@@ -1,4 +1,4 @@
-import { Pause, Play, X } from '@phosphor-icons/react'
+import { Pause, Play, ShareNetwork, X } from '@phosphor-icons/react'
 import { AnimatePresence, animate, motion, useMotionValue, useReducedMotion } from 'motion/react'
 import { useCallback, useEffect, useRef, useState, type ReactNode } from 'react'
 
@@ -12,12 +12,15 @@ interface Props {
   /** Elemen interaktif pada slide terakhir (tombol bagikan), ditaruh di atas lapisan ketuk. */
   overlayLast?: ReactNode
   onIndex?: (i: number) => void
+  /** bagikan layar yang sedang tampil sebagai gambar */
+  onShareSlide?: (i: number) => void
+  sharing?: boolean
 }
 
 const HOLD_MS = 220
 
 /** Story player gaya Instagram: progress, auto-advance, ketuk kiri/kanan, tahan untuk jeda, geser, panah keyboard. */
-export function StoryPlayer({ slides, duration = 5000, isSample, onExit, overlayLast, onIndex }: Props) {
+export function StoryPlayer({ slides, duration = 5000, isSample, onExit, overlayLast, onIndex, onShareSlide, sharing }: Props) {
   const reduce = useReducedMotion()
   const [idx, setIdx] = useState(0)
   const [manualPause, setManualPause] = useState(false)
@@ -114,6 +117,12 @@ export function StoryPlayer({ slides, duration = 5000, isSample, onExit, overlay
               <button type="button" onClick={() => setManualPause(p => !p)} aria-label={manualPause ? 'Lanjutkan ringkasan' : 'Jeda ringkasan'} className="grid size-11 place-items-center rounded-full text-fg hover:bg-fg/10">
                 {manualPause ? <Play size={22} weight="fill" aria-hidden /> : <Pause size={22} weight="fill" aria-hidden />}
               </button>
+              {onShareSlide && (
+                <button type="button" onClick={() => { setManualPause(true); onShareSlide(idx) }} disabled={sharing} aria-busy={sharing}
+                  aria-label="Bagikan layar ini sebagai gambar" className="grid size-11 place-items-center rounded-full text-fg hover:bg-fg/10 disabled:opacity-50">
+                  <ShareNetwork size={22} weight="bold" aria-hidden />
+                </button>
+              )}
               <button type="button" onClick={onExit} aria-label="Tutup ringkasan" className="grid size-11 place-items-center rounded-full text-fg hover:bg-fg/10">
                 <X size={22} weight="bold" aria-hidden />
               </button>

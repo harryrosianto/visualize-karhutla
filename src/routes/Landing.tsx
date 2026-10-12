@@ -19,10 +19,10 @@ function CheckRegion() {
         <p className="mt-6 max-w-[44ch] text-base leading-relaxed text-fg-2 md:text-lg">
           Pilih kabupaten/kota atau seluruh Kalimantan untuk melihat ringkasannya dalam tujuh layar, kemudian bagikan.
         </p>
-        <div className="mt-10">
+        <Link to="/wrapped/kalimantan" className="mt-8 inline-flex min-h-11 items-center text-fg-2 underline decoration-ember underline-offset-4 hover:text-fg">Lihat ringkasan seluruh Kalimantan</Link>
+        <div className="mt-4">
           <KabupatenPicker onSelect={k => nav(`/wrapped/${k.slug}`)} />
         </div>
-        <Link to="/wrapped/kalimantan" className="mt-6 inline-flex min-h-11 items-center text-fg-2 underline decoration-ember underline-offset-4 hover:text-fg">Lihat ringkasan seluruh Kalimantan</Link>
       </div>
     </section>
   )

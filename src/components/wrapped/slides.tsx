@@ -203,11 +203,64 @@ export function SlideCampaign() {
           <div className={`${tile} aspect-square`}><Picture name="wildfire-3" eager sizes="(min-width: 768px) 20vw, 50vw" className="size-full object-cover" position="50% 50%" /></div>
         </motion.div>
         <motion.div variants={item} initial="hidden" animate="show" className="mt-[7cqw]">
-          <h2 className="text-[10.5cqw] font-extrabold leading-[1] tracking-tighter text-fg">Karhutla belum berakhir<span className="text-ember">.</span></h2>
-          <p lang="en" className="mt-[1.5cqw] text-[5cqw] font-semibold leading-tight text-fg-3">The fires are not over.</p>
-          <p className="mt-[5cqw] text-[5.4cqw] leading-snug text-fg">Bantu ingatkan orang-orang di sekitar Anda.</p>
-          <p lang="en" className="mt-[1.2cqw] text-[4.4cqw] leading-snug text-fg-3">Help remind the people around you.</p>
+          <h2 className="text-[11.5cqw] font-extrabold leading-[1] tracking-tighter text-fg">Karhutla belum berakhir<span className="text-ember">.</span></h2>
+          <p lang="en" className="mt-[2cqw] text-[6cqw] font-semibold leading-tight text-fg-3">The fires are not over.</p>
         </motion.div>
+      </div>
+    </div>
+  )
+}
+
+export interface SummaryStat { label: string; value: string; sub?: string }
+
+/** Empat angka rangkuman, dipakai kartu potret dan kartu lanskap. */
+export function summaryStats(kab: Kab, kabs: Kab[], meta: Meta): SummaryStat[] {
+  const d = pct(kab.total2026, kab.total2025)
+  const burned = burnedInfo(kab, meta)
+  const fields = burned ? Math.round(burned.ha / HA_PER_FIELD) : null
+  const top = kab.isRegion ? provinceTotals(kabs, meta)[0] : null
+  return [
+    { label: 'Dibandingkan 2025', value: d === null ? 'Belum tersedia' : `${d >= 0 ? '+' : '-'}${fmt(Math.abs(d))}%`, sub: d === null ? undefined : `${fmt(kab.total2025!)} titik pada periode yang sama` },
+    top
+      ? { label: 'Provinsi tertinggi', value: top.short, sub: `${top.name}, ${fmt(top.total)} titik` }
+      : { label: 'Peringkat di Kalimantan', value: `#${kab.rankKalimantan}`, sub: `dari ${kabs.length} kabupaten/kota` },
+    { label: 'Bulan puncak', value: MONTHS[kab.peakMonth], sub: `${fmt(kab.monthly[kab.peakMonth])} titik` },
+    { label: 'Luas lahan terbakar', value: fields === null ? 'Belum tersedia' : fmt(fields), sub: fields === null || !burned ? undefined : `lapangan sepak bola, ${fmt(burned.ha)} ha${burned.scope === 'provinsi' ? ' (tingkat provinsi)' : burned.scope === 'wilayah' ? ' (provinsi yang tersedia)' : ''}` },
+  ]
+}
+
+/** Kartu rangkuman lanskap 16:9 untuk X/Threads dan tampilan desktop (diekspor pada 1600x900). */
+export function SummaryWide({ kab, kabs, meta }: SlideCtx) {
+  const stats = summaryStats(kab, kabs, meta)
+  const total = fmt(kab.total2026)
+  return (
+    <div className="relative size-full overflow-hidden bg-ink">
+      <Picture name="hero-forest-night" eager sizes="100vw" className="absolute inset-0 size-full object-cover" position="62% 50%" />
+      <div aria-hidden className="absolute inset-0" style={{ background: 'linear-gradient(to right, rgb(12 10 9 / 0.97) 0%, rgb(12 10 9 / 0.88) 48%, rgb(12 10 9 / 0.72) 100%)' }} />
+      <div className="relative flex size-full flex-col px-[5cqw] pb-[3.2cqw] pt-[4cqw]">
+        {meta.isSample && <div className="-mx-[5cqw] -mt-[4cqw] mb-[2.6cqw] bg-ember py-[0.9cqw] text-center text-[1.6cqw] font-bold tracking-wide text-ink">DATA CONTOH. Angka bersifat fiktif dan hanya untuk pengujian tampilan.</div>}
+        <div className="flex items-baseline justify-between">
+          <p translate="no" className="text-[1.9cqw] font-semibold text-fg-2">Karhutla Wrapped 2026</p>
+          <p translate="no" className="text-[2.1cqw] font-extrabold tracking-tight text-fg">Visualize Karhutla<span className="text-ember">.</span> <span className="text-[1.5cqw] font-normal text-fg-2">{siteHost()}</span></p>
+        </div>
+        <div className="mt-[2.5cqw] grid flex-1 grid-cols-[1.05fr_1fr] items-center gap-[4.5cqw]">
+          <div>
+            <h2 style={{ fontSize: `${Math.min(8.5, 40 / (kab.name.length * 0.56))}cqw` }} className="font-extrabold leading-[0.98] tracking-tighter text-fg">{kab.name}<span className="text-ember">.</span></h2>
+            <p className="mt-[0.8cqw] text-[2cqw] text-fg-2">{kab.provinceName}</p>
+            <p className="mt-[3.2cqw] text-[1.8cqw] text-fg-3">Titik panas sejak 1 Januari 2026</p>
+            <p style={{ fontSize: `${Math.min(12.5, 44 / (total.length * 0.56))}cqw` }} className="mt-[0.4cqw] font-extrabold leading-[0.95] tracking-tighter text-fg num">{total}<span className="text-ember">.</span></p>
+          </div>
+          <dl className="grid grid-cols-2 gap-x-[2.8cqw] gap-y-[2.6cqw]">
+            {stats.map(t => (
+              <div key={t.label} className="border-t border-fg/20 pt-[1.1cqw]">
+                <dt className="text-[1.6cqw] text-fg-3">{t.label}</dt>
+                <dd className="mt-[0.4cqw] text-[3.7cqw] font-extrabold leading-none tracking-tight text-fg num">{t.value}</dd>
+                {t.sub && <dd className="mt-[0.5cqw] text-[1.45cqw] leading-snug text-fg-2">{t.sub}</dd>}
+              </div>
+            ))}
+          </dl>
+        </div>
+        <p className="mt-[1.6cqw] text-[1.3cqw] leading-snug text-fg-2">Data per {fmtDate(meta.dataDate)}. Sumber: NASA FIRMS, SiPongi Kemenhut. Batas wilayah: geoBoundaries.{meta.isSample ? ' DATA CONTOH.' : ''}</p>
       </div>
     </div>
   )
@@ -215,10 +268,7 @@ export function SlideCampaign() {
 
 /* 7. Rangkuman. Dipakai juga sebagai kartu bagikan 1080x1920 (variant export). */
 export function SummaryCard({ kab, kabs, meta, variant = 'story' }: SlideCtx & { variant?: 'story' | 'export' }) {
-  const d = pct(kab.total2026, kab.total2025)
-  const burned = burnedInfo(kab, meta)
-  const fields = burned ? Math.round(burned.ha / HA_PER_FIELD) : null
-  const top = kab.isRegion ? provinceTotals(kabs, meta)[0] : null
+  const stats = summaryStats(kab, kabs, meta)
   const exp = variant === 'export'
   const stat = (label: string, value: string, sub?: string) => (
     <div className="border-t border-fg/15 pt-[3cqw]">
@@ -240,12 +290,7 @@ export function SummaryCard({ kab, kabs, meta, variant = 'story' }: SlideCtx & {
           <p style={fit(fmt(kab.total2026), exp ? 21 : 24)} className="mt-[1cqw] font-extrabold leading-[0.95] tracking-tighter text-fg num">{fmt(kab.total2026)}<span className="text-ember">.</span></p>
         </div>
         <dl className={`grid grid-cols-2 gap-x-[6cqw] ${exp ? 'mt-[7cqw] gap-y-[5cqw]' : 'mt-[5cqw] gap-y-[3.5cqw]'}`}>
-          {stat('Dibandingkan 2025', d === null ? 'Belum tersedia' : `${d >= 0 ? '+' : '-'}${fmt(Math.abs(d))}%`, d === null ? undefined : `${fmt(kab.total2025!)} titik pada periode yang sama`)}
-          {top
-            ? stat('Provinsi tertinggi', top.short, `${top.name}, ${fmt(top.total)} titik`)
-            : stat('Peringkat di Kalimantan', `#${kab.rankKalimantan}`, `dari ${kabs.length} kabupaten/kota`)}
-          {stat('Bulan puncak', MONTHS[kab.peakMonth], `${fmt(kab.monthly[kab.peakMonth])} titik`)}
-          {stat('Luas lahan terbakar', fields === null ? 'Belum tersedia' : fmt(fields), fields === null || !burned ? undefined : `lapangan sepak bola, ${fmt(burned.ha)} ha${burned.scope === 'provinsi' ? ' (tingkat provinsi)' : burned.scope === 'wilayah' ? ' (provinsi yang tersedia)' : ''}`)}
+          {stats.map(t => stat(t.label, t.value, t.sub))}
         </dl>
         <div className="mt-auto pt-[4cqw] text-[3.1cqw] leading-snug text-fg-2">
           {exp && <p translate="no" className="mb-[2cqw] text-[4.4cqw] font-extrabold tracking-tight text-fg">Visualize Karhutla<span className="text-ember">.</span> <span className="font-normal text-fg-2">{siteHost()}</span></p>}

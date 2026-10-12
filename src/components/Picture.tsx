@@ -1,4 +1,5 @@
 import { ALT, imageSet, type ImageName } from '../lib/images'
+import { useExporting } from './ExportContext'
 
 interface Props {
   name: ImageName
@@ -13,6 +14,9 @@ interface Props {
 /** Gambar responsif AVIF/WebP dengan srcset. Lazy kecuali eager (hero). */
 export function Picture({ name, sizes = '100vw', eager, decorative = true, className, position = 'center', alt }: Props) {
   const s = imageSet(name)
+  const exporting = useExporting()
+  // saat diekspor ke PNG, <picture>/<source> tidak ikut tersalin dengan benar; pakai <img> biasa
+  if (exporting) return <img src={s.webp.largest} alt="" className={className} style={{ objectPosition: position }} />
   return (
     <picture>
       <source type="image/avif" srcSet={s.avif.srcset} sizes={sizes} />

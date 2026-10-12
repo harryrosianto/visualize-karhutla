@@ -86,3 +86,6 @@
 
 /* Tooltip peta: baris pertama nama wilayah, berikutnya provinsi dan jumlah titik panas */
 .map-tip strong { color: var(--color-fg); font-size: 0.875rem; }
+
+/* Panggung ekspor PNG: matikan animasi CSS agar hasil statis */
+.export-static .kb { animation: none; }

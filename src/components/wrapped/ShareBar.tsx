@@ -1,4 +1,4 @@
-import { DownloadSimple, LinkSimple, ShareNetwork, ThreadsLogo, XLogo } from '@phosphor-icons/react'
+import { DownloadSimple, ImageSquare, LinkSimple, ShareNetwork, ThreadsLogo, XLogo } from '@phosphor-icons/react'
 import { toBlob } from 'html-to-image'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
@@ -9,7 +9,7 @@ import { SummaryCard } from './slides'
 type Status = 'menyiapkan' | 'siap' | 'gagal'
 
 /** Kartu bagikan 1080x1920 dirender di luar layar begitu slide rangkuman tampil, supaya tombol bagikan langsung bekerja. */
-export function ShareBar({ kab, meta, kabs }: { kab: Kab; meta: Meta; kabs: Kab[] }) {
+export function ShareBar({ kab, meta, kabs, onWide, busy }: { kab: Kab; meta: Meta; kabs: Kab[]; onWide?: () => void; busy?: boolean }) {
   const card = useRef<HTMLDivElement>(null)
   const blob = useRef<Blob | null>(null)
   const [status, setStatus] = useState<Status>('menyiapkan')
@@ -80,7 +80,7 @@ export function ShareBar({ kab, meta, kabs }: { kab: Kab; meta: Meta; kabs: Kab[
     }
   }
 
-  const sec = 'btn btn-ghost min-h-12 min-w-0 flex-1 gap-1.5 px-2 text-sm'
+  const sec = 'btn btn-ghost min-h-12 min-w-0 flex-1 gap-1 px-1.5 text-[13px]'
   return (
     <div className="pointer-events-auto grid gap-2">
       <button type="button" onClick={onShare} disabled={status === 'menyiapkan'} className="btn btn-primary w-full disabled:opacity-70">
@@ -88,9 +88,10 @@ export function ShareBar({ kab, meta, kabs }: { kab: Kab; meta: Meta; kabs: Kab[
         {status === 'menyiapkan' ? 'Menyiapkan gambar...' : 'Bagikan ke Story'}
       </button>
       <div className="flex gap-1.5">
-        <a className={sec} href={xIntent(kab, meta)} target="_blank" rel="noopener noreferrer"><XLogo size={18} weight="bold" aria-hidden />X</a>
-        <a className={sec} href={threadsIntent(kab, meta)} target="_blank" rel="noopener noreferrer"><ThreadsLogo size={18} weight="bold" aria-hidden />Threads</a>
-        <button type="button" onClick={copy} className={sec}><LinkSimple size={18} weight="bold" aria-hidden />Salin tautan</button>
+        <a className={sec} href={xIntent(kab, meta)} target="_blank" rel="noopener noreferrer"><XLogo size={16} weight="bold" aria-hidden />X</a>
+        <a className={sec} href={threadsIntent(kab, meta)} target="_blank" rel="noopener noreferrer"><ThreadsLogo size={16} weight="bold" aria-hidden />Threads</a>
+        <button type="button" onClick={copy} className={sec}><LinkSimple size={16} weight="bold" aria-hidden />Tautan</button>
+        {onWide && <button type="button" onClick={onWide} disabled={busy} aria-label="Unduh gambar lanskap untuk X dan Threads" title="Gambar lanskap 16:9 untuk X dan Threads" className={sec}><ImageSquare size={16} weight="bold" aria-hidden />Lanskap</button>}
       </div>
       <div className="flex items-center justify-between text-sm">
         <Link to="/wrapped" className="inline-flex min-h-11 items-center text-fg-2 underline underline-offset-4 hover:text-fg">Telusuri wilayah lain</Link>
