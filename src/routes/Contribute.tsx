@@ -41,6 +41,12 @@ export default function Contribute() {
         Visualize Karhutla bersifat terbuka dan berkembang melalui sumbangan pembaca. Artikel, data, koreksi, maupun gagasan Anda dapat membuat proyek ini lebih akurat dan bermanfaat.
       </p>
 
+      <figure className="mt-10 max-w-3xl">
+        <img src={`${import.meta.env.BASE_URL}media/pratinjau-beranda.jpg`} width={800} height={455} loading="lazy" decoding="async"
+          alt="Tangkapan layar halaman beranda Visualize Karhutla: judul besar di atas siluet hutan terbakar, dengan tombol Telusuri wilayah dan Lihat peta." className="w-full rounded-panel border border-line" />
+        <figcaption className="mt-3 text-sm text-fg-3">Tampilan halaman beranda Visualize Karhutla.</figcaption>
+      </figure>
+
       <section aria-labelledby="cara" className="mt-16">
         <h2 id="cara" className="text-3xl font-extrabold tracking-tight text-fg md:text-4xl">Cara berkontribusi<span className="text-ember">.</span></h2>
         <ul className="mt-10 grid gap-10">
