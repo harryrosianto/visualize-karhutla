@@ -95,7 +95,7 @@ const write = (rel: string, html: string) => { const f = path.join(DIST, rel); f
 const sampleNote = meta.isSample ? ' (DATA CONTOH)' : ''
 const defaults = { desc: `Peta titik panas dan ringkasan Karhutla Wrapped per kabupaten/kota di Kalimantan tahun 2026${sampleNote}. Sumber data: NASA FIRMS dan SiPongi Kemenhut.`, image: `${SITE}/og/default.jpg` }
 write('index.html', page({ title: 'Visualize Karhutla', ...defaults, url: SITE + '/' }))
-for (const [route, title] of [['peta', 'Peta titik panas | Visualize Karhutla'], ['wrapped', 'Karhutla Wrapped 2026 | Visualize Karhutla'], ['tentang', 'Tentang data | Visualize Karhutla']])
+for (const [route, title] of [['peta', 'Peta titik panas | Visualize Karhutla'], ['wrapped', 'Karhutla Wrapped 2026 | Visualize Karhutla'], ['tentang', 'Tentang data | Visualize Karhutla'], ['kontribusi', 'Kontribusi | Visualize Karhutla']])
   write(`${route}/index.html`, page({ title, ...defaults, url: `${SITE}/${route}` }))
 for (const k of kabs) {
   write(`wrapped/${k.slug}/index.html`, page({

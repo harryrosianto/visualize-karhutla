@@ -1,0 +1,28 @@
+name: Laporkan koreksi
+description: Laporkan angka, keterangan, atau istilah yang keliru
+title: "[Koreksi] "
+labels: ["koreksi"]
+body:
+  - type: input
+    id: halaman
+    attributes:
+      label: Halaman atau alamat tautan
+      placeholder: https://
+    validations:
+      required: true
+  - type: textarea
+    id: keliru
+    attributes:
+      label: Bagian yang keliru
+    validations:
+      required: true
+  - type: textarea
+    id: seharusnya
+    attributes:
+      label: Seharusnya
+    validations:
+      required: true
+  - type: input
+    id: rujukan
+    attributes:
+      label: Rujukan atau sumber

@@ -11,6 +11,7 @@ const MapPage = lazy(() => import('./routes/MapPage'))
 const WrappedPicker = lazy(() => import('./routes/WrappedPicker'))
 const WrappedPage = lazy(() => import('./routes/WrappedPage'))
 const About = lazy(() => import('./routes/About'))
+const Contribute = lazy(() => import('./routes/Contribute'))
 const NotFound = lazy(() => import('./routes/NotFound'))
 
 function ScrollTop() {
@@ -46,6 +47,7 @@ export default function App() {
               <Route index element={<Landing />} />
               <Route path="wrapped" element={<WrappedPicker />} />
               <Route path="tentang" element={<About />} />
+              <Route path="kontribusi" element={<Contribute />} />
               <Route path="*" element={<NotFound />} />
             </Route>
             <Route element={<Shell footer={false} />}>

@@ -1,0 +1,41 @@
+name: Kirim artikel
+description: Usulkan artikel tentang kebakaran hutan dan lahan untuk daftar bacaan
+title: "[Artikel] "
+labels: ["artikel"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Artikel dimuat bila bersumber dari media bereputasi, lembaga pemerintah, lembaga riset, atau organisasi lingkungan, dan relevan dengan karhutla di Indonesia. Kiriman bersifat publik. Jangan mencantumkan data pribadi.
+  - type: input
+    id: judul
+    attributes:
+      label: Judul artikel
+    validations:
+      required: true
+  - type: input
+    id: tautan
+    attributes:
+      label: Tautan artikel
+      description: Tautan yang dapat dibuka publik tanpa berlangganan, bila memungkinkan.
+      placeholder: https://
+    validations:
+      required: true
+  - type: input
+    id: penerbit
+    attributes:
+      label: Penerbit atau media
+    validations:
+      required: true
+  - type: input
+    id: tanggal
+    attributes:
+      label: Tanggal terbit
+      placeholder: 2026-09-15
+  - type: textarea
+    id: relevansi
+    attributes:
+      label: Ringkasan dan relevansi
+      description: Satu sampai dua kalimat mengenai isi artikel dan mengapa relevan.
+    validations:
+      required: true

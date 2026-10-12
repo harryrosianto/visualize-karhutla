@@ -1,0 +1,52 @@
+name: Sumbang data
+description: Sumbangkan data luas lahan terbakar atau data pendukung lainnya
+title: "[Data] "
+labels: ["data"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Data harus disertai sumber yang dapat diperiksa (SiPongi, BPBD, BNPB, laporan resmi, atau publikasi ilmiah). Kiriman bersifat publik. Jangan mencantumkan data pribadi.
+  - type: dropdown
+    id: jenis
+    attributes:
+      label: Jenis data
+      options:
+        - Luas lahan terbakar
+        - Titik panas
+        - Kejadian kebakaran
+        - Lainnya
+    validations:
+      required: true
+  - type: input
+    id: wilayah
+    attributes:
+      label: Wilayah
+      description: Kabupaten/kota atau provinsi.
+    validations:
+      required: true
+  - type: input
+    id: angka
+    attributes:
+      label: Angka dan satuan
+      placeholder: 1.234,5 hektare
+    validations:
+      required: true
+  - type: input
+    id: periode
+    attributes:
+      label: Periode data
+      placeholder: 1 Januari sampai 30 September 2026
+    validations:
+      required: true
+  - type: input
+    id: sumber
+    attributes:
+      label: Sumber dan tautan
+    validations:
+      required: true
+  - type: textarea
+    id: metode
+    attributes:
+      label: Catatan metode
+      description: Misalnya data lapangan, hasil analisis citra satelit, atau kutipan dari laporan.

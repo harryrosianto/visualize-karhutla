@@ -1,0 +1,23 @@
+name: Usulkan fitur atau perbaikan
+description: Usulan fitur, aksesibilitas, terjemahan, atau penyuntingan bahasa
+title: "[Usulan] "
+labels: ["usulan"]
+body:
+  - type: dropdown
+    id: jenis
+    attributes:
+      label: Jenis usulan
+      options:
+        - Fitur baru
+        - Aksesibilitas
+        - Terjemahan atau penyuntingan bahasa
+        - Lainnya
+    validations:
+      required: true
+  - type: textarea
+    id: uraian
+    attributes:
+      label: Uraian
+      description: Jelaskan usulan dan manfaatnya bagi pembaca.
+    validations:
+      required: true

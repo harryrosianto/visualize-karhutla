@@ -13,7 +13,8 @@ export function SiteNav() {
         <div className="flex items-center">
           <NavLink to="/peta" className={link}>Peta</NavLink>
           <NavLink to="/wrapped" className={(s) => `${link(s)} max-sm:hidden`}>Wrapped</NavLink>
-          <NavLink to="/tentang" className={link}>Tentang</NavLink>
+          <NavLink to="/kontribusi" className={link}>Kontribusi</NavLink>
+          <NavLink to="/tentang" className={(s) => `${link(s)} max-sm:hidden`}>Tentang</NavLink>
         </div>
       </nav>
     </header>

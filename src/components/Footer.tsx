@@ -37,6 +37,7 @@ export function Footer() {
         <div className="grid grid-cols-2 gap-10 sm:grid-cols-3">
           <Col title="Jelajah">
             <li><Link className={a} to="/peta">Peta titik panas</Link></li>
+            <li><Link className={a} to="/kontribusi">Kontribusi</Link></li>
             <li><Link className={a} to="/wrapped"><span translate="no">Karhutla Wrapped</span></Link></li>
           </Col>
           <Col title="Tentang">
