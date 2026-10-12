@@ -1,4 +1,5 @@
-import { animate, useInView, useReducedMotion } from 'motion/react'
+import { animate, useInView } from 'motion/react'
+import { useStaticMotion } from './ExportContext'
 import { useEffect, useRef } from 'react'
 import { fmt } from '../lib/data'
 
@@ -8,7 +9,7 @@ interface Props { value: number; duration?: number; start?: boolean; format?: (n
 export function CountUp({ value, duration = 1.6, start, format = fmt, className }: Props) {
   const ref = useRef<HTMLSpanElement>(null)
   const inView = useInView(ref, { once: true, amount: 0.4 })
-  const reduce = useReducedMotion()
+  const reduce = useStaticMotion()
   const go = start ?? inView
   useEffect(() => {
     const el = ref.current

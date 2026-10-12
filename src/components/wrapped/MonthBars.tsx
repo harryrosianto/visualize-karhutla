@@ -1,10 +1,11 @@
 import { scaleBand, scaleLinear } from '@visx/scale'
-import { motion, useReducedMotion } from 'motion/react'
+import { motion } from 'motion/react'
+import { useStaticMotion } from '../ExportContext'
 import { MONTHS, MONTHS_SHORT, fmt } from '../../lib/data'
 
 /** Bar chart bulanan Jan-Okt dengan bulan puncak disorot. Tanpa trek latar. */
 export function MonthBars({ values, peak }: { values: number[]; peak: number }) {
-  const reduce = useReducedMotion()
+  const reduce = useStaticMotion()
   const W = 300, H = 170, top = 26, bottom = 22
   const x = scaleBand<number>({ domain: values.map((_, i) => i), range: [0, W], padding: 0.28 })
   const y = scaleLinear({ domain: [0, Math.max(1, ...values)], range: [H - bottom, top] })

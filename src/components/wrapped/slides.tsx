@@ -1,4 +1,5 @@
-import { motion, useReducedMotion, type Variants } from 'motion/react'
+import { motion, type Variants } from 'motion/react'
+import { useStaticMotion } from '../ExportContext'
 import type { ReactNode } from 'react'
 import { HA_PER_FIELD, MONTHS, burnedInfo, burnedSourceLine, fmt, fmtDate, provinceTotals, sourceLine, type Kab, type Meta } from '../../lib/data'
 import { CountUp } from '../CountUp'
@@ -13,7 +14,7 @@ export interface SlideCtx { kab: Kab; kabs: Kab[]; meta: Meta }
 const fit = (text: string, max = 34) => ({ fontSize: `${Math.min(max, 84 / (text.length * 0.56))}cqw` })
 
 function useVariants(): { box: Variants; item: Variants } {
-  const reduce = useReducedMotion()
+  const reduce = useStaticMotion()
   return {
     box: { hidden: {}, show: { transition: { staggerChildren: reduce ? 0 : 0.12, delayChildren: reduce ? 0 : 0.15 } } },
     item: {
