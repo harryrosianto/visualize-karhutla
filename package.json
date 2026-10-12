@@ -15,7 +15,8 @@
     "sample": "tsx scripts/generate-sample.ts",
     "firms": "tsx scripts/process-firms.ts",
     "fetch-firms": "tsx scripts/fetch-firms.ts",
-    "deploy:cloudflare": "npm run build && npx wrangler deploy"
+    "deploy:cloudflare": "npm run build && npx wrangler deploy",
+    "deploy:pages": "cross-env DEPLOY_TARGET=pages npm run build && npx wrangler pages deploy dist --project-name visualize-karhutla --branch main"
   },
   "dependencies": {
     "@deck.gl/aggregation-layers": "^9.4.0",
@@ -50,6 +51,7 @@
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
     "@vitejs/plugin-react": "^6.1.2",
+    "cross-env": "^10.1.0",
     "satori": "^0.48.1",
     "sharp": "^0.35.5",
     "subset-font": "^2.9.0",

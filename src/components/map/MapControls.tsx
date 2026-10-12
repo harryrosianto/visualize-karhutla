@@ -10,7 +10,7 @@ const chip = (on: boolean) =>
 export function ProvinceChips({ provinces, value, onChange }: { provinces: { id: ProvinceId; short: string }[]; value: Filter; onChange: (f: Filter) => void }) {
   const all = [{ id: 'all' as const, short: 'Semua' }, ...provinces]
   return (
-    <div role="group" aria-label="Filter provinsi" className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1 [scrollbar-width:none] md:mx-0 md:px-0 md:pb-0">
+    <div role="group" aria-label="Filter provinsi" className="flex min-w-0 flex-1 gap-2 overflow-x-auto [scrollbar-width:none]">
       {all.map(p => (
         <button key={p.id} type="button" aria-pressed={value === p.id} onClick={() => onChange(p.id)} className={chip(value === p.id)}>{p.short}</button>
       ))}
@@ -43,7 +43,7 @@ export function TimeDock({ days, day, onDay, playing, onPlay, today, cumulative,
   // posisi awal tiap bulan sebagai penanda di bawah slider
   const ticks = MONTHS_SHORT.map((m, i) => ({ m, i, at: days.findIndex(d => d.slice(5, 7) === String(i + 1).padStart(2, '0')) })).filter(t => t.at >= 0)
   return (
-    <section aria-label="Garis waktu" className="rounded-panel border border-line bg-ink-2/95 p-4 md:p-5">
+    <section aria-label="Garis waktu" className="rounded-panel border border-line bg-ink-2/95 p-3 md:p-5">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div className="flex items-center gap-3">
           <button type="button" onClick={onPlay} aria-label={playing ? 'Jeda animasi' : 'Putar animasi penyebaran'}
@@ -51,7 +51,7 @@ export function TimeDock({ days, day, onDay, playing, onPlay, today, cumulative,
             {playing ? <Pause size={22} weight="fill" aria-hidden /> : <Play size={22} weight="fill" aria-hidden />}
           </button>
           <div>
-            <p className="text-lg font-bold leading-tight text-fg num" aria-live="polite">{label}</p>
+            <p className="text-base font-bold leading-tight text-fg num md:text-lg" aria-live="polite">{label}</p>
             <p className="text-xs text-fg-2 num">
               {today > 0 ? `${fmt(today)} titik panas pada hari tersebut` : 'Tidak terdapat titik panas pada hari tersebut'}; kumulatif {fmt(cumulative)} sejak 1 Januari
             </p>
@@ -59,7 +59,7 @@ export function TimeDock({ days, day, onDay, playing, onPlay, today, cumulative,
         </div>
         <ModeToggle value={mode} onChange={onMode} />
       </div>
-      <div className="mt-3">
+      <div className="mt-1 md:mt-3">
         <label htmlFor="time-range" className="sr-only">Tanggal</label>
         <input id="time-range" type="range" min={0} max={max} value={day} onChange={e => onDay(Number(e.target.value))}
           aria-valuetext={label} className="ember-range h-11 w-full cursor-pointer" />

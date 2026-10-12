@@ -35,9 +35,20 @@ Perintah ini membangun situs dan menjalankan `wrangler deploy`. Login Cloudflare
 
 Konfigurasi diuji dengan `wrangler deploy --dry-run` dan `wrangler dev`: 284 berkas aset terbaca; halaman statis per rute (`/peta/`, `/wrapped/<slug>/`) dilayani dengan meta `og:*` yang benar; alamat yang tidak dikenal jatuh ke aplikasi (HTTP 200, `not_found_handling: single-page-application`); serta aturan header cache dan keamanan terbaca. Berkas terbesar sekitar 3 MB, jauh di bawah batas 25 MiB per aset.
 
-### Jika memakai Cloudflare Pages klasik
+### Alamat tanpa nama akun
 
-Pages klasik tidak memakai `wrangler.jsonc` ini. Gunakan build command `npm run build`, output `dist`, dan tambahkan berkas `public/_redirects` berisi `/*    /index.html   200` untuk routing sisi klien.
+Alamat Worker selalu berbentuk `<nama-proyek>.<subdomain-akun>.workers.dev`; bagian subdomain akun tidak dapat dihilangkan. Dua cara agar nama pribadi tidak muncul:
+
+- **Cloudflare Pages (disarankan):** alamatnya `visualize-karhutla.pages.dev` tanpa subdomain akun, selama nama proyek belum dipakai orang lain.
+  1. Dasbor Cloudflare, Workers & Pages, Create application. Di bagian bawah halaman pilih tautan **Looking to deploy Pages? Get started**, lalu **Connect to Git**.
+  2. Repositori `visualize-karhutla`, nama proyek `visualize-karhutla`, production branch `main`.
+  3. Build command `npm run build`, output directory `dist`. Variabel: `VITE_SITE_URL` = `https://visualize-karhutla.pages.dev`. Cloudflare Pages otomatis menyetel `CF_PAGES=1`, sehingga build membuat `_redirects` untuk routing sisi klien.
+  4. Tanpa Git: `npm run deploy:pages` (isi `VITE_SITE_URL` di `.env` lebih dulu).
+  5. Hapus proyek Worker lama di dasbor bila tidak dipakai agar tidak ada dua situs.
+- **Tetap Workers:** ubah subdomain akun menjadi nama netral di Workers & Pages, kolom Subdomain (Change), misalnya `karhutla`, sehingga alamatnya `visualize-karhutla.karhutla.workers.dev`. Perubahan ini berlaku untuk seluruh Worker pada akun.
+- **Domain sendiri:** alamat paling bersih; tambahkan pada Custom domains dan ubah `VITE_SITE_URL`.
+
+Berkas `wrangler.jsonc` hanya dipakai alur Workers; build Pages klasik mengabaikannya.
 
 ## Berkas konfigurasi yang sudah disediakan
 

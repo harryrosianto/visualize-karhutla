@@ -105,3 +105,10 @@ for (const k of kabs) {
   }))
 }
 console.log(`[og] selesai: ${kabs.length} halaman Wrapped, og:image ${SITE}/og/<slug>.jpg`)
+
+// Cloudflare Pages klasik (alamat <proyek>.pages.dev) butuh _redirects untuk routing sisi klien.
+// Workers Static Assets memakai not_found_handling di wrangler.jsonc dan tidak boleh memuat aturan ini.
+if (process.env.CF_PAGES === '1' || process.env.DEPLOY_TARGET === 'pages') {
+  fs.writeFileSync(path.join(DIST, '_redirects'), '/*    /index.html   200\n')
+  console.log('[og] _redirects dibuat untuk Cloudflare Pages')
+}
