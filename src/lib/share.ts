@@ -12,7 +12,7 @@ export const wrappedUrl = (slug: string) => `${siteUrl()}/wrapped/${slug}`
 
 export function shareText(kab: Kab, meta: Meta) {
   const sample = meta.isSample ? ' (DATA CONTOH)' : ''
-  return `${kab.name}: ${fmt(kab.total2026)} titik panas karhutla sepanjang 2026${sample}. Cek wilayahmu di Karhutla Wrapped.`
+  return `${kab.name}: ${fmt(kab.total2026)} titik panas karhutla sepanjang 2026${sample}. Telusuri wilayah lain pada Karhutla Wrapped.`
 }
 
 export const xIntent = (kab: Kab, meta: Meta) =>

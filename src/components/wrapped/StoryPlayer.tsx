@@ -111,10 +111,10 @@ export function StoryPlayer({ slides, duration = 5000, isSample, onExit, overlay
           <div className="mt-[2cqw] flex items-center justify-between">
             <p className="text-[4cqw] font-extrabold tracking-tight text-fg">Visualize Karhutla<span className="text-ember">.</span></p>
             <div className="pointer-events-auto flex items-center">
-              <button type="button" onClick={() => setManualPause(p => !p)} aria-label={manualPause ? 'Lanjutkan cerita' : 'Jeda cerita'} className="grid size-11 place-items-center rounded-full text-fg hover:bg-fg/10">
+              <button type="button" onClick={() => setManualPause(p => !p)} aria-label={manualPause ? 'Lanjutkan ringkasan' : 'Jeda ringkasan'} className="grid size-11 place-items-center rounded-full text-fg hover:bg-fg/10">
                 {manualPause ? <Play size={22} weight="fill" aria-hidden /> : <Pause size={22} weight="fill" aria-hidden />}
               </button>
-              <button type="button" onClick={onExit} aria-label="Tutup cerita" className="grid size-11 place-items-center rounded-full text-fg hover:bg-fg/10">
+              <button type="button" onClick={onExit} aria-label="Tutup ringkasan" className="grid size-11 place-items-center rounded-full text-fg hover:bg-fg/10">
                 <X size={22} weight="bold" aria-hidden />
               </button>
             </div>

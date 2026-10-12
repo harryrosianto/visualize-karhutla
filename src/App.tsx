@@ -33,7 +33,7 @@ function Shell({ footer = true }: { footer?: boolean }) {
   )
 }
 
-const Fallback = () => <div className="grid min-h-[60dvh] place-items-center text-fg-3" role="status">Memuat...</div>
+const Fallback = () => <div className="grid min-h-[60dvh] place-items-center text-fg-3" role="status">Memuat halaman...</div>
 
 export default function App() {
   return (

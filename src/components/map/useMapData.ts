@@ -18,10 +18,6 @@ export interface Merged {
   /** akumulasi titik per provinsi per hari */
   cum: Partial<Record<ProvinceId, number[]>>
   daily: Partial<Record<ProvinceId, number[]>>
-  /** akumulasi titik per kabupaten per hari (untuk ikon api) */
-  kabCum: Record<string, number[]>
-  /** nilai terbesar titik panas 7 hari terakhir pada satu kabupaten (skala ikon) */
-  maxRecent: number
   boundaries: { type: 'FeatureCollection'; features: Feature<Polygon | MultiPolygon, any>[] }
 }
 
@@ -85,16 +81,8 @@ export function useMapData() {
       let s = 0
       cum[p] = arr.map(v => (s += v))
     }
-    const kabCum: Record<string, number[]> = {}
-    let maxRecent = 1
-    for (const p of present) for (const [slug, arr] of Object.entries(parts[p]!.daily.kab)) {
-      let acc = 0
-      const c = arr.map(v => (acc += v))
-      kabCum[slug] = c
-      for (let d = 0; d < c.length; d++) maxRecent = Math.max(maxRecent, c[d] - (c[d - 7] ?? 0))
-    }
     const boundaries = { type: 'FeatureCollection' as const, features: present.flatMap(p => parts[p]!.bnd.features) }
-    return { n, position, filter, color, frp, days, cum, daily, kabCum, maxRecent, boundaries }
+    return { n, position, filter, color, frp, days, cum, daily, boundaries }
   }, [parts])
 
   return { merged, loaded, total: PROVS.length, error, retry: () => { setError(null); setAttempt(a => a + 1) } }

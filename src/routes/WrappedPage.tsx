@@ -5,12 +5,13 @@ import { StoryPlayer, type StorySlide } from '../components/wrapped/StoryPlayer'
 import { SlideBurned, SlideMonth, SlideOpening, SlideRank, SlideTotal, SummaryCard } from '../components/wrapped/slides'
 import { ShareBar } from '../components/wrapped/ShareBar'
 import { useData } from '../lib/DataContext'
+import { REGION_SLUG } from '../lib/data'
 
 export default function WrappedPage() {
   const { slug } = useParams()
   const nav = useNavigate()
-  const { kabs, meta, error } = useData()
-  const kab = kabs.find(k => k.slug === slug)
+  const { kabs, meta, region, error } = useData()
+  const kab = slug === REGION_SLUG ? region ?? undefined : kabs.find(k => k.slug === slug)
   const exit = useCallback(() => nav('/wrapped'), [nav])
 
   useEffect(() => {
@@ -31,9 +32,9 @@ export default function WrappedPage() {
     ]
   }, [kab, kabs, meta])
 
-  if (error) return <Message title="Data belum bisa dimuat" body="Periksa koneksi, lalu muat ulang halaman." />
-  if (!kabs.length || !meta) return <div className="grid min-h-dvh place-items-center bg-ink text-fg-3" role="status">Memuat cerita...</div>
-  if (!kab || !slides) return <Message title="Wilayah tidak ditemukan" body="Tautan ini tidak cocok dengan kabupaten atau kota di Kalimantan." />
+  if (error) return <Message title="Data belum dapat dimuat" body="Periksa sambungan internet, kemudian muat ulang halaman." />
+  if (!kabs.length || !meta) return <div className="grid min-h-dvh place-items-center bg-ink text-fg-3" role="status">Memuat ringkasan...</div>
+  if (!kab || !slides) return <Message title="Wilayah tidak ditemukan" body="Tautan ini tidak sesuai dengan kabupaten/kota maupun wilayah Kalimantan." />
 
   return (
     <StoryPlayer slides={slides} isSample={meta.isSample} onExit={exit} overlayLast={<ShareBar kab={kab} meta={meta} kabs={kabs} />} />

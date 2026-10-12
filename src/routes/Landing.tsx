@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { Hero } from '../components/Hero'
 import { KabupatenPicker } from '../components/KabupatenPicker'
 import { KeyStats } from '../components/KeyStats'
@@ -12,17 +12,17 @@ function CheckRegion() {
       <Picture name="firefighters-silhouette" sizes="100vw" className="absolute inset-0 -z-20 size-full object-cover" position="30% 50%" />
       <div aria-hidden className="absolute inset-0 -z-10 bg-ink/80" />
       <div aria-hidden className="absolute inset-0 -z-10 bg-gradient-to-b from-ink-2 via-transparent to-ink" />
-      <Picture name="burnt-forest" sizes="100vw" className="pointer-events-none absolute inset-x-0 bottom-0 -z-10 block h-auto w-full" />
-      <div className="mx-auto max-w-[1400px] px-4 pb-40 pt-28 md:px-8 md:pb-56 md:pt-44">
+      <div className="mx-auto max-w-[1400px] px-4 py-28 md:px-8 md:py-44">
         <h2 className="max-w-[14ch] text-5xl font-extrabold leading-[0.98] tracking-tighter text-fg md:text-7xl">
-          Seberapa berasap kabupatenmu<span className="text-ember">?</span>
+          Telusuri data karhutla per wilayah<span className="text-ember">.</span>
         </h2>
         <p className="mt-6 max-w-[44ch] text-base leading-relaxed text-fg-2 md:text-lg">
-          Pilih wilayahmu, lihat ceritanya dalam enam layar, lalu bagikan.
+          Pilih kabupaten/kota atau seluruh Kalimantan untuk melihat ringkasannya dalam enam layar, kemudian bagikan.
         </p>
         <div className="mt-10">
           <KabupatenPicker onSelect={k => nav(`/wrapped/${k.slug}`)} />
         </div>
+        <Link to="/wrapped/kalimantan" className="mt-6 inline-flex min-h-11 items-center text-fg-2 underline decoration-ember underline-offset-4 hover:text-fg">Lihat ringkasan seluruh Kalimantan</Link>
       </div>
     </section>
   )

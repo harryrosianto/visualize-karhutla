@@ -88,15 +88,15 @@ export default function MapPage() {
           <ProvinceChips provinces={meta?.provinces ?? []} value={filter} onChange={onFilter} />
         </div>
         <div role="status" aria-live="polite" className="pointer-events-none text-xs text-fg-2">
-          {error ? '' : loaded < total ? `Memuat data provinsi ${loaded} dari ${total}...` : ''}
+          {error ? '' : loaded < total ? `Memuat data provinsi (${loaded} dari ${total})...` : ''}
         </div>
       </div>
 
       {error && (
         <div role="alert" className="absolute left-1/2 top-1/2 z-20 w-[min(90%,420px)] -translate-x-1/2 -translate-y-1/2 rounded-panel border border-line bg-ink-2 p-6 text-center">
-          <p className="text-lg font-bold text-fg">Data peta belum bisa dimuat</p>
-          <p className="mt-2 text-sm text-fg-2">Periksa koneksi, lalu coba lagi.</p>
-          <button type="button" onClick={retry} className="btn btn-primary mt-5">Coba lagi</button>
+          <p className="text-lg font-bold text-fg">Data peta belum dapat dimuat</p>
+          <p className="mt-2 text-sm text-fg-2">Periksa sambungan internet, kemudian coba kembali.</p>
+          <button type="button" onClick={retry} className="btn btn-primary mt-5">Muat ulang</button>
         </div>
       )}
 

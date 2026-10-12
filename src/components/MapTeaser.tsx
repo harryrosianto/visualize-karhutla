@@ -69,12 +69,12 @@ export function MapTeaser() {
     <section className="border-y border-line bg-ink-2">
       <div ref={wrap} className="mx-auto grid max-w-[1400px] gap-8 px-4 py-20 md:grid-cols-12 md:px-8 md:py-28">
         <div className="md:col-span-4 md:self-end">
-          <h2 className="text-4xl font-extrabold leading-[1.02] tracking-tighter text-fg md:text-5xl">Di mana apinya menyala</h2>
-          <p className="mt-5 max-w-[34ch] text-base leading-relaxed text-fg-2">Api membesar di kabupaten dengan titik panas terbanyak.</p>
-          <Link to="/peta" className="btn btn-primary mt-8">Buka peta <ArrowRight weight="bold" size={18} aria-hidden /></Link>
+          <h2 className="text-4xl font-extrabold leading-[1.02] tracking-tighter text-fg md:text-5xl">Sebaran titik panas</h2>
+          <p className="mt-5 max-w-[34ch] text-base leading-relaxed text-fg-2">Ukuran ikon api menunjukkan jumlah titik panas pada tiap kabupaten/kota.</p>
+          <Link to="/peta" className="btn btn-primary mt-8">Lihat peta <ArrowRight weight="bold" size={18} aria-hidden /></Link>
           <SourceNote className="mt-6" />
         </div>
-        <Link to="/peta" aria-label="Buka peta titik panas Kalimantan" className="relative block aspect-[5/4] md:col-span-8 md:aspect-[16/11]">
+        <Link to="/peta" aria-label="Lihat peta titik panas Kalimantan" className="relative block aspect-[5/4] md:col-span-8 md:aspect-[16/11]">
           <canvas ref={cv} role="img" aria-label="Peta Kalimantan dengan ikon api di kabupaten berpanas terbanyak" className="size-full" />
           <div aria-hidden className="pointer-events-none absolute inset-0">
             {icons.map(i => (

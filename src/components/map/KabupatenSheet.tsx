@@ -52,7 +52,7 @@ export function KabupatenSheet({ kab, onClose }: { kab: Kab; onClose: () => void
       <p className="mt-6 text-6xl font-extrabold leading-none tracking-tighter text-fg num">{fmt(kab.total2026)}<span className="text-ember">.</span></p>
       <p className="mt-1 text-sm text-fg-2">titik panas sejak 1 Januari 2026</p>
       {delta !== null && (
-        <p className="mt-1 text-sm text-fg-2">{delta >= 0 ? 'Naik' : 'Turun'} {fmt(Math.abs(delta))}% dari {fmt(kab.total2025!)} titik pada periode yang sama di 2025{meta?.isSample ? ' (contoh)' : ''}.</p>
+        <p className="mt-1 text-sm text-fg-2">{delta >= 0 ? 'Meningkat' : 'Menurun'} {fmt(Math.abs(delta))}% dibandingkan {fmt(kab.total2025!)} titik pada periode yang sama tahun 2025{meta?.isSample ? ' (contoh)' : ''}.</p>
       )}
 
       <div className="mt-6">
@@ -61,10 +61,10 @@ export function KabupatenSheet({ kab, onClose }: { kab: Kab; onClose: () => void
 
       <dl className="mt-5 grid grid-cols-2 gap-4 border-t border-line pt-5">
         <div><dt className="text-xs text-fg-3">Bulan puncak</dt><dd className="mt-1 text-lg font-bold text-fg">{MONTHS[kab.peakMonth]}</dd></div>
-        <div><dt className="text-xs text-fg-3">Peringkat Kalimantan</dt><dd className="mt-1 text-lg font-bold text-fg num">#{kab.rankKalimantan} dari 56</dd></div>
+        <div><dt className="text-xs text-fg-3">Peringkat di Kalimantan</dt><dd className="mt-1 text-lg font-bold text-fg num">#{kab.rankKalimantan} dari 56</dd></div>
       </dl>
 
-      <Link to={`/wrapped/${kab.slug}`} className="btn btn-primary mt-6 w-full">Lihat Wrapped <ArrowRight size={18} weight="bold" aria-hidden /></Link>
+      <Link to={`/wrapped/${kab.slug}`} className="btn btn-primary mt-6 w-full">Lihat Karhutla Wrapped <ArrowRight size={18} weight="bold" aria-hidden /></Link>
       <SourceNote className="mt-4" />
     </motion.aside>
   )

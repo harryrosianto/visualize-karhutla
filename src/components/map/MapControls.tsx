@@ -53,7 +53,7 @@ export function TimeDock({ days, day, onDay, playing, onPlay, today, cumulative,
           <div>
             <p className="text-lg font-bold leading-tight text-fg num" aria-live="polite">{label}</p>
             <p className="text-xs text-fg-2 num">
-              {today > 0 ? `${fmt(today)} titik hari itu` : 'Tidak ada titik hari itu'}, {fmt(cumulative)} sejak 1 Januari
+              {today > 0 ? `${fmt(today)} titik panas pada hari tersebut` : 'Tidak terdapat titik panas pada hari tersebut'}; kumulatif {fmt(cumulative)} sejak 1 Januari
             </p>
           </div>
         </div>
@@ -79,10 +79,10 @@ export function Legend({ mode }: { mode: MapMode }) {
       {mode === 'titik' ? (
         <>
           <span className="flex items-center gap-1.5"><i aria-hidden className="size-2.5 rounded-full bg-ember" />Titik panas</span>
-          <span className="flex items-center gap-1.5"><i aria-hidden className="size-2.5 rounded-full bg-hot" />Intensitas tertinggi</span>
+          <span className="flex items-center gap-1.5"><i aria-hidden className="size-2.5 rounded-full bg-hot" />Intensitas tertinggi (persentil ke-95)</span>
         </>
       ) : (
-        <span>Makin tinggi dan terang, makin padat titik panasnya.</span>
+        <span>Semakin tinggi dan terang kolom, semakin padat titik panas.</span>
       )}
     </div>
   )

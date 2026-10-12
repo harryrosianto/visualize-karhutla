@@ -26,19 +26,3 @@ for (const img of IMAGES) {
 fs.mkdirSync('public/media', { recursive: true })
 await sharp('assets-src/hero-forest-night.jpg').resize({ width: 1600 }).jpeg({ quality: 70, mozjpeg: true }).toFile('public/media/hero-poster.jpg')
 
-// siluet hutan hangus: ilustrasi hitam-putih dijadikan alfa (putih = transparan), hitam pekat dengan tepi halus
-{
-  const src = 'assets-src/burnt-forest-bw.avif'
-  const { data, info } = await sharp(src).resize({ width: 1800 }).greyscale().raw().toBuffer({ resolveWithObject: true })
-  const rgba = Buffer.alloc(info.width * info.height * 4)
-  for (let i = 0; i < data.length; i++) {
-    const a = Math.max(0, Math.min(255, Math.round((235 - data[i]) * 1.45)))
-    rgba[i * 4] = 12; rgba[i * 4 + 1] = 10; rgba[i * 4 + 2] = 9; rgba[i * 4 + 3] = a
-  }
-  const base = sharp(rgba, { raw: { width: info.width, height: info.height, channels: 4 } })
-  for (const w of [800, 1800]) {
-    await base.clone().resize({ width: w }).avif({ quality: 55, effort: 4 }).toFile(`${OUT}/burnt-forest-${w}.avif`)
-    await base.clone().resize({ width: w }).webp({ quality: 78, alphaQuality: 90 }).toFile(`${OUT}/burnt-forest-${w}.webp`)
-  }
-  console.log('ok burnt-forest')
-}

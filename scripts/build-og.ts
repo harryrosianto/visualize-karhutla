@@ -15,7 +15,9 @@ const DIST = 'dist'
 if (!fs.existsSync(path.join(DIST, 'index.html'))) { console.error('[og] dist/index.html tidak ada. Jalankan vite build dulu.'); process.exit(1) }
 
 const meta = JSON.parse(fs.readFileSync('public/data/meta.json', 'utf8'))
-const kabs: any[] = JSON.parse(fs.readFileSync('public/data/kabupaten.json', 'utf8'))
+const kabsOnly: any[] = JSON.parse(fs.readFileSync('public/data/kabupaten.json', 'utf8'))
+// entri gabungan seluruh Kalimantan, sama seperti buildRegion di src/lib/data.ts
+const kabs: any[] = [...kabsOnly, { slug: 'kalimantan', name: 'Kalimantan', provinceName: 'Lima provinsi', total2026: kabsOnly.reduce((a, k) => a + k.total2026, 0) }]
 const fmt = (n: number) => new Intl.NumberFormat('id-ID').format(Math.round(n))
 const MONTHS = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember']
 const dateLabel = (iso: string) => { const [y, m, d] = iso.split('-').map(Number); return `${d} ${MONTHS[m - 1]} ${y}` }
@@ -42,7 +44,7 @@ const txt = (style: Record<string, any>, s: string) => h('div', style, s)
 function tree(opts: { kicker: string; title: string; big?: string; sub?: string; foot: string }): N {
   return h('div', { width: 1200, height: 630, position: 'relative', flexDirection: 'column', color: '#F5F5F4', fontFamily: 'Grotesk' },
     { type: 'img', props: { src: bg, width: 1200, height: 630, style: { position: 'absolute', left: 0, top: 0 } } },
-    meta.isSample ? h('div', { width: 1200, height: 44, background: '#F97316', color: '#0C0A09', alignItems: 'center', justifyContent: 'center', fontWeight: 800, fontSize: 24, position: 'absolute', left: 0, top: 0 }, 'DATA CONTOH. Angka fiktif untuk uji tampilan.') : h('div', {}),
+    meta.isSample ? h('div', { width: 1200, height: 44, background: '#F97316', color: '#0C0A09', alignItems: 'center', justifyContent: 'center', fontWeight: 800, fontSize: 24, position: 'absolute', left: 0, top: 0 }, 'DATA CONTOH. Angka bersifat fiktif, hanya untuk pengujian tampilan.') : h('div', {}),
     h('div', { position: 'absolute', left: 0, top: 86, flexDirection: 'column', padding: '0 72px', width: 1200, height: 500, justifyContent: 'space-between' },
       h('div', { flexDirection: 'column' },
         txt({ fontSize: 30, fontWeight: 500, color: '#D6D3D1' }, opts.kicker),
@@ -71,7 +73,7 @@ fs.mkdirSync(path.join(DIST, 'og'), { recursive: true })
 console.log(`[og] membuat ${kabs.length + 1} gambar...`)
 fs.writeFileSync(path.join(DIST, 'og', 'default.jpg'), await png(tree({ kicker: 'Karhutla Kalimantan 2026', title: 'Setahun di balik asap', foot })))
 for (const k of kabs) {
-  const out = await png(tree({ kicker: `Karhutla Wrapped 2026, ${k.provinceName}`, title: k.name, big: fmt(k.total2026), sub: 'titik panas sejak 1 Januari', foot }))
+  const out = await png(tree({ kicker: `Karhutla Wrapped 2026, ${k.provinceName}`, title: k.name, big: fmt(k.total2026), sub: 'titik panas sejak 1 Januari 2026', foot }))
   fs.writeFileSync(path.join(DIST, 'og', `${k.slug}.jpg`), out)
 }
 
@@ -92,14 +94,14 @@ function page(o: { title: string; desc: string; image: string; url: string }) {
 }
 const write = (rel: string, html: string) => { const f = path.join(DIST, rel); fs.mkdirSync(path.dirname(f), { recursive: true }); fs.writeFileSync(f, html) }
 const sampleNote = meta.isSample ? ' (DATA CONTOH)' : ''
-const defaults = { desc: `Peta titik panas dan Karhutla Wrapped per kabupaten di Kalimantan 2026${sampleNote}. Data NASA FIRMS dan SiPongi Kemenhut.`, image: `${SITE}/og/default.jpg` }
+const defaults = { desc: `Peta titik panas dan ringkasan Karhutla Wrapped per kabupaten/kota di Kalimantan tahun 2026${sampleNote}. Sumber data: NASA FIRMS dan SiPongi Kemenhut.`, image: `${SITE}/og/default.jpg` }
 write('index.html', page({ title: 'Visualize Karhutla', ...defaults, url: SITE + '/' }))
 for (const [route, title] of [['peta', 'Peta titik panas | Visualize Karhutla'], ['wrapped', 'Karhutla Wrapped 2026 | Visualize Karhutla'], ['tentang', 'Tentang data | Visualize Karhutla']])
   write(`${route}/index.html`, page({ title, ...defaults, url: `${SITE}/${route}` }))
 for (const k of kabs) {
   write(`wrapped/${k.slug}/index.html`, page({
     title: `${k.name} | Karhutla Wrapped 2026`,
-    desc: `${k.name}, ${k.provinceName}: ${fmt(k.total2026)} titik panas sejak 1 Januari 2026${sampleNote}. Cek ceritanya dalam enam layar.`,
+    desc: `${k.name}, ${k.provinceName}: ${fmt(k.total2026)} titik panas sejak 1 Januari 2026${sampleNote}. Ringkasan lengkap dalam enam layar.`,
     image: `${SITE}/og/${k.slug}.jpg`, url: `${SITE}/wrapped/${k.slug}`,
   }))
 }

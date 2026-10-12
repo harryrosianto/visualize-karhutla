@@ -19,7 +19,7 @@ export function DataBanner() {
   if (!show) return null
   return (
     <div ref={ref} role="status" className="relative z-40 bg-ember px-4 py-2 text-center text-sm font-bold tracking-wide text-ink">
-      DATA CONTOH. Angka di situs ini fiktif, hanya untuk menguji tampilan. Batas wilayah asli.
+      DATA CONTOH. Angka pada situs ini bersifat fiktif dan hanya untuk pengujian tampilan. Hanya batas wilayah yang asli.
     </div>
   )
 }

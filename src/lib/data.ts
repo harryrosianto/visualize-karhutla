@@ -23,6 +23,8 @@ export interface Kab {
   peakMonth: number
   burnedHa: number | null
   rankKalimantan: number
+  /** true untuk entri gabungan seluruh Kalimantan (slug `kalimantan`) */
+  isRegion?: boolean
 }
 
 export interface Daily { days: string[]; kab: Record<string, number[]> }
@@ -62,4 +64,26 @@ export function fmtDate(iso: string) {
 }
 export function sourceLine(meta: Meta, kind: 'hotspot' | 'burnedArea' = 'hotspot') {
   return `Sumber: ${meta.sources[kind]}. Data per ${fmtDate(meta.dataDate)}.`
+}
+
+export const REGION_SLUG = 'kalimantan'
+
+/** Entri gabungan seluruh Kalimantan: jumlah dari 56 kabupaten/kota. Pembanding dan luas terbakar hanya dihitung bila lengkap. */
+export function buildRegion(kabs: Kab[]): Kab | null {
+  if (!kabs.length) return null
+  const monthly = Array(10).fill(0)
+  kabs.forEach(k => k.monthly.forEach((n, i) => (monthly[i] += n)))
+  const complete = <T extends 'total2025' | 'burnedHa'>(key: T) => (kabs.every(k => k[key] !== null) ? kabs.reduce((a, k) => a + (k[key] as number), 0) : null)
+  return {
+    slug: REGION_SLUG, name: 'Kalimantan', provinceId: 'kalbar', provinceName: 'Lima provinsi', centroid: [114, 0.1],
+    total2026: kabs.reduce((a, k) => a + k.total2026, 0), total2025: complete('total2025'),
+    monthly, peakMonth: monthly.indexOf(Math.max(...monthly)), burnedHa: complete('burnedHa'), rankKalimantan: 0, isRegion: true,
+  }
+}
+
+export interface ProvinceTotal { id: ProvinceId; name: string; short: string; total: number }
+export function provinceTotals(kabs: Kab[], meta: Meta): ProvinceTotal[] {
+  return meta.provinces
+    .map(p => ({ ...p, total: kabs.filter(k => k.provinceId === p.id).reduce((a, k) => a + k.total2026, 0) }))
+    .sort((a, b) => b.total - a.total)
 }

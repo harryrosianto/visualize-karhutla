@@ -63,7 +63,7 @@ export function ShareBar({ kab, meta, kabs }: { kab: Kab; meta: Meta; kabs: Kab[
     } catch (e: any) {
       if (e?.name === 'AbortError') return
       setStatus('gagal')
-      flash('Gambar belum bisa dibuat. Coba lagi.')
+      flash('Gambar belum dapat dibuat. Silakan coba kembali.')
     }
   }
 
@@ -90,10 +90,10 @@ export function ShareBar({ kab, meta, kabs }: { kab: Kab; meta: Meta; kabs: Kab[
       <div className="flex gap-1.5">
         <a className={sec} href={xIntent(kab, meta)} target="_blank" rel="noopener noreferrer"><XLogo size={18} weight="bold" aria-hidden />X</a>
         <a className={sec} href={threadsIntent(kab, meta)} target="_blank" rel="noopener noreferrer"><ThreadsLogo size={18} weight="bold" aria-hidden />Threads</a>
-        <button type="button" onClick={copy} className={sec}><LinkSimple size={18} weight="bold" aria-hidden />Salin link</button>
+        <button type="button" onClick={copy} className={sec}><LinkSimple size={18} weight="bold" aria-hidden />Salin tautan</button>
       </div>
       <div className="flex items-center justify-between text-sm">
-        <Link to="/wrapped" className="inline-flex min-h-11 items-center text-fg-2 underline underline-offset-4 hover:text-fg">Cek wilayah lain</Link>
+        <Link to="/wrapped" className="inline-flex min-h-11 items-center text-fg-2 underline underline-offset-4 hover:text-fg">Telusuri wilayah lain</Link>
         <p role="status" aria-live="polite" className="text-fg">{note}</p>
       </div>
 

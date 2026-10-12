@@ -8,8 +8,8 @@ const norm = (s: string) => s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,
 interface Props { onSelect: (k: Kab) => void; label?: string; hideLabel?: boolean; autoFocus?: boolean; initial?: string }
 
 /** Combobox pencarian kabupaten/kota dengan autocomplete (ARIA 1.2, navigasi panah/enter/escape). */
-export function KabupatenPicker({ onSelect, label = 'Cek wilayahmu', hideLabel, autoFocus, initial = '' }: Props) {
-  const { kabs, error } = useData()
+export function KabupatenPicker({ onSelect, label = 'Telusuri wilayah', hideLabel, autoFocus, initial = '' }: Props) {
+  const { kabs, region, error } = useData()
   const id = useId()
   const [q, setQ] = useState(initial)
   const [open, setOpen] = useState(false)
@@ -18,9 +18,10 @@ export function KabupatenPicker({ onSelect, label = 'Cek wilayahmu', hideLabel, 
 
   const results = useMemo(() => {
     const n = norm(q.trim())
-    const pool = n ? kabs.filter(k => norm(k.name).includes(n) || norm(k.provinceName).includes(n)) : kabs
+    const all = region ? [region, ...kabs] : kabs
+    const pool = n ? all.filter(k => norm(k.name).includes(n) || norm(k.provinceName).includes(n)) : all
     return pool.slice(0, 8)
-  }, [q, kabs])
+  }, [q, kabs, region])
 
   const choose = (k: Kab) => { setQ(k.name); setOpen(false); onSelect(k) }
   const onKey = (e: React.KeyboardEvent) => {
@@ -41,15 +42,15 @@ export function KabupatenPicker({ onSelect, label = 'Cek wilayahmu', hideLabel, 
           autoComplete="off" autoFocus={autoFocus} value={q} disabled={!!error}
           onChange={e => { setQ(e.target.value); setOpen(true); setHi(0) }}
           onFocus={() => setOpen(true)} onBlur={() => setTimeout(() => setOpen(false), 120)} onKeyDown={onKey}
-          placeholder="Ketik nama kabupaten atau kota"
+          placeholder="Ketik nama kabupaten/kota"
           className="h-14 w-full rounded-full border border-fg-3/60 bg-ink/80 pl-12 pr-5 text-base text-fg placeholder:text-fg-3 focus:border-ember focus:outline-none"
         />
       </div>
-      {error && <p role="alert" className="mt-2 text-sm text-fg-2">Data belum bisa dimuat. Muat ulang halaman.</p>}
+      {error && <p role="alert" className="mt-2 text-sm text-fg-2">Data belum dapat dimuat. Silakan muat ulang halaman.</p>}
       {open && !error && (
         <ul ref={list} id={`${id}-list`} role="listbox" aria-label="Hasil pencarian"
           className="absolute z-20 mt-2 max-h-72 w-full overflow-auto rounded-panel border border-line bg-ink-2 p-1 shadow-[0_20px_50px_-20px_rgb(154_52_18/0.5)]">
-          {results.length === 0 && <li className="px-4 py-3 text-sm text-fg-2">Tidak ada wilayah yang cocok. Coba nama lain, misalnya "Kapuas".</li>}
+          {results.length === 0 && <li className="px-4 py-3 text-sm text-fg-2">Wilayah tidak ditemukan. Gunakan nama lain, misalnya "Kapuas".</li>}
           {results.map((k, i) => (
             <li key={k.slug} id={`${id}-${k.slug}`} role="option" aria-selected={i === hi}
               onMouseDown={e => { e.preventDefault(); choose(k) }} onMouseEnter={() => setHi(i)}
