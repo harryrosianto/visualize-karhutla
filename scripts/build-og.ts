@@ -26,7 +26,6 @@ const font = (f: string) => fs.readFileSync(f)
 const fonts: any[] = [
   { name: 'Grotesk', data: font('node_modules/@fontsource/schibsted-grotesk/files/schibsted-grotesk-latin-800-normal.woff'), weight: 800, style: 'normal' },
   { name: 'Grotesk', data: font('node_modules/@fontsource/schibsted-grotesk/files/schibsted-grotesk-latin-500-normal.woff'), weight: 500, style: 'normal' },
-  { name: 'Serif', data: font('node_modules/@fontsource/instrument-serif/files/instrument-serif-latin-400-italic.woff'), weight: 400, style: 'italic' },
 ]
 
 // latar: foto hero dengan overlay gelap, dibuat sekali
