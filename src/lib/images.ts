@@ -1,7 +1,7 @@
 // Menyusun srcset dari hasil `npm run images` di src/assets/images/.
 const urls = import.meta.glob('../assets/images/*.{avif,webp}', { eager: true, query: '?url', import: 'default' }) as Record<string, string>
 
-export type ImageName = 'hero-forest-night' | 'embers-closeup' | 'grass-fire-smoke' | 'firefighters-manggala' | 'firefighters-silhouette'
+export type ImageName = 'hero-forest-night' | 'embers-closeup' | 'grass-fire-smoke' | 'firefighters-manggala' | 'firefighters-silhouette' | 'developer'
 
 export function imageSet(name: ImageName) {
   const build = (ext: 'avif' | 'webp') => {
@@ -22,5 +22,6 @@ export const ALT: Record<ImageName, string> = {
   'embers-closeup': 'Percikan bara berterbangan di udara malam di atas semak yang terbakar, cahaya jingga redup di dasar gambar.',
   'firefighters-manggala': 'Dua petugas pemadam berseragam dan helm oranye menyemprotkan air ke lahan terbakar yang diselimuti asap tebal.',
   'firefighters-silhouette': 'Siluet dua petugas pemadam memegang selang di depan kobaran api oranye yang besar.',
+  'developer': 'Foto harrie ros, pengembang situs, memegang boneka orangutan di sebuah toko perabot.',
   'grass-fire-smoke': 'Api menjalar di rerumputan kering di bawah pohon-pohon gundul, asap putih tebal menyelimuti lahan.',
 }

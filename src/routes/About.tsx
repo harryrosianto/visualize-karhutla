@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react'
 import { useData } from '../lib/DataContext'
 import { fmtDate } from '../lib/data'
+import { Picture } from '../components/Picture'
 import { siteUrl } from '../lib/share'
 import { useState } from 'react'
 import credits from '../assets/images/credits.json'
@@ -11,6 +12,7 @@ const toc = [
   ['keterbatasan', 'Keterbatasan data'],
   ['unduh', 'Unduh data'],
   ['kutip', 'Cara mengutip'],
+  ['pengembang', 'Pengembang'],
   ['kredit', 'Kredit aset visual'],
   ['kredit-data', 'Kredit data'],
 ] as const
@@ -138,6 +140,16 @@ export default function About() {
             <p>Contoh sitasi untuk set data turunan pada situs ini (gaya APA yang disesuaikan):</p>
             {meta && <Citation isSample={meta.isSample} dataDate={meta.dataDate} />}
             <p>Sitasi atas data primer sebaiknya mencantumkan NASA FIRMS dan SiPongi Kemenhut secara terpisah.</p>
+          </Section>
+
+          <Section id="pengembang" title="Pengembang">
+            <div className="flex items-center gap-5">
+              <div className="size-32 shrink-0 overflow-hidden rounded-panel md:size-40"><Picture name="developer" decorative={false} sizes="160px" className="size-full object-cover" /></div>
+              <div>
+                <p className="text-2xl font-bold text-fg">harrie ros</p>
+                <p className="mt-1 text-fg-2">Pengembang situs Visualize Karhutla.</p>
+              </div>
+            </div>
           </Section>
 
           <Section id="kredit" title="Kredit aset visual">

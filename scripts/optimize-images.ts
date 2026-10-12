@@ -26,3 +26,13 @@ for (const img of IMAGES) {
 fs.mkdirSync('public/media', { recursive: true })
 await sharp('assets-src/hero-forest-night.jpg').resize({ width: 1600 }).jpeg({ quality: 70, mozjpeg: true }).toFile('public/media/hero-poster.jpg')
 
+
+// foto pengembang: dipotong persegi 1:1 (wajah dan boneka), lebar 360 dan 720
+{
+  const crop = sharp('assets-src/developer.webp').extract({ left: 0, top: 330, width: 720, height: 720 })
+  for (const w of [360, 720]) {
+    await crop.clone().resize({ width: w }).avif({ quality: 55, effort: 4 }).toFile(`${OUT}/developer-${w}.avif`)
+    await crop.clone().resize({ width: w }).webp({ quality: 80 }).toFile(`${OUT}/developer-${w}.webp`)
+  }
+  console.log('ok developer')
+}
