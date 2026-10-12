@@ -17,7 +17,7 @@ const bnd = loadBoundaries()
 const kabs = PROVINCES.flatMap(p => bnd[p.id].map(f => ({ f, box: bbox(f.geometry) })))
 
 const pts = new Map<string, { lon: number[]; lat: number[]; day: string[]; frp: number[] }>()
-const count2025 = new Map<string, number>()
+const prev = new Map<string, string[]>() // slug -> "MM-DD" titik tahun lalu
 const dailyKey = new Map<string, Map<string, number>>() // slug -> tanggal -> n
 let maxDate = ''
 let read = 0, kept = 0
@@ -45,7 +45,7 @@ for (const file of files) {
     if (!hit) continue
     kept++
     const slug = hit.f.properties.slug
-    if (yr === YEAR - 1) { count2025.set(slug, (count2025.get(slug) ?? 0) + 1); continue }
+    if (yr === YEAR - 1) { const l = prev.get(slug) ?? []; l.push(r.date.slice(5)); prev.set(slug, l); continue }
     if (r.date > maxDate) maxDate = r.date
     const prov = hit.f.properties.provinceId
     const b = pts.get(prov) ?? { lon: [], lat: [], day: [], frp: [] }
@@ -65,6 +65,9 @@ const kabOut: any[] = []
 const sip = JSON.parse(fs.readFileSync('data/sipongi.json', 'utf8'))
 const burned = new Map<string, number>((sip.entries ?? []).map((e: any) => [e.kabupatenSlug, e.burnedHa]))
 const lastMonth = Number(maxDate.slice(5, 7))
+// pembanding hanya periode yang sama: 1 Januari sampai MM-DD tanggal data terakhir
+const md = maxDate.slice(5)
+const count2025 = new Map<string, number>([...prev].map(([slug, l]) => [slug, l.filter(d => d <= md).length]))
 
 for (const p of PROVINCES) {
   const b = pts.get(p.id) ?? { lon: [], lat: [], day: [], frp: [] }
@@ -76,11 +79,11 @@ for (const p of PROVINCES) {
     const daily = days.map(d => dm?.get(d) ?? 0)
     kab[slug] = daily
     const monthly: number[] = Array(10).fill(0)
-    daily.forEach((n, i) => { monthly[Number(days[i].slice(5, 7)) - 1] += n })
+    daily.forEach((n, i) => { const m = Number(days[i].slice(5, 7)) - 1; if (m < 10) monthly[m] += n }) // UI mencakup Januari sampai Oktober
     const total = monthly.reduce((a, c) => a + c, 0)
     kabOut.push({
       slug, name: f.properties.name, provinceId: p.id, provinceName: p.name, centroid: f.properties.centroid,
-      total2026: total, total2025: count2025.size ? count2025.get(slug) ?? 0 : null,
+      total2026: total, total2025: prev.size ? count2025.get(slug) ?? 0 : null,
       monthly, peakMonth: monthly.indexOf(Math.max(...monthly)),
       burnedHa: burned.has(slug) ? burned.get(slug) : null, rankKalimantan: 0,
     })

@@ -91,7 +91,7 @@ export function SlideTotal({ kab, meta }: SlideCtx) {
       <motion.p variants={item} className="mt-[8cqw] max-w-[28ch] text-[5.2cqw] font-semibold leading-snug text-fg">
         {d === null
           ? 'Pembanding 2025 belum tersedia.'
-          : `${d >= 0 ? 'Naik' : 'Turun'} ${fmt(Math.abs(d))}% dari ${fmt(kab.total2025!)} titik pada 2025${meta.isSample ? ' (angka contoh)' : ''}.`}
+          : `${d >= 0 ? 'Naik' : 'Turun'} ${fmt(Math.abs(d))}% dari ${fmt(kab.total2025!)} titik pada periode yang sama di 2025${meta.isSample ? ' (angka contoh)' : ''}.`}
       </motion.p>
     </SlideShell>
   )
@@ -191,7 +191,7 @@ export function SummaryCard({ kab, meta, variant = 'story' }: SlideCtx & { varia
           <p style={fit(fmt(kab.total2026), exp ? 21 : 24)} className="mt-[1cqw] font-extrabold leading-[0.95] tracking-tighter text-fg num">{fmt(kab.total2026)}<span className="text-ember">.</span></p>
         </div>
         <dl className={`grid grid-cols-2 gap-x-[6cqw] ${exp ? 'mt-[7cqw] gap-y-[5cqw]' : 'mt-[5cqw] gap-y-[3.5cqw]'}`}>
-          {stat('Dibanding 2025', d === null ? 'Belum ada' : `${d >= 0 ? '+' : '-'}${fmt(Math.abs(d))}%`, d === null ? undefined : `${fmt(kab.total2025!)} titik pada 2025`)}
+          {stat('Dibanding 2025', d === null ? 'Belum ada' : `${d >= 0 ? '+' : '-'}${fmt(Math.abs(d))}%`, d === null ? undefined : `${fmt(kab.total2025!)} titik pada periode sama 2025`)}
           {stat('Peringkat Kalimantan', `#${kab.rankKalimantan}`, 'dari 56 kabupaten dan kota')}
           {stat('Bulan puncak', MONTHS[kab.peakMonth], `${fmt(kab.monthly[kab.peakMonth])} titik`)}
           {stat('Luas terbakar', fields === null ? 'Belum ada' : fmt(fields), fields === null ? undefined : `lapangan sepak bola, ${fmt(kab.burnedHa!)} ha`)}

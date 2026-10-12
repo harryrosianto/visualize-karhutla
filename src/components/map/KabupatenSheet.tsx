@@ -52,7 +52,7 @@ export function KabupatenSheet({ kab, onClose }: { kab: Kab; onClose: () => void
       <p className="mt-6 text-6xl font-extrabold leading-none tracking-tighter text-fg num">{fmt(kab.total2026)}<span className="text-ember">.</span></p>
       <p className="mt-1 text-sm text-fg-2">titik panas sejak 1 Januari 2026</p>
       {delta !== null && (
-        <p className="mt-1 text-sm text-fg-2">{delta >= 0 ? 'Naik' : 'Turun'} {fmt(Math.abs(delta))}% dari {fmt(kab.total2025!)} titik pada 2025{meta?.isSample ? ' (contoh)' : ''}.</p>
+        <p className="mt-1 text-sm text-fg-2">{delta >= 0 ? 'Naik' : 'Turun'} {fmt(Math.abs(delta))}% dari {fmt(kab.total2025!)} titik pada periode yang sama di 2025{meta?.isSample ? ' (contoh)' : ''}.</p>
       )}
 
       <div className="mt-6">
