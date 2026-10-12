@@ -40,19 +40,21 @@
     radial-gradient(30% 30% at 90% 30%, rgb(249 115 22 / 0.18), transparent 70%);
   filter: blur(18px);
 }
-.num { font-variant-numeric: tabular-nums; }
+.num { font-variant-numeric: lining-nums proportional-nums; }
 
-.btn {
-  display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
-  min-height: 48px; padding: 0 1.5rem; border-radius: 9999px; white-space: nowrap;
-  font-weight: 600; font-size: 1rem; cursor: pointer; text-decoration: none;
-  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s;
+@layer components {
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+    min-height: 48px; padding: 0 1.5rem; border-radius: 9999px; white-space: nowrap;
+    font-weight: 600; font-size: 1rem; cursor: pointer; text-decoration: none;
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s;
+  }
+  .btn:active { transform: translateY(1px) scale(0.98); }
+  .btn-primary { background: var(--color-ember); color: var(--color-ink); }
+  .btn-primary:hover { background: #fb923c; }
+  .btn-ghost { border: 1px solid rgb(245 245 244 / 0.4); color: var(--color-fg); background: rgb(12 10 9 / 0.5); }
+  .btn-ghost:hover { border-color: var(--color-fg); }
 }
-.btn:active { transform: translateY(1px) scale(0.98); }
-.btn-primary { background: var(--color-ember); color: var(--color-ink); }
-.btn-primary:hover { background: #fb923c; }
-.btn-ghost { border: 1px solid rgb(245 245 244 / 0.4); color: var(--color-fg); background: rgb(12 10 9 / 0.5); }
-.btn-ghost:hover { border-color: var(--color-fg); }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; scroll-behavior: auto !important; }
@@ -67,3 +69,7 @@
 .ember-range::-moz-range-track { height: 4px; border-radius: 9999px; background: var(--color-line); }
 .ember-range::-webkit-slider-thumb { -webkit-appearance: none; margin-top: -9px; width: 22px; height: 22px; border-radius: 9999px; background: var(--color-ember); border: 3px solid var(--color-ink); box-shadow: 0 0 0 1px var(--color-ember); }
 .ember-range::-moz-range-thumb { width: 18px; height: 18px; border-radius: 9999px; background: var(--color-ember); border: 3px solid var(--color-ink); box-shadow: 0 0 0 1px var(--color-ember); }
+
+/* Gerak lambat latar foto slide Wrapped (hormati reduced motion lewat aturan global di atas) */
+@keyframes kenburns { from { transform: scale(1); } to { transform: scale(1.09); } }
+.kb { animation: kenburns 9s ease-out forwards; will-change: transform; }
