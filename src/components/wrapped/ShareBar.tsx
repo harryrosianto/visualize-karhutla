@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import type { Kab, Meta } from '../../lib/data'
 import { shareText, threadsIntent, wrappedUrl, xIntent } from '../../lib/share'
+import { ExportStage } from '../ExportContext'
 import { SummaryCard } from './slides'
 
 type Status = 'menyiapkan' | 'siap' | 'gagal'
@@ -98,12 +99,10 @@ export function ShareBar({ kab, meta, kabs, onWide, busy }: { kab: Kab; meta: Me
         <p role="status" aria-live="polite" className="text-fg">{note}</p>
       </div>
 
-      {/* kartu untuk diekspor, di luar layar */}
-      <div aria-hidden className="pointer-events-none fixed left-[-12000px] top-0" style={{ width: 1080, height: 1920 }}>
-        <div ref={card} style={{ width: 1080, height: 1920 }} className="[container-type:inline-size]">
-          <SummaryCard kab={kab} kabs={kabs} meta={meta} variant="export" />
-        </div>
-      </div>
+      {/* kartu untuk diekspor, di luar layar; ExportStage mematikan animasi agar yang terambil keadaan akhir */}
+      <ExportStage ref={card} width={1080} height={1920}>
+        <SummaryCard kab={kab} kabs={kabs} meta={meta} variant="export" />
+      </ExportStage>
     </div>
   )
 }
