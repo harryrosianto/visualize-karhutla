@@ -1,11 +1,24 @@
+import { useEffect, useRef } from 'react'
 import { useData } from '../lib/DataContext'
 
-/** Banner wajib selama data contoh dipakai. */
+/** Banner wajib selama data contoh dipakai. Tinggi diekspos sebagai --banner-h agar halaman peta pas layar. */
 export function DataBanner() {
   const { meta } = useData()
-  if (!meta?.isSample) return null
+  const ref = useRef<HTMLDivElement>(null)
+  const show = !!meta?.isSample
+  useEffect(() => {
+    const root = document.documentElement
+    if (!show || !ref.current) { root.style.setProperty('--banner-h', '0px'); return }
+    const el = ref.current
+    const set = () => root.style.setProperty('--banner-h', `${el.offsetHeight}px`)
+    set()
+    const ro = new ResizeObserver(set)
+    ro.observe(el)
+    return () => ro.disconnect()
+  }, [show])
+  if (!show) return null
   return (
-    <div role="status" className="relative z-40 bg-ember px-4 py-2 text-center text-sm font-bold tracking-wide text-ink">
+    <div ref={ref} role="status" className="relative z-40 bg-ember px-4 py-2 text-center text-sm font-bold tracking-wide text-ink">
       DATA CONTOH. Angka di situs ini fiktif, hanya untuk menguji tampilan. Batas wilayah asli.
     </div>
   )

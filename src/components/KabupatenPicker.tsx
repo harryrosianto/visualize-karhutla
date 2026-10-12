@@ -5,10 +5,10 @@ import type { Kab } from '../lib/data'
 
 const norm = (s: string) => s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9 ]/g, '')
 
-interface Props { onSelect: (k: Kab) => void; label?: string; autoFocus?: boolean; initial?: string }
+interface Props { onSelect: (k: Kab) => void; label?: string; hideLabel?: boolean; autoFocus?: boolean; initial?: string }
 
 /** Combobox pencarian kabupaten/kota dengan autocomplete (ARIA 1.2, navigasi panah/enter/escape). */
-export function KabupatenPicker({ onSelect, label = 'Cek wilayahmu', autoFocus, initial = '' }: Props) {
+export function KabupatenPicker({ onSelect, label = 'Cek wilayahmu', hideLabel, autoFocus, initial = '' }: Props) {
   const { kabs, error } = useData()
   const id = useId()
   const [q, setQ] = useState(initial)
@@ -32,7 +32,7 @@ export function KabupatenPicker({ onSelect, label = 'Cek wilayahmu', autoFocus, 
 
   return (
     <div className="relative w-full max-w-xl">
-      <label htmlFor={id} className="mb-2 block text-sm font-semibold text-fg">{label}</label>
+      <label htmlFor={id} className={hideLabel ? 'sr-only' : 'mb-2 block text-sm font-semibold text-fg'}>{label}</label>
       <div className="relative">
         <MagnifyingGlass aria-hidden size={20} className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-fg-3" />
         <input

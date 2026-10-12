@@ -60,3 +60,10 @@
 
 .maplibregl-ctrl-attrib { background: rgb(12 10 9 / 0.75) !important; color: var(--color-fg-2) !important; }
 .maplibregl-ctrl-attrib a { color: var(--color-fg) !important; }
+
+/* Slider waktu peta */
+.ember-range { -webkit-appearance: none; appearance: none; background: transparent; }
+.ember-range::-webkit-slider-runnable-track { height: 4px; border-radius: 9999px; background: var(--color-line); }
+.ember-range::-moz-range-track { height: 4px; border-radius: 9999px; background: var(--color-line); }
+.ember-range::-webkit-slider-thumb { -webkit-appearance: none; margin-top: -9px; width: 22px; height: 22px; border-radius: 9999px; background: var(--color-ember); border: 3px solid var(--color-ink); box-shadow: 0 0 0 1px var(--color-ember); }
+.ember-range::-moz-range-thumb { width: 18px; height: 18px; border-radius: 9999px; background: var(--color-ember); border: 3px solid var(--color-ink); box-shadow: 0 0 0 1px var(--color-ember); }
