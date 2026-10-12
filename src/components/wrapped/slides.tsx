@@ -188,7 +188,32 @@ export function SlideRank({ kab, kabs, meta }: SlideCtx) {
   )
 }
 
-/* 6. Rangkuman. Dipakai juga sebagai kartu bagikan 1080x1920 (variant export). */
+/* 6. Kampanye: karhutla belum berakhir (dua bahasa) */
+export function SlideCampaign() {
+  const { item } = useVariants()
+  const tile = 'relative overflow-hidden rounded-[2.4cqw] bg-ink-3'
+  return (
+    <div className="relative size-full overflow-hidden bg-ink">
+      <div aria-hidden className="glow-ember absolute inset-0 opacity-70" />
+      <div className="relative flex size-full flex-col px-[6cqw] pb-[8cqw] pt-[26cqw]">
+        {/* bingkai tiga foto ala kolase Instagram: satu besar di atas, dua persegi di bawah */}
+        <motion.div variants={item} initial="hidden" animate="show" className="grid grid-cols-2 gap-[1.2cqw]">
+          <div className={`${tile} col-span-2 aspect-[16/10]`}><Picture name="wildfire-2" eager sizes="(min-width: 768px) 40vw, 100vw" className="size-full object-cover" position="45% 35%" /></div>
+          <div className={`${tile} aspect-square`}><Picture name="wildfire-1" eager sizes="(min-width: 768px) 20vw, 50vw" className="size-full object-cover" position="40% 55%" /></div>
+          <div className={`${tile} aspect-square`}><Picture name="wildfire-3" eager sizes="(min-width: 768px) 20vw, 50vw" className="size-full object-cover" position="50% 50%" /></div>
+        </motion.div>
+        <motion.div variants={item} initial="hidden" animate="show" className="mt-[7cqw]">
+          <h2 className="text-[10.5cqw] font-extrabold leading-[1] tracking-tighter text-fg">Karhutla belum berakhir<span className="text-ember">.</span></h2>
+          <p lang="en" className="mt-[1.5cqw] text-[5cqw] font-semibold leading-tight text-fg-3">The fires are not over.</p>
+          <p className="mt-[5cqw] text-[5.4cqw] leading-snug text-fg">Bantu ingatkan orang-orang di sekitar Anda.</p>
+          <p lang="en" className="mt-[1.2cqw] text-[4.4cqw] leading-snug text-fg-3">Help remind the people around you.</p>
+        </motion.div>
+      </div>
+    </div>
+  )
+}
+
+/* 7. Rangkuman. Dipakai juga sebagai kartu bagikan 1080x1920 (variant export). */
 export function SummaryCard({ kab, kabs, meta, variant = 'story' }: SlideCtx & { variant?: 'story' | 'export' }) {
   const d = pct(kab.total2026, kab.total2025)
   const burned = burnedInfo(kab, meta)

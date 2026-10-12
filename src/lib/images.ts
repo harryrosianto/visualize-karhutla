@@ -1,13 +1,13 @@
 // Menyusun srcset dari hasil `npm run images` di src/assets/images/.
 const urls = import.meta.glob('../assets/images/*.{avif,webp}', { eager: true, query: '?url', import: 'default' }) as Record<string, string>
 
-export type ImageName = 'hero-forest-night' | 'embers-closeup' | 'grass-fire-smoke' | 'firefighters-manggala' | 'firefighters-silhouette' | 'developer'
+export type ImageName = 'hero-forest-night' | 'embers-closeup' | 'grass-fire-smoke' | 'firefighters-manggala' | 'firefighters-silhouette' | 'developer' | 'wildfire-1' | 'wildfire-2' | 'wildfire-3'
 
 export function imageSet(name: ImageName) {
   const build = (ext: 'avif' | 'webp') => {
     const entries = Object.entries(urls)
       .map(([k, v]) => {
-        const m = k.match(/\/([a-z-]+)-(\d+)\.(avif|webp)$/)
+        const m = k.match(/\/([a-z0-9-]+?)-(\d+)\.(avif|webp)$/)
         return m && m[1] === name && m[3] === ext ? { w: Number(m[2]), url: v } : null
       })
       .filter((x): x is { w: number; url: string } => !!x)
@@ -22,6 +22,9 @@ export const ALT: Record<ImageName, string> = {
   'embers-closeup': 'Percikan bara berterbangan di udara malam di atas semak yang terbakar, cahaya jingga redup di dasar gambar.',
   'firefighters-manggala': 'Dua petugas pemadam berseragam dan helm oranye menyemprotkan air ke lahan terbakar yang diselimuti asap tebal.',
   'firefighters-silhouette': 'Siluet dua petugas pemadam memegang selang di depan kobaran api oranye yang besar.',
+  'wildfire-1': 'Orangutan bergelantung pada ranting pohon gundul di lanskap hutan yang berkabut asap.',
+  'wildfire-2': 'Dua petugas bermasker menggendong seekor orangutan di tengah semak kering dan kabut asap.',
+  'wildfire-3': 'Pemandangan dari udara: asap tebal mengepul di atas hutan yang terbakar.',
   'developer': 'Foto harrie ros, pengembang situs, memegang boneka orangutan di sebuah toko perabot.',
   'grass-fire-smoke': 'Api menjalar di rerumputan kering di bawah pohon-pohon gundul, asap putih tebal menyelimuti lahan.',
 }

@@ -100,7 +100,7 @@ for (const [route, title] of [['peta', 'Peta titik panas | Visualize Karhutla'],
 for (const k of kabs) {
   write(`wrapped/${k.slug}/index.html`, page({
     title: `${k.name} | Karhutla Wrapped 2026`,
-    desc: `${k.name}, ${k.provinceName}: ${fmt(k.total2026)} titik panas sejak 1 Januari 2026${sampleNote}. Ringkasan lengkap dalam enam layar.`,
+    desc: `${k.name}, ${k.provinceName}: ${fmt(k.total2026)} titik panas sejak 1 Januari 2026${sampleNote}. Ringkasan lengkap dalam tujuh layar.`,
     image: `${SITE}/og/${k.slug}.jpg`, url: `${SITE}/wrapped/${k.slug}`,
   }))
 }

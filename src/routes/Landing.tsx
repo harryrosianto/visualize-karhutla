@@ -17,7 +17,7 @@ function CheckRegion() {
           Telusuri data karhutla per wilayah<span className="text-ember">.</span>
         </h2>
         <p className="mt-6 max-w-[44ch] text-base leading-relaxed text-fg-2 md:text-lg">
-          Pilih kabupaten/kota atau seluruh Kalimantan untuk melihat ringkasannya dalam enam layar, kemudian bagikan.
+          Pilih kabupaten/kota atau seluruh Kalimantan untuk melihat ringkasannya dalam tujuh layar, kemudian bagikan.
         </p>
         <div className="mt-10">
           <KabupatenPicker onSelect={k => nav(`/wrapped/${k.slug}`)} />

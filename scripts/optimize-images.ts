@@ -9,6 +9,9 @@ const IMAGES = [
   { file: 'grass-fire-smoke', widths: [480, 960, 1600] },
   { file: 'firefighters-manggala', ext: 'webp', widths: [480, 960] },
   { file: 'firefighters-silhouette', ext: 'webp', widths: [480, 960, 1600] },
+  { file: 'wildfire-1', ext: 'avif', widths: [480, 960] },
+  { file: 'wildfire-2', widths: [480, 960] },
+  { file: 'wildfire-3', widths: [480, 960] },
 ]
 fs.mkdirSync(OUT, { recursive: true })
 for (const img of IMAGES) {

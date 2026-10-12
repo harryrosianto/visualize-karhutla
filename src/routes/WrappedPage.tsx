@@ -2,7 +2,7 @@ import { useCallback, useMemo } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { useEffect } from 'react'
 import { StoryPlayer, type StorySlide } from '../components/wrapped/StoryPlayer'
-import { SlideBurned, SlideMonth, SlideOpening, SlideRank, SlideTotal, SummaryCard } from '../components/wrapped/slides'
+import { SlideBurned, SlideCampaign, SlideMonth, SlideOpening, SlideRank, SlideTotal, SummaryCard } from '../components/wrapped/slides'
 import { ShareBar } from '../components/wrapped/ShareBar'
 import { useData } from '../lib/DataContext'
 import { REGION_SLUG } from '../lib/data'
@@ -28,6 +28,7 @@ export default function WrappedPage() {
       { id: 'luas', title: 'Luas terbakar', node: <SlideBurned {...c} /> },
       { id: 'bulan', title: 'Bulan paling berasap', node: <SlideMonth {...c} /> },
       { id: 'rank', title: 'Peringkat di Kalimantan', node: <SlideRank {...c} /> },
+      { id: 'kampanye', title: 'Karhutla belum berakhir. The fires are not over.', node: <SlideCampaign /> },
       { id: 'ringkas', title: 'Rangkuman', node: <SummaryCard {...c} /> },
     ]
   }, [kab, kabs, meta])
