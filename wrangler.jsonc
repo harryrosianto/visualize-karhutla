@@ -1,0 +1,10 @@
+{
+  // Situs statis di Cloudflare (Workers Static Assets). Nama harus sama dengan nama proyek di dasbor Cloudflare.
+  "name": "visualize-karhutla",
+  "compatibility_date": "2026-10-01",
+  "assets": {
+    "directory": "./dist",
+    // alamat yang tidak cocok dengan berkas dilayani index.html (routing sisi klien)
+    "not_found_handling": "single-page-application"
+  }
+}

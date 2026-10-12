@@ -6,25 +6,21 @@ Situs ini berupa berkas statis (hasil `npm run build` di folder `dist/`), sehing
 
 Menurut pengetahuan penulis, paket gratis Cloudflare Pages mencakup: lalu lintas dan bandwidth berkas statis tanpa batas, domain khusus dengan HTTPS, kompresi Brotli otomatis, dan integrasi Git. Batas yang relevan: 500 build per bulan, 20.000 berkas per situs, dan 25 MiB per berkas. Situs ini berisi sekitar 300 berkas dan berkas terbesarnya (data titik panas) di bawah 5 MiB, sehingga masih jauh dari batas. Batas dapat berubah; periksa dokumentasi Cloudflare sebelum deploy.
 
-### Opsi A: dari repositori Git (disarankan)
+### Opsi A: dari repositori Git (Workers Builds, disarankan)
 
-Repositori: https://github.com/harryrosianto/visualize-karhutla (cabang `main`).
+Repositori: https://github.com/harryrosianto/visualize-karhutla (cabang `main`). Dasbor Cloudflare terbaru menerbitkan situs statis sebagai Worker dengan aset statis, dikonfigurasi lewat `wrangler.jsonc` di akar repositori (sudah disediakan).
 
-1. Masuk ke dasbor Cloudflare, menu **Workers & Pages**, lalu **Create application**. Pilih tab **Pages** (pada tampilan terbaru, tautan kecil "Looking to deploy Pages? Get started"), kemudian **Connect to Git**.
-2. Hubungkan akun GitHub, pilih repositori `visualize-karhutla`, lalu **Begin setup**.
+1. Dasbor Cloudflare, **Workers & Pages**, **Create application**, **Import a repository**. Pilih repositori `visualize-karhutla`.
+2. Nama proyek harus **sama** dengan `name` pada `wrangler.jsonc`, yaitu `visualize-karhutla`. Jika memakai nama lain, ubah `name` di berkas itu.
 3. Pengaturan build:
-   - Production branch: `main`
-   - Framework preset: None
    - Build command: `npm run build`
-   - Build output directory: `dist`
-4. Buka **Environment variables (advanced)** dan tambahkan untuk **Production** (dan **Preview** bila perlu):
-   - `VITE_SITE_URL` = alamat publik tanpa garis miring akhir. Sebelum memakai domain sendiri, isi dengan alamat bawaan Cloudflare, yaitu `https://<nama-proyek>.pages.dev` (nama proyek sama dengan yang dipilih pada langkah 2 atau 3; tampil di bagian atas halaman setelah proyek dibuat).
-   - `NODE_VERSION` = `22` (opsional; `.nvmrc` sudah menetapkan 22).
-5. Klik **Save and Deploy**. Build pertama berjalan sekitar 1 sampai 3 menit.
-6. Jika nama proyek ternyata berbeda dari tebakan pada langkah 4, perbarui `VITE_SITE_URL` pada Settings, Environment variables, lalu **Retry deployment** (variabel ini ditanam saat build).
-7. Domain sendiri (opsional): tab **Custom domains**, **Set up a custom domain**. Ubah `VITE_SITE_URL` menjadi domain tersebut dan jalankan ulang deployment.
+   - Deploy command: `npx wrangler deploy` (bawaan)
+   - Root directory: kosong
+4. Tambahkan **Build variables**: `VITE_SITE_URL` = alamat publik tanpa garis miring akhir, yaitu `https://visualize-karhutla.<subdomain-akun>.workers.dev` (subdomain akun terlihat pada tab Settings proyek, bagian Domains & Routes, setelah deploy pertama). `NODE_VERSION` tidak perlu diisi karena `.nvmrc` menetapkan 22.
+5. Simpan dan deploy. Build pertama berjalan sekitar 1 sampai 3 menit. Jika `VITE_SITE_URL` belum benar, perbaiki variabelnya lalu jalankan ulang build (variabel ini ditanam saat build).
+6. Domain sendiri (opsional): Settings, Domains & Routes, Add, Custom domain. Ubah `VITE_SITE_URL` menjadi domain tersebut dan bangun ulang.
 
-Setiap push ke `main` otomatis membangun dan menerbitkan ulang situs. `VITE_SITE_URL` wajib benar karena dipakai untuk tautan bagikan, kartu bagikan, `og:image`, dan tag kanonis; jika salah, pratinjau media sosial menunjuk ke alamat yang keliru.
+Setiap push ke `main` otomatis membangun dan menerbitkan ulang situs. `VITE_SITE_URL` wajib benar karena dipakai untuk tautan bagikan, kartu bagikan, `og:image`, dan tag kanonis.
 
 ### Opsi B: unggah langsung tanpa Git
 
@@ -33,15 +29,19 @@ Setiap push ke `main` otomatis membangun dan menerbitkan ulang situs. `VITE_SITE
 npm run deploy:cloudflare
 ```
 
-Perintah ini membangun situs dan menjalankan `wrangler pages deploy`. Login Cloudflare diminta satu kali, dan proyek `visualize-karhutla` dibuat bila belum ada.
+Perintah ini membangun situs dan menjalankan `wrangler deploy`. Login Cloudflare diminta satu kali.
 
 ### Hasil uji lokal
 
-Konfigurasi diuji dengan emulator Cloudflare (`wrangler pages dev dist`): halaman statis per rute (`/peta/`, `/wrapped/<slug>/`) dilayani dengan meta `og:*` yang benar, alamat yang tidak dikenal jatuh ke aplikasi (HTTP 200), serta header cache dan keamanan terpasang. Jumlah berkas hasil build 216 dan berkas terbesar sekitar 3 MB, jauh di bawah batas Cloudflare.
+Konfigurasi diuji dengan `wrangler deploy --dry-run` dan `wrangler dev`: 284 berkas aset terbaca; halaman statis per rute (`/peta/`, `/wrapped/<slug>/`) dilayani dengan meta `og:*` yang benar; alamat yang tidak dikenal jatuh ke aplikasi (HTTP 200, `not_found_handling: single-page-application`); serta aturan header cache dan keamanan terbaca. Berkas terbesar sekitar 3 MB, jauh di bawah batas 25 MiB per aset.
+
+### Jika memakai Cloudflare Pages klasik
+
+Pages klasik tidak memakai `wrangler.jsonc` ini. Gunakan build command `npm run build`, output `dist`, dan tambahkan berkas `public/_redirects` berisi `/*    /index.html   200` untuk routing sisi klien.
 
 ## Berkas konfigurasi yang sudah disediakan
 
-- `public/_redirects`: mengarahkan semua alamat yang tidak cocok dengan berkas ke `index.html` (routing sisi klien). Halaman statis per rute (`/wrapped/<slug>/`) tetap dilayani langsung, sehingga pratinjau media sosial memuat `og:image` yang benar.
+- `wrangler.jsonc`: mengarahkan Cloudflare ke folder `dist` dan mengatur routing sisi klien. Halaman statis per rute (`/wrapped/<slug>/`) tetap dilayani langsung, sehingga pratinjau media sosial memuat `og:image` yang benar.
 - `public/_headers`: cache panjang untuk `/assets/*` (nama berkas berhash), satu jam untuk `/data/*` dan `/unduh/*`, satu hari untuk `/og/*`; serta header keamanan dasar (`nosniff`, `Referrer-Policy`, `Permissions-Policy`).
 - `.nvmrc`: versi Node untuk build.
 

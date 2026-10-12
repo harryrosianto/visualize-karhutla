@@ -15,7 +15,7 @@
     "sample": "tsx scripts/generate-sample.ts",
     "firms": "tsx scripts/process-firms.ts",
     "fetch-firms": "tsx scripts/fetch-firms.ts",
-    "deploy:cloudflare": "npm run build && npx wrangler pages deploy dist --project-name visualize-karhutla --branch main"
+    "deploy:cloudflare": "npm run build && npx wrangler deploy"
   },
   "dependencies": {
     "@deck.gl/aggregation-layers": "^9.4.0",
