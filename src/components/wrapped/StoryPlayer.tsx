@@ -10,7 +10,8 @@ interface Props {
   isSample: boolean
   onExit: () => void
   /** Elemen interaktif pada slide terakhir (tombol bagikan), ditaruh di atas lapisan ketuk. */
-  overlayLast?: ReactNode
+  /** Elemen interaktif per indeks layar (mis. tombol bagikan). Layar yang punya overlay tidak maju otomatis. */
+  overlays?: Record<number, ReactNode>
   onIndex?: (i: number) => void
   /** bagikan layar yang sedang tampil sebagai gambar */
   onShareSlide?: (i: number) => void
@@ -20,7 +21,7 @@ interface Props {
 const HOLD_MS = 220
 
 /** Story player gaya Instagram: progress, auto-advance, ketuk kiri/kanan, tahan untuk jeda, geser, panah keyboard. */
-export function StoryPlayer({ slides, duration = 5000, isSample, onExit, overlayLast, onIndex, onShareSlide, sharing }: Props) {
+export function StoryPlayer({ slides, duration = 5000, isSample, onExit, overlays = {}, onIndex, onShareSlide, sharing }: Props) {
   const reduce = useReducedMotion()
   const [idx, setIdx] = useState(0)
   const [manualPause, setManualPause] = useState(false)
@@ -34,16 +35,17 @@ export function StoryPlayer({ slides, duration = 5000, isSample, onExit, overlay
   const next = useCallback(() => setIdx(i => Math.min(last, i + 1)), [last])
   const prev = useCallback(() => setIdx(i => Math.max(0, i - 1)), [])
 
-  useEffect(() => { progress.set(idx === last ? 1 : 0); onIndex?.(idx) }, [idx, last, progress, onIndex])
+  const hold = idx === last || idx in overlays
+  useEffect(() => { progress.set(hold ? 1 : 0); onIndex?.(idx) }, [idx, hold, progress, onIndex])
 
   useEffect(() => {
-    if (paused || idx === last) return
+    if (paused || hold) return
     const c = animate(progress, 1, {
       duration: ((1 - progress.get()) * duration) / 1000, ease: 'linear',
       onComplete: () => setIdx(i => Math.min(last, i + 1)),
     })
     return () => c.stop()
-  }, [idx, paused, duration, last, progress])
+  }, [idx, paused, hold, duration, last, progress])
 
   useEffect(() => {
     const v = () => setHidden(document.hidden)
@@ -130,7 +132,7 @@ export function StoryPlayer({ slides, duration = 5000, isSample, onExit, overlay
           </div>
         </div>
 
-        {idx === last && overlayLast && <div className="absolute inset-x-0 bottom-0 z-10 px-[6cqw] pb-[4cqw]">{overlayLast}</div>}
+        {overlays[idx] && <div className="absolute inset-x-0 bottom-0 z-10 px-[6cqw] pb-[4cqw]">{overlays[idx]}</div>}
 
         <p className="sr-only" aria-live="polite">Layar {idx + 1} dari {slides.length}: {slide.title}</p>
         <div className="sr-only">

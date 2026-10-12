@@ -5,6 +5,7 @@ import { CountUp } from '../CountUp'
 import { Picture } from '../Picture'
 import type { ImageName } from '../../lib/images'
 import { MonthBars } from './MonthBars'
+import { PUBLIC_HOST_PATH } from '../../lib/site'
 
 export interface SlideCtx { kab: Kab; kabs: Kab[]; meta: Meta }
 
@@ -297,5 +298,22 @@ export function SummaryCard({ kab, kabs, meta, variant = 'story' }: SlideCtx & {
         </div>
       </div>
     </div>
+  )
+}
+
+/* 8. Ajakan berkontribusi (penutup) */
+export function SlideContribute() {
+  const { item } = useVariants()
+  return (
+    <SlideShell image="embers-closeup" position="50% 60%" dim={0.82}>
+      <Kicker>Ikut berkontribusi</Kicker>
+      <motion.h2 variants={item} className="mt-[3cqw] text-[12cqw] font-extrabold leading-[0.98] tracking-tighter text-fg">Ikut mengangkat isu karhutla<span className="text-ember">.</span></motion.h2>
+      <Lead>Proyek ini terbuka bagi siapa saja. Kirim artikel, sumbang data, laporkan koreksi, atau kembangkan kodenya.</Lead>
+      <motion.div variants={item} className="mt-[8cqw] border-l-[0.9cqw] border-ember pl-[4cqw]">
+        <p className="text-[3.8cqw] text-fg-3">Kunjungi</p>
+        <p translate="no" className="mt-[1cqw] text-[5cqw] font-bold leading-snug text-fg">{PUBLIC_HOST_PATH.split('/')[0]}</p>
+        <p translate="no" className="text-[5cqw] font-bold leading-snug text-ember">/{PUBLIC_HOST_PATH.split('/').slice(1).join('/')}</p>
+      </motion.div>
+    </SlideShell>
   )
 }

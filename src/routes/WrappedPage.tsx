@@ -2,8 +2,9 @@ import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } fro
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { ExportStage } from '../components/ExportContext'
 import { StoryPlayer, type StorySlide } from '../components/wrapped/StoryPlayer'
-import { SlideBurned, SlideCampaign, SlideMonth, SlideOpening, SlideRank, SlideTotal, SummaryCard, SummaryWide } from '../components/wrapped/slides'
+import { SlideBurned, SlideCampaign, SlideContribute, SlideMonth, SlideOpening, SlideRank, SlideTotal, SummaryCard, SummaryWide } from '../components/wrapped/slides'
 import { ShareBar } from '../components/wrapped/ShareBar'
+import { ContributeCta } from '../components/wrapped/ContributeCta'
 import { useData } from '../lib/DataContext'
 import { REGION_SLUG, type Meta } from '../lib/data'
 import { renderPng, shareOrDownload } from '../lib/exportImage'
@@ -50,6 +51,7 @@ export default function WrappedPage() {
       { id: 'rank', title: 'Peringkat di Kalimantan', node: <SlideRank {...c} /> },
       { id: 'kampanye', title: 'Karhutla belum berakhir. The fires are not over.', node: <SlideCampaign /> },
       { id: 'ringkas', title: 'Rangkuman', node: <SummaryCard {...c} /> },
+      { id: 'kontribusi', title: 'Ikut mengangkat isu karhutla', node: <SlideContribute /> },
     ]
   }, [kab, kabs, meta])
 
@@ -86,7 +88,10 @@ export default function WrappedPage() {
       <StoryPlayer
         slides={slides} isSample={meta.isSample} onExit={exit}
         onShareSlide={idx => setJob({ kind: 'slide', idx })} sharing={!!job}
-        overlayLast={<ShareBar kab={kab} meta={meta} kabs={kabs} onWide={() => setJob({ kind: 'wide' })} busy={!!job} />}
+        overlays={{
+          6: <ShareBar kab={kab} meta={meta} kabs={kabs} onWide={() => setJob({ kind: 'wide' })} busy={!!job} />,
+          7: <ContributeCta />,
+        }}
       />
       <p role="status" aria-live="polite" className="pointer-events-none fixed inset-x-0 top-24 z-50 mx-auto w-fit max-w-[90vw] rounded-full bg-ink-2 px-4 py-2 text-center text-sm text-fg empty:hidden">{job ? 'Menyiapkan gambar...' : note}</p>
       {job?.kind === 'wide' && <ExportStage ref={stage} width={1600} height={900}><SummaryWide {...c} /></ExportStage>}
