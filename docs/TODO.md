@@ -14,3 +14,9 @@
 
 ## Media
 - [ ] Video hero: taruh `public/media/hero.mp4` (lihat README). Saat ini hero memakai poster gambar.
+
+## Verifikasi tambahan
+- [ ] Tautan SiPongi (`https://sipongi.menlhk.go.id/`) di footer dan `/tentang` belum dicek ulang setelah perubahan nama kementerian. Pastikan alamat terbaru.
+- [ ] Kutipan geoBoundaries (Runfola dkk. 2020) dan kalimat pengakuan NASA FIRMS di `/tentang` ditulis dari ingatan dan pedoman umum; cocokkan dengan format kutipan resmi masing-masing.
+- [ ] Kinerja halaman `/peta` di perangkat nyata belum diuji. Di Lighthouse mobile (CPU 4x lebih lambat, WebGL perangkat lunak) skornya jauh di bawah target; lihat `docs/SUMMARY.md`.
+- [ ] Pembaruan titik panas: untuk data asli, pertimbangkan memangkas `hotspots-*.json` (kini kolom lon/lat/hari/FRP) bila berkas melewati sekitar 1 MB per provinsi.

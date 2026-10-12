@@ -33,11 +33,14 @@ export function useMapData() {
     let alive = true
     ;(async () => {
       try {
-        for (const p of LOAD_ORDER) {
-          const [hot, daily, bnd] = await Promise.all([loadHotspots(p), loadDaily(p), loadBoundaries(p)])
-          if (!alive) return
-          setParts(prev => ({ ...prev, [p]: { hot, daily, bnd } }))
-        }
+        // dua tahap: provinsi terbesar dulu, sisanya sekaligus (menghindari rebuild layer berulang)
+        const load = async (p: ProvinceId) => ({ p, part: { hot: await loadHotspots(p), daily: await loadDaily(p), bnd: await loadBoundaries(p) } })
+        const first = await load(LOAD_ORDER[0])
+        if (!alive) return
+        setParts({ [first.p]: first.part })
+        const rest = await Promise.all(LOAD_ORDER.slice(1).map(load))
+        if (!alive) return
+        setParts(prev => ({ ...prev, ...Object.fromEntries(rest.map(r => [r.p, r.part])) }))
       } catch (e: any) {
         if (alive) setError(String(e?.message ?? e))
       }

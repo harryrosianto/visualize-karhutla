@@ -5,3 +5,4 @@ data/boundaries/src
 data/raw/*
 !data/raw/.gitkeep
 *.log
+.env

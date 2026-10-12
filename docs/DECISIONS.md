@@ -11,3 +11,13 @@ Dicatat saat mengerjakan tanpa pengawasan. Format: keputusan, lalu alasan.
 7. **Data contoh dibuat deterministik (seed tetap)** agar hasil build dan tautan bagikan stabil antar run. Seluruh angka fiktif dan berlabel "DATA CONTOH".
 8. **Perbandingan 2025 pada data asli** dihitung dari CSV FIRMS tahun 2025 jika ada di `data/raw/`; jika tidak ada, `total2025 = null` dan UI menulis "pembanding 2025 belum tersedia", bukan angka karangan.
 9. **Poin FIRMS berkepercayaan rendah dibuang** (MODIS < 30, VIIRS "l") di `process-firms.ts`; dicatat di halaman Tentang.
+10. **Slide 4 Wrapped (bulan berasap) memakai warna solid + cahaya bara, bukan foto.** Rencana awal memakai foto lahan; bar chart butuh kontras bersih, jadi foto hanya di slide 1, 2, 3. Slide 5 dan 6 juga solid.
+11. **Banner DATA CONTOH berupa pita penuh, bukan pill di atas foto.** Skill melarang pill di atas gambar; pita solid tetap memenuhi syarat banner di seluruh UI dan kartu bagikan.
+12. **Garis batas kabupaten di peta memakai layer garis MapLibre (worker), bukan GeoJsonLayer deck.gl; klik dideteksi dengan point-in-polygon (`src/lib/geo.ts`).** GeoJsonLayer menahan main thread sekitar 5 detik pada Lighthouse mobile (TBT 10,8 dtk turun ke sekitar 1,3 dtk setelah diganti).
+13. **Modul peta (MapLibre + deck.gl, 473 KB gzip) dimuat terpisah dan ditunda sampai kontrol halaman tampil.** Agar teks halaman dan kontrol muncul lebih dulu. Peta tetap berat; lihat SUMMARY untuk angka Lighthouse jujur.
+14. **Data peta dimuat dua tahap** (Kalimantan Tengah dulu, empat provinsi lain sekaligus) agar layer tidak dibangun ulang lima kali.
+15. **Gambar OG berformat JPEG (1200x630, sekitar 65 KB)**, bukan PNG (sekitar 480 KB). Cukup untuk X dan Threads, dan folder `dist/og` hanya 3,7 MB untuk 57 gambar.
+16. **Pembanding 2025 memakai periode yang sama (1 Januari sampai tanggal data), bukan total setahun 2025.** Perbandingan setahun penuh dengan tahun berjalan menyesatkan.
+17. **Ikon memakai `@phosphor-icons/react`** (sesuai skill). Tanda titik kecil pada label kolom footer dipertahankan karena diminta eksplisit pada referensi.
+18. **`.btn` didefinisikan di `@layer components`** agar utilitas Tailwind (padding, lebar) bisa menimpanya; versi tanpa layer membuat tombol bagikan meluber.
+19. **Angka memakai `lining-nums proportional-nums`**, bukan tabular, karena tabular membuat titik pemisah ribuan melebar ("1 . 777").

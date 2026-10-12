@@ -1,6 +1,6 @@
 import { Pause, Play } from '@phosphor-icons/react'
 import { MONTHS_SHORT, fmt, fmtDate, type ProvinceId } from '../../lib/data'
-import type { MapMode } from './MapView'
+import type { MapMode } from './mapTypes'
 
 export type Filter = 'all' | ProvinceId
 

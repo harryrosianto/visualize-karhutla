@@ -22,6 +22,7 @@ function ScrollTop() {
 function Shell({ footer = true }: { footer?: boolean }) {
   return (
     <>
+      <a href="#konten" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-full focus:bg-ember focus:px-4 focus:py-2 focus:text-ink">Lewati ke konten</a>
       <DataBanner />
       <div className="relative">
         <SiteNav />
@@ -39,7 +40,6 @@ export default function App() {
     <BrowserRouter basename={import.meta.env.BASE_URL.replace(/\/$/, '')}>
       <DataProvider>
         <ScrollTop />
-        <a href="#konten" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-full focus:bg-ember focus:px-4 focus:py-2 focus:text-ink">Lewati ke konten</a>
         <Suspense fallback={<Fallback />}>
           <Routes>
             <Route element={<Shell />}>

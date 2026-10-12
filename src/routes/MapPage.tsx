@@ -1,13 +1,16 @@
 import { AnimatePresence, useReducedMotion } from 'motion/react'
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { Suspense, lazy, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { KabupatenPicker } from '../components/KabupatenPicker'
 import { Legend, ProvinceChips, TimeDock, type Filter } from '../components/map/MapControls'
 import { KabupatenSheet } from '../components/map/KabupatenSheet'
-import { BOUNDS, MapView, type MapMode } from '../components/map/MapView'
+import { BOUNDS, type MapMode } from '../components/map/mapTypes'
 import { PROVS, useMapData } from '../components/map/useMapData'
 import { SourceNote } from '../components/SourceNote'
 import { useData } from '../lib/DataContext'
 import type { Kab } from '../lib/data'
+
+// MapLibre + deck.gl (sekitar 1,9 MB) dimuat terpisah supaya kontrol dan teks halaman tampil lebih dulu
+const MapView = lazy(() => import('../components/map/MapView'))
 
 export default function MapPage() {
   const { kabs, meta } = useData()
@@ -22,6 +25,13 @@ export default function MapPage() {
   const [flyTo, setFlyTo] = useState<{ lon: number; lat: number; key: number } | null>(null)
   const lastDay = merged ? merged.days.length - 1 : 0
   const inited = useRef(false)
+  // beri browser kesempatan mengecat kontrol dan banner sebelum modul peta (berat) dievaluasi
+  const [mapGo, setMapGo] = useState(false)
+  useEffect(() => {
+    if (!meta) return
+    const t = window.setTimeout(() => setMapGo(true), 900)
+    return () => window.clearTimeout(t)
+  }, [meta])
 
   // mulai dari hari terakhir (kumulatif penuh) begitu data pertama tiba
   useEffect(() => {
@@ -63,10 +73,12 @@ export default function MapPage() {
   return (
     <section className="relative h-[calc(100dvh-var(--banner-h,0px))] min-h-[560px] overflow-hidden bg-ink">
       <h1 className="sr-only">Peta titik panas Kalimantan 2026</h1>
+      {mapGo && <Suspense fallback={<div className="absolute inset-0 bg-ink" />}>
       <MapView
         merged={merged} mode={mode} day={day} filter={filter} selectedSlug={sel} onSelect={select}
         fitBounds={bounds} fitKey={fitKey} flyTo={flyTo} reduceMotion={reduce}
       />
+      </Suspense>}
 
       <div className="pointer-events-none absolute inset-x-0 top-16 z-10 flex flex-col gap-2 px-4 md:px-8">
         <div className="pointer-events-auto max-w-sm">
