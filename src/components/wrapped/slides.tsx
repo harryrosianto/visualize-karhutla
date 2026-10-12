@@ -23,10 +23,10 @@ function useVariants(): { box: Variants; item: Variants } {
   }
 }
 
-interface ShellProps { image?: ImageName; position?: string; dim?: number; children: ReactNode; footer?: ReactNode; glow?: boolean }
+interface ShellProps { image?: ImageName; position?: string; dim?: number; children: ReactNode; footer?: ReactNode; glow?: boolean; forest?: boolean }
 
 /** Latar slide: foto dengan overlay gelap (min 72%) atau warna solid + cahaya bara. */
-export function SlideShell({ image, position = 'center', dim = 0.74, children, footer, glow = true }: ShellProps) {
+export function SlideShell({ image, position = 'center', dim = 0.74, children, footer, glow = true, forest }: ShellProps) {
   const { box } = useVariants()
   return (
     <div className="relative size-full overflow-hidden bg-ink">
@@ -38,6 +38,13 @@ export function SlideShell({ image, position = 'center', dim = 0.74, children, f
       ) : glow ? (
         <div aria-hidden className="glow-ember absolute inset-0 opacity-80" />
       ) : null}
+      {forest && (
+        // siluet hutan hangus di tepi bawah, di depan cahaya bara
+        <div aria-hidden className="absolute inset-x-0 bottom-0">
+          <div className="absolute inset-x-0 bottom-0 h-[34cqw] bg-gradient-to-t from-ember/30 to-transparent" />
+          <Picture name="burnt-forest" sizes="(min-width: 768px) 40vw, 100vw" className="relative block h-auto w-full" />
+        </div>
+      )}
       <motion.div variants={box} initial="hidden" animate="show" className="relative flex size-full flex-col px-[8cqw] pb-[10cqw] pt-[30cqw]">
         {children}
         {footer && <div className="mt-auto pt-[5cqw] text-[3.1cqw] leading-snug text-fg-2">{footer}</div>}
@@ -102,7 +109,7 @@ export function SlideBurned({ kab, meta }: SlideCtx) {
   const { item } = useVariants()
   const fields = kab.burnedHa === null ? null : Math.round(kab.burnedHa / HA_PER_FIELD)
   return (
-    <SlideShell image="grass-fire-smoke" position="45% 60%" dim={0.76} footer={<Src meta={meta} kind="burnedArea" />}>
+    <SlideShell image="firefighters-manggala" position="46% 50%" dim={0.78} footer={<Src meta={meta} kind="burnedArea" />}>
       <Kicker>Perkiraan luas terbakar setara dengan</Kicker>
       {fields === null ? (
         <>
@@ -128,7 +135,7 @@ export function SlideMonth({ kab, meta }: SlideCtx) {
   const n = kab.monthly[kab.peakMonth]
   const share = kab.total2026 ? (n / kab.total2026) * 100 : 0
   return (
-    <SlideShell footer={<Src meta={meta} />}>
+    <SlideShell forest footer={<Src meta={meta} />}>
       <Kicker>Bulan paling berasap</Kicker>
       <Big text={MONTHS[kab.peakMonth]} max={20}>{MONTHS[kab.peakMonth]}</Big>
       <Lead>{fmt(n)} titik panas, {fmt(share)}% dari total tahun ini.</Lead>
@@ -147,7 +154,7 @@ export function SlideRank({ kab, kabs, meta }: SlideCtx) {
   const inProv = kabs.filter(k => k.provinceId === kab.provinceId).sort((a, b) => b.total2026 - a.total2026)
   const provRank = inProv.findIndex(k => k.slug === kab.slug) + 1
   return (
-    <SlideShell footer={<Src meta={meta} />}>
+    <SlideShell image="firefighters-silhouette" position="32% 50%" dim={0.74} footer={<Src meta={meta} />}>
       <Kicker>Peringkat titik panas di Kalimantan</Kicker>
       <Big text={`#${kab.rankKalimantan}`}>#<CountUp value={kab.rankKalimantan} duration={1.2} start /></Big>
       <Lead>dari {kabs.length} kabupaten dan kota. Urutan ke-{provRank} dari {inProv.length} di {kab.provinceName}.</Lead>

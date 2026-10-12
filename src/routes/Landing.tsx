@@ -9,10 +9,11 @@ function CheckRegion() {
   const nav = useNavigate()
   return (
     <section id="cek" className="relative isolate overflow-hidden">
-      <Picture name="embers-closeup" sizes="100vw" className="absolute inset-0 -z-20 size-full object-cover" position="50% 70%" />
+      <Picture name="firefighters-silhouette" sizes="100vw" className="absolute inset-0 -z-20 size-full object-cover" position="30% 50%" />
       <div aria-hidden className="absolute inset-0 -z-10 bg-ink/80" />
       <div aria-hidden className="absolute inset-0 -z-10 bg-gradient-to-b from-ink-2 via-transparent to-ink" />
-      <div className="mx-auto max-w-[1400px] px-4 py-28 md:px-8 md:py-44">
+      <Picture name="burnt-forest" sizes="100vw" className="pointer-events-none absolute inset-x-0 bottom-0 -z-10 block h-auto w-full" />
+      <div className="mx-auto max-w-[1400px] px-4 pb-40 pt-28 md:px-8 md:pb-56 md:pt-44">
         <h2 className="max-w-[14ch] text-5xl font-extrabold leading-[0.98] tracking-tighter text-fg md:text-7xl">
           Seberapa berasap kabupatenmu<span className="text-ember">?</span>
         </h2>

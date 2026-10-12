@@ -9,6 +9,7 @@
     "postbuild": "tsx scripts/build-og.ts",
     "preview": "vite preview",
     "images": "tsx scripts/optimize-images.ts",
+    "scene": "tsx scripts/build-scene.ts",
     "boundaries": "tsx scripts/fetch-boundaries.ts",
     "sample": "tsx scripts/generate-sample.ts",
     "firms": "tsx scripts/process-firms.ts",

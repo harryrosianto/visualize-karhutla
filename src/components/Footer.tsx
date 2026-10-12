@@ -26,7 +26,7 @@ export function Footer() {
       </div>
       <div className="mx-auto grid max-w-[1400px] gap-14 px-4 py-20 md:grid-cols-[1.3fr_1fr] md:px-8 md:py-28">
         <div>
-          <p className="font-brand text-6xl font-normal leading-none tracking-normal text-fg md:text-7xl">
+          <p className="font-brand text-6xl font-normal leading-none tracking-[0.05em] text-fg md:text-7xl">
             Visualize Karhutla<span className="text-ember">.</span>
           </p>
           <p className="mt-3 font-serif text-2xl italic leading-[1.15] text-ember pb-1">Setahun di balik asap.</p>
