@@ -8,30 +8,41 @@ Menurut pengetahuan penulis, paket gratis Cloudflare Pages mencakup: lalu lintas
 
 ### Opsi A: dari repositori Git (disarankan)
 
-1. Dorong repositori ke GitHub atau GitLab. Pastikan `public/data/` ikut ter-commit (sudah demikian).
-2. Di dasbor Cloudflare: Workers & Pages, Create, Pages, Connect to Git.
+Repositori: https://github.com/harryrosianto/visualize-karhutla (cabang `main`).
+
+1. Masuk ke dasbor Cloudflare, menu **Workers & Pages**, lalu **Create application**. Pilih tab **Pages** (pada tampilan terbaru, tautan kecil "Looking to deploy Pages? Get started"), kemudian **Connect to Git**.
+2. Hubungkan akun GitHub, pilih repositori `visualize-karhutla`, lalu **Begin setup**.
 3. Pengaturan build:
+   - Production branch: `main`
    - Framework preset: None
    - Build command: `npm run build`
    - Build output directory: `dist`
-   - Variabel lingkungan: `NODE_VERSION` = `22` dan `VITE_SITE_URL` = alamat publik tanpa garis miring akhir (mis. `https://karhutla.contoh.id`)
-4. Setelah build pertama selesai, tambahkan domain khusus pada tab Custom domains.
+4. Buka **Environment variables (advanced)** dan tambahkan untuk **Production** (dan **Preview** bila perlu):
+   - `VITE_SITE_URL` = alamat publik tanpa garis miring akhir. Sebelum memakai domain sendiri, isi dengan alamat bawaan Cloudflare, yaitu `https://<nama-proyek>.pages.dev` (nama proyek sama dengan yang dipilih pada langkah 2 atau 3; tampil di bagian atas halaman setelah proyek dibuat).
+   - `NODE_VERSION` = `22` (opsional; `.nvmrc` sudah menetapkan 22).
+5. Klik **Save and Deploy**. Build pertama berjalan sekitar 1 sampai 3 menit.
+6. Jika nama proyek ternyata berbeda dari tebakan pada langkah 4, perbarui `VITE_SITE_URL` pada Settings, Environment variables, lalu **Retry deployment** (variabel ini ditanam saat build).
+7. Domain sendiri (opsional): tab **Custom domains**, **Set up a custom domain**. Ubah `VITE_SITE_URL` menjadi domain tersebut dan jalankan ulang deployment.
 
-`VITE_SITE_URL` wajib diisi sebelum build pertama. Nilai ini dipakai untuk tautan bagikan, kartu bagikan, `og:image`, dan tag kanonis. Jika kosong, tautan menunjuk ke `http://localhost:4173`.
+Setiap push ke `main` otomatis membangun dan menerbitkan ulang situs. `VITE_SITE_URL` wajib benar karena dipakai untuk tautan bagikan, kartu bagikan, `og:image`, dan tag kanonis; jika salah, pratinjau media sosial menunjuk ke alamat yang keliru.
 
 ### Opsi B: unggah langsung tanpa Git
 
 ```bash
-npm run build
-npx wrangler pages deploy dist --project-name visualize-karhutla
+# isi VITE_SITE_URL di .env lebih dulu, lalu:
+npm run deploy:cloudflare
 ```
 
-Perintah ini meminta login Cloudflare satu kali. Atur `VITE_SITE_URL` di berkas `.env` lokal sebelum `npm run build`.
+Perintah ini membangun situs dan menjalankan `wrangler pages deploy`. Login Cloudflare diminta satu kali, dan proyek `visualize-karhutla` dibuat bila belum ada.
+
+### Hasil uji lokal
+
+Konfigurasi diuji dengan emulator Cloudflare (`wrangler pages dev dist`): halaman statis per rute (`/peta/`, `/wrapped/<slug>/`) dilayani dengan meta `og:*` yang benar, alamat yang tidak dikenal jatuh ke aplikasi (HTTP 200), serta header cache dan keamanan terpasang. Jumlah berkas hasil build 216 dan berkas terbesar sekitar 3 MB, jauh di bawah batas Cloudflare.
 
 ## Berkas konfigurasi yang sudah disediakan
 
 - `public/_redirects`: mengarahkan semua alamat yang tidak cocok dengan berkas ke `index.html` (routing sisi klien). Halaman statis per rute (`/wrapped/<slug>/`) tetap dilayani langsung, sehingga pratinjau media sosial memuat `og:image` yang benar.
-- `public/_headers`: cache panjang untuk `/assets/*` (nama berkas berhash), satu jam untuk `/data/*` dan `/unduh/*`, satu hari untuk `/og/*`.
+- `public/_headers`: cache panjang untuk `/assets/*` (nama berkas berhash), satu jam untuk `/data/*` dan `/unduh/*`, satu hari untuk `/og/*`; serta header keamanan dasar (`nosniff`, `Referrer-Policy`, `Permissions-Policy`).
 - `.nvmrc`: versi Node untuk build.
 
 ## Pembaruan data
