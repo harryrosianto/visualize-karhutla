@@ -308,7 +308,7 @@ export function SlideContribute() {
   return (
     <SlideShell image="embers-closeup" position="50% 60%" dim={0.82}>
       <Kicker>Ikut berkontribusi</Kicker>
-      <motion.h2 variants={item} className="mt-[3cqw] text-[10cqw] font-extrabold leading-[0.98] tracking-tighter text-fg">Ikut mengangkat isu karhutla<span className="text-ember">.</span></motion.h2>
+      <motion.h2 variants={item} className="mt-[3cqw] text-[10cqw] font-extrabold leading-[0.98] tracking-tighter text-fg">Mengangkat isu karhutla<span className="text-ember">.</span></motion.h2>
       <Lead>Proyek ini terbuka bagi siapa saja. Kirim artikel, sumbang data, laporkan koreksi, atau kembangkan kodenya.</Lead>
       <motion.img variants={item} src={`${import.meta.env.BASE_URL}media/pratinjau-beranda.jpg`} alt="Tangkapan layar halaman beranda Visualize Karhutla." className="mt-[6cqw] w-full rounded-[2cqw] border border-fg/15 shadow-[0_2cqw_6cqw_rgb(0_0_0/0.5)]" />
       <motion.div variants={item} className="mt-[6cqw] border-l-[0.9cqw] border-ember pl-[4cqw]">

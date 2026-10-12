@@ -51,7 +51,7 @@ export default function WrappedPage() {
       { id: 'rank', title: 'Peringkat di Kalimantan', node: <SlideRank {...c} /> },
       { id: 'kampanye', title: 'Karhutla belum berakhir. The fires are not over.', node: <SlideCampaign /> },
       { id: 'ringkas', title: 'Rangkuman', node: <SummaryCard {...c} /> },
-      { id: 'kontribusi', title: 'Ikut mengangkat isu karhutla', node: <SlideContribute /> },
+      { id: 'kontribusi', title: 'Mengangkat isu karhutla', node: <SlideContribute /> },
     ]
   }, [kab, kabs, meta])
 
