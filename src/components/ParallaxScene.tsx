@@ -76,7 +76,7 @@ export function ParallaxScene({ target }: { target: RefObject<HTMLElement | null
               sizes={SIZES}
               alt="" width={3000} height={890} draggable={false}
               loading="eager" decoding="async" fetchPriority={i === 0 ? 'high' : 'auto'}
-              className="size-full object-cover object-bottom"
+              className="size-full object-cover object-[55%_100%] md:object-bottom"
             />
           </picture>
         </Layer>

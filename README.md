@@ -29,6 +29,8 @@ Skrip lain:
 | `npm run boundaries` | Unduh batas geoBoundaries IDN ADM1/ADM2, saring 56 kabupaten/kota Kalimantan ke `public/data/boundaries-*.json` |
 | `npm run sample` | Bangkitkan DATA CONTOH deterministik (seed tetap) |
 | `npm run firms` | Proses CSV NASA FIRMS di `data/raw/` menjadi data asli |
+| `npm run downloads` | Buat CSV dan metadata unduhan di `public/unduh/` (otomatis saat `npm run build`) |
+| `npm run scene` | Susun lapisan parallax hero dari `assets-src/scene/` ke `src/assets/scene/` |
 | `npm run images` | Optimalkan gambar dari `assets-src/` ke `src/assets/images/` |
 | `node scripts/lh-report.mjs <laporan.json>` | Ringkas laporan Lighthouse JSON |
 

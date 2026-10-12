@@ -5,11 +5,12 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc --noEmit && vite build",
+    "build": "tsx scripts/build-downloads.ts && tsc --noEmit && vite build",
     "postbuild": "tsx scripts/build-og.ts",
     "preview": "vite preview",
     "images": "tsx scripts/optimize-images.ts",
     "scene": "tsx scripts/build-scene.ts",
+    "downloads": "tsx scripts/build-downloads.ts",
     "boundaries": "tsx scripts/fetch-boundaries.ts",
     "sample": "tsx scripts/generate-sample.ts",
     "firms": "tsx scripts/process-firms.ts",
@@ -56,5 +57,8 @@
     "tsx": "^4.23.15",
     "typescript": "^7.0.2",
     "vite": "^8.3.4"
+  },
+  "engines": {
+    "node": ">=20.12"
   }
 }

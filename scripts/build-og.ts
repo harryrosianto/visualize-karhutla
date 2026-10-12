@@ -105,5 +105,4 @@ for (const k of kabs) {
     image: `${SITE}/og/${k.slug}.jpg`, url: `${SITE}/wrapped/${k.slug}`,
   }))
 }
-write('404.html', base) // cadangan SPA untuk hosting statis
 console.log(`[og] selesai: ${kabs.length} halaman Wrapped, og:image ${SITE}/og/<slug>.jpg`)

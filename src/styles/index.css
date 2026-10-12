@@ -84,3 +84,6 @@
 @keyframes bird-drift { from { transform: translate3d(-3vw, 0, 0); } to { transform: translate3d(5vw, -1.4vh, 0); } }
 .bird-flock { animation: bird-drift 22s ease-in-out infinite alternate; opacity: 0.9; }
 .bird-flock-2 { animation-duration: 30s; animation-delay: -9s; opacity: 0.8; }
+
+/* Tooltip peta: baris pertama nama wilayah, berikutnya provinsi dan jumlah titik panas */
+.map-tip strong { color: var(--color-fg); font-size: 0.875rem; }

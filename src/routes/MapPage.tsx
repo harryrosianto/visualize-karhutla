@@ -1,5 +1,7 @@
 import { AnimatePresence, useReducedMotion } from 'motion/react'
 import { Suspense, lazy, useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { useSearchParams } from 'react-router-dom'
+import { LinkSimple } from '@phosphor-icons/react'
 import { KabupatenPicker } from '../components/KabupatenPicker'
 import { Legend, ProvinceChips, TimeDock, type Filter } from '../components/map/MapControls'
 import { KabupatenSheet } from '../components/map/KabupatenSheet'
@@ -8,20 +10,31 @@ import { PROVS, useMapData } from '../components/map/useMapData'
 import { SourceNote } from '../components/SourceNote'
 import { useData } from '../lib/DataContext'
 import type { Kab } from '../lib/data'
+import { siteUrl } from '../lib/share'
 
 // MapLibre + deck.gl (sekitar 1,9 MB) dimuat terpisah supaya kontrol dan teks halaman tampil lebih dulu
 const MapView = lazy(() => import('../components/map/MapView'))
 
+const FILTERS = ['kalbar', 'kalteng', 'kalsel', 'kaltim', 'kaltara']
+
 export default function MapPage() {
+  // keadaan tampilan disimpan di URL agar dapat dibagikan: ?provinsi=&tanggal=&mode=3d&kabupaten=
+  const [params, setParams] = useSearchParams()
+  const initial = useRef({
+    filter: (FILTERS.includes(params.get('provinsi') ?? '') ? params.get('provinsi') : 'all') as Filter,
+    mode: (params.get('mode') === '3d' ? 'hex' : 'titik') as MapMode,
+    date: params.get('tanggal'),
+    kab: params.get('kabupaten'),
+  })
   const { kabs, meta } = useData()
   const { merged, loaded, total, error, retry } = useMapData()
   const reduce = !!useReducedMotion()
-  const [mode, setMode] = useState<MapMode>('titik')
-  const [filter, setFilter] = useState<Filter>('all')
+  const [mode, setMode] = useState<MapMode>(initial.current.mode)
+  const [filter, setFilter] = useState<Filter>(initial.current.filter)
   const [day, setDay] = useState(0)
   const [playing, setPlaying] = useState(false)
-  const [sel, setSel] = useState<string | null>(null)
-  const [fitKey, setFitKey] = useState(0)
+  const [sel, setSel] = useState<string | null>(initial.current.kab)
+  const [fitKey, setFitKey] = useState(initial.current.filter === 'all' ? 0 : 1)
   const [flyTo, setFlyTo] = useState<{ lon: number; lat: number; key: number } | null>(null)
   const lastDay = merged ? merged.days.length - 1 : 0
   const inited = useRef(false)
@@ -35,8 +48,31 @@ export default function MapPage() {
 
   // mulai dari hari terakhir (kumulatif penuh) begitu data pertama tiba
   useEffect(() => {
-    if (merged && !inited.current) { inited.current = true; setDay(merged.days.length - 1) }
+    if (merged && !inited.current) {
+      inited.current = true
+      const i = initial.current.date ? merged.days.indexOf(initial.current.date) : -1
+      setDay(i >= 0 ? i : merged.days.length - 1)
+    }
   }, [merged])
+
+  // tulis keadaan ke URL (tanpa menambah riwayat); selama animasi diputar, tanggal tidak ditulis
+  useEffect(() => {
+    if (!merged || !inited.current || playing) return
+    const p = new URLSearchParams()
+    if (filter !== 'all') p.set('provinsi', filter)
+    if (mode === 'hex') p.set('mode', '3d')
+    if (day !== merged.days.length - 1) p.set('tanggal', merged.days[day])
+    if (sel) p.set('kabupaten', sel)
+    setParams(p, { replace: true })
+  }, [merged, filter, mode, day, sel, playing, setParams])
+
+  const [copied, setCopied] = useState(false)
+  const copyView = async () => {
+    const url = `${siteUrl()}/peta${params.toString() ? '?' + params.toString() : ''}`
+    try { await navigator.clipboard.writeText(url) } catch { window.prompt('Salin tautan tampilan peta:', url); return }
+    setCopied(true)
+    window.setTimeout(() => setCopied(false), 2500)
+  }
 
   // animasi harian; dengan reduced motion loncat 7 hari per langkah
   useEffect(() => {
@@ -114,7 +150,9 @@ export default function MapPage() {
               today={today} cumulative={cumulative} mode={mode} onMode={setMode} />
             <div className="mt-2 flex flex-wrap items-center justify-between gap-x-6 gap-y-1 rounded-panel bg-ink/80 px-3 py-2">
               <Legend mode={mode} />
+              <button type="button" onClick={copyView} className="inline-flex min-h-11 items-center gap-1.5 rounded-full px-3 text-xs font-semibold text-fg-2 hover:text-fg"><LinkSimple size={16} weight="bold" aria-hidden />Salin tautan tampilan</button>
               <SourceNote />
+              <p role="status" aria-live="polite" className="w-full text-xs text-fg">{copied ? 'Tautan tampilan peta disalin.' : ''}</p>
             </div>
           </div>
         )}

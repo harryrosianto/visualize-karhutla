@@ -1,12 +1,16 @@
 import type { ReactNode } from 'react'
 import { useData } from '../lib/DataContext'
 import { fmtDate } from '../lib/data'
+import { siteUrl } from '../lib/share'
+import { useState } from 'react'
 import credits from '../assets/images/credits.json'
 
 const toc = [
   ['metodologi', 'Metodologi'],
   ['sumber', 'Sumber data'],
   ['keterbatasan', 'Keterbatasan data'],
+  ['unduh', 'Unduh data'],
+  ['kutip', 'Cara mengutip'],
   ['kredit', 'Kredit aset visual'],
   ['kredit-data', 'Kredit data'],
 ] as const
@@ -23,8 +27,32 @@ const A = ({ href, children }: { href: string; children: ReactNode }) => (
   <a href={href} target="_blank" rel="noopener noreferrer" className="text-fg underline decoration-ember underline-offset-4 hover:text-ember">{children}</a>
 )
 
+function Citation({ isSample, dataDate }: { isSample: boolean; dataDate: string }) {
+  const [copied, setCopied] = useState(false)
+  const text = `Visualize Karhutla. (2026). Titik panas kebakaran hutan dan lahan di Kalimantan menurut kabupaten/kota, 1 Januari sampai ${fmtDate(dataDate)} 2026 [Set data]. Diolah dari NASA FIRMS (VIIRS NOAA-20) dan geoBoundaries. ${siteUrl()}/tentang#unduh. Diakses ${fmtDate(new Date().toISOString().slice(0, 10))}.`
+  const copy = async () => {
+    try { await navigator.clipboard.writeText(text); setCopied(true); window.setTimeout(() => setCopied(false), 2500) } catch { /* abaikan */ }
+  }
+  return (
+    <>
+      {isSample && <p className="rounded-panel border border-ember bg-ember/10 p-4 text-fg">Data saat ini adalah DATA CONTOH. Jangan dikutip sebagai fakta.</p>}
+      <blockquote className="border-l-2 border-ember pl-4 text-fg">{text}</blockquote>
+      <div className="flex items-center gap-4">
+        <button type="button" onClick={copy} className="btn btn-ghost">Salin sitasi</button>
+        <span role="status" aria-live="polite" className="text-sm text-fg">{copied ? 'Sitasi disalin.' : ''}</span>
+      </div>
+    </>
+  )
+}
+
 export default function About() {
   const { meta } = useData()
+  const pre = meta?.isSample ? 'CONTOH-' : ''
+  const files = [
+    [`${pre}titik-panas-kabupaten-2026.csv`, 'Ringkasan per kabupaten/kota: total 2026, pembanding 2025 pada periode yang sama, jumlah per bulan, bulan puncak, peringkat, luas lahan terbakar.'],
+    [`${pre}titik-panas-harian-2026.csv`, 'Jumlah titik panas per kabupaten/kota per hari (hanya hari dengan titik panas).'],
+    [`${pre}metadata.json`, 'Metadata: sumber, tanggal data, status data, dan catatan metode.'],
+  ]
   return (
     <div className="mx-auto max-w-[1400px] px-4 pb-24 pt-32 md:px-8 md:pt-40">
       <h1 className="max-w-[16ch] text-5xl font-extrabold leading-[0.98] tracking-tighter text-fg md:text-7xl">Metode dan sumber data<span className="text-ember">.</span></h1>
@@ -81,6 +109,23 @@ export default function About() {
               <li>Batas kabupaten/kota memakai data dengan tahun representasi 2020. Wilayah yang dimekarkan setelah tahun tersebut mungkin belum tergambar. Provinsi sebagian kabupaten dikoreksi secara manual karena batas provinsi pada sumber data lebih lama.</li>
               <li>Situs ini bukan publikasi resmi pemerintah. Untuk keperluan kebijakan, rujuklah sumber data aslinya.</li>
             </ul>
+          </Section>
+
+          <Section id="unduh" title="Unduh data">
+            <p>Data teragregasi yang menjadi dasar seluruh angka pada situs ini tersedia untuk diunduh dalam format CSV (pemisah koma, pengodean UTF-8).</p>
+            <ul className="grid gap-3">
+              {files.map(([f, d]) => (
+                <li key={f}><a href={`${import.meta.env.BASE_URL}unduh/${f}`} download className="text-fg underline decoration-ember underline-offset-4 hover:text-ember">{f}</a>
+                  <span className="block text-sm text-fg-3">{d}</span></li>
+              ))}
+            </ul>
+            <p>Berkas ini merupakan data turunan. Untuk keperluan penelitian, rujuklah juga sumber aslinya (NASA FIRMS dan SiPongi Kemenhut) beserta ketentuan penggunaannya.</p>
+          </Section>
+
+          <Section id="kutip" title="Cara mengutip">
+            <p>Contoh sitasi untuk set data turunan pada situs ini (gaya APA yang disesuaikan):</p>
+            {meta && <Citation isSample={meta.isSample} dataDate={meta.dataDate} />}
+            <p>Sitasi atas data primer sebaiknya mencantumkan NASA FIRMS dan SiPongi Kemenhut secara terpisah.</p>
           </Section>
 
           <Section id="kredit" title="Kredit aset visual">

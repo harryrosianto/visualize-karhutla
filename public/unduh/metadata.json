@@ -1,0 +1,23 @@
+{
+  "judul": "Titik panas kebakaran hutan dan lahan di Kalimantan menurut kabupaten/kota, 2026",
+  "status_data": "asli",
+  "tanggal_data": "2026-10-12",
+  "dibuat": "2026-10-12T13:33:57.090Z",
+  "sumber": {
+    "hotspot": "NASA FIRMS (VIIRS NOAA-20)",
+    "burnedArea": "belum tersedia",
+    "boundaries": "geoBoundaries IDN ADM1/ADM2 (CC BY 3.0 IGO)"
+  },
+  "berkas": [
+    "titik-panas-kabupaten-2026.csv",
+    "titik-panas-harian-2026.csv"
+  ],
+  "catatan": [
+    "Titik panas adalah indikator kebakaran, bukan ukuran luas lahan terbakar.",
+    "Tanggal menggunakan tanggal akuisisi FIRMS dalam waktu UTC.",
+    "titik_panas_2025_periode_sama: 1 Januari sampai tanggal yang sama pada tahun 2025; kosong bila tidak tersedia.",
+    "luas_terbakar_ha berasal dari SiPongi Kemenhut dan kosong bila belum diisi.",
+    "Batas wilayah: geoBoundaries (ADM2), CC BY 3.0 IGO.",
+    "Data turunan; rujuk NASA FIRMS dan SiPongi untuk sumber asli."
+  ]
+}
