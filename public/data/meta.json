@@ -1,11 +1,11 @@
 {
- "isSample": true,
- "generatedAt": "2026-10-12T10:36:41.810Z",
+ "isSample": false,
+ "generatedAt": "2026-10-12T11:10:10.839Z",
  "dataDate": "2026-10-12",
  "year": 2026,
  "sources": {
-  "hotspot": "DATA CONTOH (fiktif), pengganti NASA FIRMS VIIRS/MODIS",
-  "burnedArea": "DATA CONTOH (fiktif), pengganti SiPongi Kemenhut",
+  "hotspot": "NASA FIRMS (VIIRS NOAA-20)",
+  "burnedArea": "belum tersedia",
   "boundaries": "geoBoundaries IDN ADM1/ADM2 (CC BY 3.0 IGO)"
  },
  "provinces": [
@@ -34,5 +34,6 @@
    "name": "Kalimantan Utara",
    "short": "Kaltara"
   }
- ]
+ ],
+ "lastMonth": 10
 }
