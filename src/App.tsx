@@ -1,4 +1,4 @@
-import { Suspense, lazy } from 'react'
+import { Component, Suspense, lazy, type ComponentType, type ReactNode } from 'react'
 import { BrowserRouter, Outlet, Route, Routes, useLocation } from 'react-router-dom'
 import { useEffect } from 'react'
 import { DataBanner } from './components/DataBanner'
@@ -7,12 +7,45 @@ import { SiteNav } from './components/SiteNav'
 import { DataProvider } from './lib/DataContext'
 import Landing from './routes/Landing'
 
-const MapPage = lazy(() => import('./routes/MapPage'))
-const WrappedPicker = lazy(() => import('./routes/WrappedPicker'))
-const WrappedPage = lazy(() => import('./routes/WrappedPage'))
-const About = lazy(() => import('./routes/About'))
-const Contribute = lazy(() => import('./routes/Contribute'))
-const NotFound = lazy(() => import('./routes/NotFound'))
+/** Muat modul rute; bila gagal (umumnya setelah situs diperbarui dan berkas lama sudah tidak ada), muat ulang halaman sekali. */
+function lazyRoute<T extends ComponentType<any>>(load: () => Promise<{ default: T }>) {
+  return lazy(() => load().catch(err => {
+    const key = 'muat-ulang-rute'
+    try {
+      if (!sessionStorage.getItem(key)) {
+        sessionStorage.setItem(key, '1')
+        window.location.reload()
+        return new Promise<never>(() => {})
+      }
+    } catch { /* penyimpanan tidak tersedia */ }
+    throw err
+  }))
+}
+
+const MapPage = lazyRoute(() => import('./routes/MapPage'))
+const WrappedPicker = lazyRoute(() => import('./routes/WrappedPicker'))
+const WrappedPage = lazyRoute(() => import('./routes/WrappedPage'))
+const About = lazyRoute(() => import('./routes/About'))
+const Contribute = lazyRoute(() => import('./routes/Contribute'))
+const NotFound = lazyRoute(() => import('./routes/NotFound'))
+
+/** Mencegah layar hitam kosong bila terjadi galat: tampilkan pesan dan tombol muat ulang. */
+class Guard extends Component<{ children: ReactNode }, { failed: boolean }> {
+  state = { failed: false }
+  static getDerivedStateFromError() { return { failed: true } }
+  render() {
+    if (!this.state.failed) return this.props.children
+    return (
+      <div role="alert" className="grid min-h-dvh place-items-center bg-ink px-4 text-center">
+        <div>
+          <h1 className="text-3xl font-extrabold tracking-tighter text-fg">Halaman belum dapat dimuat<span className="text-ember">.</span></h1>
+          <p className="mt-3 text-fg-2">Situs mungkin baru diperbarui. Silakan muat ulang halaman.</p>
+          <button type="button" onClick={() => { try { sessionStorage.removeItem('muat-ulang-rute') } catch { /* abaikan */ } window.location.reload() }} className="btn btn-primary mt-8">Muat ulang</button>
+        </div>
+      </div>
+    )
+  }
+}
 
 function ScrollTop() {
   const { pathname, hash } = useLocation()
@@ -39,7 +72,7 @@ const Fallback = () => <div className="grid min-h-[60dvh] place-items-center tex
 export default function App() {
   return (
     <BrowserRouter basename={import.meta.env.BASE_URL.replace(/\/$/, '')}>
-      <DataProvider>
+      <Guard><DataProvider>
         <ScrollTop />
         <Suspense fallback={<Fallback />}>
           <Routes>
@@ -56,7 +89,7 @@ export default function App() {
             <Route path="wrapped/:slug" element={<WrappedPage />} />
           </Routes>
         </Suspense>
-      </DataProvider>
+      </DataProvider></Guard>
     </BrowserRouter>
   )
 }
