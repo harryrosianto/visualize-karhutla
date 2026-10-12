@@ -11,3 +11,4 @@ data/raw/*
 src/Downloads/
 src/Burned.otf
 .wrangler/
+public/vendor/

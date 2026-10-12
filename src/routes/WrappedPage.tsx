@@ -7,7 +7,7 @@ import { ShareBar } from '../components/wrapped/ShareBar'
 import { useData } from '../lib/DataContext'
 import { REGION_SLUG, type Meta } from '../lib/data'
 import { renderPng, shareOrDownload } from '../lib/exportImage'
-import { shareText, siteHost, wrappedUrl } from '../lib/share'
+import { shareText, wrappedUrl } from '../lib/share'
 
 type Job = { kind: 'slide'; idx: number } | { kind: 'wide' }
 
@@ -19,7 +19,6 @@ function ExportFrame({ meta, children }: { meta: Meta; children: ReactNode }) {
       {meta.isSample && <div className="absolute inset-x-0 top-0 bg-ember py-[2cqw] text-center text-[3.6cqw] font-bold tracking-wide text-ink">DATA CONTOH. Angka bersifat fiktif dan hanya untuk pengujian tampilan.</div>}
       <div className="absolute inset-x-0 flex items-baseline justify-between px-[8cqw]" style={{ top: meta.isSample ? '12cqw' : '9cqw' }}>
         <p translate="no" className="text-[4.4cqw] font-extrabold tracking-tight text-fg">Visualize Karhutla<span className="text-ember">.</span></p>
-        <p className="text-[3.2cqw] text-fg-2">{siteHost()}</p>
       </div>
     </div>
   )

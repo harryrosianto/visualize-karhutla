@@ -1,7 +1,6 @@
 import { motion, useReducedMotion, type Variants } from 'motion/react'
 import type { ReactNode } from 'react'
 import { HA_PER_FIELD, MONTHS, burnedInfo, burnedSourceLine, fmt, fmtDate, provinceTotals, sourceLine, type Kab, type Meta } from '../../lib/data'
-import { siteHost } from '../../lib/share'
 import { CountUp } from '../CountUp'
 import { Picture } from '../Picture'
 import type { ImageName } from '../../lib/images'
@@ -241,7 +240,7 @@ export function SummaryWide({ kab, kabs, meta }: SlideCtx) {
         {meta.isSample && <div className="-mx-[5cqw] -mt-[4cqw] mb-[2.6cqw] bg-ember py-[0.9cqw] text-center text-[1.6cqw] font-bold tracking-wide text-ink">DATA CONTOH. Angka bersifat fiktif dan hanya untuk pengujian tampilan.</div>}
         <div className="flex items-baseline justify-between">
           <p translate="no" className="text-[1.9cqw] font-semibold text-fg-2">Karhutla Wrapped 2026</p>
-          <p translate="no" className="text-[2.1cqw] font-extrabold tracking-tight text-fg">Visualize Karhutla<span className="text-ember">.</span> <span className="text-[1.5cqw] font-normal text-fg-2">{siteHost()}</span></p>
+          <p translate="no" className="text-[2.1cqw] font-extrabold tracking-tight text-fg">Visualize Karhutla<span className="text-ember">.</span></p>
         </div>
         <div className="mt-[2.5cqw] grid flex-1 grid-cols-[1.05fr_1fr] items-center gap-[4.5cqw]">
           <div>
@@ -293,7 +292,7 @@ export function SummaryCard({ kab, kabs, meta, variant = 'story' }: SlideCtx & {
           {stats.map(t => stat(t.label, t.value, t.sub))}
         </dl>
         <div className="mt-auto pt-[4cqw] text-[3.1cqw] leading-snug text-fg-2">
-          {exp && <p translate="no" className="mb-[2cqw] text-[4.4cqw] font-extrabold tracking-tight text-fg">Visualize Karhutla<span className="text-ember">.</span> <span className="font-normal text-fg-2">{siteHost()}</span></p>}
+          {exp && <p translate="no" className="mb-[2cqw] text-[4.4cqw] font-extrabold tracking-tight text-fg">Visualize Karhutla<span className="text-ember">.</span></p>}
           <p>Data per {fmtDate(meta.dataDate)}. Sumber: NASA FIRMS, SiPongi Kemenhut. Batas wilayah: geoBoundaries.{meta.isSample ? ' DATA CONTOH.' : ''}</p>
         </div>
       </div>

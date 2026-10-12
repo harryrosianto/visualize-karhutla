@@ -16,7 +16,9 @@
     "firms": "tsx scripts/process-firms.ts",
     "fetch-firms": "tsx scripts/fetch-firms.ts",
     "deploy:cloudflare": "npm run build && npx wrangler deploy",
-    "deploy:pages": "cross-env DEPLOY_TARGET=pages npm run build && npx wrangler pages deploy dist --project-name visualize-karhutla --branch main"
+    "deploy:pages": "cross-env DEPLOY_TARGET=pages npm run build && npx wrangler pages deploy dist --project-name visualize-karhutla --branch main",
+    "prebuild": "node scripts/copy-maplibre-worker.mjs",
+    "predev": "node scripts/copy-maplibre-worker.mjs"
   },
   "dependencies": {
     "@deck.gl/aggregation-layers": "^9.4.0",

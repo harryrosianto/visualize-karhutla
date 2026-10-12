@@ -1,6 +1,5 @@
 import * as maplibregl from 'maplibre-gl'
 import type { GeoJSONSource, Map as MLMap } from 'maplibre-gl'
-import workerUrl from '../../lib/mlWorker?worker&url'
 import { HexagonLayer, MapLibreOverlay, ScatterplotLayer } from 'deck.gl'
 import { DataFilterExtension } from '@deck.gl/extensions'
 import { useEffect, useMemo, useRef, useState } from 'react'
@@ -9,7 +8,8 @@ import type { ProvinceId } from '../../lib/data'
 import type { Bounds, MapMode } from './mapTypes'
 import { PROVS, type Merged } from './useMapData'
 
-maplibregl.setWorkerUrl(workerUrl)
+// worker disalin dari node_modules oleh scripts/copy-maplibre-worker.mjs (lihat catatan di skrip itu)
+maplibregl.setWorkerUrl(`${import.meta.env.BASE_URL}vendor/maplibre-gl-worker.mjs`)
 const STYLE = 'https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json'
 const ext = new DataFilterExtension({ filterSize: 2 })
 const HEX_COLORS: [number, number, number][] = [[67, 20, 7], [124, 45, 18], [194, 65, 12], [249, 115, 22], [251, 146, 60], [239, 68, 68]]
