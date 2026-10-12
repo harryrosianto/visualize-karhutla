@@ -21,23 +21,25 @@ const prev = new Map<string, string[]>() // slug -> "MM-DD" titik tahun lalu
 const dailyKey = new Map<string, Map<string, number>>() // slug -> tanggal -> n
 let maxDate = ''
 let read = 0, kept = 0
+const sats = new Set<string>()
 
 function* rows(file: string) {
   const text = fs.readFileSync(path.join(RAW, file), 'utf8').split(/\r?\n/)
   const head = text[0].split(',').map(s => s.trim())
   const ix = (n: string) => head.indexOf(n)
-  const iLat = ix('latitude'), iLon = ix('longitude'), iDate = ix('acq_date'), iFrp = ix('frp'), iConf = ix('confidence')
+  const iSat = ix('satellite'), iLat = ix('latitude'), iLon = ix('longitude'), iDate = ix('acq_date'), iFrp = ix('frp'), iConf = ix('confidence')
   if (iLat < 0 || iLon < 0 || iDate < 0) throw new Error(`${file}: kolom latitude/longitude/acq_date tidak ditemukan`)
   for (let i = 1; i < text.length; i++) {
     if (!text[i]) continue
     const c = text[i].split(',')
-    yield { lat: +c[iLat], lon: +c[iLon], date: c[iDate], frp: iFrp >= 0 ? +c[iFrp] : 0, conf: iConf >= 0 ? c[iConf] : '' }
+    yield { lat: +c[iLat], lon: +c[iLon], date: c[iDate], frp: iFrp >= 0 ? +c[iFrp] : 0, conf: iConf >= 0 ? c[iConf] : '', sat: iSat >= 0 ? c[iSat] : '' }
   }
 }
 
 for (const file of files) {
   for (const r of rows(file)) {
     read++
+    if (r.sat) sats.add(r.sat)
     if (r.conf === 'l' || r.conf === 'low' || (/^\d+$/.test(r.conf) && +r.conf < 30)) continue
     const yr = Number(r.date.slice(0, 4))
     if (yr !== YEAR && yr !== YEAR - 1) continue
@@ -59,6 +61,8 @@ for (const file of files) {
 if (!maxDate) { console.error(`Tidak ada titik tahun ${YEAR} di dalam lima provinsi.`); process.exit(1) }
 console.log(`baris dibaca ${read}, dipertahankan ${kept}, tanggal data terakhir ${maxDate}`)
 
+const SAT: Record<string, string> = { N: 'VIIRS Suomi NPP', N20: 'VIIRS NOAA-20', N21: 'VIIRS NOAA-21', T: 'MODIS Terra', A: 'MODIS Aqua', Terra: 'MODIS Terra', Aqua: 'MODIS Aqua' }
+const satLabel = sats.size ? [...sats].map(x => SAT[x] ?? x).join(' + ') : 'VIIRS/MODIS'
 const days = dayLabels(YEAR, maxDate)
 const dayIdx = new Map(days.map((d, i) => [d, i]))
 const kabOut: any[] = []
@@ -95,7 +99,7 @@ fs.writeFileSync('public/data/kabupaten.json', JSON.stringify(kabOut))
 fs.writeFileSync('public/data/meta.json', JSON.stringify({
   isSample: false, generatedAt: new Date().toISOString(), dataDate: maxDate, year: YEAR,
   sources: {
-    hotspot: 'NASA FIRMS (VIIRS/MODIS)',
+    hotspot: `NASA FIRMS (${satLabel})`,
     burnedArea: sip.entries?.length ? `SiPongi Kemenhut, periode ${sip.period}, diambil ${sip.retrievedAt}` : 'belum tersedia',
     boundaries: 'geoBoundaries IDN ADM1/ADM2 (CC BY 3.0 IGO)',
   },
