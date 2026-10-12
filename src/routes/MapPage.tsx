@@ -119,7 +119,7 @@ export default function MapPage() {
       />
       </Suspense>}
 
-      <div className="pointer-events-none absolute inset-x-0 top-16 z-10 flex flex-col gap-2 px-4 md:px-8">
+      <div className="pointer-events-none absolute inset-x-0 top-28 sm:top-16 z-10 flex flex-col gap-2 px-4 md:px-8">
         <div className={`pointer-events-auto max-w-sm ${searchOpen ? '' : 'max-md:hidden'}`}>
           <KabupatenPicker hideLabel label="Cari kabupaten atau kota" onSelect={k => { setSearchOpen(false); setSel(k.slug); if (filter !== 'all' && filter !== k.provinceId) setFilter('all'); setFlyTo({ lon: k.centroid[0], lat: k.centroid[1], key: Date.now() }) }} />
         </div>

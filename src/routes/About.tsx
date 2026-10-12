@@ -144,7 +144,7 @@ export default function About() {
 
           <Section id="pengembang" title="Pengembang">
             <div className="flex items-center gap-5">
-              <div className="size-32 shrink-0 overflow-hidden rounded-panel md:size-40"><Picture name="developer" decorative={false} sizes="160px" className="size-full object-cover" /></div>
+              <div className="size-32 shrink-0 overflow-hidden rounded-full md:size-40"><Picture name="developer" decorative={false} sizes="160px" className="size-full object-cover" /></div>
               <div>
                 <p className="text-2xl font-bold text-fg">harrie ros</p>
                 <p className="mt-1 text-fg-2">Pengembang situs <span translate="no">Visualize Karhutla</span>.</p>
