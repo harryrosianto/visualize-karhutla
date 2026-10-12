@@ -10,3 +10,4 @@ data/raw/*
 # Berisi folder Downloads pribadi, jangan pernah di-commit
 src/Downloads/
 src/Burned.otf
+.wrangler/
