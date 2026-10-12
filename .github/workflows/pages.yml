@@ -26,11 +26,10 @@ jobs:
       - run: npm ci
       - run: npm run build
         env:
-          # Atur di Settings > Secrets and variables > Actions > Variables:
-          # SITE_URL  = alamat publik tanpa garis miring akhir, mis. https://nama.github.io/visualize-karhutla
-          # SITE_BASE = /visualize-karhutla/ (kosongkan bila memakai domain khusus)
-          VITE_SITE_URL: ${{ vars.SITE_URL }}
-          VITE_BASE: ${{ vars.SITE_BASE }}
+          # Terisi otomatis: https://<akun>.github.io/<repositori> dan base /<repositori>/.
+          # Untuk domain khusus, buat variabel repositori SITE_URL (alamat publik) dan SITE_BASE (kosongkan).
+          VITE_SITE_URL: ${{ vars.SITE_URL || format('https://{0}.github.io/{1}', github.repository_owner, github.event.repository.name) }}
+          VITE_BASE: ${{ vars.SITE_BASE || (vars.SITE_URL && '/' || format('/{0}/', github.event.repository.name)) }}
       # GitHub Pages tidak mendukung _redirects; 404.html menjadi cadangan routing sisi klien
       - run: cp dist/index.html dist/404.html
       - uses: actions/upload-pages-artifact@v3

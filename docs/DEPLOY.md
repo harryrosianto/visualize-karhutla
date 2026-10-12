@@ -59,9 +59,7 @@ Cloudflare Pages akan membangun ulang situs secara otomatis setelah push. Kunci 
 Berkas `.github/workflows/pages.yml` membangun dan menerbitkan situs setiap kali ada push ke cabang `main`.
 
 1. Dorong repositori ke GitHub. Di Settings, Pages, pilih sumber "GitHub Actions".
-2. Di Settings, Secrets and variables, Actions, tab Variables, tambahkan:
-   - `SITE_URL`: alamat publik tanpa garis miring akhir, misalnya `https://nama.github.io/visualize-karhutla`
-   - `SITE_BASE`: `/visualize-karhutla/` (nama repositori); kosongkan bila memakai domain khusus.
-3. Push; situs terbit pada `SITE_URL`.
+2. Tidak perlu variabel tambahan: alamat (`https://<akun>.github.io/<repositori>`) dan base path (`/<repositori>/`) terisi otomatis oleh workflow. Untuk domain khusus, buat variabel repositori `SITE_URL` (alamat publik, tanpa garis miring akhir); `SITE_BASE` boleh dikosongkan.
+3. Push; situs terbit pada alamat tersebut.
 
 Catatan: pada GitHub Pages, halaman statis tiap rute (`/wrapped/<slug>/`) dilayani langsung sehingga pratinjau media sosial berfungsi; alamat lain yang tidak dikenal memakai `404.html` (salinan `index.html`) sehingga status HTTP-nya 404 meski halaman tetap tampil. Kuota lunak GitHub Pages: situs 1 GB dan bandwidth sekitar 100 GB per bulan.
