@@ -7,7 +7,7 @@ export function SiteNav() {
   return (
     <header className="absolute inset-x-0 top-0 z-30">
       <nav aria-label="Utama" className="mx-auto flex h-16 max-w-[1400px] items-center justify-between px-4 md:px-8">
-        <Link to="/" className="flex min-h-[44px] items-center whitespace-nowrap text-base font-extrabold tracking-tight text-fg sm:text-lg">
+        <Link to="/" className="flex min-h-[44px] items-center font-brand whitespace-nowrap text-xl font-normal tracking-wide text-fg sm:text-2xl">
           Visualize Karhutla<span className="text-ember">.</span>
         </Link>
         <div className="flex items-center">

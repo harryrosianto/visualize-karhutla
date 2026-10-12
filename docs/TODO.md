@@ -26,3 +26,8 @@
 2. `npm run fetch-firms` (unduh 2025-01-01 sampai hari ini, VIIRS SNPP), lalu `npm run firms`.
 3. Isi `data/sipongi.json` secara manual, lalu `npm run firms` lagi.
 Catatan: data asli jauh lebih besar dari contoh (7 hari terakhir saja sudah sekitar 29 ribu titik di Kalimantan), jadi `hotspots-*.json` bisa beberapa MB; lihat butir pemangkasan di atas.
+
+## Aset yang diberikan pemilik proyek (lisensi belum diketahui)
+- [ ] Font `Burned.otf` (wordmark): pencipta dan lisensi web-embedding belum diverifikasi. Subset woff2 (`src/assets/fonts/burned-latin.woff2`) ikut ter-commit; berkas OTF asli tidak (di-gitignore, salinan di `assets-src/`). Pastikan lisensinya mengizinkan penyematan di web.
+- [ ] Animasi api `fire-fire.gif` (ikon peta): sumber dan lisensi belum diketahui. Dipakai sebagai `src/assets/media/fire.webp`.
+- [ ] `src/Downloads/` berisi seluruh folder Downloads pribadi. Sudah di-gitignore dan tidak pernah di-commit, tapi sebaiknya dipindahkan keluar dari proyek.

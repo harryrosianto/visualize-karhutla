@@ -34,5 +34,29 @@
     "verified": false,
     "usedIn": "Slide luas terbakar dan bulan berasap Wrapped, angka kunci landing",
     "note": "Pencipta dan platform diambil dari nama berkas. URL dan lisensi belum diverifikasi (lihat docs/TODO.md). Foto bukan lokasi Kalimantan."
+  },
+  {
+    "file": "Burned.otf",
+    "originalFile": "Burned.otf",
+    "title": "Font Burned (wordmark Visualize Karhutla)",
+    "creator": "",
+    "source": "",
+    "sourceUrl": "",
+    "license": "",
+    "verified": false,
+    "usedIn": "Wordmark di hero, navigasi, dan footer",
+    "note": "Disediakan pemilik proyek. Pencipta dan lisensi belum diketahui (lihat docs/TODO.md). Yang dikirim ke browser hanya subset Latin dasar (burned-latin.woff2)."
+  },
+  {
+    "file": "fire-fire.gif",
+    "originalFile": "fire-fire.gif",
+    "title": "Animasi api (ikon di peta)",
+    "creator": "",
+    "source": "",
+    "sourceUrl": "",
+    "license": "",
+    "verified": false,
+    "usedIn": "Penanda titik panas di peta dan cuplikan peta landing",
+    "note": "Disediakan pemilik proyek. Sumber dan lisensi belum diketahui (lihat docs/TODO.md). Diperkecil menjadi WebP animasi 192px (fire.webp)."
   }
 ]

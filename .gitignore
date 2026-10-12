@@ -6,3 +6,7 @@ data/raw/*
 !data/raw/.gitkeep
 *.log
 .env
+
+# Berisi folder Downloads pribadi, jangan pernah di-commit
+src/Downloads/
+src/Burned.otf

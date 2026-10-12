@@ -55,7 +55,7 @@ export function Hero() {
       <EmberCanvas className="-z-10" />
 
       <motion.div style={{ y: textY, opacity: textOpacity }} className="mx-auto w-full max-w-[1400px] px-4 pb-24 pt-28 md:px-8">
-        <motion.h1 {...rise(0.1)} className="text-[clamp(3.5rem,13.5vw,10rem)] font-extrabold leading-[0.88] tracking-tighter text-fg">
+        <motion.h1 {...rise(0.1)} className="font-brand text-[clamp(3.5rem,13.5vw,10rem)] font-normal leading-[0.95] tracking-normal text-fg">
           Visualize<br />Karhutla<span className="text-ember">.</span>
         </motion.h1>
         <motion.p {...rise(0.25)} className="mt-4 pb-1 font-serif text-3xl italic leading-[1.1] text-ember md:text-5xl">

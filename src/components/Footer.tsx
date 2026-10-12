@@ -21,12 +21,12 @@ export function Footer() {
   return (
     <footer className="relative isolate overflow-hidden border-t border-line bg-ink">
       <div aria-hidden className="glow-ember pointer-events-none absolute inset-y-0 right-0 -z-10 w-full md:w-3/5" />
-      <div aria-hidden className="pointer-events-none absolute -bottom-6 left-0 -z-10 select-none whitespace-nowrap text-[34vw] font-extrabold leading-none tracking-tighter text-fg/[0.035] md:text-[20vw]">
+      <div aria-hidden className="pointer-events-none absolute -bottom-6 left-0 -z-10 select-none whitespace-nowrap font-brand text-[34vw] font-normal leading-none tracking-normal text-fg/[0.035] md:text-[20vw]">
         KARHUTLA
       </div>
       <div className="mx-auto grid max-w-[1400px] gap-14 px-4 py-20 md:grid-cols-[1.3fr_1fr] md:px-8 md:py-28">
         <div>
-          <p className="text-6xl font-extrabold leading-none tracking-tighter text-fg md:text-7xl">
+          <p className="font-brand text-6xl font-normal leading-none tracking-normal text-fg md:text-7xl">
             Visualize Karhutla<span className="text-ember">.</span>
           </p>
           <p className="mt-3 font-serif text-2xl italic leading-[1.15] text-ember pb-1">Setahun di balik asap.</p>

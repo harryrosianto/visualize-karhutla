@@ -1,6 +1,7 @@
 import * as maplibregl from 'maplibre-gl'
 import type { GeoJSONSource, Map as MLMap } from 'maplibre-gl'
 import workerUrl from '../../lib/mlWorker?worker&url'
+import fireUrl from '../../assets/media/fire.webp'
 import { HexagonLayer, MapLibreOverlay, ScatterplotLayer } from 'deck.gl'
 import { DataFilterExtension } from '@deck.gl/extensions'
 import { useEffect, useMemo, useRef, useState } from 'react'
@@ -59,6 +60,12 @@ export default function MapView({ merged, mode, day, filter, selectedSlug, onSel
       if (slug) onSelectRef.current(slug)
     })
     // garis batas kabupaten sebagai layer garis native MapLibre (diproses di worker, bukan main thread)
+    const fz = () => {
+      const z = m.getZoom()
+      el.current?.style.setProperty('--fz', (0.3 + 0.7 * Math.min(1, Math.max(0, (z - 3.8) / 3.4))).toFixed(3))
+    }
+    m.on('zoom', fz)
+    fz()
     m.on('load', () => {
       m.addSource('kab', { type: 'geojson', data: EMPTY as any })
       m.addLayer({ id: 'kab-line', type: 'line', source: 'kab', paint: { 'line-color': '#A8A29E', 'line-opacity': 0.3, 'line-width': 0.7 } })
@@ -113,6 +120,40 @@ export default function MapView({ merged, mode, day, filter, selectedSlug, onSel
     return out
   }, [merged, mode, day, fRange])
 
+
+  /* Ikon api animasi (GIF/WebP) per kabupaten: ukuran mengikuti titik panas 7 hari terakhir pada hari terpilih. */
+  const fires = useRef<{ slug: string; name: string; prov: ProvinceId; el: HTMLButtonElement; marker: maplibregl.Marker }[]>([])
+  useEffect(() => {
+    const m = map.current
+    if (!m || !merged) return
+    fires.current.forEach(f => f.marker.remove())
+    fires.current = merged.boundaries.features.map(f => {
+      const el = document.createElement('button')
+      el.type = 'button'
+      el.className = 'fire-marker'
+      el.innerHTML = `<img src="${fireUrl}" alt="" width="64" height="64" draggable="false" />`
+      el.addEventListener('click', e => { e.stopPropagation(); onSelectRef.current(f.properties.slug) })
+      const marker = new maplibregl.Marker({ element: el, anchor: 'bottom' }).setLngLat(f.properties.centroid as [number, number]).addTo(m)
+      return { slug: f.properties.slug, name: f.properties.name, prov: f.properties.provinceId as ProvinceId, el, marker }
+    })
+    return () => { fires.current.forEach(f => f.marker.remove()); fires.current = [] }
+  }, [merged?.boundaries.features.length, ready]) // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
+    if (!merged) return
+    const nf = new Intl.NumberFormat('id-ID')
+    for (const f of fires.current) {
+      const cum = merged.kabCum[f.slug]
+      const recent = cum ? cum[day] - (cum[day - 7] ?? 0) : 0
+      const show = mode === 'titik' && recent > 0 && (filter === 'all' || filter === f.prov)
+      const scale = show ? 0.32 + 0.68 * Math.sqrt(recent / merged.maxRecent) : 0
+      f.el.style.setProperty('--s', scale.toFixed(3))
+      f.el.style.visibility = show ? 'visible' : 'hidden'
+      f.el.tabIndex = show ? 0 : -1
+      f.el.setAttribute('aria-label', `${f.name}: ${nf.format(recent)} titik panas dalam 7 hari terakhir. Buka detail.`)
+    }
+  }, [merged, day, mode, filter, ready])
+
   useEffect(() => {
     const o = overlay.current
     if (!o) return
@@ -125,19 +166,11 @@ export default function MapView({ merged, mode, day, filter, selectedSlug, onSel
           getFillColor: { value: merged.color, size: 4, normalized: true },
         } } as any
         const blend = { blend: true, blendColorSrcFactor: 'src-alpha', blendColorDstFactor: 'one', blendAlphaSrcFactor: 'one', blendAlphaDstFactor: 'one' } as any
-        // titik lama memudar (soft range 21 hari), titik 5 hari terakhir menyala dengan halo
+        // titik individual hanya jadi jejak tipis; tanda utama adalah ikon api per kabupaten (penanda DOM di bawah)
         layers.push(new ScatterplotLayer({
-          id: 'trail', data, radiusUnits: 'meters', getRadius: 1600, radiusMinPixels: 1.1, radiusMaxPixels: 6, opacity: 0.5, parameters: blend,
+          id: 'trail', data, radiusUnits: 'meters', getRadius: 1200, radiusMinPixels: 0.8, radiusMaxPixels: 3, opacity: 0.1, parameters: blend,
           extensions: [ext],
           filterRange: [[0, day], fRange] as any, filterSoftRange: [[day - 21, day], fRange] as any, filterTransformSize: true,
-        } as any))
-        layers.push(new ScatterplotLayer({
-          id: 'glow', data, radiusUnits: 'meters', getRadius: 8000, radiusMinPixels: 5, radiusMaxPixels: 26, opacity: 0.16, parameters: blend,
-          extensions: [ext], filterRange: [[day - 4, day], fRange] as any,
-        } as any))
-        layers.push(new ScatterplotLayer({
-          id: 'core', data, radiusUnits: 'meters', getRadius: 2600, radiusMinPixels: 2, radiusMaxPixels: 9, opacity: 1,
-          extensions: [ext], filterRange: [[day - 4, day], fRange] as any,
         } as any))
       } else {
         layers.push(new HexagonLayer<[number, number]>({
