@@ -1,6 +1,6 @@
 import { motion, useReducedMotion, type Variants } from 'motion/react'
 import type { ReactNode } from 'react'
-import { HA_PER_FIELD, MONTHS, fmt, fmtDate, provinceTotals, sourceLine, type Kab, type Meta } from '../../lib/data'
+import { HA_PER_FIELD, MONTHS, burnedInfo, burnedSourceLine, fmt, fmtDate, provinceTotals, sourceLine, type Kab, type Meta } from '../../lib/data'
 import { siteHost } from '../../lib/share'
 import { CountUp } from '../CountUp'
 import { Picture } from '../Picture'
@@ -58,7 +58,7 @@ function Big({ text, children, max }: { text: string; children: ReactNode; max?:
   const { item } = useVariants()
   return <motion.p variants={item} style={fit(text, max)} className="mt-[3cqw] font-extrabold leading-[0.95] tracking-tighter text-fg">{children}<span className="text-ember">.</span></motion.p>
 }
-const Src = ({ meta, kind = 'hotspot' }: { meta: Meta; kind?: 'hotspot' | 'burnedArea' }) => <>{sourceLine(meta, kind)}</>
+const Src = ({ meta, kind = 'hotspot' }: { meta: Meta; kind?: 'hotspot' | 'burnedArea' }) => <>{kind === 'burnedArea' ? burnedSourceLine(meta) : sourceLine(meta, kind)}</>
 
 export function pct(now: number, before: number | null) {
   if (!before) return null
@@ -72,7 +72,7 @@ export function SlideOpening({ kab }: SlideCtx) {
     <SlideShell image="hero-forest-night" position="62% 50%" dim={0.62}>
       <Kicker>Karhutla Wrapped 2026</Kicker>
       <motion.h2 variants={item} className="mt-[4cqw] text-[17cqw] font-extrabold leading-[0.92] tracking-tighter text-fg">Setahun di balik asap<span className="text-ember">.</span></motion.h2>
-      <motion.p variants={item} style={{ fontSize: `${Math.min(14, 74 / (kab.name.length * 0.5))}cqw` }} className="mt-[7cqw] pb-[1cqw] font-serif italic leading-[1.1] text-ember">{kab.name}</motion.p>
+      <motion.p variants={item} style={{ fontSize: `${Math.min(14, 74 / (kab.name.length * 0.5))}cqw` }} className="mt-[7cqw] pb-[1cqw] font-serif leading-[1.1] text-ember">{kab.name}</motion.p>
       <motion.p variants={item} className="mt-[2cqw] text-[4.6cqw] text-fg-2">{kab.provinceName}</motion.p>
     </SlideShell>
   )
@@ -102,21 +102,23 @@ export function SlideTotal({ kab, meta }: SlideCtx) {
 /* 3. Luas terbakar */
 export function SlideBurned({ kab, meta }: SlideCtx) {
   const { item } = useVariants()
-  const fields = kab.burnedHa === null ? null : Math.round(kab.burnedHa / HA_PER_FIELD)
+  const info = burnedInfo(kab, meta)
+  const fields = info ? Math.round(info.ha / HA_PER_FIELD) : null
+  const where = info?.scope === 'provinsi' ? kab.provinceName : kab.name
   return (
     <SlideShell image="firefighters-manggala" position="46% 50%" dim={0.78} footer={<Src meta={meta} kind="burnedArea" />}>
-      <Kicker>Estimasi luas lahan terbakar setara dengan</Kicker>
-      {fields === null ? (
+      <Kicker>Estimasi luas lahan terbakar di {where} setara dengan</Kicker>
+      {fields === null || !info ? (
         <>
           <motion.p variants={item} className="mt-[4cqw] text-[13cqw] font-extrabold leading-[0.98] tracking-tighter text-fg">Belum tersedia<span className="text-ember">.</span></motion.p>
-          <Lead>Data luas lahan terbakar dari SiPongi untuk wilayah ini belum tersedia.</Lead>
+          <Lead>Data luas lahan terbakar untuk wilayah ini belum tersedia.</Lead>
         </>
       ) : (
         <>
           <Big text={fmt(fields)}><CountUp value={fields} duration={1.8} start /></Big>
           <Lead>lapangan sepak bola</Lead>
-          <motion.p variants={item} className="mt-[8cqw] max-w-[30ch] text-[4.4cqw] leading-snug text-fg-2">
-            Luas lahan terbakar tercatat {fmt(kab.burnedHa!)} hektare. Satu lapangan sepak bola dihitung seluas {String(HA_PER_FIELD).replace('.', ',')} hektare.
+          <motion.p variants={item} className="mt-[8cqw] max-w-[32ch] text-[4.2cqw] leading-snug text-fg-2">
+            Luas lahan terbakar tercatat {fmt(info.ha)} hektare{info.scopeNote ? ` (${info.scopeNote})` : ''}. Satu lapangan sepak bola dihitung seluas {String(HA_PER_FIELD).replace('.', ',')} hektare.
           </motion.p>
         </>
       )}
@@ -189,7 +191,8 @@ export function SlideRank({ kab, kabs, meta }: SlideCtx) {
 /* 6. Rangkuman. Dipakai juga sebagai kartu bagikan 1080x1920 (variant export). */
 export function SummaryCard({ kab, kabs, meta, variant = 'story' }: SlideCtx & { variant?: 'story' | 'export' }) {
   const d = pct(kab.total2026, kab.total2025)
-  const fields = kab.burnedHa === null ? null : Math.round(kab.burnedHa / HA_PER_FIELD)
+  const burned = burnedInfo(kab, meta)
+  const fields = burned ? Math.round(burned.ha / HA_PER_FIELD) : null
   const top = kab.isRegion ? provinceTotals(kabs, meta)[0] : null
   const exp = variant === 'export'
   const stat = (label: string, value: string, sub?: string) => (
@@ -217,7 +220,7 @@ export function SummaryCard({ kab, kabs, meta, variant = 'story' }: SlideCtx & {
             ? stat('Provinsi tertinggi', top.short, `${top.name}, ${fmt(top.total)} titik`)
             : stat('Peringkat di Kalimantan', `#${kab.rankKalimantan}`, `dari ${kabs.length} kabupaten/kota`)}
           {stat('Bulan puncak', MONTHS[kab.peakMonth], `${fmt(kab.monthly[kab.peakMonth])} titik`)}
-          {stat('Luas lahan terbakar', fields === null ? 'Belum tersedia' : fmt(fields), fields === null ? undefined : `lapangan sepak bola, ${fmt(kab.burnedHa!)} ha`)}
+          {stat('Luas lahan terbakar', fields === null ? 'Belum tersedia' : fmt(fields), fields === null || !burned ? undefined : `lapangan sepak bola, ${fmt(burned.ha)} ha${burned.scope === 'provinsi' ? ' (tingkat provinsi)' : burned.scope === 'wilayah' ? ' (provinsi yang tersedia)' : ''}`)}
         </dl>
         <div className="mt-auto pt-[4cqw] text-[3.1cqw] leading-snug text-fg-2">
           {exp && <p className="mb-[2cqw] text-[4.4cqw] font-extrabold tracking-tight text-fg">Visualize Karhutla<span className="text-ember">.</span> <span className="font-normal text-fg-2">{siteHost()}</span></p>}

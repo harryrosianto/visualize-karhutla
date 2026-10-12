@@ -1,12 +1,11 @@
 @import 'tailwindcss';
 @import '@fontsource-variable/schibsted-grotesk';
-@import '@fontsource/instrument-serif/400-italic.css';
 @import 'maplibre-gl/dist/maplibre-gl.css' layer(base);
 
 @theme {
   --font-display: 'Schibsted Grotesk Variable', ui-sans-serif, system-ui, sans-serif;
   --font-brand: 'Burned', 'Schibsted Grotesk Variable', ui-sans-serif, sans-serif;
-  --font-serif: 'Instrument Serif', ui-serif, Georgia, serif;
+  --font-serif: 'Times New Roman', Times, 'Liberation Serif', Tinos, serif;
   --color-ink: #0c0a09;
   --color-ink-2: #161210;
   --color-ink-3: #211b17;

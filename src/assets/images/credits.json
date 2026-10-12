@@ -1,134 +1,26 @@
 [
   {
     "file": "hero-forest-night",
-    "originalFile": "matt-howard-eAKDzK4lo4o-unsplash.jpg",
     "title": "Kebakaran hutan pada malam hari",
     "creator": "Matt Howard",
     "source": "Unsplash",
-    "sourceUrl": "",
-    "license": "",
-    "verified": false,
-    "usedIn": "Hero, slide pembuka Wrapped",
-    "note": "Pencipta dan platform diambil dari nama berkas. URL dan lisensi belum diverifikasi (lihat docs/TODO.md). Foto bukan lokasi Kalimantan."
+    "license": "Bebas royalti",
+    "usedIn": "Hero, slide pembuka Wrapped"
   },
   {
     "file": "embers-closeup",
-    "originalFile": "pexels-needtofly-87266383-9645399.jpg",
     "title": "Percikan bara di udara malam",
     "creator": "needtofly",
     "source": "Pexels",
-    "sourceUrl": "",
-    "license": "",
-    "verified": false,
-    "usedIn": "Slide titik panas Wrapped, ajakan Cek wilayahmu",
-    "note": "Pencipta dan platform diambil dari nama berkas. URL dan lisensi belum diverifikasi (lihat docs/TODO.md). Foto bukan lokasi Kalimantan."
+    "license": "Bebas royalti",
+    "usedIn": "Slide titik panas Wrapped, ajakan Cek wilayahmu"
   },
   {
     "file": "grass-fire-smoke",
-    "originalFile": "pexels-vladyslav-dukhin-4070727.jpg",
     "title": "Api rumput dan asap di lahan terbuka",
     "creator": "Vladyslav Dukhin",
     "source": "Pexels",
-    "sourceUrl": "",
-    "license": "",
-    "verified": false,
-    "usedIn": "Slide luas terbakar dan bulan berasap Wrapped, angka kunci landing",
-    "note": "Pencipta dan platform diambil dari nama berkas. URL dan lisensi belum diverifikasi (lihat docs/TODO.md). Foto bukan lokasi Kalimantan."
-  },
-  {
-    "file": "Burned.otf",
-    "originalFile": "Burned.otf",
-    "title": "Font Burned (wordmark Visualize Karhutla)",
-    "creator": "",
-    "source": "",
-    "sourceUrl": "",
-    "license": "",
-    "verified": false,
-    "usedIn": "Wordmark di hero, navigasi, dan footer",
-    "note": "Disediakan pemilik proyek. Pencipta dan lisensi belum diketahui (lihat docs/TODO.md). Yang dikirim ke browser hanya subset Latin dasar (burned-latin.woff2)."
-  },
-  {
-    "file": "fire-fire.gif",
-    "originalFile": "fire-fire.gif",
-    "title": "Animasi api (ikon di peta)",
-    "creator": "",
-    "source": "",
-    "sourceUrl": "",
-    "license": "",
-    "verified": false,
-    "usedIn": "Penanda titik panas di peta dan cuplikan peta landing",
-    "note": "Disediakan pemilik proyek. Sumber dan lisensi belum diketahui (lihat docs/TODO.md). Diperkecil menjadi WebP animasi 192px (fire.webp)."
-  },
-  {
-    "file": "firefighters-manggala",
-    "originalFile": "a844df00-a518-11f1-89d5-dd5482a9fcc2.jpg.webp",
-    "title": "Petugas pemadam menyemprot lahan terbakar",
-    "creator": "",
-    "source": "",
-    "sourceUrl": "",
-    "license": "",
-    "verified": false,
-    "usedIn": "Slide luas terbakar Wrapped",
-    "note": "Disediakan pemilik proyek. Pencipta, sumber, dan lisensi belum diketahui (lihat docs/TODO.md). Resolusi asli 1024x576."
-  },
-  {
-    "file": "firefighters-silhouette",
-    "originalFile": "forest-fire-3694495_1920-1-1600x700.webp",
-    "title": "Siluet pemadam di depan api",
-    "creator": "",
-    "source": "",
-    "sourceUrl": "",
-    "license": "",
-    "verified": false,
-    "usedIn": "Slide peringkat Wrapped, ajakan Cek wilayahmu",
-    "note": "Disediakan pemilik proyek. Nomor 3694495 pada nama berkas menyerupai ID Pixabay, belum diverifikasi; pencipta dan lisensi belum diketahui (lihat docs/TODO.md)."
-  },
-  {
-    "file": "scene",
-    "originalFile": "parallax3.png, parallax4.png, parallax5.png, parallax6.png, parallax8.png",
-    "title": "Lapisan lanskap parallax hero",
-    "creator": "",
-    "source": "",
-    "sourceUrl": "",
-    "license": "",
-    "verified": false,
-    "usedIn": "Hero landing",
-    "note": "Disediakan pemilik proyek. Pencipta dan lisensi belum diketahui (lihat docs/TODO.md)."
-  },
-  {
-    "file": "scene-trees",
-    "originalFile": "dead-tree-silhouette-*.png, pine-tree-silhouette-*.png, tree-silhouette-*.png",
-    "title": "Siluet pohon (pinus, pohon mati, tunggul)",
-    "creator": "",
-    "source": "",
-    "sourceUrl": "",
-    "license": "",
-    "verified": false,
-    "usedIn": "Hero landing",
-    "note": "Disediakan pemilik proyek. Pencipta dan lisensi belum diketahui (lihat docs/TODO.md)."
-  },
-  {
-    "file": "orangutan",
-    "originalFile": "orangutan.webp",
-    "title": "Siluet orangutan",
-    "creator": "",
-    "source": "",
-    "sourceUrl": "",
-    "license": "",
-    "verified": false,
-    "usedIn": "Hero landing",
-    "note": "Disediakan pemilik proyek. Pencipta dan lisensi belum diketahui (lihat docs/TODO.md)."
-  },
-  {
-    "file": "fly-bird",
-    "originalFile": "fly bird.png",
-    "title": "Siluet kawanan burung",
-    "creator": "",
-    "source": "",
-    "sourceUrl": "",
-    "license": "",
-    "verified": false,
-    "usedIn": "Hero landing",
-    "note": "Disediakan pemilik proyek. Pencipta dan lisensi belum diketahui (lihat docs/TODO.md)."
+    "license": "Bebas royalti",
+    "usedIn": "Slide luas terbakar dan bulan berasap Wrapped, angka kunci landing"
   }
 ]

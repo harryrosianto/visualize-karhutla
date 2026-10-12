@@ -9,6 +9,12 @@ export interface Meta {
   year: number
   sources: { hotspot: string; burnedArea: string; boundaries: string }
   provinces: { id: ProvinceId; name: string; short: string }[]
+  /** luas lahan terbakar tingkat provinsi (ha), dari pemberitaan yang mengutip BNPB/SiPongi */
+  burnedArea?: {
+    source: string; period: string; retrievedAt: string; note: string
+    provinces: Partial<Record<ProvinceId, number>>
+    references: { publisher: string; title: string; date: string; url: string }[]
+  } | null
 }
 
 export interface Kab {
@@ -86,4 +92,25 @@ export function provinceTotals(kabs: Kab[], meta: Meta): ProvinceTotal[] {
   return meta.provinces
     .map(p => ({ ...p, total: kabs.filter(k => k.provinceId === p.id).reduce((a, k) => a + k.total2026, 0) }))
     .sort((a, b) => b.total - a.total)
+}
+
+export interface BurnedInfo { ha: number; scope: 'kabupaten' | 'provinsi' | 'wilayah'; scopeNote: string }
+
+/** Luas lahan terbakar yang tersedia untuk sebuah wilayah: per kabupaten/kota bila ada, jika tidak tingkat provinsi, atau jumlah provinsi untuk seluruh Kalimantan. */
+export function burnedInfo(kab: Kab, meta: Meta): BurnedInfo | null {
+  if (kab.burnedHa !== null) return { ha: kab.burnedHa, scope: 'kabupaten', scopeNote: '' }
+  const b = meta.burnedArea
+  if (!b) return null
+  if (kab.isRegion) {
+    const vals = Object.values(b.provinces) as number[]
+    if (!vals.length) return null
+    const missing = meta.provinces.length - vals.length
+    return { ha: vals.reduce((a, v) => a + v, 0), scope: 'wilayah', scopeNote: missing ? `jumlah ${vals.length} provinsi; ${missing} provinsi belum tersedia` : 'jumlah lima provinsi' }
+  }
+  const ha = b.provinces[kab.provinceId]
+  return ha === undefined ? null : { ha, scope: 'provinsi', scopeNote: `data tingkat provinsi; data per kabupaten/kota belum tersedia` }
+}
+
+export function burnedSourceLine(meta: Meta) {
+  return meta.burnedArea ? `Sumber luas lahan terbakar: ${meta.burnedArea.source}. Periode: ${meta.burnedArea.period}.` : 'Data luas lahan terbakar belum tersedia.'
 }

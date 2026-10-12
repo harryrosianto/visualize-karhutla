@@ -86,17 +86,27 @@ export default function About() {
             <p>Data titik panas diperoleh dari NASA FIRMS (Fire Information for Resource Management System) yang dihasilkan sensor VIIRS dengan resolusi spasial sekitar 375 meter. Satu titik panas merepresentasikan piksel yang memiliki suhu lebih tinggi daripada piksel di sekitarnya pada saat satelit melintas.</p>
             <p>Titik panas disaring pada lima provinsi di Kalimantan, yaitu Kalimantan Barat, Kalimantan Tengah, Kalimantan Selatan, Kalimantan Timur, dan Kalimantan Utara. Suatu titik dihitung sebagai bagian dari kabupaten/kota apabila koordinatnya berada di dalam batas wilayah administratif tingkat ADM2 dari geoBoundaries. Titik dengan tingkat kepercayaan rendah dikeluarkan dari perhitungan (MODIS di bawah 30 dan VIIRS berlabel rendah).</p>
             <p>Data diagregasi menurut kabupaten/kota dan hari. Tanggal yang digunakan adalah tanggal akuisisi FIRMS dalam waktu UTC, sehingga dapat berbeda satu hari dari tanggal menurut WIB. Data pembanding tahun 2025 dihitung pada periode yang sama, yaitu 1 Januari hingga tanggal data terakhir.</p>
-            <p>Luas lahan terbakar tidak diturunkan dari titik panas. Angka tersebut bersumber dari SiPongi Kemenhut dan dimasukkan secara manual. Padanan "lapangan sepak bola" menggunakan luas 0,714 hektare per lapangan. Peringkat disusun berdasarkan jumlah titik panas, bukan berdasarkan luas lahan terbakar.</p>
-            <p>Ringkasan untuk seluruh Kalimantan merupakan penjumlahan dari 56 kabupaten/kota. Data pembanding dan luas lahan terbakar pada ringkasan tersebut hanya ditampilkan apabila tersedia untuk seluruh kabupaten/kota.</p>
+            <p>Luas lahan terbakar tidak diturunkan dari titik panas. Data per kabupaten/kota belum tersedia, sehingga situs ini memakai angka tingkat provinsi yang dilaporkan BNPB melalui pemberitaan: gabungan data SiPongi Kemenhut hingga 31 Juli 2026 dan hasil pengukuran lapangan tim gabungan BNPB hingga 14 September 2026. Angka Kalimantan Utara tidak dilaporkan. Periode angka ini lebih pendek daripada periode titik panas. Padanan "lapangan sepak bola" menggunakan luas 0,714 hektare per lapangan. Peringkat disusun berdasarkan jumlah titik panas, bukan berdasarkan luas lahan terbakar.</p>
+            <p>Ringkasan untuk seluruh Kalimantan merupakan penjumlahan dari 56 kabupaten/kota. Data pembanding tahun 2025 pada ringkasan tersebut hanya ditampilkan apabila tersedia untuk seluruh kabupaten/kota, sedangkan luas lahan terbakar merupakan jumlah provinsi yang datanya tersedia.</p>
           </Section>
 
           <Section id="sumber" title="Sumber data">
             <ul className="grid gap-3">
               <li><A href="https://firms.modaps.eosdis.nasa.gov/">NASA FIRMS</A>: titik panas VIIRS, tahun 2025 dan 2026.</li>
-              <li><A href="https://sipongi.menlhk.go.id/">SiPongi Kemenhut</A>: luas lahan terbakar per wilayah, dimasukkan secara manual dengan mencantumkan periode dan tanggal pengambilan data pada berkas data.</li>
+              <li><A href="https://sipongi.menlhk.go.id/">SiPongi Kemenhut</A> dan BNPB: sumber primer luas lahan terbakar. Situs ini belum mengakses SiPongi secara langsung; angka dikutip dari pemberitaan yang tercantum pada bagian referensi di bawah.</li>
               <li><A href="https://www.geoboundaries.org/">geoBoundaries</A>: batas provinsi dan kabupaten/kota Indonesia (ADM1 dan ADM2).</li>
             </ul>
             <p>Setiap angka pada situs ini disertai keterangan sumber dan tanggal data. Keterangan tersebut turut dicantumkan pada kartu yang dibagikan.</p>
+            {meta?.burnedArea && (
+              <>
+                <p>Referensi angka luas lahan terbakar (diakses {fmtDate(meta.burnedArea.retrievedAt)}):</p>
+                <ul className="grid gap-3">
+                  {meta.burnedArea.references.map(r => (
+                    <li key={r.url}>{r.publisher} ({fmtDate(r.date)}). <A href={r.url}>{r.title}</A>.</li>
+                  ))}
+                </ul>
+              </>
+            )}
           </Section>
 
           <Section id="keterbatasan" title="Keterbatasan data">
@@ -104,6 +114,8 @@ export default function About() {
               <li>Titik panas bukan api yang telah terkonfirmasi dan bukan ukuran luas lahan terbakar. Satu titik dapat merepresentasikan beberapa api kecil, dan sebaliknya.</li>
               <li>Satelit hanya melintas beberapa kali dalam sehari. Api yang padam sebelum atau menyala setelah lintasan tidak terekam.</li>
               <li>Awan dan asap tebal dapat menutupi api, sehingga jumlah titik pada hari berasap cenderung lebih rendah daripada kondisi sebenarnya.</li>
+              <li>Angka luas lahan terbakar bersumber dari pemberitaan, bukan dari unduhan langsung SiPongi, sehingga belum diverifikasi terhadap sumber primer. Angka antarlembaga berbeda menurut metode dan periode; misalnya Walhi mencatat 33.837 ha untuk seluruh Kalimantan pada Januari hingga Juli 2026 (Mongabay Indonesia, 6 Agustus 2026), sedangkan BNPB mencatat sekitar 90 ribu ha hingga 14 September 2026. Angka-angka tersebut tidak dicampur pada situs ini.</li>
+              <li>Periode luas lahan terbakar (hingga 14 September 2026) berbeda dari periode titik panas (hingga tanggal data terakhir), sehingga keduanya tidak boleh dibandingkan langsung.</li>
               <li>Piksel bersuhu tinggi juga dapat berasal dari sumber lain, misalnya pembakaran terencana pada lahan industri.</li>
               <li>Pengolahan hanya memakai satu satelit pada satu waktu. Data dari satelit lain tidak digabungkan agar tidak terjadi perhitungan ganda pada kejadian yang sama.</li>
               <li>Batas kabupaten/kota memakai data dengan tahun representasi 2020. Wilayah yang dimekarkan setelah tahun tersebut mungkin belum tergambar. Provinsi sebagian kabupaten dikoreksi secara manual karena batas provinsi pada sumber data lebih lama.</li>
@@ -129,15 +141,13 @@ export default function About() {
           </Section>
 
           <Section id="kredit" title="Kredit aset visual">
-            <p>Foto dan ilustrasi pada situs ini berfungsi sebagai ilustrasi suasana dan bukan dokumentasi lokasi tertentu di Kalimantan.</p>
+            <p>Foto dan ilustrasi pada situs ini berfungsi sebagai ilustrasi suasana dan bukan dokumentasi lokasi tertentu di Kalimantan. Seluruh aset visual berasal dari sumber bebas royalti dan digunakan untuk keperluan nonkomersial.</p>
+            <p>Foto yang dapat dikreditkan:</p>
             <ul className="grid gap-5">
               {credits.map(c => (
                 <li key={c.file} className="border-l-2 border-ember pl-4">
                   <p className="font-semibold text-fg">{c.title}</p>
-                  <p>Pencipta: {c.creator || 'belum diketahui'}{c.source ? `; sumber: ${c.source}` : ''}.{' '}
-                    {c.license ? `Lisensi: ${c.license}.` : 'Lisensi: belum diverifikasi.'}
-                    {c.sourceUrl && <> <A href={c.sourceUrl}>Halaman sumber</A></>}
-                  </p>
+                  <p>Pencipta: {c.creator}; sumber: {c.source}. Lisensi: {c.license}.</p>
                   <p className="text-sm text-fg-3">Digunakan pada: {c.usedIn}.</p>
                 </li>
               ))}

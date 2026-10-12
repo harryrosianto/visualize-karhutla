@@ -14,9 +14,9 @@ const q = (s: string) => `"${s.replace(/"/g, '""')}"`
 const MONTHS = ['jan', 'feb', 'mar', 'apr', 'mei', 'jun', 'jul', 'agu', 'sep', 'okt']
 const BULAN = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober']
 
-const header = ['slug', 'kabupaten_kota', 'provinsi', 'titik_panas_2026', 'titik_panas_2025_periode_sama', ...MONTHS.map(m => `titik_panas_${m}_2026`), 'bulan_puncak', 'peringkat_kalimantan', 'luas_terbakar_ha', 'status_data']
+const header = ['slug', 'kabupaten_kota', 'provinsi', 'titik_panas_2026', 'titik_panas_2025_periode_sama', ...MONTHS.map(m => `titik_panas_${m}_2026`), 'bulan_puncak', 'peringkat_kalimantan', 'luas_terbakar_kabupaten_ha', 'luas_terbakar_provinsi_ha', 'status_data']
 const rows = kabs.map(k => [
-  q(k.slug), q(k.name), q(k.provinceName), k.total2026, k.total2025 ?? '', ...k.monthly, q(BULAN[k.peakMonth]), k.rankKalimantan, k.burnedHa ?? '', status,
+  q(k.slug), q(k.name), q(k.provinceName), k.total2026, k.total2025 ?? '', ...k.monthly, q(BULAN[k.peakMonth]), k.rankKalimantan, k.burnedHa ?? '', meta.burnedArea?.provinces?.[k.provinceId] ?? '', status,
 ].join(','))
 fs.writeFileSync(`${OUT}/${prefix}titik-panas-kabupaten-2026.csv`, [header.join(','), ...rows].join('\n') + '\n')
 
@@ -42,7 +42,8 @@ fs.writeFileSync(`${OUT}/${prefix}metadata.json`, JSON.stringify({
     'Titik panas adalah indikator kebakaran, bukan ukuran luas lahan terbakar.',
     'Tanggal menggunakan tanggal akuisisi FIRMS dalam waktu UTC.',
     'titik_panas_2025_periode_sama: 1 Januari sampai tanggal yang sama pada tahun 2025; kosong bila tidak tersedia.',
-    'luas_terbakar_ha berasal dari SiPongi Kemenhut dan kosong bila belum diisi.',
+    'luas_terbakar_kabupaten_ha kosong karena data per kabupaten/kota belum tersedia.',
+    meta.burnedArea ? `luas_terbakar_provinsi_ha (nilai provinsi diulang pada setiap kabupaten/kota): ${meta.burnedArea.source}; periode ${meta.burnedArea.period}. Kosong bila provinsi tidak dilaporkan (Kalimantan Utara).` : 'luas_terbakar_provinsi_ha belum tersedia.',
     'Batas wilayah: geoBoundaries (ADM2), CC BY 3.0 IGO.',
     meta.isSample ? 'DATA CONTOH: seluruh angka titik panas bersifat fiktif dan tidak boleh dikutip sebagai fakta.' : 'Data turunan; rujuk NASA FIRMS dan SiPongi untuk sumber asli.',
   ],

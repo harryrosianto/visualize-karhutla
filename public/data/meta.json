@@ -1,11 +1,11 @@
 {
  "isSample": false,
- "generatedAt": "2026-10-12T11:10:10.839Z",
+ "generatedAt": "2026-10-12T13:52:07.510Z",
  "dataDate": "2026-10-12",
  "year": 2026,
  "sources": {
   "hotspot": "NASA FIRMS (VIIRS NOAA-20)",
-  "burnedArea": "belum tersedia",
+  "burnedArea": "BNPB: gabungan data SiPongi Kemenhut hingga 31 Juli 2026 dan hasil pengukuran lapangan tim gabungan BNPB; dilaporkan CNBC Indonesia dan Katadata, periode 1 Januari sampai 14 September 2026",
   "boundaries": "geoBoundaries IDN ADM1/ADM2 (CC BY 3.0 IGO)"
  },
  "provinces": [
@@ -35,5 +35,37 @@
    "short": "Kaltara"
   }
  ],
+ "burnedArea": {
+  "source": "BNPB: gabungan data SiPongi Kemenhut hingga 31 Juli 2026 dan hasil pengukuran lapangan tim gabungan BNPB; dilaporkan CNBC Indonesia dan Katadata",
+  "period": "1 Januari sampai 14 September 2026",
+  "retrievedAt": "2026-10-12",
+  "note": "Angka provinsi Kalimantan Barat adalah 38.310 ha (SiPongi hingga 31 Juli) ditambah 10.224 ha (pengukuran lapangan BNPB 1 Agustus sampai 14 September). Kalimantan Utara tidak disebut dalam laporan tersebut, sehingga tidak tersedia. Angka lain dari sumber berbeda (Walhi, BPBD, Nusantara Atlas) berbeda metode dan periode, dan tidak dicampur.",
+  "provinces": {
+   "kalbar": 48536,
+   "kalteng": 15976.1,
+   "kalsel": 19303.99,
+   "kaltim": 5761.57
+  },
+  "references": [
+   {
+    "publisher": "CNBC Indonesia",
+    "title": "Luas Lahan Terbakar di Kalbar Tembus 48.536 Ha, Masih Ada 19 Hotspot",
+    "date": "2026-09-15",
+    "url": "https://www.cnbcindonesia.com/news/20260915170901-4-768159/luas-lahan-terbakar-di-kalbar-tembus-48536-ha-masih-ada-19-hotspot"
+   },
+   {
+    "publisher": "Katadata",
+    "title": "Karhutla Kalimantan Hanguskan Hampir 100 Ribu Hektare, Kalahkan Luas Jakarta",
+    "date": "2026-09-22",
+    "url": "https://katadata.co.id/ekonomi-hijau/investasi-hijau/6ab2461180b79/karhutla-kalimantan-hanguskan-hampir-100-ribu-hektare-kalahkan-luas-jakarta"
+   },
+   {
+    "publisher": "Mongabay Indonesia",
+    "title": "Ketika Kebakaran Hutan dan Lahan Menggila di Kalimantan",
+    "date": "2026-08-06",
+    "url": "https://mongabay.co.id/2026/08/06/ketika-kebakaran-hutan-dan-lahan-menggila-di-kalimantan/"
+   }
+  ]
+ },
  "lastMonth": 10
 }

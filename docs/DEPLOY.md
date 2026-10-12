@@ -53,3 +53,15 @@ Cloudflare Pages akan membangun ulang situs secara otomatis setelah push. Kunci 
 | Netlify | Paket gratis dengan batas bandwidth bulanan; `_redirects` dan `_headers` yang sama berlaku. |
 | GitHub Pages | Gratis untuk repositori publik; tidak mendukung `_redirects`, sehingga rute Wrapped memerlukan `404.html` sebagai cadangan (salin `dist/index.html` menjadi `dist/404.html`). |
 | Vercel | Paket gratis (Hobby) ditujukan untuk penggunaan non-komersial; tambahkan `vercel.json` berisi rewrite ke `/index.html`. |
+
+## GitHub Pages (opsional)
+
+Berkas `.github/workflows/pages.yml` membangun dan menerbitkan situs setiap kali ada push ke cabang `main`.
+
+1. Dorong repositori ke GitHub. Di Settings, Pages, pilih sumber "GitHub Actions".
+2. Di Settings, Secrets and variables, Actions, tab Variables, tambahkan:
+   - `SITE_URL`: alamat publik tanpa garis miring akhir, misalnya `https://nama.github.io/visualize-karhutla`
+   - `SITE_BASE`: `/visualize-karhutla/` (nama repositori); kosongkan bila memakai domain khusus.
+3. Push; situs terbit pada `SITE_URL`.
+
+Catatan: pada GitHub Pages, halaman statis tiap rute (`/wrapped/<slug>/`) dilayani langsung sehingga pratinjau media sosial berfungsi; alamat lain yang tidak dikenal memakai `404.html` (salinan `index.html`) sehingga status HTTP-nya 404 meski halaman tetap tampil. Kuota lunak GitHub Pages: situs 1 GB dan bandwidth sekitar 100 GB per bulan.

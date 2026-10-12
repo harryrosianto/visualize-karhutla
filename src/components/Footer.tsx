@@ -29,7 +29,7 @@ export function Footer() {
           <p className="font-brand text-6xl font-normal leading-none tracking-[0.05em] text-fg md:text-7xl">
             Visualize Karhutla<span className="text-ember">.</span>
           </p>
-          <p className="mt-3 font-serif text-2xl italic leading-[1.15] text-ember pb-1">Karhutla Kalimantan 2026.</p>
+          <p className="mt-3 font-serif text-2xl leading-[1.15] text-ember pb-1">Karhutla Kalimantan 2026.</p>
           <p className="mt-6 max-w-[40ch] text-base leading-relaxed text-fg-2">
             Peta dan ringkasan data titik panas karhutla di lima provinsi Kalimantan yang dapat diakses dan dibagikan oleh masyarakat.
           </p>

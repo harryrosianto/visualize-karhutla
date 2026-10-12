@@ -100,10 +100,16 @@ fs.writeFileSync('public/data/meta.json', JSON.stringify({
   isSample: false, generatedAt: new Date().toISOString(), dataDate: maxDate, year: YEAR,
   sources: {
     hotspot: `NASA FIRMS (${satLabel})`,
-    burnedArea: sip.entries?.length ? `SiPongi Kemenhut, periode ${sip.period}, diambil ${sip.retrievedAt}` : 'belum tersedia',
+    burnedArea: sip.entries?.length || sip.provinces?.length ? `${sip.source}, periode ${sip.period}` : 'belum tersedia',
     boundaries: 'geoBoundaries IDN ADM1/ADM2 (CC BY 3.0 IGO)',
   },
   provinces: PROVINCES.map(p => ({ id: p.id, name: p.name, short: p.short })),
+  // luas lahan terbakar tingkat provinsi dari pemberitaan (lihat data/sipongi.json); kosong bila belum diisi
+  burnedArea: sip.provinces?.length ? {
+    source: sip.source, period: sip.period, retrievedAt: sip.retrievedAt, note: sip.note ?? '',
+    provinces: Object.fromEntries(sip.provinces.map((p: any) => [p.provinceId, p.burnedHa])),
+    references: sip.references ?? [],
+  } : null,
   lastMonth,
 }, null, 1))
 console.log('selesai:', kabOut.length, 'kabupaten')
