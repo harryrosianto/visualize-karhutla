@@ -109,7 +109,7 @@ export function StoryPlayer({ slides, duration = 5000, isSample, onExit, overlay
           </div>
           {isSample && <div className="-mx-[3cqw] mt-[2.4cqw] bg-ember py-[1.2cqw] text-center text-[3cqw] font-bold tracking-wide text-ink">DATA CONTOH</div>}
           <div className="mt-[2cqw] flex items-center justify-between">
-            <p className="text-[4cqw] font-extrabold tracking-tight text-fg">Visualize Karhutla<span className="text-ember">.</span></p>
+            <p translate="no" className="text-[4cqw] font-extrabold tracking-tight text-fg">Visualize Karhutla<span className="text-ember">.</span></p>
             <div className="pointer-events-auto flex items-center">
               <button type="button" onClick={() => setManualPause(p => !p)} aria-label={manualPause ? 'Lanjutkan ringkasan' : 'Jeda ringkasan'} className="grid size-11 place-items-center rounded-full text-fg hover:bg-fg/10">
                 {manualPause ? <Play size={22} weight="fill" aria-hidden /> : <Pause size={22} weight="fill" aria-hidden />}

@@ -70,7 +70,7 @@ export function SlideOpening({ kab }: SlideCtx) {
   const { item } = useVariants()
   return (
     <SlideShell image="hero-forest-night" position="62% 50%" dim={0.62}>
-      <Kicker>Karhutla Wrapped 2026</Kicker>
+      <Kicker><span translate="no">Karhutla Wrapped 2026</span></Kicker>
       <motion.h2 variants={item} className="mt-[4cqw] text-[17cqw] font-extrabold leading-[0.92] tracking-tighter text-fg">Setahun di balik asap<span className="text-ember">.</span></motion.h2>
       <motion.p variants={item} style={{ fontSize: `${Math.min(14, 74 / (kab.name.length * 0.5))}cqw` }} className="mt-[7cqw] pb-[1cqw] font-serif leading-[1.1] text-ember">{kab.name}</motion.p>
       <motion.p variants={item} className="mt-[2cqw] text-[4.6cqw] text-fg-2">{kab.provinceName}</motion.p>
@@ -207,7 +207,7 @@ export function SummaryCard({ kab, kabs, meta, variant = 'story' }: SlideCtx & {
       <div aria-hidden className="glow-ember absolute inset-0 opacity-90" />
       <div className={`relative flex size-full flex-col px-[8cqw] ${exp ? 'pt-[6cqw] pb-[6cqw]' : 'pt-[28cqw] pb-[50cqw]'}`}>
         {meta.isSample && exp && <div className="-mx-[8cqw] mb-[5cqw] bg-ember py-[2cqw] text-center text-[3.6cqw] font-bold tracking-wide text-ink">DATA CONTOH. Angka bersifat fiktif dan hanya untuk pengujian tampilan.</div>}
-        <p className="text-[4.4cqw] font-semibold text-fg-2">Karhutla Wrapped 2026</p>
+        <p translate="no" className="text-[4.4cqw] font-semibold text-fg-2">Karhutla Wrapped 2026</p>
         <h2 style={fit(kab.name, 15)} className="mt-[2cqw] font-extrabold leading-[0.95] tracking-tighter text-fg">{kab.name}<span className="text-ember">.</span></h2>
         <p className="mt-[1.5cqw] text-[4.2cqw] text-fg-2">{kab.provinceName}</p>
         <div className={`${exp ? 'mt-[7cqw]' : 'mt-[6cqw]'}`}>
@@ -223,7 +223,7 @@ export function SummaryCard({ kab, kabs, meta, variant = 'story' }: SlideCtx & {
           {stat('Luas lahan terbakar', fields === null ? 'Belum tersedia' : fmt(fields), fields === null || !burned ? undefined : `lapangan sepak bola, ${fmt(burned.ha)} ha${burned.scope === 'provinsi' ? ' (tingkat provinsi)' : burned.scope === 'wilayah' ? ' (provinsi yang tersedia)' : ''}`)}
         </dl>
         <div className="mt-auto pt-[4cqw] text-[3.1cqw] leading-snug text-fg-2">
-          {exp && <p className="mb-[2cqw] text-[4.4cqw] font-extrabold tracking-tight text-fg">Visualize Karhutla<span className="text-ember">.</span> <span className="font-normal text-fg-2">{siteHost()}</span></p>}
+          {exp && <p translate="no" className="mb-[2cqw] text-[4.4cqw] font-extrabold tracking-tight text-fg">Visualize Karhutla<span className="text-ember">.</span> <span className="font-normal text-fg-2">{siteHost()}</span></p>}
           <p>Data per {fmtDate(meta.dataDate)}. Sumber: NASA FIRMS, SiPongi Kemenhut. Batas wilayah: geoBoundaries.{meta.isSample ? ' DATA CONTOH.' : ''}</p>
         </div>
       </div>

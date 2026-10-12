@@ -64,7 +64,7 @@ export function KabupatenSheet({ kab, onClose }: { kab: Kab; onClose: () => void
         <div><dt className="text-xs text-fg-3">Peringkat di Kalimantan</dt><dd className="mt-1 text-lg font-bold text-fg num">#{kab.rankKalimantan} dari 56</dd></div>
       </dl>
 
-      <Link to={`/wrapped/${kab.slug}`} className="btn btn-primary mt-6 w-full">Lihat Karhutla Wrapped <ArrowRight size={18} weight="bold" aria-hidden /></Link>
+      <Link to={`/wrapped/${kab.slug}`} className="btn btn-primary mt-6 w-full">Lihat <span translate="no">Karhutla Wrapped</span> <ArrowRight size={18} weight="bold" aria-hidden /></Link>
       <SourceNote className="mt-4" />
     </motion.aside>
   )

@@ -38,7 +38,7 @@ function Citation({ isSample, dataDate }: { isSample: boolean; dataDate: string 
   return (
     <>
       {isSample && <p className="rounded-panel border border-ember bg-ember/10 p-4 text-fg">Data saat ini adalah DATA CONTOH. Jangan dikutip sebagai fakta.</p>}
-      <blockquote className="border-l-2 border-ember pl-4 text-fg">{text}</blockquote>
+      <blockquote translate="no" className="border-l-2 border-ember pl-4 text-fg">{text}</blockquote>
       <div className="flex items-center gap-4">
         <button type="button" onClick={copy} className="btn btn-ghost">Salin sitasi</button>
         <span role="status" aria-live="polite" className="text-sm text-fg">{copied ? 'Sitasi disalin.' : ''}</span>
@@ -147,7 +147,7 @@ export default function About() {
               <div className="size-32 shrink-0 overflow-hidden rounded-panel md:size-40"><Picture name="developer" decorative={false} sizes="160px" className="size-full object-cover" /></div>
               <div>
                 <p className="text-2xl font-bold text-fg">harrie ros</p>
-                <p className="mt-1 text-fg-2">Pengembang situs Visualize Karhutla.</p>
+                <p className="mt-1 text-fg-2">Pengembang situs <span translate="no">Visualize Karhutla</span>.</p>
               </div>
             </div>
           </Section>
