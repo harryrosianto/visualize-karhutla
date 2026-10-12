@@ -1,8 +1,9 @@
-import { motion, useReducedMotion } from 'motion/react'
+import { motion, useReducedMotion, useScroll, useTransform } from 'motion/react'
 import { ArrowRight } from '@phosphor-icons/react'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Picture } from './Picture'
+import { ParallaxScene } from './ParallaxScene'
 import { EmberCanvas } from './EmberCanvas'
 
 const base = import.meta.env.BASE_URL
@@ -28,31 +29,32 @@ function useHeroVideo() {
 export function Hero() {
   const reduce = useReducedMotion()
   const video = useHeroVideo()
+  const ref = useRef<HTMLElement>(null)
+  const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] })
+  const textY = useTransform(scrollYProgress, [0, 1], reduce ? [0, 0] : [0, 140])
+  const textOpacity = useTransform(scrollYProgress, [0, 0.7], reduce ? [1, 1] : [1, 0])
   const rise = (d: number) => ({
     initial: reduce ? false : { opacity: 0, y: 28 },
     animate: { opacity: 1, y: 0 },
     transition: { duration: 0.9, delay: d, ease },
   })
   return (
-    <section className="relative isolate flex min-h-[100dvh] items-end overflow-hidden">
-      <div className="absolute inset-0 -z-20 bg-ink">
-        <Picture name="hero-forest-night" eager sizes="100vw" className="size-full object-cover" position="60% 50%" />
-        {video && (
-          <video
-            className="absolute inset-0 size-full object-cover"
-            autoPlay muted loop playsInline
-            poster={`${base}media/hero-poster.jpg`}
-            aria-hidden
-          >
+    <section ref={ref} className="relative isolate flex min-h-[100dvh] items-center overflow-hidden">
+      {video ? (
+        <div className="absolute inset-0 -z-20 bg-ink">
+          <Picture name="hero-forest-night" eager sizes="100vw" className="size-full object-cover" position="60% 50%" />
+          <video className="absolute inset-0 size-full object-cover" autoPlay muted loop playsInline poster={`${base}media/hero-poster.jpg`} aria-hidden>
             <source src={`${base}media/hero.mp4`} type="video/mp4" />
           </video>
-        )}
-      </div>
-      <div aria-hidden className="absolute inset-0 -z-10 bg-gradient-to-t from-ink via-ink/70 to-ink/35" />
-      <div aria-hidden className="absolute inset-0 -z-10 bg-gradient-to-r from-ink/80 via-ink/20 to-transparent" />
-      <EmberCanvas className="-z-10 mix-blend-screen" />
+          <div aria-hidden className="absolute inset-0 bg-gradient-to-t from-ink via-ink/70 to-ink/35" />
+        </div>
+      ) : (
+        <div className="absolute inset-0 -z-20"><ParallaxScene target={ref} /></div>
+      )}
+      <div aria-hidden className="absolute inset-0 -z-10 bg-gradient-to-r from-ink/80 via-ink/35 to-transparent" />
+      <EmberCanvas className="-z-10" />
 
-      <div className="mx-auto w-full max-w-[1400px] px-4 pb-14 pt-28 md:px-8 md:pb-20">
+      <motion.div style={{ y: textY, opacity: textOpacity }} className="mx-auto w-full max-w-[1400px] px-4 pb-24 pt-28 md:px-8">
         <motion.h1 {...rise(0.1)} className="text-[clamp(3.5rem,13.5vw,10rem)] font-extrabold leading-[0.88] tracking-tighter text-fg">
           Visualize<br />Karhutla<span className="text-ember">.</span>
         </motion.h1>
@@ -66,7 +68,7 @@ export function Hero() {
           <a href="#cek" className="btn btn-primary">Cek wilayahmu <ArrowRight weight="bold" size={18} aria-hidden /></a>
           <Link to="/peta" className="btn btn-ghost">Buka peta</Link>
         </motion.div>
-      </div>
+      </motion.div>
     </section>
   )
 }

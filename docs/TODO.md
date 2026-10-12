@@ -20,3 +20,9 @@
 - [ ] Kutipan geoBoundaries (Runfola dkk. 2020) dan kalimat pengakuan NASA FIRMS di `/tentang` ditulis dari ingatan dan pedoman umum; cocokkan dengan format kutipan resmi masing-masing.
 - [ ] Kinerja halaman `/peta` di perangkat nyata belum diuji. Di Lighthouse mobile (CPU 4x lebih lambat, WebGL perangkat lunak) skornya jauh di bawah target; lihat `docs/SUMMARY.md`.
 - [ ] Pembaruan titik panas: untuk data asli, pertimbangkan memangkas `hotspots-*.json` (kini kolom lon/lat/hari/FRP) bila berkas melewati sekitar 1 MB per provinsi.
+
+## Data asli (cara tercepat)
+1. Daftar kunci gratis: https://firms.modaps.eosdis.nasa.gov/api/map_key/ lalu isi `FIRMS_MAP_KEY` di `.env`.
+2. `npm run fetch-firms` (unduh 2025-01-01 sampai hari ini, VIIRS SNPP), lalu `npm run firms`.
+3. Isi `data/sipongi.json` secara manual, lalu `npm run firms` lagi.
+Catatan: data asli jauh lebih besar dari contoh (7 hari terakhir saja sudah sekitar 29 ribu titik di Kalimantan), jadi `hotspots-*.json` bisa beberapa MB; lihat butir pemangkasan di atas.

@@ -11,7 +11,8 @@
     "images": "tsx scripts/optimize-images.ts",
     "boundaries": "tsx scripts/fetch-boundaries.ts",
     "sample": "tsx scripts/generate-sample.ts",
-    "firms": "tsx scripts/process-firms.ts"
+    "firms": "tsx scripts/process-firms.ts",
+    "fetch-firms": "tsx scripts/fetch-firms.ts"
   },
   "dependencies": {
     "@deck.gl/aggregation-layers": "^9.4.0",

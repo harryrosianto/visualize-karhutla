@@ -34,8 +34,11 @@ export function EmberCanvas({ className = '' }: { className?: string }) {
         if (p.y < -10) Object.assign(p, mk(false))
         const fade = Math.min(1, p.y / (h * 0.4 + 1))
         ctx!.beginPath()
-        ctx!.fillStyle = `rgba(249,115,22,${p.a * fade})`
-        ctx!.shadowColor = 'rgba(249,115,22,.8)'; ctx!.shadowBlur = 6
+        // halo murah (lingkaran besar transparan) menggantikan shadowBlur yang mahal
+        ctx!.fillStyle = `rgba(249,115,22,${p.a * fade * 0.18})`
+        ctx!.arc(p.x, p.y, p.r * 3.2, 0, 6.283); ctx!.fill()
+        ctx!.beginPath()
+        ctx!.fillStyle = `rgba(253,186,116,${p.a * fade})`
         ctx!.arc(p.x, p.y, p.r, 0, 6.283); ctx!.fill()
       }
     }

@@ -38,7 +38,7 @@ function* rows(file: string) {
 for (const file of files) {
   for (const r of rows(file)) {
     read++
-    if (r.conf === 'l' || (/^\d+$/.test(r.conf) && +r.conf < 30)) continue
+    if (r.conf === 'l' || r.conf === 'low' || (/^\d+$/.test(r.conf) && +r.conf < 30)) continue
     const yr = Number(r.date.slice(0, 4))
     if (yr !== YEAR && yr !== YEAR - 1) continue
     const hit = kabs.find(k => r.lon >= k.box[0] && r.lon <= k.box[2] && r.lat >= k.box[1] && r.lat <= k.box[3] && inPolygon(r.lon, r.lat, k.f.geometry))

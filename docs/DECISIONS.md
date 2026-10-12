@@ -21,3 +21,6 @@ Dicatat saat mengerjakan tanpa pengawasan. Format: keputusan, lalu alasan.
 17. **Ikon memakai `@phosphor-icons/react`** (sesuai skill). Tanda titik kecil pada label kolom footer dipertahankan karena diminta eksplisit pada referensi.
 18. **`.btn` didefinisikan di `@layer components`** agar utilitas Tailwind (padding, lebar) bisa menimpanya; versi tanpa layer membuat tombol bagikan meluber.
 19. **Angka memakai `lining-nums proportional-nums`**, bukan tabular, karena tabular membuat titik pemisah ribuan melebar ("1 . 777").
+20. **Hero memakai adegan parallax orisinal** (`ParallaxScene`, siluet bukit dan pinus dibangkitkan kode di `src/lib/landscape.ts`) terinspirasi gaya lanskap berlapis ala Firewatch. Tidak ada aset atau kode situs lain yang disalin. Parallax scroll dan pointer memakai `useScroll`, `useSpring`, `useTransform`; statis saat reduced motion. Video `hero.mp4`, bila ada, menggantikan adegan.
+21. **Performa adegan parallax:** `will-change` pada lima lapisan besar menurunkan performa landing dari 92 ke 59 (TBT 2 dtk); dibuang bersama `mix-blend` dan `shadowBlur` kanvas, skor kembali 89.
+22. **Filter kepercayaan FIRMS** juga menolak "low" (format CSV asli memakai kata nominal/low/high, bukan huruf tunggal).
