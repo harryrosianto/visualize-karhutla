@@ -1,0 +1,62 @@
+@import 'tailwindcss';
+@import '@fontsource-variable/schibsted-grotesk';
+@import '@fontsource/instrument-serif/400-italic.css';
+@import 'maplibre-gl/dist/maplibre-gl.css' layer(base);
+
+@theme {
+  --font-display: 'Schibsted Grotesk Variable', ui-sans-serif, system-ui, sans-serif;
+  --font-serif: 'Instrument Serif', ui-serif, Georgia, serif;
+  --color-ink: #0c0a09;
+  --color-ink-2: #161210;
+  --color-ink-3: #211b17;
+  --color-line: #2e2722;
+  --color-fg: #f5f5f4;
+  --color-fg-2: #d6d3d1;
+  --color-fg-3: #a8a29e;
+  --color-ember: #f97316;
+  --color-ember-deep: #9a3412;
+  --color-hot: #ef4444;
+  --radius-panel: 1rem;
+}
+
+@layer base {
+  html { color-scheme: dark; -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--color-ink);
+    color: var(--color-fg-2);
+    font-family: var(--font-display);
+    -webkit-font-smoothing: antialiased;
+  }
+  :focus-visible { outline: 2px solid var(--color-ember); outline-offset: 3px; border-radius: 4px; }
+  ::selection { background: var(--color-ember); color: var(--color-ink); }
+  h1, h2, h3 { color: var(--color-fg); }
+}
+
+/* Z-index scale: banner 40, nav 30, sheet 20, map controls 10 */
+.glow-ember {
+  background:
+    radial-gradient(60% 55% at 78% 60%, rgb(154 52 18 / 0.55), transparent 70%),
+    radial-gradient(30% 30% at 90% 30%, rgb(249 115 22 / 0.18), transparent 70%);
+  filter: blur(18px);
+}
+.num { font-variant-numeric: tabular-nums; }
+
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+  min-height: 48px; padding: 0 1.5rem; border-radius: 9999px; white-space: nowrap;
+  font-weight: 600; font-size: 1rem; cursor: pointer; text-decoration: none;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s;
+}
+.btn:active { transform: translateY(1px) scale(0.98); }
+.btn-primary { background: var(--color-ember); color: var(--color-ink); }
+.btn-primary:hover { background: #fb923c; }
+.btn-ghost { border: 1px solid rgb(245 245 244 / 0.4); color: var(--color-fg); background: rgb(12 10 9 / 0.5); }
+.btn-ghost:hover { border-color: var(--color-fg); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; scroll-behavior: auto !important; }
+}
+
+.maplibregl-ctrl-attrib { background: rgb(12 10 9 / 0.75) !important; color: var(--color-fg-2) !important; }
+.maplibregl-ctrl-attrib a { color: var(--color-fg) !important; }

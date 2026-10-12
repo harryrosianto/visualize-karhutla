@@ -1,0 +1,38 @@
+[
+  {
+    "file": "hero-forest-night",
+    "originalFile": "matt-howard-eAKDzK4lo4o-unsplash.jpg",
+    "title": "Kebakaran hutan pada malam hari",
+    "creator": "Matt Howard",
+    "source": "Unsplash",
+    "sourceUrl": "",
+    "license": "",
+    "verified": false,
+    "usedIn": "Hero, slide pembuka Wrapped",
+    "note": "Pencipta dan platform diambil dari nama berkas. URL dan lisensi belum diverifikasi (lihat docs/TODO.md). Foto bukan lokasi Kalimantan."
+  },
+  {
+    "file": "embers-closeup",
+    "originalFile": "pexels-needtofly-87266383-9645399.jpg",
+    "title": "Percikan bara di udara malam",
+    "creator": "needtofly",
+    "source": "Pexels",
+    "sourceUrl": "",
+    "license": "",
+    "verified": false,
+    "usedIn": "Slide titik panas Wrapped, ajakan Cek wilayahmu",
+    "note": "Pencipta dan platform diambil dari nama berkas. URL dan lisensi belum diverifikasi (lihat docs/TODO.md). Foto bukan lokasi Kalimantan."
+  },
+  {
+    "file": "grass-fire-smoke",
+    "originalFile": "pexels-vladyslav-dukhin-4070727.jpg",
+    "title": "Api rumput dan asap di lahan terbuka",
+    "creator": "Vladyslav Dukhin",
+    "source": "Pexels",
+    "sourceUrl": "",
+    "license": "",
+    "verified": false,
+    "usedIn": "Slide luas terbakar dan bulan berasap Wrapped, angka kunci landing",
+    "note": "Pencipta dan platform diambil dari nama berkas. URL dan lisensi belum diverifikasi (lihat docs/TODO.md). Foto bukan lokasi Kalimantan."
+  }
+]

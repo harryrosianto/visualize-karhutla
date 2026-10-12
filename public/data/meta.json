@@ -1,0 +1,38 @@
+{
+ "isSample": true,
+ "generatedAt": "2026-10-12T09:15:28.871Z",
+ "dataDate": "2026-10-12",
+ "year": 2026,
+ "sources": {
+  "hotspot": "DATA CONTOH (fiktif), pengganti NASA FIRMS VIIRS/MODIS",
+  "burnedArea": "DATA CONTOH (fiktif), pengganti SiPongi Kemenhut",
+  "boundaries": "geoBoundaries IDN ADM1/ADM2 (CC BY 3.0 IGO)"
+ },
+ "provinces": [
+  {
+   "id": "kalbar",
+   "name": "Kalimantan Barat",
+   "short": "Kalbar"
+  },
+  {
+   "id": "kalteng",
+   "name": "Kalimantan Tengah",
+   "short": "Kalteng"
+  },
+  {
+   "id": "kalsel",
+   "name": "Kalimantan Selatan",
+   "short": "Kalsel"
+  },
+  {
+   "id": "kaltim",
+   "name": "Kalimantan Timur",
+   "short": "Kaltim"
+  },
+  {
+   "id": "kaltara",
+   "name": "Kalimantan Utara",
+   "short": "Kaltara"
+  }
+ ]
+}

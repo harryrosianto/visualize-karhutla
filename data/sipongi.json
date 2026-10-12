@@ -1,0 +1,7 @@
+{
+  "_petunjuk": "Isi manual dari SiPongi Kemenhut. Satu entri per kabupaten: { kabupatenSlug, burnedHa } (slug sama dengan public/data/kabupaten.json). Biarkan entries kosong selama data belum ada.",
+  "source": "",
+  "period": "",
+  "retrievedAt": "",
+  "entries": []
+}

@@ -1,0 +1,51 @@
+{
+  "name": "visualize-karhutla",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "postbuild": "tsx scripts/build-og.ts",
+    "preview": "vite preview",
+    "images": "tsx scripts/optimize-images.ts",
+    "boundaries": "tsx scripts/fetch-boundaries.ts",
+    "sample": "tsx scripts/generate-sample.ts",
+    "firms": "tsx scripts/process-firms.ts"
+  },
+  "dependencies": {
+    "@deck.gl/mapbox": "^9.4.0",
+    "@fontsource-variable/schibsted-grotesk": "^5.3.0",
+    "@fontsource/instrument-serif": "^5.3.0",
+    "@phosphor-icons/react": "^2.1.10",
+    "@visx/curve": "^4.0.0",
+    "@visx/group": "^4.0.0",
+    "@visx/scale": "^4.0.0",
+    "@visx/shape": "^4.0.0",
+    "deck.gl": "^9.4.0",
+    "html-to-image": "^1.11.13",
+    "maplibre-gl": "^6.14.0",
+    "motion": "^14.1.0",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "react-router-dom": "^7.18.4"
+  },
+  "devDependencies": {
+    "@resvg/resvg-js": "^2.6.2",
+    "@tailwindcss/vite": "^4.3.3",
+    "@turf/boolean-point-in-polygon": "^7.4.0",
+    "@turf/centroid": "^7.4.0",
+    "@turf/helpers": "^7.4.0",
+    "@types/geojson": "^7946.0.16",
+    "@types/node": "^26.6.5",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-react": "^6.1.2",
+    "satori": "^0.48.1",
+    "sharp": "^0.35.5",
+    "tailwindcss": "^4.3.3",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2",
+    "vite": "^8.3.4"
+  }
+}
