@@ -58,5 +58,15 @@
     "width": 1080,
     "height": 1920,
     "issue": 8
+  },
+  {
+    "id": "t9-1",
+    "ext": "jpg",
+    "title": "Satu Sawit, Satu Gigit",
+    "creator": "Gugun Beke",
+    "creatorUrl": "https://www.threads.com/@gugunbeke",
+    "width": 1280,
+    "height": 1707,
+    "issue": 9
   }
 ]
