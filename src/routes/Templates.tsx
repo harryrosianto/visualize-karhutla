@@ -6,7 +6,8 @@ import { HASHTAG, TEMPLATES } from '../content/storyTemplates'
 import { useData } from '../lib/DataContext'
 import { downloadBlob, renderPng, shareOrDownload } from '../lib/exportImage'
 import { siteUrl } from '../lib/share'
-import { ADD_YOURS_URL } from '../lib/site'
+import { communityTemplates } from '../lib/community'
+import { ADD_YOURS_URL, issueUrl } from '../lib/site'
 
 const ADD_YOURS = { id: 'add-yours', headline: 'Add yours' }
 const PROMPT = 'Add yours: how are you speaking up for Kalimantan’s forests? #visualizekarhutla'
@@ -108,6 +109,29 @@ export default function Templates() {
           <p lang="en" translate="no" className="mt-1 rounded-panel border border-line bg-ink-2 p-4 text-fg">{PROMPT}</p>
           <button type="button" onClick={async () => { try { await navigator.clipboard.writeText(PROMPT); setNote('Teks stiker disalin.') } catch { setNote('Teks belum dapat disalin. Salin secara manual.') } window.setTimeout(() => setNote(''), 2600) }} className="btn btn-ghost mt-3">Salin teks stiker</button>
         </div>
+      </section>
+
+      <section aria-labelledby="komunitas" className="mt-20 border-t border-line pt-14">
+        <h2 id="komunitas" className="text-3xl font-extrabold tracking-tight text-fg md:text-4xl">Templat dari komunitas<span className="text-ember">.</span></h2>
+        <p className="mt-4 max-w-[60ch] text-fg-2">Karya ilustrator dan desainer yang disumbangkan untuk kampanye ini. Semua kiriman ditinjau pemelihara sebelum dimuat. Silakan unduh dan bagikan dengan mencantumkan nama kreator.</p>
+        <a href={issueUrl('templat.yml')} target="_blank" rel="noopener noreferrer" className="btn btn-primary mt-6">Kirim templat Anda</a>
+        <p className="mt-3 max-w-[60ch] text-sm text-fg-3">Ukuran dan rasio bebas: Story 9:16, lanskap desktop, atau lainnya. Pengiriman memakai GitHub (akun gratis) dan disetujui terlebih dahulu sebelum tampil di sini.</p>
+        {communityTemplates.length === 0 ? (
+          <p className="mt-10 text-fg-3">Belum ada templat dari komunitas. Jadilah kontributor pertama.</p>
+        ) : (
+          <ul className="mt-10 columns-2 gap-4 md:columns-4 md:gap-6">
+            {communityTemplates.map(t => (
+              <li key={t.id} className="mb-8 break-inside-avoid">
+                <img src={t.thumb} alt={`Templat ${t.title} oleh ${t.creator}`} width={t.width} height={t.height} loading="lazy" decoding="async" className="w-full rounded-panel border border-line" style={{ aspectRatio: `${t.width} / ${t.height}` }} />
+                <p className="mt-2 text-sm font-semibold text-fg">{t.title}</p>
+                <p className="text-sm text-fg-3">
+                  Oleh {t.creatorUrl ? <a href={t.creatorUrl} target="_blank" rel="noopener noreferrer nofollow" className="underline decoration-ember underline-offset-4 hover:text-fg">{t.creator}</a> : t.creator}
+                </p>
+                <a href={t.full} download={`karhutla-templat-${t.id}.${t.ext}`} className="btn btn-ghost mt-2 min-h-11 w-full gap-1.5 px-2 text-sm"><DownloadSimple size={18} weight="bold" aria-hidden />Unduh</a>
+              </li>
+            ))}
+          </ul>
+        )}
       </section>
 
       <p className="mt-12 max-w-[64ch] text-sm leading-relaxed text-fg-3">

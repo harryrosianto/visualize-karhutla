@@ -1,0 +1,44 @@
+name: Kirim templat
+description: Sumbangkan templat visual (ilustrasi atau desain) untuk kampanye kesadaran karhutla
+title: "[Templat] "
+labels: ["templat"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Ilustrator dan desainer dipersilakan menyumbangkan templat untuk Instagram Story, unggahan, atau layar desktop. Ukuran dan rasio bebas. Kiriman bersifat publik dan **ditinjau pemelihara terlebih dahulu**; hanya yang disetujui yang dimuat pada halaman Templat Story. Jangan mencantumkan data pribadi.
+  - type: input
+    id: judul
+    attributes:
+      label: Judul templat
+    validations:
+      required: true
+  - type: input
+    id: kreator
+    attributes:
+      label: Nama kreator
+      description: Nama atau nama samaran yang ditampilkan sebagai kredit.
+    validations:
+      required: true
+  - type: input
+    id: tautan
+    attributes:
+      label: Tautan portofolio atau akun media sosial
+      description: Opsional. Ditampilkan sebagai tautan kredit (harus diawali https://).
+      placeholder: https://
+  - type: textarea
+    id: gambar
+    attributes:
+      label: Gambar
+      description: Seret berkas gambar ke kotak ini (PNG, JPG, WebP, atau GIF; maksimal 12 MB per berkas, hingga 6 berkas). Format SVG tidak diterima.
+    validations:
+      required: true
+  - type: checkboxes
+    id: pernyataan
+    attributes:
+      label: Pernyataan
+      options:
+        - label: Karya ini buatan saya sendiri (atau saya berhak penuh menyumbangkannya), dan tidak memuat merek, karya, atau wajah orang lain tanpa izin.
+          required: true
+        - label: Saya mengizinkan pengunjung memakai, mengunduh, dan membagikan karya ini secara gratis untuk kampanye kesadaran karhutla dengan mencantumkan nama saya sebagai kredit.
+          required: true
