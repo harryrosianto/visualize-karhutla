@@ -1,8 +1,10 @@
+import { InstagramLogo, ThreadsLogo } from '@phosphor-icons/react'
 import type { ReactNode } from 'react'
 import { useData } from '../lib/DataContext'
 import { fmtDate } from '../lib/data'
 import { Picture } from '../components/Picture'
 import { siteUrl } from '../lib/share'
+import { INSTAGRAM_URL, THREADS_URL } from '../lib/site'
 import { useState } from 'react'
 import credits from '../assets/images/credits.json'
 
@@ -149,6 +151,10 @@ export default function About() {
                 <p className="text-2xl font-bold text-fg">harrie ros</p>
                 <p className="mt-1 text-fg-2">Pengembang situs <span translate="no">Visualize Karhutla</span>.</p>
               </div>
+            </div>
+            <div className="flex flex-wrap gap-3">
+              <a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer" className="btn btn-ghost min-h-11 gap-2 px-4 text-sm"><InstagramLogo size={18} weight="bold" aria-hidden /><span translate="no">@worldofhahadaily</span></a>
+              <a href={THREADS_URL} target="_blank" rel="noopener noreferrer" className="btn btn-ghost min-h-11 gap-2 px-4 text-sm"><ThreadsLogo size={18} weight="bold" aria-hidden /><span translate="no">@harrierosss</span></a>
             </div>
           </Section>
 

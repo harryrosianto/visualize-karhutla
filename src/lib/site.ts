@@ -11,3 +11,6 @@ export const ADD_YOURS_URL = 'https://www.instagram.com/s/aGlnaGxpZ2h0OjE4MTEzMD
 
 /** Akun Threads pemelihara, jalur alternatif mengirim karya tanpa GitHub (lewat DM). */
 export const THREADS_URL = 'https://www.threads.com/@harrierosss' as const
+
+/** Akun Instagram pengembang. */
+export const INSTAGRAM_URL = 'https://www.instagram.com/worldofhahadaily/' as const
