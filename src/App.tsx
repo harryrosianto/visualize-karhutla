@@ -25,6 +25,7 @@ function lazyRoute<T extends ComponentType<any>>(load: () => Promise<{ default: 
 const MapPage = lazyRoute(() => import('./routes/MapPage'))
 const WrappedPicker = lazyRoute(() => import('./routes/WrappedPicker'))
 const WrappedPage = lazyRoute(() => import('./routes/WrappedPage'))
+const Templates = lazyRoute(() => import('./routes/Templates'))
 const About = lazyRoute(() => import('./routes/About'))
 const Contribute = lazyRoute(() => import('./routes/Contribute'))
 const NotFound = lazyRoute(() => import('./routes/NotFound'))
@@ -79,6 +80,7 @@ export default function App() {
             <Route element={<Shell />}>
               <Route index element={<Landing />} />
               <Route path="wrapped" element={<WrappedPicker />} />
+              <Route path="templat" element={<Templates />} />
               <Route path="tentang" element={<About />} />
               <Route path="kontribusi" element={<Contribute />} />
               <Route path="*" element={<NotFound />} />

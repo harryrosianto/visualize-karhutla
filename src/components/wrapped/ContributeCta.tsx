@@ -7,6 +7,7 @@ export function ContributeCta() {
   return (
     <div className="pointer-events-auto grid gap-2">
       <Link to="/kontribusi" className="btn btn-primary w-full">Buka halaman kontribusi <ArrowRight size={18} weight="bold" aria-hidden /></Link>
+      <Link to="/templat" className="btn btn-ghost min-h-12 w-full">Templat Story kampanye</Link>
       <a href={REPO_URL} target="_blank" rel="noopener noreferrer" className="btn btn-ghost min-h-12 w-full"><GithubLogo size={18} weight="bold" aria-hidden />Lihat di GitHub</a>
     </div>
   )

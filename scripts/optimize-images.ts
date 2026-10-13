@@ -5,13 +5,13 @@ import sharp from 'sharp'
 const OUT = 'src/assets/images'
 const IMAGES = [
   { file: 'hero-forest-night', widths: [480, 960, 1600, 2400] },
-  { file: 'embers-closeup', widths: [480, 960, 1440] },
-  { file: 'grass-fire-smoke', widths: [480, 960, 1600] },
-  { file: 'firefighters-manggala', ext: 'webp', widths: [480, 960] },
+  { file: 'embers-closeup', widths: [480, 960, 1440, 2160] },
+  { file: 'grass-fire-smoke', widths: [480, 960, 1600, 2400] },
+  { file: 'firefighters-manggala', ext: 'webp', widths: [480, 960, 1024] },
   { file: 'firefighters-silhouette', ext: 'webp', widths: [480, 960, 1600] },
-  { file: 'wildfire-1', ext: 'avif', widths: [480, 960] },
-  { file: 'wildfire-2', widths: [480, 960] },
-  { file: 'wildfire-3', widths: [480, 960] },
+  { file: 'wildfire-1', ext: 'avif', widths: [480, 960, 1600, 2400] },
+  { file: 'wildfire-2', widths: [480, 960, 1500] },
+  { file: 'wildfire-3', widths: [480, 960, 1360] },
 ]
 fs.mkdirSync(OUT, { recursive: true })
 for (const img of IMAGES) {
