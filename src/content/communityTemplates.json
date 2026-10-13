@@ -28,5 +28,15 @@
     "width": 1376,
     "height": 773,
     "issue": 4
+  },
+  {
+    "id": "t5-1",
+    "ext": "png",
+    "title": "Campaign",
+    "creator": "Greenpeace",
+    "creatorUrl": "https://www.youtube.com/watch?v=8rIjVDo_u8c",
+    "width": 1380,
+    "height": 772,
+    "issue": 5
   }
 ]
