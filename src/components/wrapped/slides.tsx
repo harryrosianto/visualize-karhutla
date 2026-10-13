@@ -309,7 +309,12 @@ export function SlideContribute({ compact }: { compact?: boolean } = {}) {
     <SlideShell image="embers-closeup" position="50% 60%" dim={0.82}>
       <Kicker>Ikut berkontribusi</Kicker>
       <motion.h2 variants={item} className="mt-[3cqw] text-[10cqw] font-extrabold leading-[0.98] tracking-tighter text-fg">Mengangkat isu karhutla<span className="text-ember">.</span></motion.h2>
-      <Lead>Proyek ini terbuka bagi siapa saja. Kirim artikel, sumbang data, laporkan koreksi, atau kembangkan kodenya.</Lead>
+      {compact ? (
+        // teks di kiri, sisi kanan dikosongkan untuk stiker Add Yours (sekitar 34% lebar, setinggi teks)
+        <motion.p variants={item} className="mt-[4cqw] min-h-[30cqw] max-w-[54cqw] text-[4.4cqw] leading-snug text-fg-2">Kirim artikel, sumbang data, laporkan koreksi, atau kembangkan kodenya.</motion.p>
+      ) : (
+        <Lead>Proyek ini terbuka bagi siapa saja. Kirim artikel, sumbang data, laporkan koreksi, atau kembangkan kodenya.</Lead>
+      )}
       <motion.img variants={item} src={`${import.meta.env.BASE_URL}media/pratinjau-beranda.jpg`} alt="Tangkapan layar halaman beranda Visualize Karhutla." className="mt-[6cqw] w-full rounded-[2cqw] border border-fg/15 shadow-[0_2cqw_6cqw_rgb(0_0_0/0.5)]" />
       {compact ? (
         <motion.p variants={item} translate="no" className="mt-[4cqw] text-[3.8cqw] font-bold text-fg">{PUBLIC_HOST_PATH}</motion.p>
