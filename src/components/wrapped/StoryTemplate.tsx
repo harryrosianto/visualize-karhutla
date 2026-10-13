@@ -38,15 +38,11 @@ export function StoryTemplate({ t, total }: { t: StoryTemplateDef; total: number
 }
 
 /** Templat "Add Yours": slide penutup Wrapped dengan ruang kosong untuk ditimpa stiker Add Yours di Instagram. */
-export function AddYoursTemplate({ guide }: { guide?: boolean }) {
+export function AddYoursTemplate() {
   return (
     <div className="relative size-full overflow-hidden bg-ink">
       <SlideContribute compact />
       <p translate="no" className="absolute left-[8cqw] top-[9cqw] text-[4.4cqw] font-extrabold tracking-tight text-fg">Visualize Karhutla<span className="text-ember">.</span></p>
-      {/* ruang stiker: area kosong berbingkai putus-putus; teks panduan hanya tampil pada pratinjau, tidak ikut diekspor */}
-      <div className="absolute inset-x-[8cqw] bottom-[6cqw] grid h-[22cqw] place-items-center rounded-[5cqw] border-[0.7cqw] border-dashed border-fg/45 bg-ink/45">
-        {guide && <span className="px-[3cqw] text-center text-[3.4cqw] leading-tight text-fg-2">Letakkan stiker Add Yours di sini</span>}
-      </div>
     </div>
   )
 }

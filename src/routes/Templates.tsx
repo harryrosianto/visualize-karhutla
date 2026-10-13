@@ -80,7 +80,7 @@ export default function Templates() {
       <section aria-labelledby="addyours" className="mt-20 grid gap-10 border-t border-line pt-14 md:grid-cols-[minmax(0,280px)_1fr] md:gap-14">
         <div>
           <div role="img" aria-label="Templat Add Yours: slide penutup Wrapped dengan ruang kosong untuk stiker." className="aspect-[9/16] overflow-hidden rounded-panel border border-line [container-type:inline-size]">
-            <AddYoursTemplate guide />
+            <AddYoursTemplate />
           </div>
           <div className="mt-3 grid gap-2">
             <button type="button" disabled={busy} onClick={() => setJob({ id: 'add-yours', mode: canShare ? 'bagikan' : 'unduh' })} className="btn btn-primary min-h-11 w-full gap-1.5 px-2 text-sm disabled:opacity-60">
@@ -92,11 +92,11 @@ export default function Templates() {
         </div>
         <div className="max-w-[56ch]">
           <h2 id="addyours" className="text-3xl font-extrabold tracking-tight text-fg md:text-4xl">Templat Add Yours<span className="text-ember">.</span></h2>
-          <p className="mt-4 text-fg-2">Stiker Add Yours hanya dapat dibuat di dalam aplikasi Instagram, sehingga tidak bisa disertakan pada gambar. Templat ini menyediakan ruang kosong di bagian bawah untuk Anda tutup dengan stiker itu.</p>
+          <p className="mt-4 text-fg-2">Stiker Add Yours hanya dapat dibuat di dalam aplikasi Instagram, sehingga tidak bisa disertakan pada gambar. Templat ini menyisakan area kosong di bagian bawah untuk diisi stiker itu.</p>
           <ol className="mt-6 grid list-decimal gap-3 pl-5 text-fg-2">
             <li>Unduh templat ini, lalu buka Instagram dan pilih gambar tersebut sebagai Story baru.</li>
             <li>Ketuk ikon stiker, pilih <strong className="text-fg">Add Yours</strong>, lalu tempel pertanyaan pada kolom teks.</li>
-            <li>Geser dan sesuaikan ukuran stiker agar menutup kotak putus-putus, kemudian unggah.</li>
+            <li>Geser dan sesuaikan ukuran stiker di area kosong bagian bawah, kemudian unggah.</li>
           </ol>
           <p className="mt-6 text-sm text-fg-3">Usulan teks stiker:</p>
           <p lang="en" translate="no" className="mt-1 rounded-panel border border-line bg-ink-2 p-4 text-fg">{PROMPT}</p>
