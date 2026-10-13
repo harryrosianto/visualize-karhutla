@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>How to contribute to Visualize Karhutla</title>
+<meta name="viewport" content="width=1280">
+<style>
+  @font-face { font-family: Burned; src: url("../../src/assets/fonts/burned-latin.woff2") format("woff2"); }
+  @page { size: 1280px 720px; margin: 0; }
+  :root { --ink:#0c0a09; --ink2:#1a1512; --fg:#f5f1ec; --fg2:#cfc6bd; --fg3:#968c82; --ember:#ff6a1f; --line:#3a312b; }
+  * { box-sizing: border-box; margin: 0; }
+  html, body { background: #000; }
+  body { font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif; color: var(--fg); -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .slide { position: relative; width: 1280px; height: 720px; overflow: hidden; background: var(--ink); padding: 64px 72px; page-break-after: always; break-after: page; margin: 0 auto; }
+  @media screen { .slide { margin: 24px auto; } }
+  h1 { font-family: Burned, Impact, sans-serif; font-weight: 400; font-size: 120px; line-height: .95; letter-spacing: .04em; }
+  h2 { font-size: 52px; line-height: 1.02; letter-spacing: -.02em; font-weight: 800; }
+  h2 i, h1 i { color: var(--ember); font-style: normal; }
+  h3 { font-size: 24px; font-weight: 700; }
+  p, li { font-size: 24px; line-height: 1.4; color: var(--fg2); }
+  .kicker { font-size: 20px; letter-spacing: .08em; text-transform: uppercase; color: var(--ember); font-weight: 700; margin-bottom: 14px; }
+  .brand { position: absolute; left: 72px; bottom: 34px; font-size: 18px; font-weight: 800; color: var(--fg3); }
+  .brand i { color: var(--ember); font-style: normal; }
+  .num { position: absolute; right: 72px; bottom: 34px; font-size: 18px; color: var(--fg3); }
+  .shot { border: 1px solid var(--line); border-radius: 14px; overflow: hidden; box-shadow: 0 18px 50px rgba(0,0,0,.55); background: #000; }
+  .shot img { display: block; width: 100%; }
+  .cols { display: grid; gap: 40px; }
+  .steps { list-style: none; padding: 0; counter-reset: s; display: grid; gap: 16px; }
+  .steps li { counter-increment: s; position: relative; padding-left: 52px; }
+  .steps li::before { content: counter(s); position: absolute; left: 0; top: 0; width: 36px; height: 36px; border-radius: 50%; background: var(--ember); color: var(--ink); font-weight: 800; font-size: 20px; display: grid; place-items: center; line-height: 36px; text-align: center; }
+  .card { background: var(--ink2); border: 1px solid var(--line); border-radius: 16px; padding: 22px 24px; }
+  .card h3 { margin-bottom: 8px; }
+  .card p { font-size: 20px; }
+  .tag { display: inline-block; font-size: 17px; font-weight: 700; color: var(--ink); background: var(--ember); border-radius: 99px; padding: 3px 12px; margin-top: 10px; }
+  .note { font-size: 19px; color: var(--fg3); }
+  code { font-family: Consolas, monospace; font-size: .9em; background: var(--ink2); border: 1px solid var(--line); border-radius: 6px; padding: 1px 8px; color: var(--fg); }
+  a { color: var(--ember); text-decoration: none; }
+  /* mock form */
+  .form { background: #fff; color: #1f2328; border-radius: 12px; padding: 20px 22px; font-size: 15px; font-family: "Segoe UI", Arial, sans-serif; }
+  .form .t { font-weight: 700; font-size: 18px; margin-bottom: 12px; }
+  .form label { display: block; font-weight: 600; margin: 10px 0 4px; font-size: 14px; }
+  .form label b { color: #cf222e; }
+  .form .f { border: 1px solid #d0d7de; border-radius: 6px; padding: 7px 10px; color: #6e7781; font-size: 14px; background: #f6f8fa; }
+  .form .drop { border: 2px dashed #8c959f; border-radius: 6px; padding: 22px 10px; text-align: center; color: #57606a; font-size: 14px; background: #f6f8fa; }
+  .form .chk { display: flex; gap: 8px; align-items: flex-start; font-size: 13px; margin-top: 6px; color: #1f2328; }
+  .form .chk span { flex: none; width: 15px; height: 15px; border-radius: 3px; background: #0969da; color: #fff; font-size: 11px; line-height: 15px; text-align: center; margin-top: 2px; }
+  .form .btn { display: inline-block; margin-top: 14px; background: #1f883d; color: #fff; font-weight: 600; border-radius: 6px; padding: 7px 14px; font-size: 14px; }
+  .cap { font-size: 16px; color: var(--fg3); margin-top: 10px; }
+  /* flow */
+  .flow { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; margin-top: 34px; }
+  .flow .st { background: var(--ink2); border: 1px solid var(--line); border-radius: 16px; padding: 20px 18px; position: relative; min-height: 220px; }
+  .flow .st b { display: block; color: var(--ember); font-size: 18px; margin-bottom: 8px; }
+  .flow .st h3 { font-size: 22px; margin-bottom: 8px; }
+  .flow .st p { font-size: 17px; }
+  .flow .st:not(:last-child)::after { content: "\2192"; position: absolute; right: -17px; top: 50%; transform: translateY(-50%); color: var(--ember); font-size: 26px; font-weight: 800; z-index: 2; }
+  .grid7 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 30px; }
+</style>
+</head>
+<body>
+
+<!-- 1 -->
+<section class="slide" style="padding:0">
+  <img src="img/home.jpg" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.45">
+  <div style="position:absolute;inset:0;background:linear-gradient(90deg,rgba(12,10,9,.92) 0%,rgba(12,10,9,.55) 60%,rgba(12,10,9,.2) 100%)"></div>
+  <div style="position:absolute;left:72px;bottom:90px;right:72px">
+    <div class="kicker">Visualize Karhutla</div>
+    <h1>How to<br>contribute<i>.</i></h1>
+    <p style="margin-top:26px;max-width:760px;font-size:28px">An open project that maps Kalimantan's 2026 forest and land fires. Here is how you can help, step by step.</p>
+  </div>
+</section>
+
+<!-- 2 -->
+<section class="slide">
+  <div class="cols" style="grid-template-columns:1fr 600px;align-items:center;height:100%">
+    <div>
+      <div class="kicker">About the project</div>
+      <h2>What is Visualize Karhutla<i>?</i></h2>
+      <ul style="margin-top:26px;padding-left:24px;display:grid;gap:12px">
+        <li>An interactive hotspot map and a yearly summary for every regency in Kalimantan.</li>
+        <li>Built on NASA FIRMS satellite data, with burned-area figures from credible news sources.</li>
+        <li>"Karhutla Wrapped": a story you can share for your regency or all of Kalimantan.</li>
+        <li><b style="color:var(--fg)">Open source</b>, and it grows through contributions from readers like you.</li>
+      </ul>
+    </div>
+    <div class="shot"><img src="img/home.jpg" alt="Home page of Visualize Karhutla"></div>
+  </div>
+  <div class="brand">Visualize Karhutla<i>.</i></div><div class="num">2</div>
+</section>
+
+<!-- 3 -->
+<section class="slide">
+  <div class="kicker">Overview</div>
+  <h2>Seven ways to help<i>.</i></h2>
+  <div class="grid7">
+    <div class="card"><h3>Send an article</h3><p>Reputable reporting on fires in Indonesia, for the reading list.</p></div>
+    <div class="card"><h3>Contribute data</h3><p>Burned-area figures per regency, with a source and period.</p></div>
+    <div class="card"><h3>Report a correction</h3><p>Spotted a wrong number or term? Tell us where.</p></div>
+    <div class="card"><h3>Suggest an idea</h3><p>Features, accessibility fixes, wording and translation.</p></div>
+    <div class="card" style="border-color:var(--ember)"><h3>Submit a template</h3><p>Illustrators: share artwork of any size for the campaign.</p><span class="tag">New</span></div>
+    <div class="card"><h3>Build with us</h3><p>The code is open. Send a pull request.</p></div>
+    <div class="card"><h3>Spread the word</h3><p>Share the site and the Instagram Story templates.</p></div>
+    <div class="card" style="display:grid;place-items:center;background:var(--ember);border-color:var(--ember)"><h3 style="color:var(--ink);text-align:center;font-size:26px">All of it starts at<br>/kontribusi</h3></div>
+  </div>
+  <div class="brand">Visualize Karhutla<i>.</i></div><div class="num">3</div>
+</section>
+
+<!-- 4 -->
+<section class="slide">
+  <div class="kicker">Before you start</div>
+  <h2>What you need<i>.</i></h2>
+  <div class="cols" style="grid-template-columns:repeat(3,1fr);margin-top:40px">
+    <div class="card" style="padding:30px"><h3 style="font-size:30px">A free GitHub account</h3><p style="margin-top:12px">Submissions use GitHub Issues. Sign up for free at <code>github.com/signup</code>.</p></div>
+    <div class="card" style="padding:30px"><h3 style="font-size:30px">Everything is public</h3><p style="margin-top:12px">Anyone can read what you send. Please do not include personal data.</p></div>
+    <div class="card" style="padding:30px"><h3 style="font-size:30px">Reviewed first</h3><p style="margin-top:12px">A maintainer approves every submission before anything is published on the site.</p></div>
+  </div>
+  <p class="note" style="margin-top:34px">The site interface is in formal Indonesian. This guide translates the labels you will see.</p>
+  <div class="brand">Visualize Karhutla<i>.</i></div><div class="num">4</div>
+</section>
+
+<!-- 5 -->
+<section class="slide">
+  <div class="cols" style="grid-template-columns:420px 1fr;gap:44px;align-items:center;height:100%">
+    <div>
+      <div class="kicker">Step 1</div>
+      <h2>Open the Contribute page<i>.</i></h2>
+      <p style="margin-top:22px">Go to <code>/kontribusi</code> ("Cara berkontribusi" means "ways to contribute").</p>
+      <p style="margin-top:14px">Pick a path. Each button opens the matching GitHub form in a new tab.</p>
+    </div>
+    <div>
+      <div class="shot"><img src="img/ways-top.jpg" alt="Ways to contribute on the Contribute page"></div>
+      <p class="cap">Screenshot: "Kirim artikel" = send an article, "Sumbang data" = contribute data, "Laporkan koreksi" = report a correction, "Usulkan" = suggest.</p>
+    </div>
+  </div>
+  <div class="brand">Visualize Karhutla<i>.</i></div><div class="num">5</div>
+</section>
+
+<!-- 6 -->
+<section class="slide">
+  <div class="cols" style="grid-template-columns:1fr 520px;gap:50px;align-items:center;height:100%">
+    <div>
+      <div class="kicker">Step 2</div>
+      <h2>Fill in the form<i>.</i></h2>
+      <ol class="steps" style="margin-top:26px">
+        <li>Sign in to GitHub when asked.</li>
+        <li>Complete the required fields (marked with a red asterisk).</li>
+        <li>Add the link or file that supports your submission.</li>
+        <li>Press <b style="color:var(--fg)">Submit new issue</b>.</li>
+      </ol>
+    </div>
+    <div>
+      <div class="form">
+        <div class="t">[Templat] My illustration</div>
+        <label>Template title <b>*</b></label><div class="f">Hutan Kita</div>
+        <label>Creator name <b>*</b></label><div class="f">Your name or pen name (shown as credit)</div>
+        <label>Portfolio or social link</label><div class="f">https://  (optional)</div>
+        <label>Image <b>*</b></label><div class="drop">Drag your image here</div>
+        <div class="chk"><span>&#10003;</span>This work is my own and I have the right to share it.</div>
+        <div class="chk"><span>&#10003;</span>I allow free use for the karhutla awareness campaign, with credit.</div>
+        <div class="btn">Submit new issue</div>
+      </div>
+      <p class="cap">Illustration of the template form fields (not a live screenshot).</p>
+    </div>
+  </div>
+  <div class="brand">Visualize Karhutla<i>.</i></div><div class="num">6</div>
+</section>
+
+<!-- 7 -->
+<section class="slide">
+  <div class="kicker">Articles and data</div>
+  <h2>What makes a good submission<i>?</i></h2>
+  <div class="cols" style="grid-template-columns:1fr 1fr;margin-top:36px">
+    <div class="card" style="padding:28px">
+      <h3 style="font-size:28px">Articles</h3>
+      <ul style="margin-top:14px;padding-left:22px;display:grid;gap:8px">
+        <li style="font-size:21px">From reputable media, government bodies, research institutes or environmental NGOs.</li>
+        <li style="font-size:21px">About forest and land fires in Indonesia.</li>
+        <li style="font-size:21px">A public link, no paywall if possible.</li>
+        <li style="font-size:21px">One or two sentences on why it matters.</li>
+      </ul>
+    </div>
+    <div class="card" style="padding:28px">
+      <h3 style="font-size:28px">Data</h3>
+      <ul style="margin-top:14px;padding-left:22px;display:grid;gap:8px">
+        <li style="font-size:21px">Burned area per regency or province (for example SiPongi, BPBD, official reports).</li>
+        <li style="font-size:21px">Always include the source link, the period and the unit.</li>
+        <li style="font-size:21px">Never invent numbers: leave blank if unknown.</li>
+        <li style="font-size:21px">Corrections: say what is wrong and give a reference.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="brand">Visualize Karhutla<i>.</i></div><div class="num">7</div>
+</section>
+
+<!-- 8 -->
+<section class="slide">
+  <div class="cols" style="grid-template-columns:460px 1fr;gap:44px;align-items:center;height:100%">
+    <div>
+      <div class="kicker">For illustrators</div>
+      <h2>Submit a template<i>.</i></h2>
+      <ul style="margin-top:22px;padding-left:22px;display:grid;gap:9px">
+        <li style="font-size:21px"><b style="color:var(--fg)">Any size or ratio</b>: Instagram Story 9:16, desktop landscape, or anything else.</li>
+        <li style="font-size:21px">PNG, JPG, WebP or GIF. Up to 12 MB each, up to 6 files. No SVG.</li>
+        <li style="font-size:21px">Give your name for credit and, optionally, a portfolio link.</li>
+        <li style="font-size:21px">Tick both confirmations about ownership and free use.</li>
+      </ul>
+    </div>
+    <div>
+      <div class="shot"><img src="img/ways-template.jpg" alt="The Submit a visual template option on the Contribute page"></div>
+      <p class="cap">Screenshot: "Sumbang templat visual" = contribute a visual template. The "Kirim templat" button opens the form.</p>
+    </div>
+  </div>
+  <div class="brand">Visualize Karhutla<i>.</i></div><div class="num">8</div>
+</section>
+
+<!-- 9 -->
+<section class="slide">
+  <div class="kicker">After you submit</div>
+  <h2>What happens next<i>.</i></h2>
+  <div class="flow">
+    <div class="st"><b>1</b><h3>You submit</h3><p>Your form becomes a public GitHub issue. Nothing is published yet.</p></div>
+    <div class="st"><b>2</b><h3>Maintainer reviews</h3><p>Checks the content, credit and that the work is yours to share.</p></div>
+    <div class="st"><b>3</b><h3>Approved</h3><p>The maintainer adds the label <code>setujui-templat</code>.</p></div>
+    <div class="st"><b>4</b><h3>Automatic publish</h3><p>An automated workflow optimizes the image, saves it to the repository and redeploys the site.</p></div>
+    <div class="st"><b>5</b><h3>It goes live</h3><p>Your template appears under "Community templates" with your name. The issue is closed with a thank-you.</p></div>
+  </div>
+  <p class="note" style="margin-top:30px">Only approved work enters the repository. Declined or unclear submissions stay as issues and may get follow-up questions.</p>
+  <div class="brand">Visualize Karhutla<i>.</i></div><div class="num">9</div>
+</section>
+
+<!-- 10 -->
+<section class="slide">
+  <div class="cols" style="grid-template-columns:420px 1fr;gap:40px;align-items:center;height:100%">
+    <div>
+      <div class="kicker">Spread the word</div>
+      <h2>Use the story templates<i>.</i></h2>
+      <ol class="steps" style="margin-top:24px">
+        <li>Open <code>/templat</code> ("Templat Story").</li>
+        <li>Press <b style="color:var(--fg)">Bagikan ke Story</b> (share) on a phone, or <b style="color:var(--fg)">Unduh</b> (download).</li>
+        <li>Post it to your Instagram Story with <b style="color:var(--fg)">#visualizekarhutla</b>.</li>
+      </ol>
+    </div>
+    <div>
+      <div class="shot" style="width:470px;margin-left:auto"><img src="img/templates-grid.jpg" alt="Eight Instagram Story templates"></div>
+      <p class="cap">Eight ready-made 1080 x 1920 templates with campaign lines in English and real fire photos.</p>
+    </div>
+  </div>
+  <div class="brand">Visualize Karhutla<i>.</i></div><div class="num">10</div>
+</section>
+
+<!-- 11 -->
+<section class="slide">
+  <div class="cols" style="grid-template-columns:1fr 470px;gap:44px;align-items:center;height:100%">
+    <div>
+      <div class="kicker">Instagram</div>
+      <h2>Start or join an Add Yours chain<i>.</i></h2>
+      <ol class="steps" style="margin-top:22px">
+        <li>Download the <b style="color:var(--fg)">Add Yours</b> template and post it as a new Story.</li>
+        <li>Tap the sticker icon, choose <b style="color:var(--fg)">Add Yours</b> and paste the prompt.</li>
+        <li>Move the sticker into the empty space on the right, then post.</li>
+      </ol>
+      <p style="margin-top:20px;font-size:21px">Suggested prompt:<br><code style="font-size:20px">Add yours: how are you speaking up for Kalimantan's forests? #visualizekarhutla</code></p>
+      <p class="note" style="margin-top:14px">Or tap "Ikut Add Yours di Instagram" on the page to join our Story directly.</p>
+    </div>
+    <div class="shot" style="max-height:560px"><img src="img/add-yours.jpg" alt="The Add Yours template and instructions"></div>
+  </div>
+  <div class="brand">Visualize Karhutla<i>.</i></div><div class="num">11</div>
+</section>
+
+<!-- 12 -->
+<section class="slide">
+  <div class="kicker">For developers</div>
+  <h2>Contribute code<i>.</i></h2>
+  <div class="cols" style="grid-template-columns:1fr 1fr;margin-top:34px">
+    <ol class="steps">
+      <li>Fork the repository and create a branch.</li>
+      <li>Run <code>npm install</code>, then <code>npm run dev</code>.</li>
+      <li>Make your change and run <code>npm run build</code> until it passes.</li>
+      <li>Open a pull request describing what and why.</li>
+    </ol>
+    <div class="card" style="padding:26px">
+      <h3>House rules</h3>
+      <ul style="margin-top:12px;padding-left:22px;display:grid;gap:8px">
+        <li style="font-size:20px">UI text is formal Indonesian ("Anda", not "kamu").</li>
+        <li style="font-size:20px">Every number shows its source and date.</li>
+        <li style="font-size:20px">Never invent data; leave it empty if unavailable.</li>
+        <li style="font-size:20px">Details: <code>CONTRIBUTING.md</code> in the repository.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="brand">Visualize Karhutla<i>.</i></div><div class="num">12</div>
+</section>
+
+<!-- 13 -->
+<section class="slide" style="display:grid;place-items:center;text-align:center">
+  <div>
+    <div class="kicker">Thank you</div>
+    <h2 style="font-size:84px">The fires are not over<i>.</i></h2>
+    <p style="margin-top:26px;font-size:28px;color:var(--fg)">Help us keep Kalimantan's forests in the conversation.</p>
+    <div style="margin-top:40px;display:grid;gap:12px;font-size:24px">
+      <div><span style="color:var(--fg3)">Website</span> &nbsp;<a href="https://harryrosianto.github.io/visualize-karhutla">harryrosianto.github.io/visualize-karhutla</a></div>
+      <div><span style="color:var(--fg3)">Contribute</span> &nbsp;<a href="https://harryrosianto.github.io/visualize-karhutla/kontribusi">harryrosianto.github.io/visualize-karhutla/kontribusi</a></div>
+      <div><span style="color:var(--fg3)">Source code</span> &nbsp;<a href="https://github.com/harryrosianto/visualize-karhutla">github.com/harryrosianto/visualize-karhutla</a></div>
+      <div style="color:var(--ember);font-weight:800;margin-top:6px">#visualizekarhutla</div>
+    </div>
+  </div>
+</section>
+
+</body>
+</html>

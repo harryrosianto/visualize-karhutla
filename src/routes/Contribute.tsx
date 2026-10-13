@@ -80,6 +80,10 @@ export default function Contribute() {
         <p className="mt-10 max-w-[64ch] text-sm leading-relaxed text-fg-3">
           Pengiriman memakai GitHub Issues sehingga memerlukan akun GitHub (gratis). Seluruh kiriman bersifat publik dan ditinjau terlebih dahulu sebelum dimuat. Jangan mencantumkan data pribadi pada kiriman.
         </p>
+        <p className="mt-4 max-w-[64ch] text-sm leading-relaxed text-fg-3">
+          Panduan bergambar dalam bahasa Inggris (slide):{' '}
+          <a href={`${REPO_URL}/blob/main/docs/how-to-contribute/how-to-contribute.pdf`} target="_blank" rel="noopener noreferrer" className="text-fg underline decoration-ember underline-offset-4">How to contribute (PDF)</a>.
+        </p>
       </section>
 
       <section aria-labelledby="bacaan" className="mt-24 border-t border-line pt-14">

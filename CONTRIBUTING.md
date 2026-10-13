@@ -1,5 +1,7 @@
 # Panduan kontribusi
 
+> **English:** a step-by-step slide guide with screenshots is in [`docs/how-to-contribute/how-to-contribute.pdf`](docs/how-to-contribute/how-to-contribute.pdf) (editable source: `deck.html` in the same folder).
+
 Terima kasih telah membantu mengembangkan Visualize Karhutla.
 
 ## Tanpa menulis kode
