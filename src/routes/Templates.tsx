@@ -7,7 +7,7 @@ import { useData } from '../lib/DataContext'
 import { downloadBlob, renderPng, shareOrDownload } from '../lib/exportImage'
 import { siteUrl } from '../lib/share'
 import { communityTemplates } from '../lib/community'
-import { ADD_YOURS_URL, issueUrl } from '../lib/site'
+import { ADD_YOURS_URL, THREADS_URL, issueUrl } from '../lib/site'
 
 const ADD_YOURS = { id: 'add-yours', headline: 'Add yours' }
 const PROMPT = 'Add yours: how are you speaking up for Kalimantan’s forests? #visualizekarhutla'
@@ -112,12 +112,15 @@ export default function Templates() {
       </section>
 
       <section aria-labelledby="komunitas" className="mt-20 border-t border-line pt-14">
-        <h2 id="komunitas" className="text-3xl font-extrabold tracking-tight text-fg md:text-4xl">Templat dari komunitas<span className="text-ember">.</span></h2>
-        <p className="mt-4 max-w-[60ch] text-fg-2">Karya ilustrator dan desainer yang disumbangkan untuk kampanye ini. Semua kiriman ditinjau pemelihara sebelum dimuat. Silakan unduh dan bagikan dengan mencantumkan nama kreator.</p>
-        <a href={issueUrl('templat.yml')} target="_blank" rel="noopener noreferrer" className="btn btn-primary mt-6">Kirim templat Anda</a>
-        <p className="mt-3 max-w-[60ch] text-sm text-fg-3">Ukuran dan rasio bebas: Story 9:16, lanskap desktop, atau lainnya. Pengiriman memakai GitHub (akun gratis) dan disetujui terlebih dahulu sebelum tampil di sini.</p>
+        <h2 id="komunitas" className="text-3xl font-extrabold tracking-tight text-fg md:text-4xl">Karya dari komunitas<span className="text-ember">.</span></h2>
+        <p className="mt-4 max-w-[60ch] text-fg-2">Karya ilustrator, fotografer, dan desainer grafis yang disumbangkan untuk kampanye ini. Semua kiriman ditinjau pemelihara sebelum dimuat. Silakan unduh dan bagikan dengan mencantumkan nama kreator.</p>
+        <div className="mt-6 flex flex-wrap gap-3">
+          <a href={issueUrl('templat.yml')} target="_blank" rel="noopener noreferrer" className="btn btn-primary">Kirim lewat GitHub</a>
+          <a href={THREADS_URL} target="_blank" rel="noopener noreferrer" className="btn btn-ghost">Kirim lewat DM Threads</a>
+        </div>
+        <p className="mt-3 max-w-[60ch] text-sm text-fg-3">Ukuran dan rasio bebas: Story 9:16, lanskap desktop, atau lainnya. Kirim lewat GitHub (akun gratis) atau, bila tidak punya akun, lewat DM Threads @harrierosss. Semua kiriman disetujui terlebih dahulu sebelum tampil di sini.</p>
         {communityTemplates.length === 0 ? (
-          <p className="mt-10 text-fg-3">Belum ada templat dari komunitas. Jadilah kontributor pertama.</p>
+          <p className="mt-10 text-fg-3">Belum ada karya dari komunitas. Jadilah kontributor pertama.</p>
         ) : (
           <ul className="mt-10 columns-2 gap-4 md:columns-4 md:gap-6">
             {communityTemplates.map(t => (

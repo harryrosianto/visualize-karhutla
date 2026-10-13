@@ -2,7 +2,7 @@ import { ArrowSquareOut, GithubLogo, ShareNetwork } from '@phosphor-icons/react'
 import { useState, type ReactNode } from 'react'
 import articles from '../content/articles.json'
 import { fmtDate } from '../lib/data'
-import { ADD_YOURS_URL, REPO_URL, issueUrl } from '../lib/site'
+import { ADD_YOURS_URL, REPO_URL, THREADS_URL, issueUrl } from '../lib/site'
 import { siteUrl } from '../lib/share'
 
 function Way({ title, children, action }: { title: string; children: ReactNode; action: ReactNode }) {
@@ -62,8 +62,12 @@ export default function Contribute() {
           <Way title="Usulkan fitur atau perbaikan bahasa" action={ext(issueUrl('usulan.yml'), 'Kirim usulan', <GithubLogo size={18} weight="bold" aria-hidden />)}>
             Usulkan fitur baru, perbaikan aksesibilitas, atau terjemahan dan penyuntingan bahasa.
           </Way>
-          <Way title="Sumbang templat visual" action={ext(issueUrl('templat.yml'), 'Kirim templat', <GithubLogo size={18} weight="bold" aria-hidden />)}>
-            Ilustrator dan desainer dapat mengunggah templat (ukuran dan rasio bebas, misalnya Story atau lanskap desktop) untuk kampanye kesadaran. Karya yang disetujui tampil pada halaman Templat Story lengkap dengan nama kreator.
+          <Way title="Sumbang karya visual" action={
+            <div className="flex flex-wrap gap-3">
+              {ext(issueUrl('templat.yml'), 'Kirim lewat GitHub', <GithubLogo size={18} weight="bold" aria-hidden />)}
+              {ext(THREADS_URL, 'Kirim lewat DM Threads')}
+            </div>}>
+            Ilustrator, fotografer, dan desainer grafis dapat mengirim karya (ukuran dan rasio bebas, misalnya Story atau lanskap desktop) untuk kampanye kesadaran. Tidak punya akun GitHub? Kirim melalui DM Threads @harrierosss. Karya yang disetujui tampil pada halaman Templat Story lengkap dengan nama kreator.
           </Way>
           <Way title="Kembangkan bersama" action={ext(REPO_URL, 'Lihat repositori', <GithubLogo size={18} weight="bold" aria-hidden />)}>
             Kode sumber tersedia terbuka. Pengembang dapat mengirim perbaikan melalui pull request; panduannya ada pada berkas CONTRIBUTING di repositori.

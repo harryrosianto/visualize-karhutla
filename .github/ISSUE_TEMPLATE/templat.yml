@@ -1,12 +1,12 @@
 name: Kirim templat
-description: Sumbangkan templat visual (ilustrasi atau desain) untuk kampanye kesadaran karhutla
+description: Sumbangkan karya visual (ilustrasi, foto, atau desain) untuk kampanye kesadaran karhutla
 title: "[Templat] "
 labels: ["templat"]
 body:
   - type: markdown
     attributes:
       value: |
-        Ilustrator dan desainer dipersilakan menyumbangkan templat untuk Instagram Story, unggahan, atau layar desktop. Ukuran dan rasio bebas. Kiriman bersifat publik dan **ditinjau pemelihara terlebih dahulu**; hanya yang disetujui yang dimuat pada halaman Templat Story. Jangan mencantumkan data pribadi.
+        Ilustrator, fotografer, dan desainer grafis dipersilakan menyumbangkan karya untuk Instagram Story, unggahan, atau layar desktop. Ukuran dan rasio bebas. Kiriman bersifat publik dan **ditinjau pemelihara terlebih dahulu**; hanya yang disetujui yang dimuat pada halaman Templat Story. Jangan mencantumkan data pribadi.
   - type: input
     id: judul
     attributes:

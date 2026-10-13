@@ -27,13 +27,13 @@ Ukuran dan rasio bebas: Story IG 9:16, banner lanskap, atau lainnya. Format PNG,
 **3/6**
 
 ```
-Cara mengirim (perlu akun GitHub gratis):
+Cara mengirim (akun GitHub gratis):
 
 1. Buka halaman Kontribusi
 2. Tekan "Kirim templat"
 3. Isi judul dan nama kreator, lalu seret gambarmu
 
-Slide di tweet pertama menunjukkan langkahnya.
+Tidak punya GitHub? DM saja ke @harrierosss di Threads.
 ```
 
 **4/6**
@@ -88,13 +88,13 @@ Any size or ratio: IG Story 9:16, landscape banner, anything. PNG, JPG, WebP or 
 **3/6**
 
 ```
-How to submit (free GitHub account needed):
+How to submit (free GitHub account):
 
 1. Open the Contribute page
 2. Press "Kirim templat" (submit template)
 3. Add a title and your name, then drag in your image
 
-The slides in the first post show each step.
+No GitHub? Just DM @harrierosss on Threads.
 ```
 
 **4/6**

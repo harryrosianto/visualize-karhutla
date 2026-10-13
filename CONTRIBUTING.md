@@ -10,7 +10,7 @@ Gunakan formulir pada tab **Issues** repositori: kirim artikel, sumbang data, la
 
 - **Artikel**: dari media bereputasi, lembaga pemerintah, lembaga riset, atau organisasi lingkungan. Setelah ditinjau, artikel ditambahkan ke `src/content/articles.json`.
 - **Data**: harus disertai sumber yang dapat diperiksa, periode, dan satuan. Data luas lahan terbakar tingkat provinsi/kabupaten ditambahkan ke `data/sipongi.json`.
-- **Templat visual**: ilustrator dapat mengunggah gambar (ukuran bebas) lewat formulir "Kirim templat". Setelah ditinjau, pemelihara memasang label `setujui-templat`; alur `.github/workflows/approve-template.yml` lalu mengoptimalkan gambar, menambahkannya ke `src/assets/community/` dan `src/content/communityTemplates.json`, serta memicu deploy. Persiapan satu kali: buat label `setujui-templat` dan `templat` pada repositori.
+- **Karya visual**: ilustrator, fotografer, dan desainer dapat mengunggah gambar (ukuran bebas) lewat formulir "Kirim templat", atau mengirim lewat DM Threads @harrierosss bagi yang tidak memakai GitHub (karya dari DM ditambahkan manual oleh pemelihara). Setelah ditinjau, pemelihara memasang label `setujui-templat`; alur `.github/workflows/approve-template.yml` lalu mengoptimalkan gambar, menambahkannya ke `src/assets/community/` dan `src/content/communityTemplates.json`, serta memicu deploy. Persiapan satu kali: buat label `setujui-templat` dan `templat` pada repositori.
 
 ## Mengirim perbaikan kode
 

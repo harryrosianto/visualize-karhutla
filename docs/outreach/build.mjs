@@ -21,6 +21,7 @@ p,li{font-size:34px;line-height:1.38;color:var(--fg2)}b{color:var(--fg)}
 .form .f{border:1px solid #d0d7de;border-radius:8px;padding:12px 16px;color:#6e7781;background:#f6f8fa;font-size:24px}
 .form .drop{border:3px dashed #8c959f;border-radius:10px;padding:40px 10px;text-align:center;color:#57606a;background:#f6f8fa;font-size:26px}
 .form .c{display:flex;gap:12px;font-size:22px;margin-top:12px;color:#1f2328;align-items:flex-start}.form .c span{flex:none;width:24px;height:24px;border-radius:5px;background:#0969da;color:#fff;font-size:17px;text-align:center;line-height:24px;margin-top:3px}
+.ex{display:flex;gap:28px;margin-top:auto;margin-bottom:96px;align-items:flex-end}.grp span{display:block;margin-top:12px;font-size:22px;color:var(--fg3)}.two{display:flex;gap:14px}.two img{width:218px;height:388px;border-radius:14px;border:1px solid var(--line);object-fit:cover}.stack{display:grid;gap:14px}.stack img{width:344px;height:193px;border-radius:14px;border:1px solid var(--line);object-fit:cover}
 .cap{font-size:22px;color:var(--fg3);margin-top:16px}
 .rules{display:grid;gap:22px;margin-top:40px}.rules div{background:var(--ink2);border:1px solid var(--line);border-radius:18px;padding:24px 28px}
 .rules b{display:block;font-size:34px;margin-bottom:6px}.rules p{font-size:28px}
@@ -31,10 +32,11 @@ p,li{font-size:34px;line-height:1.38;color:var(--fg2)}b{color:var(--fg)}
 const S = []
 S.push(`<section class="slide"><div class="k">Open call</div><h1>Illustrators,<br>photographers,<br>designers<i>.</i></h1>
 <p style="margin-top:34px">The fires in Kalimantan are not over. Send us your artwork, photos or designs for the karhutla awareness campaign. Your work goes on the site with your name.</p>
-<div class="shot" style="margin-top:auto;margin-bottom:70px"><img src="img/templates-grid.jpg" alt=""></div>
+<div class="ex"><div class="grp"><div class="two"><img src="img/ex-story-1.png" alt=""><img src="img/ex-story-2.png" alt=""></div><span>Story templates</span></div>
+<div class="grp"><div class="stack"><img src="img/ex-comm-1.jpg" alt=""><img src="img/ex-comm-2.jpg" alt=""></div><span>Community artwork</span></div></div>
 <div class="wm">Visualize Karhutla<i>.</i></div><div class="pg">1 / 4</div></section>`)
 S.push(`<section class="slide"><div class="k">Langkah 1</div><h2>Buka halaman<br>Kontribusi<i>.</i></h2>
-<ol class="steps"><li>Buka <b>harryrosianto.github.io/visualize-karhutla/kontribusi</b></li><li>Cari <b>"Sumbang templat visual"</b>, lalu tekan <b>Kirim templat</b>.</li></ol>
+<ol class="steps"><li>Buka <b>harryrosianto.github.io/visualize-karhutla/kontribusi</b></li><li>Cari <b>"Sumbang templat visual"</b>, lalu tekan <b>Kirim templat</b>. Perlu akun GitHub gratis.</li></ol>
 <div class="shot" style="margin-top:auto;margin-bottom:70px"><img src="img/ways-template.jpg" alt=""></div>
 <div class="wm">Visualize Karhutla<i>.</i></div><div class="pg">2 / 4</div></section>`)
 S.push(`<section class="slide"><div class="k">Langkah 2</div><h2>Isi formulir,<br>seret gambarmu<i>.</i></h2>
@@ -44,12 +46,12 @@ S.push(`<section class="slide"><div class="k">Langkah 2</div><h2>Isi formulir,<b
 <label>Tautan portofolio</label><div class="f">https://  (opsional)</div>
 <label>Gambar <b>*</b></label><div class="drop">Seret gambarmu ke sini</div>
 <div class="c"><span>&#10003;</span>Karya ini buatan saya sendiri.</div><div class="c"><span>&#10003;</span>Boleh dipakai gratis untuk kampanye karhutla dengan kredit.</div></div>
-<p class="cap">Ilustrasi kolom formulir (bukan tangkapan layar asli). Perlu akun GitHub gratis.</p>
 <div class="wm">Visualize Karhutla<i>.</i></div><div class="pg">3 / 4</div></section>`)
 S.push(`<section class="slide"><div class="k">Ketentuan dan alur</div><h2>Bebas ukuran,<br>ditinjau dulu<i>.</i></h2>
 <div class="rules"><div><b>Ilustrasi, foto, atau desain</b><p>Ukuran dan rasio bebas: Story 9:16, lanskap desktop, atau lainnya. PNG, JPG, WebP, GIF; maksimal 12 MB.</p></div></div>
 <div class="flow"><div><em>1</em><p><b>Kirim</b> formulirmu di GitHub.</p></div><div><em>2</em><p><b>Ditinjau</b> pemelihara sebelum tayang.</p></div><div><em>3</em><p><b>Tayang</b> di halaman Templat Story dengan namamu.</p></div></div>
-<div class="url">harryrosianto.github.io/visualize-karhutla/templat</div>
+<div class="rules" style="margin-top:34px"><div><b>Tidak punya GitHub?</b><p>Kirim lewat DM Threads <b style="display:inline;font-size:inherit;color:var(--ember)">@harrierosss</b>. Karya tetap ditinjau sebelum tayang.</p></div></div>
+<div class="url" style="font-size:32px">harryrosianto.github.io/visualize-karhutla/templat</div>
 <div class="wm">#visualizekarhutla</div><div class="pg">4 / 4</div></section>`)
 fs.writeFileSync('docs/outreach/slides.html', `<!doctype html><html lang="id"><head><meta charset="utf-8"><title>Open call ilustrator</title><style>${css}</style></head><body>${S.join('')}</body></html>`)
 console.log('slides.html ditulis')
