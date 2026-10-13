@@ -29,8 +29,8 @@ p,li{font-size:34px;line-height:1.38;color:var(--fg2)}b{color:var(--fg)}
 .url{font-size:38px;font-weight:800;color:var(--ember);border-left:8px solid var(--ember);padding-left:24px;margin-top:34px}
 `
 const S = []
-S.push(`<section class="slide"><div class="k">Open call</div><h1>Ilustrator,<br>karhutla butuh<br>karyamu<i>.</i></h1>
-<p style="margin-top:34px">Sumbangkan ilustrasi untuk kampanye kesadaran karhutla di Kalimantan. Karyamu tampil di situs, lengkap dengan namamu.</p>
+S.push(`<section class="slide"><div class="k">Open call</div><h1>Illustrators,<br>photographers,<br>designers<i>.</i></h1>
+<p style="margin-top:34px">The fires in Kalimantan are not over. Send us your artwork, photos or designs for the karhutla awareness campaign. Your work goes on the site with your name.</p>
 <div class="shot" style="margin-top:auto;margin-bottom:70px"><img src="img/templates-grid.jpg" alt=""></div>
 <div class="wm">Visualize Karhutla<i>.</i></div><div class="pg">1 / 4</div></section>`)
 S.push(`<section class="slide"><div class="k">Langkah 1</div><h2>Buka halaman<br>Kontribusi<i>.</i></h2>
@@ -47,7 +47,7 @@ S.push(`<section class="slide"><div class="k">Langkah 2</div><h2>Isi formulir,<b
 <p class="cap">Ilustrasi kolom formulir (bukan tangkapan layar asli). Perlu akun GitHub gratis.</p>
 <div class="wm">Visualize Karhutla<i>.</i></div><div class="pg">3 / 4</div></section>`)
 S.push(`<section class="slide"><div class="k">Ketentuan dan alur</div><h2>Bebas ukuran,<br>ditinjau dulu<i>.</i></h2>
-<div class="rules"><div><b>Ukuran dan rasio bebas</b><p>Story 9:16, lanskap desktop, atau lainnya. PNG, JPG, WebP, GIF; maksimal 12 MB.</p></div></div>
+<div class="rules"><div><b>Ilustrasi, foto, atau desain</b><p>Ukuran dan rasio bebas: Story 9:16, lanskap desktop, atau lainnya. PNG, JPG, WebP, GIF; maksimal 12 MB.</p></div></div>
 <div class="flow"><div><em>1</em><p><b>Kirim</b> formulirmu di GitHub.</p></div><div><em>2</em><p><b>Ditinjau</b> pemelihara sebelum tayang.</p></div><div><em>3</em><p><b>Tayang</b> di halaman Templat Story dengan namamu.</p></div></div>
 <div class="url">harryrosianto.github.io/visualize-karhutla/templat</div>
 <div class="wm">#visualizekarhutla</div><div class="pg">4 / 4</div></section>`)

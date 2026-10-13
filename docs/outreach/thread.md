@@ -1,4 +1,4 @@
-# Open call untuk ilustrator: thread (X / Threads)
+# Open call untuk ilustrator, fotografer, dan desainer: thread (X / Threads)
 
 **Lampiran:** `img/slide-1.png` sampai `img/slide-4.png` pada postingan pertama (X menerima 4 gambar; Threads juga bisa carousel). Postingan lain hanya teks.
 
@@ -9,17 +9,17 @@ Batas X: 280 karakter per postingan (tautan dihitung 23). Semua postingan di baw
 **1/6**
 
 ```
-Panggilan untuk ilustrator 🎨
+Panggilan untuk ilustrator, fotografer, dan desainer grafis 🎨📷
 
 Karhutla di Kalimantan belum berakhir: 252.279 titik panas terdeteksi sepanjang 2026 (NASA FIRMS, per 12 Oktober).
 
-Kami butuh karyamu agar lebih banyak orang peduli. Karyamu tampil di situs, lengkap dengan namamu. 🧵
+Kami butuh karyamu agar lebih banyak orang peduli. Karya tampil di situs lengkap dengan namamu. 🧵
 ```
 
 **2/6**
 
 ```
-Yang kami cari: ilustrasi atau desain bertema karhutla, hutan, gambut, satwa, atau udara bersih.
+Yang kami cari: ilustrasi, foto, atau desain bertema karhutla, hutan, gambut, satwa, atau udara bersih.
 
 Ukuran dan rasio bebas: Story IG 9:16, banner lanskap, atau lainnya. Format PNG, JPG, WebP, atau GIF, maksimal 12 MB.
 ```
@@ -60,7 +60,7 @@ Ketentuan singkat:
 Siap ikut? Kirim karyamu di sini:
 https://harryrosianto.github.io/visualize-karhutla/templat
 
-Tag ilustrator yang kamu kenal, dan repost supaya sampai ke mereka.
+Tag ilustrator, fotografer, atau desainer yang kamu kenal, dan repost supaya sampai ke mereka.
 
 #visualizekarhutla
 ```
@@ -70,7 +70,7 @@ Tag ilustrator yang kamu kenal, dan repost supaya sampai ke mereka.
 **1/6**
 
 ```
-Calling all illustrators 🎨
+Calling illustrators, photographers and graphic designers 🎨📷
 
 Kalimantan's fires are not over: 252,279 hotspots detected in 2026 so far (NASA FIRMS, as of 12 Oct).
 
@@ -80,7 +80,7 @@ We need your artwork to help more people care. It goes on the site with your nam
 **2/6**
 
 ```
-What we are looking for: illustrations or designs about wildfires, forests, peat, wildlife, or clean air.
+What we are looking for: illustrations, photos or designs about wildfires, forests, peat, wildlife, or clean air.
 
 Any size or ratio: IG Story 9:16, landscape banner, anything. PNG, JPG, WebP or GIF, up to 12 MB.
 ```
@@ -121,7 +121,7 @@ The short rules:
 Ready? Submit your artwork here:
 https://harryrosianto.github.io/visualize-karhutla/templat
 
-Tag an illustrator you know, and repost so it reaches them.
+Tag an illustrator, photographer or designer you know, and repost so it reaches them.
 
 #visualizekarhutla
 ```
