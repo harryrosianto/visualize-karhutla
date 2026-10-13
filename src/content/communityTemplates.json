@@ -1,1 +1,12 @@
-[]
+[
+  {
+    "id": "t2-1",
+    "ext": "png",
+    "title": "Monster in my Kitchen",
+    "creator": "Greenpeace",
+    "creatorUrl": "https://www.youtube.com/watch?v=8rIjVDo_u8c",
+    "width": 1375,
+    "height": 770,
+    "issue": 2
+  }
+]
