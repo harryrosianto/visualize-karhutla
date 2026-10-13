@@ -18,5 +18,15 @@
     "width": 1380,
     "height": 768,
     "issue": 3
+  },
+  {
+    "id": "t4-1",
+    "ext": "png",
+    "title": "Deforestation",
+    "creator": "Greenpeace",
+    "creatorUrl": "https://www.youtube.com/watch?v=8rIjVDo_u8c",
+    "width": 1376,
+    "height": 773,
+    "issue": 4
   }
 ]
