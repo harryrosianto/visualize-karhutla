@@ -6,6 +6,7 @@ import { HASHTAG, TEMPLATES } from '../content/storyTemplates'
 import { useData } from '../lib/DataContext'
 import { downloadBlob, renderPng, shareOrDownload } from '../lib/exportImage'
 import { siteUrl } from '../lib/share'
+import { ADD_YOURS_URL } from '../lib/site'
 
 const ADD_YOURS = { id: 'add-yours', headline: 'Add yours' }
 const PROMPT = 'Add yours: how are you speaking up for Kalimantan’s forests? #visualizekarhutla'
@@ -98,6 +99,11 @@ export default function Templates() {
             <li>Ketuk ikon stiker, pilih <strong className="text-fg">Add Yours</strong>, lalu tempel pertanyaan pada kolom teks.</li>
             <li>Geser dan sesuaikan ukuran stiker di area kosong bagian bawah, kemudian unggah.</li>
           </ol>
+          <div className="mt-6 rounded-panel border border-ember/60 bg-ember/10 p-5">
+            <p className="font-bold text-fg">Ingin ikut tanpa membuat templat sendiri?</p>
+            <p className="mt-1 text-sm text-fg-2">Buka Story Add Yours kami di Instagram, ketuk stikernya, lalu tambahkan Story Anda.</p>
+            <a href={ADD_YOURS_URL} target="_blank" rel="noopener noreferrer" className="btn btn-primary mt-4">Ikut Add Yours di Instagram</a>
+          </div>
           <p className="mt-6 text-sm text-fg-3">Usulan teks stiker:</p>
           <p lang="en" translate="no" className="mt-1 rounded-panel border border-line bg-ink-2 p-4 text-fg">{PROMPT}</p>
           <button type="button" onClick={async () => { try { await navigator.clipboard.writeText(PROMPT); setNote('Teks stiker disalin.') } catch { setNote('Teks belum dapat disalin. Salin secara manual.') } window.setTimeout(() => setNote(''), 2600) }} className="btn btn-ghost mt-3">Salin teks stiker</button>

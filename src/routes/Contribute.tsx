@@ -2,7 +2,7 @@ import { ArrowSquareOut, GithubLogo, ShareNetwork } from '@phosphor-icons/react'
 import { useState, type ReactNode } from 'react'
 import articles from '../content/articles.json'
 import { fmtDate } from '../lib/data'
-import { REPO_URL, issueUrl } from '../lib/site'
+import { ADD_YOURS_URL, REPO_URL, issueUrl } from '../lib/site'
 import { siteUrl } from '../lib/share'
 
 function Way({ title, children, action }: { title: string; children: ReactNode; action: ReactNode }) {
@@ -68,6 +68,7 @@ export default function Contribute() {
           <Way title="Sebarkan" action={
             <div className="flex flex-wrap items-center gap-4">
               <button type="button" onClick={share} className="btn btn-primary"><ShareNetwork size={18} weight="bold" aria-hidden />Bagikan situs ini</button>
+              <a href={ADD_YOURS_URL} target="_blank" rel="noopener noreferrer" className="btn btn-ghost">Ikut Add Yours di Instagram<ArrowSquareOut size={16} weight="bold" aria-hidden /></a>
               <span role="status" aria-live="polite" className="text-sm text-fg">{note}</span>
             </div>}>
             Karhutla belum berakhir. Bantu ingatkan orang-orang di sekitar Anda dengan membagikan situs ini atau ringkasan wilayah Anda.

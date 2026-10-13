@@ -5,3 +5,6 @@ export const issueUrl = (template: string) => `${REPO_URL}/issues/new?template=$
 /** Alamat publik GitHub Pages, ditampilkan pada slide ajakan berkontribusi. */
 export const PUBLIC_URL = 'https://harryrosianto.github.io/visualize-karhutla'
 export const PUBLIC_HOST_PATH = PUBLIC_URL.replace(/^https?:\/\//, '')
+
+/** Story sorotan Instagram berisi stiker Add Yours; pengunjung dapat ikut dari sini. */
+export const ADD_YOURS_URL = 'https://www.instagram.com/s/aGlnaGxpZ2h0OjE4MTEzMDMzMTE3MTM1Nzc0?story_media_id=4006837623154725768_4000644639&srtk=MXQyMzQ2M2l3ZHJsMQ==' as const
