@@ -8,7 +8,7 @@ import { downloadBlob, renderPng, shareOrDownload } from '../lib/exportImage'
 import { siteUrl } from '../lib/share'
 
 const ADD_YOURS = { id: 'add-yours', headline: 'Add yours' }
-const PROMPT = 'Add yours: how are you speaking up for Kalimantan’s forests? #KarhutlaBelumBerakhir'
+const PROMPT = 'Add yours: how are you speaking up for Kalimantan’s forests? #visualizekarhutla'
 
 type Job = { id: string; mode: 'bagikan' | 'unduh' }
 

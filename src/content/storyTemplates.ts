@@ -15,7 +15,7 @@ export interface StoryTemplateDef {
   alt: string
 }
 
-export const HASHTAG = '#KarhutlaBelumBerakhir'
+export const HASHTAG = '#visualizekarhutla'
 
 export const TEMPLATES: StoryTemplateDef[] = [
   { id: 'hutan-terbakar', image: 'wildfire-1', layout: 'full', position: '50% 40%', headline: 'The forest is burning.', sub: 'Orangutans are running out of trees to climb.', alt: 'Orangutan pada pohon gundul di lanskap berasap.' },
