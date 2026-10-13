@@ -3,7 +3,9 @@ import { Hero } from '../components/Hero'
 import { KabupatenPicker } from '../components/KabupatenPicker'
 import { KeyStats } from '../components/KeyStats'
 import { MapTeaser } from '../components/MapTeaser'
+import { CommunityGallery } from '../components/CommunityGallery'
 import { Picture } from '../components/Picture'
+import { communityTemplates } from '../lib/community'
 
 function CheckRegion() {
   const nav = useNavigate()
@@ -28,12 +30,29 @@ function CheckRegion() {
   )
 }
 
+function Gallery() {
+  return (
+    <section id="galeri-warga" aria-labelledby="galeri-judul" className="mx-auto max-w-[1400px] px-4 py-24 md:px-8 md:py-36">
+      <h2 id="galeri-judul" className="max-w-[14ch] text-5xl font-extrabold leading-[0.98] tracking-tighter text-fg md:text-7xl">Galeri warga<span className="text-ember">.</span></h2>
+      <p className="mt-6 max-w-[52ch] text-base leading-relaxed text-fg-2 md:text-lg">
+        Ilustrasi, foto, dan desain dari warga untuk mengingatkan bahwa karhutla belum berakhir. Unduh dan bagikan dengan mencantumkan nama kreator, atau kirim karya Anda sendiri.
+      </p>
+      <CommunityGallery limit={8} />
+      <div className="mt-2 flex flex-wrap gap-3">
+        <Link to="/templat#galeri-warga" className="btn btn-primary">{communityTemplates.length > 8 ? 'Lihat seluruh galeri' : 'Buka halaman galeri dan templat'}</Link>
+        <Link to="/templat#galeri-warga" className="btn btn-ghost">Kirim karya Anda</Link>
+      </div>
+    </section>
+  )
+}
+
 export default function Landing() {
   return (
     <>
       <Hero />
       <KeyStats />
       <MapTeaser />
+      <Gallery />
       <CheckRegion />
     </>
   )

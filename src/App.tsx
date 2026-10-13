@@ -50,7 +50,16 @@ class Guard extends Component<{ children: ReactNode }, { failed: boolean }> {
 
 function ScrollTop() {
   const { pathname, hash } = useLocation()
-  useEffect(() => { if (!hash) window.scrollTo(0, 0) }, [pathname, hash])
+  useEffect(() => {
+    if (!hash) { window.scrollTo(0, 0); return }
+    // halaman dimuat malas: tunggu elemen tujuan muncul, lalu gulir
+    let tries = 0
+    const t = window.setInterval(() => {
+      const el = document.getElementById(decodeURIComponent(hash.slice(1)))
+      if (el) { el.scrollIntoView(); window.clearInterval(t) } else if (++tries > 30) window.clearInterval(t)
+    }, 100)
+    return () => window.clearInterval(t)
+  }, [pathname, hash])
   return null
 }
 

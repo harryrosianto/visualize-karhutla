@@ -6,7 +6,7 @@ import { HASHTAG, TEMPLATES } from '../content/storyTemplates'
 import { useData } from '../lib/DataContext'
 import { downloadBlob, renderPng, shareOrDownload } from '../lib/exportImage'
 import { siteUrl } from '../lib/share'
-import { communityTemplates } from '../lib/community'
+import { CommunityGallery } from '../components/CommunityGallery'
 import { ADD_YOURS_URL, THREADS_URL, issueUrl } from '../lib/site'
 
 const ADD_YOURS = { id: 'add-yours', headline: 'Add yours' }
@@ -111,30 +111,15 @@ export default function Templates() {
         </div>
       </section>
 
-      <section aria-labelledby="komunitas" className="mt-20 border-t border-line pt-14">
-        <h2 id="komunitas" className="text-3xl font-extrabold tracking-tight text-fg md:text-4xl">Karya dari komunitas<span className="text-ember">.</span></h2>
+      <section id="galeri-warga" aria-labelledby="galeri-warga-judul" className="mt-20 scroll-mt-24 border-t border-line pt-14">
+        <h2 id="galeri-warga-judul" className="text-3xl font-extrabold tracking-tight text-fg md:text-4xl">Galeri warga<span className="text-ember">.</span></h2>
         <p className="mt-4 max-w-[60ch] text-fg-2">Karya ilustrator, fotografer, dan desainer grafis yang disumbangkan untuk kampanye ini. Semua kiriman ditinjau pemelihara sebelum dimuat. Silakan unduh dan bagikan dengan mencantumkan nama kreator.</p>
         <div className="mt-6 flex flex-wrap gap-3">
           <a href={issueUrl('templat.yml')} target="_blank" rel="noopener noreferrer" className="btn btn-primary">Kirim lewat GitHub</a>
           <a href={THREADS_URL} target="_blank" rel="noopener noreferrer" className="btn btn-ghost">Kirim lewat DM Threads</a>
         </div>
         <p className="mt-3 max-w-[60ch] text-sm text-fg-3">Ukuran dan rasio bebas: Story 9:16, lanskap desktop, atau lainnya. Kirim lewat GitHub (akun gratis) atau, bila tidak punya akun, lewat DM Threads @harrierosss. Semua kiriman disetujui terlebih dahulu sebelum tampil di sini.</p>
-        {communityTemplates.length === 0 ? (
-          <p className="mt-10 text-fg-3">Belum ada karya dari komunitas. Jadilah kontributor pertama.</p>
-        ) : (
-          <ul className="mt-10 columns-2 gap-4 md:columns-4 md:gap-6">
-            {communityTemplates.map(t => (
-              <li key={t.id} className="mb-8 break-inside-avoid">
-                <img src={t.thumb} alt={`Templat ${t.title} oleh ${t.creator}`} width={t.width} height={t.height} loading="lazy" decoding="async" className="w-full rounded-panel border border-line" style={{ aspectRatio: `${t.width} / ${t.height}` }} />
-                <p className="mt-2 text-sm font-semibold text-fg">{t.title}</p>
-                <p className="text-sm text-fg-3">
-                  Oleh {t.creatorUrl ? <a href={t.creatorUrl} target="_blank" rel="noopener noreferrer nofollow" className="underline decoration-ember underline-offset-4 hover:text-fg">{t.creator}</a> : t.creator}
-                </p>
-                <a href={t.full} download={`karhutla-templat-${t.id}.${t.ext}`} className="btn btn-ghost mt-2 min-h-11 w-full gap-1.5 px-2 text-sm"><DownloadSimple size={18} weight="bold" aria-hidden />Unduh</a>
-              </li>
-            ))}
-          </ul>
-        )}
+        <CommunityGallery />
       </section>
 
       <p className="mt-12 max-w-[64ch] text-sm leading-relaxed text-fg-3">
