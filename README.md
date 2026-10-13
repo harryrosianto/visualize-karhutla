@@ -64,7 +64,7 @@ Taruh `public/media/hero.mp4` (H.264, tanpa suara, disarankan 8 detik loop, leba
 
 ```
 data/               sipongi.json, raw/ (CSV FIRMS), boundaries/src (cache unduhan)
-docs/               PLAN, DECISIONS, TODO, SUMMARY
+docs/               DECISIONS, DEPLOY
 scripts/            pipeline data, optimasi gambar, build-og
 public/data/        meta, kabupaten, daily-*, hotspots-*, boundaries-* (dimuat per provinsi)
 src/components/     Hero, KeyStats, MapTeaser, Footer, map/*, wrapped/*
@@ -73,7 +73,7 @@ src/routes/         Landing, MapPage, WrappedPicker, WrappedPage, About
 
 ## Kualitas
 
-Hasil audit Lighthouse mobile terbaru dicatat di `docs/SUMMARY.md`. Semua animasi menghormati `prefers-reduced-motion`; semua kontrol bisa dipakai dengan keyboard (peta lewat kotak cari kabupaten, story lewat tombol panah dan spasi).
+Semua animasi menghormati `prefers-reduced-motion`; semua kontrol bisa dipakai dengan keyboard (peta lewat kotak cari kabupaten, story lewat tombol panah dan spasi).
 
 ## Kredit
 

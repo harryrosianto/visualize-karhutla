@@ -12,3 +12,14 @@ src/Downloads/
 src/Burned.otf
 .wrangler/
 public/vendor/
+
+# Berkas kerja lokal (tidak perlu dilihat pengguna repositori)
+.claude/
+skills-lock.json
+docs/PLAN.md
+docs/SUMMARY.md
+docs/TODO.md
+src/floria.PNG
+src/images (1).jpeg
+src/1029179_hero.avif
+src/7f781aee-6b92-49b1-99e9-4da0b70eaf22.jpeg
