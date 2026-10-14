@@ -1,7 +1,7 @@
 import { DownloadSimple, FilmSlate, ShareNetwork } from '@phosphor-icons/react'
 import { useEffect, useState } from 'react'
 import { communityTemplates } from '../lib/community'
-import { GALLERY_VIDEO_SECONDS, canRecordGallery, renderGalleryVideo, type GalleryVideo } from '../lib/galleryVideo'
+import { canRecordGallery, renderGalleryVideo, type GalleryVideo } from '../lib/galleryVideo'
 import { downloadBlob } from '../lib/exportImage'
 import { siteUrl } from '../lib/share'
 
@@ -48,7 +48,7 @@ export function GalleryStory({ className = '' }: { className?: string }) {
         <FilmSlate size={18} weight="bold" aria-hidden />
         {phase === 'busy' ? `Menyiapkan video... ${Math.round(progress * 100)}%` : phase === 'ready' ? 'Buat ulang video Story' : 'Bagikan galeri sebagai Story (video)'}
       </button>
-      {phase === 'busy' && <p role="status" className="mt-3 max-w-[52ch] text-sm text-fg-3">Video direkam secara langsung ({GALLERY_VIDEO_SECONDS} detik). Biarkan tab ini tetap terbuka dan terlihat sampai selesai.</p>}
+      {phase === 'busy' && <p role="status" className="mt-3 max-w-[52ch] text-sm text-fg-3">Video 15 detik sedang dibuat. Biarkan tab ini tetap terbuka sampai selesai.</p>}
       {phase === 'error' && <p role="alert" className="mt-3 text-sm text-fg">Video belum dapat dibuat di browser ini. Silakan coba lagi atau pakai browser lain.</p>}
       {phase === 'ready' && video && (
         <div className="mt-5 grid max-w-[260px] gap-3">

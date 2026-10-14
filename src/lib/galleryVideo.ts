@@ -1,3 +1,4 @@
+import { ArrayBufferTarget, Muxer } from 'mp4-muxer'
 import type { CommunityTemplate } from './community'
 
 const W = 1080
@@ -24,9 +25,44 @@ const MIMES: [string, 'mp4' | 'webm'][] = [
   ['video/webm', 'webm'],
 ]
 
-export const GALLERY_VIDEO_SECONDS = TOTAL
 
-export const canRecordGallery = () => typeof MediaRecorder !== 'undefined' && typeof HTMLCanvasElement !== 'undefined' && 'captureStream' in HTMLCanvasElement.prototype
+const hasWebCodecs = () => typeof VideoEncoder !== 'undefined' && typeof VideoFrame !== 'undefined'
+const hasRecorder = () => typeof MediaRecorder !== 'undefined' && typeof HTMLCanvasElement !== 'undefined' && 'captureStream' in HTMLCanvasElement.prototype
+export const canRecordGallery = () => hasWebCodecs() || hasRecorder()
+
+const FPS = 30
+const CODECS = ['avc1.640028', 'avc1.4D0028', 'avc1.42E028']
+
+/** Encode bingkai demi bingkai dengan stempel waktu pasti (tidak bergantung kecepatan perangkat) dan kemas sebagai MP4 berdurasi tepat. Mengembalikan null bila H.264 tidak tersedia. */
+async function encodeOffline(canvas: HTMLCanvasElement, draw: (t: number) => void, onProgress?: (p: number) => void): Promise<Blob | null> {
+  if (!hasWebCodecs()) return null
+  let codec = ''
+  for (const c of CODECS) {
+    try { const r = await VideoEncoder.isConfigSupported({ codec: c, width: W, height: H, bitrate: 4_500_000, framerate: FPS }); if (r.supported) { codec = c; break } } catch { /* coba berikutnya */ }
+  }
+  if (!codec) return null
+  const target = new ArrayBufferTarget()
+  const muxer = new Muxer({ target, video: { codec: 'avc', width: W, height: H }, fastStart: 'in-memory' })
+  let failure: unknown = null
+  const encoder = new VideoEncoder({ output: (chunk, meta) => muxer.addVideoChunk(chunk, meta), error: e => { failure = e } })
+  encoder.configure({ codec, width: W, height: H, bitrate: 4_500_000, framerate: FPS })
+  const frames = TOTAL * FPS
+  for (let n = 0; n < frames; n++) {
+    if (failure) throw failure
+    draw(n / FPS)
+    const frame = new VideoFrame(canvas, { timestamp: Math.round((n * 1_000_000) / FPS), duration: Math.round(1_000_000 / FPS) })
+    encoder.encode(frame, { keyFrame: n % (FPS * 2) === 0 })
+    frame.close()
+    while (encoder.encodeQueueSize > 6) await new Promise(r => setTimeout(r, 4))
+    if (n % 6 === 0) { onProgress?.(n / frames); await new Promise(r => setTimeout(r, 0)) }
+  }
+  await encoder.flush()
+  encoder.close()
+  if (failure) throw failure
+  muxer.finalize()
+  onProgress?.(1)
+  return new Blob([target.buffer], { type: 'video/mp4' })
+}
 
 function loadImage(src: string) {
   return new Promise<HTMLImageElement>((resolve, reject) => {
@@ -50,9 +86,6 @@ interface Tile { i: number; x: number; y: number; w: number; h: number; bmp?: Im
 
 /** Video Story 9:16 (1080x1920, 15 detik): galeri warga bergulir turun, setiap karya tampil dalam rasio aslinya (tanpa dipotong). */
 export async function renderGalleryVideo(items: CommunityTemplate[], opts: { fontFamily: string; onProgress?: (p: number) => void }): Promise<GalleryVideo> {
-  const picked = MIMES.find(([m]) => MediaRecorder.isTypeSupported(m))
-  if (!picked) throw new Error('perekam video tidak didukung')
-  const [mime, ext] = picked
   const imgs = await Promise.all(items.map(t => loadImage(t.full)))
   if (document.fonts) await document.fonts.ready
 
@@ -156,6 +189,14 @@ export async function renderGalleryVideo(items: CommunityTemplate[], opts: { fon
   }
 
   draw(0)
+  try {
+    const mp4 = await encodeOffline(canvas, draw, opts.onProgress)
+    if (mp4) return { blob: mp4, ext: 'mp4', mime: 'video/mp4', seconds: TOTAL }
+  } catch { /* lanjut ke perekam waktu nyata */ }
+  if (!hasRecorder()) throw new Error('pembuat video tidak didukung')
+  const picked = MIMES.find(([m]) => MediaRecorder.isTypeSupported(m))
+  if (!picked) throw new Error('perekam video tidak didukung')
+  const [mime, ext] = picked
   const stream = canvas.captureStream(30)
   const rec = new MediaRecorder(stream, { mimeType: mime, videoBitsPerSecond: 6_000_000 })
   const chunks: Blob[] = []
