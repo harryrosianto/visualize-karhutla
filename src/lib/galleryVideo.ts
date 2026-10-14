@@ -46,7 +46,7 @@ function fitText(ctx: CanvasRenderingContext2D, text: string, maxW: number) {
   return s.trimEnd() + '…'
 }
 
-interface Tile { i: number; x: number; y: number; w: number; h: number }
+interface Tile { i: number; x: number; y: number; w: number; h: number; bmp?: ImageBitmap }
 
 /** Video Story 9:16 (1080x1920, 15 detik): galeri warga bergulir turun, setiap karya tampil dalam rasio aslinya (tanpa dipotong). */
 export async function renderGalleryVideo(items: CommunityTemplate[], opts: { fontFamily: string; onProgress?: (p: number) => void }): Promise<GalleryVideo> {
@@ -79,6 +79,18 @@ export async function renderGalleryVideo(items: CommunityTemplate[], opts: { fon
   const contentH = FOOTER_TOP + 520
   const maxScroll = Math.max(0, contentH - H)
 
+  // muat ulang ke ukuran tampil dan dekode sebelum merekam, agar tidak ada jeda dekode saat bergulir
+  await Promise.all(tiles.map(async t => {
+    try { t.bmp = await createImageBitmap(imgs[t.i], { resizeWidth: Math.round(t.w), resizeHeight: Math.round(t.h), resizeQuality: 'high' }) } catch { /* pakai gambar asli */ }
+  }))
+  const MAXW = W - PAD * 2
+  const fit = (weight: number, size: number, text: string) => {
+    let sz = size
+    ctx.font = font(weight, sz)
+    while (ctx.measureText(text).width > MAXW && sz > 24) { sz -= 2; ctx.font = font(weight, sz) }
+    return sz
+  }
+
   const drawContent = (scroll: number) => {
     ctx.fillStyle = INK
     ctx.fillRect(0, 0, W, H)
@@ -87,12 +99,12 @@ export async function renderGalleryVideo(items: CommunityTemplate[], opts: { fon
     ctx.textBaseline = 'alphabetic'
     // judul
     ctx.fillStyle = FG
-    ctx.font = font(800, 156)
+    fit(800, 156, 'Galeri warga.')
     ctx.fillText('Galeri warga', PAD, 470)
     const w = ctx.measureText('Galeri warga').width
     ctx.fillStyle = EMBER
     ctx.fillText('.', PAD + w, 470)
-    ctx.font = font(500, 46)
+    fit(500, 46, 'Karya warga untuk mengingatkan:')
     ctx.fillStyle = FG2
     ctx.fillText('Karya warga untuk mengingatkan:', PAD, 560)
     ctx.fillText('karhutla belum berakhir.', PAD, 620)
@@ -103,7 +115,7 @@ export async function renderGalleryVideo(items: CommunityTemplate[], opts: { fon
       ctx.save()
       ctx.beginPath(); ctx.roundRect(t.x, t.y, t.w, t.h, 28); ctx.clip()
       ctx.fillStyle = '#16120F'; ctx.fillRect(t.x, t.y, t.w, t.h)
-      ctx.drawImage(img, t.x, t.y, t.w, t.h)
+      ctx.drawImage(t.bmp ?? img, t.x, t.y, t.w, t.h)
       ctx.restore()
       ctx.strokeStyle = 'rgba(255,255,255,0.14)'; ctx.lineWidth = 2
       ctx.beginPath(); ctx.roundRect(t.x, t.y, t.w, t.h, 28); ctx.stroke()
@@ -117,13 +129,13 @@ export async function renderGalleryVideo(items: CommunityTemplate[], opts: { fon
     }
     // penutup
     ctx.fillStyle = FG
-    ctx.font = font(800, 132)
+    fit(800, 132, 'karyamu.')
     ctx.fillText('Kirim', PAD, FOOTER_TOP + 190)
     ctx.fillText('karyamu', PAD, FOOTER_TOP + 330)
     const w2 = ctx.measureText('karyamu').width
     ctx.fillStyle = EMBER
     ctx.fillText('.', PAD + w2, FOOTER_TOP + 330)
-    ctx.font = font(800, 56)
+    fit(800, 56, '#visualizekarhutla')
     ctx.fillText('#visualizekarhutla', PAD, FOOTER_TOP + 430)
     ctx.restore()
   }
