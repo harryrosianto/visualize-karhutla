@@ -1,5 +1,5 @@
 import { Component, Suspense, lazy, type ComponentType, type ReactNode } from 'react'
-import { BrowserRouter, Outlet, Route, Routes, useLocation } from 'react-router-dom'
+import { BrowserRouter, Navigate, Outlet, Route, Routes, useLocation } from 'react-router-dom'
 import { useEffect } from 'react'
 import { DataBanner } from './components/DataBanner'
 import { Footer } from './components/Footer'
@@ -90,6 +90,7 @@ export default function App() {
               <Route index element={<Landing />} />
               <Route path="wrapped" element={<WrappedPicker />} />
               <Route path="templat" element={<Templates />} />
+              <Route path="galeri" element={<Navigate to="/templat#galeri-warga" replace />} />
               <Route path="tentang" element={<About />} />
               <Route path="kontribusi" element={<Contribute />} />
               <Route path="*" element={<NotFound />} />
