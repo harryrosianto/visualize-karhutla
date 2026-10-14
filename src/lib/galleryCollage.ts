@@ -136,7 +136,7 @@ export async function renderGalleryCollage(items: CommunityTemplate[], opts: { f
   const names = [...new Set(items.map(t => t.creator))]
   ctx.font = font(600, 40)
   ctx.fillStyle = FG2
-  ctx.fillText(`Karya ${names.length} warga untuk mengingatkan: karhutla belum berakhir.`, MARGIN + 6, CH - 100)
+  ctx.fillText('Karya warga untuk mengingatkan: karhutla belum berakhir.', MARGIN + 6, CH - 100)
   ctx.font = font(800, 42)
   ctx.fillStyle = EMBER
   const tag = '#visualizekarhutla'
