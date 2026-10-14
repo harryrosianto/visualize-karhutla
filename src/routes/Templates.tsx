@@ -7,7 +7,7 @@ import { useData } from '../lib/DataContext'
 import { downloadBlob, renderPng, shareOrDownload } from '../lib/exportImage'
 import { siteUrl } from '../lib/share'
 import { CommunityGallery } from '../components/CommunityGallery'
-import { GalleryStory } from '../components/GalleryStory'
+import { GalleryCollage } from '../components/GalleryCollage'
 import { ADD_YOURS_URL, THREADS_URL, issueUrl } from '../lib/site'
 
 const ADD_YOURS = { id: 'add-yours', headline: 'Add yours' }
@@ -120,7 +120,7 @@ export default function Templates() {
           <a href={THREADS_URL} target="_blank" rel="noopener noreferrer" className="btn btn-ghost">Kirim lewat DM Threads</a>
         </div>
         <p className="mt-3 max-w-[60ch] text-sm text-fg-3">Ukuran dan rasio bebas: Story 9:16, lanskap desktop, atau lainnya. Kirim lewat GitHub (akun gratis) atau, bila tidak punya akun, lewat DM Threads @harrierosss. Semua kiriman disetujui terlebih dahulu sebelum tampil di sini.</p>
-        <GalleryStory className="mt-6" />
+        <GalleryCollage className="mt-6" />
         <CommunityGallery />
       </section>
 
