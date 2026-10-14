@@ -4,6 +4,7 @@ import { KabupatenPicker } from '../components/KabupatenPicker'
 import { KeyStats } from '../components/KeyStats'
 import { MapTeaser } from '../components/MapTeaser'
 import { CommunityGallery } from '../components/CommunityGallery'
+import { GalleryStory } from '../components/GalleryStory'
 import { Picture } from '../components/Picture'
 import { communityTemplates } from '../lib/community'
 
@@ -42,6 +43,7 @@ function Gallery() {
         <Link to="/templat#galeri-warga" className="btn btn-primary">{communityTemplates.length > 8 ? 'Lihat seluruh galeri' : 'Buka halaman galeri dan templat'}</Link>
         <Link to="/templat#galeri-warga" className="btn btn-ghost">Kirim karya Anda</Link>
       </div>
+      <GalleryStory className="mt-4" />
     </section>
   )
 }
