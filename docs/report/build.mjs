@@ -43,8 +43,8 @@ const brand = (i, extra = '') => `<div class="foot"><span><b>Visualize Karhutla<
 const S = []
 // 1 sampul
 S.push(`<section class="slide"><div class="k">Improvement report &middot; October 2026</div><h1>What we<br>shipped,<br>what&rsquo;s<br>next<i>.</i></h1>
-<p style="margin-top:34px;max-width:600px">A progress report on Visualize Karhutla, the open project that maps Kalimantan&rsquo;s 2026 forest and land fires.</p>
-<div class="phone" style="position:absolute;right:84px;bottom:-60px;width:330px"><img src="img/hero-mobile.png" alt=""></div>
+<p style="margin-top:34px;max-width:500px">A progress report on Visualize Karhutla, the open project that maps Kalimantan&rsquo;s 2026 forest and land fires.</p>
+<div class="phone" style="position:absolute;right:84px;top:300px;width:340px"><img src="img/hero-mobile.png" alt=""></div>
 ${brand(1)}</section>`)
 // 2 data
 S.push(`<section class="slide"><div class="k">Data</div><h2>Real satellite data, clearly sourced<i>.</i></h2>
@@ -59,9 +59,10 @@ S.push(`<section class="slide"><div class="k">Interactive map</div><h2>Explore e
 ${brand(3)}</section>`)
 // 4 wrapped
 S.push(`<section class="slide"><div class="k">Karhutla Wrapped</div><h2>Every regency gets its own story<i>.</i></h2>
-<div class="row" style="margin-top:44px;gap:30px"><div class="phone" style="width:300px;flex:none"><img src="img/wrapped-total.png" alt=""></div><div class="phone" style="width:300px;flex:none;margin-top:60px"><img src="img/wrapped-bulan.png" alt=""></div>
+<div class="row" style="margin-top:44px;gap:30px"><div class="phone" style="width:300px;flex:none"><img src="img/ketapang-total.png" alt=""></div><div class="phone" style="width:300px;flex:none;margin-top:60px"><img src="img/ketapang-rank.png" alt=""></div>
 <div style="padding-top:20px"><p style="font-size:29px"><b>8 screens</b> per regency, plus one for all of Kalimantan.</p><p style="font-size:29px;margin-top:20px">Share any screen as a <b>1080&times;1920</b> image, or a <b>landscape</b> summary for X and Threads.</p></div></div>
-<div class="chips"><span>Per regency</span><span>Kalimantan-wide</span><span>Share to Story</span></div>
+<p style="margin-top:26px;font-size:26px;color:var(--fg3)">Example: Ketapang, West Kalimantan &mdash; the regency with the most hotspots in Kalimantan.</p>
+<div class="chips" style="margin-top:22px"><span>Per regency</span><span>Kalimantan-wide</span><span>Share to Story</span></div>
 ${brand(4)}</section>`)
 // 5 kesadaran
 S.push(`<section class="slide"><div class="k">Awareness tools</div><h2>Ready-made visuals to spread the word<i>.</i></h2>
@@ -105,7 +106,8 @@ S.push(`<section class="slide" style="padding-top:80px"><div class="k">What to i
 <div><em>2</em><p><b>Burned area per regency</b> (today: province level, from news reports).</p></div>
 <div><em>3</em><p><b>More years of history</b> for context beyond 2025.</p></div>
 <div><em>4</em><p><b>A faster map</b> on slow phones (lighter hotspot data).</p></div>
-<div><em>5</em><p><b>Automated tests</b> for pages and share images, and an English version.</p></div>
+<div><em>5</em><p><b>Other affected regions</b> coming soon: fetch data for Sumatra, Papua and beyond.</p></div>
+<div><em>6</em><p><b>Automated tests</b> for pages and share images, and an English version.</p></div>
 </div>
 <div class="need"><h3>We need your contribution.</h3><p><b>Data:</b> burned-area figures, local reports, corrections. <b>Assets:</b> illustrations, photos, designs. <b>Also:</b> articles, code, translation.</p><div class="url">harryrosianto.github.io/visualize-karhutla/kontribusi</div></div>
 ${brand(10, '#visualizekarhutla')}</section>`)
