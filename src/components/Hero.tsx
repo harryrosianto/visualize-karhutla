@@ -39,7 +39,7 @@ export function Hero() {
     transition: { duration: 0.9, delay: d, ease },
   })
   return (
-    <section ref={ref} className="relative isolate flex min-h-[100dvh] items-center overflow-hidden">
+    <section ref={ref} className="relative isolate flex min-h-[100dvh] items-start overflow-hidden md:items-center">
       {video ? (
         <div className="absolute inset-0 -z-20 bg-ink">
           <Picture name="hero-forest-night" eager sizes="100vw" className="size-full object-cover" position="60% 50%" />
@@ -54,7 +54,7 @@ export function Hero() {
       <div aria-hidden className="absolute inset-0 -z-10 bg-gradient-to-r from-ink/55 via-ink/15 to-transparent" />
       <EmberCanvas className="-z-10" />
 
-      <motion.div style={{ y: textY, opacity: textOpacity }} className="mx-auto w-full max-w-[1400px] px-4 pb-24 pt-28 md:px-8">
+      <motion.div style={{ y: textY, opacity: textOpacity }} className="mx-auto w-full max-w-[1400px] px-4 pb-0 pt-28 md:px-8 md:pb-24">
         <motion.h1 translate="no" {...rise(0.1)} className="font-brand text-[clamp(3.5rem,13.5vw,10rem)] font-normal leading-[0.98] tracking-[0.05em] text-fg">
           Visualize<br />Karhutla<span className="text-ember">.</span>
         </motion.h1>

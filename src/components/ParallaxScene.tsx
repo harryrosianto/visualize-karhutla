@@ -66,6 +66,8 @@ export function ParallaxScene({ target }: { target: RefObject<HTMLElement | null
         <img src={u('birds')} alt="" width={520} height={292} draggable={false} className="bird-flock bird-flock-2 absolute right-[16%] top-[27%] w-[min(20vw,220px)] -scale-x-100" />
       </Layer>
 
+      {/* ponsel: adegan diperkecil dan ditaruh di bagian bawah (seperti poster), langit mengisi atas untuk judul */}
+      <div className="absolute inset-x-0 bottom-0 h-[38dvh] md:inset-0 md:h-auto">
       {LAYERS.map((l, i) => (
         <Layer key={l.id} depth={l.depth} progress={progress} mx={mx} my={my}>
           <picture>
@@ -81,6 +83,7 @@ export function ParallaxScene({ target }: { target: RefObject<HTMLElement | null
           </picture>
         </Layer>
       ))}
+      </div>
     </div>
   )
 }
