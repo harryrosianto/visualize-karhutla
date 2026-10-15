@@ -54,7 +54,8 @@ export default function Landing() {
   return (
     <>
       <Hero />
-      <KeyStats />
+      {/* menumpuk satu piksel di atas hero agar tidak ada garis sambungan */}
+      <div className="relative z-10 -mt-px bg-ink"><KeyStats /></div>
       <MapTeaser />
       <Gallery />
       <CheckRegion />

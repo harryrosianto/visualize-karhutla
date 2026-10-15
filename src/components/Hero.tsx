@@ -53,6 +53,8 @@ export function Hero() {
       )}
       <div aria-hidden className="absolute inset-0 -z-10 bg-gradient-to-r from-ink/55 via-ink/15 to-transparent" />
       <EmberCanvas className="-z-10" />
+      {/* pelumasan peralihan: lapisan depan yang marun gelap memudar ke warna latar bagian berikutnya */}
+      <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-32 bg-gradient-to-b from-transparent to-ink md:h-44" />
 
       <motion.div style={{ y: textY, opacity: textOpacity }} className="mx-auto w-full max-w-[1400px] px-4 pb-0 pt-28 md:px-8 md:pb-24">
         <motion.h1 translate="no" {...rise(0.1)} className="font-brand text-[clamp(3.5rem,13.5vw,10rem)] font-normal leading-[0.98] tracking-[0.05em] text-fg">
