@@ -158,5 +158,15 @@
     "width": 1080,
     "height": 1350,
     "issue": 18
+  },
+  {
+    "id": "t19-1",
+    "ext": "png",
+    "title": "Karhutla Fog",
+    "creator": "National Geographic Indonesia",
+    "creatorUrl": "https://nationalgeographic.grid.id/",
+    "width": 598,
+    "height": 1071,
+    "issue": 19
   }
 ]
