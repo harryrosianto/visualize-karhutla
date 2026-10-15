@@ -1,6 +1,6 @@
 # Improvement report (carousel 4:5)
 
-- `slides/slide-1.png` ... `slide-8.png`: 8 gambar 1080 x 1350 (rasio 4:5, ukuran feed) siap unggah.
+- `slides/slide-1.png` ... `slide-10.png`: 10 gambar 1080 x 1350 (rasio 4:5, ukuran feed) siap unggah.
 - `build.mjs`: membangun `slides.html` dari data situs (angka tidak diketik manual).
 - `img/`: tangkapan layar yang dipakai pada slide.
 
