@@ -5,16 +5,14 @@ import { canRecordGallery, renderGalleryVideo, type GalleryVideo } from '../lib/
 import { downloadBlob } from '../lib/exportImage'
 import { siteUrl } from '../lib/share'
 
-const MAX_ITEMS = 12
-
-/** Membuat video Story IG (9:16, 15 detik) berisi Galeri warga yang bergulir turun, lalu dibagikan atau diunduh. */
+/** Membuat video Story IG (9:16) berisi seluruh Galeri warga yang bergulir turun (durasi menyesuaikan jumlah karya), lalu dibagikan atau diunduh. */
 export function GalleryStory({ className = '' }: { className?: string }) {
   const [phase, setPhase] = useState<'idle' | 'busy' | 'ready' | 'error'>('idle')
   const [progress, setProgress] = useState(0)
   const [video, setVideo] = useState<GalleryVideo | null>(null)
   const [url, setUrl] = useState('')
   const [note, setNote] = useState('')
-  const items = communityTemplates.slice(0, MAX_ITEMS)
+  const items = communityTemplates
   const supported = canRecordGallery()
 
   useEffect(() => () => { if (url) URL.revokeObjectURL(url) }, [url])
@@ -48,13 +46,13 @@ export function GalleryStory({ className = '' }: { className?: string }) {
         <FilmSlate size={18} weight="bold" aria-hidden />
         {phase === 'busy' ? `Menyiapkan video... ${Math.round(progress * 100)}%` : phase === 'ready' ? 'Buat ulang video Story' : 'Bagikan galeri sebagai Story (video)'}
       </button>
-      {phase === 'busy' && <p role="status" className="mt-3 max-w-[52ch] text-sm text-fg-3">Video 15 detik sedang dibuat. Biarkan tab ini tetap terbuka sampai selesai.</p>}
+      {phase === 'busy' && <p role="status" className="mt-3 max-w-[52ch] text-sm text-fg-3">Video sedang dibuat dan memuat seluruh karya. Biarkan tab ini tetap terbuka sampai selesai.</p>}
       {phase === 'error' && <p role="alert" className="mt-3 text-sm text-fg">Video belum dapat dibuat di browser ini. Silakan coba lagi atau pakai browser lain.</p>}
       {phase === 'ready' && video && (
         <div className="mt-5 grid max-w-[260px] gap-3">
           <video src={url} controls autoPlay muted loop playsInline className="aspect-[9/16] w-full rounded-panel border border-line bg-ink-2" aria-label="Pratinjau video Story galeri warga" />
           <button type="button" onClick={share} className="btn btn-primary min-h-11 w-full gap-1.5 px-2 text-sm"><ShareNetwork size={18} weight="bold" aria-hidden />Bagikan ke Story</button>
-          <button type="button" onClick={() => { downloadBlob(video.blob, fileName()); flash('Video diunduh.') }} className="btn btn-ghost min-h-11 w-full gap-1.5 px-2 text-sm"><DownloadSimple size={18} weight="bold" aria-hidden />Unduh video ({video.ext.toUpperCase()})</button>
+          <button type="button" onClick={() => { downloadBlob(video.blob, fileName()); flash('Video diunduh.') }} className="btn btn-ghost min-h-11 w-full gap-1.5 px-2 text-sm"><DownloadSimple size={18} weight="bold" aria-hidden />Unduh video ({video.ext.toUpperCase()}, {Math.round(video.seconds)} detik)</button>
           {video.ext === 'webm' && <p className="text-xs text-fg-3">Browser ini menghasilkan WebM. Jika Instagram menolaknya, ubah ke MP4 dahulu atau buat videonya dari Chrome terbaru atau Safari.</p>}
           <p role="status" aria-live="polite" className="min-h-5 text-sm text-fg">{note}</p>
         </div>

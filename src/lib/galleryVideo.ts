@@ -3,7 +3,10 @@ import type { CommunityTemplate } from './community'
 
 const W = 1080
 const H = 1920
-const TOTAL = 15
+/** Kecepatan gulir rata-rata (piksel per detik) agar tiap karya sempat terbaca; durasi video menyesuaikan jumlah karya. */
+const SCROLL_SPEED = 150
+const MIN_SECONDS = 10
+const MAX_SECONDS = 60
 const HOLD_START = 1.2
 const HOLD_END = 1.8
 const PAD = 86
@@ -34,7 +37,7 @@ const FPS = 30
 const CODECS = ['avc1.640028', 'avc1.4D0028', 'avc1.42E028']
 
 /** Encode bingkai demi bingkai dengan stempel waktu pasti (tidak bergantung kecepatan perangkat) dan kemas sebagai MP4 berdurasi tepat. Mengembalikan null bila H.264 tidak tersedia. */
-async function encodeOffline(canvas: HTMLCanvasElement, draw: (t: number) => void, onProgress?: (p: number) => void): Promise<Blob | null> {
+async function encodeOffline(canvas: HTMLCanvasElement, draw: (t: number) => void, total: number, onProgress?: (p: number) => void): Promise<Blob | null> {
   if (!hasWebCodecs()) return null
   let codec = ''
   for (const c of CODECS) {
@@ -46,7 +49,7 @@ async function encodeOffline(canvas: HTMLCanvasElement, draw: (t: number) => voi
   let failure: unknown = null
   const encoder = new VideoEncoder({ output: (chunk, meta) => muxer.addVideoChunk(chunk, meta), error: e => { failure = e } })
   encoder.configure({ codec, width: W, height: H, bitrate: 4_500_000, framerate: FPS })
-  const frames = TOTAL * FPS
+  const frames = Math.round(total * FPS)
   for (let n = 0; n < frames; n++) {
     if (failure) throw failure
     draw(n / FPS)
@@ -111,6 +114,8 @@ export async function renderGalleryVideo(items: CommunityTemplate[], opts: { fon
   const FOOTER_TOP = gridEnd + 40
   const contentH = FOOTER_TOP + 520
   const maxScroll = Math.max(0, contentH - H)
+  const scrollSeconds = Math.min(MAX_SECONDS - HOLD_START - HOLD_END, Math.max(MIN_SECONDS - HOLD_START - HOLD_END, maxScroll / SCROLL_SPEED))
+  const TOTAL = Math.round((HOLD_START + scrollSeconds + HOLD_END) * 10) / 10
 
   // muat ulang ke ukuran tampil dan dekode sebelum merekam, agar tidak ada jeda dekode saat bergulir
   await Promise.all(tiles.map(async t => {
@@ -190,7 +195,7 @@ export async function renderGalleryVideo(items: CommunityTemplate[], opts: { fon
 
   draw(0)
   try {
-    const mp4 = await encodeOffline(canvas, draw, opts.onProgress)
+    const mp4 = await encodeOffline(canvas, draw, TOTAL, opts.onProgress)
     if (mp4) return { blob: mp4, ext: 'mp4', mime: 'video/mp4', seconds: TOTAL }
   } catch { /* lanjut ke perekam waktu nyata */ }
   if (!hasRecorder()) throw new Error('pembuat video tidak didukung')
