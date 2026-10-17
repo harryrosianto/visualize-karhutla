@@ -40,7 +40,6 @@ export default function CeritaDetail() {
       <Link to="/cerita" className="inline-flex min-h-11 items-center gap-2 text-sm text-fg-3 hover:text-fg"><ArrowLeft size={16} weight="bold" aria-hidden />Cerita karhutla</Link>
       {c.wilayah && <p className="mt-6 text-sm text-fg-3">{c.wilayah}</p>}
       <h1 className="mt-3 font-serif text-4xl font-bold leading-[1.1] tracking-tight text-fg md:text-5xl">{c.judul}</h1>
-      {c.ringkasan && <p className="mt-5 font-serif text-xl leading-relaxed text-fg-2 md:text-2xl">{c.ringkasan}</p>}
       <div className="mt-8 flex items-center justify-between gap-4 border-y border-line py-4 text-sm text-fg-3">
         <div className="flex min-w-0 items-center gap-3">
           <PenulisAvatar foto={c.foto} size={44} />
@@ -52,8 +51,7 @@ export default function CeritaDetail() {
         <button type="button" onClick={copy} className="inline-flex min-h-10 items-center gap-1.5 rounded-full border border-line px-3 text-fg-2 hover:text-fg"><LinkSimple size={16} weight="bold" aria-hidden />Salin tautan</button>
       </div>
       <p role="status" aria-live="polite" className="mt-2 min-h-5 text-sm text-fg">{note}</p>
-      {c.gambar && <img src={c.gambar} alt="" className="mt-6 w-full rounded-panel border border-line" />}
-      <div className="cerita-prose mt-8" dangerouslySetInnerHTML={{ __html: html }} />
+      <div className="cerita-prose mt-10" dangerouslySetInnerHTML={{ __html: html }} />
 
       {c.topik.length > 0 && (
         <ul className="mt-12 flex flex-wrap gap-2" aria-label="Topik">

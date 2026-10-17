@@ -25,6 +25,7 @@ Isi tulisan dalam Markdown. Gunakan `##` untuk subjudul, daftar, dan kutipan.
 ```
 
 Catatan:
+- `ringkasan` dan `gambar` (sampul) hanya tampil di daftar cerita; halaman baca memuat judul, penulis, isi, dan topik. Gambar yang ingin tampil di halaman baca harus ada di dalam isi Markdown.
 - HTML mentah di dalam isi tidak dirender (ditampilkan sebagai teks); tautan hanya `http(s)` atau `mailto`, dan gambar hanya milik situs di bawah `cerita/`.
 - Tulisan berbasis publikasi: tulis ringkasan dengan kata-kata sendiri dan sertakan tautan; jangan menyalin seluruh isi yang berhak cipta.
 - Cerita warga: pastikan penulis mengizinkan, dan jangan memuat data pribadi pihak lain.
