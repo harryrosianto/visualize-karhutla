@@ -1,6 +1,7 @@
 import { ArrowLeft, ArrowSquareOut, LinkSimple } from '@phosphor-icons/react'
 import { useEffect, useMemo, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
+import { CeritaShare } from '../components/CeritaShare'
 import { PenulisAvatar } from '../components/PenulisAvatar'
 import { cerita, slugTopik } from '../lib/cerita'
 import { fmtDate } from '../lib/data'
@@ -66,6 +67,8 @@ export default function CeritaDetail() {
           {c.sumber && <a href={c.sumber} target="_blank" rel="noopener noreferrer nofollow" className="mt-3 inline-flex items-center gap-1.5 font-semibold text-fg underline decoration-ember underline-offset-4 hover:text-ember">Buka publikasi asli<ArrowSquareOut size={16} weight="bold" aria-hidden /></a>}
         </aside>
       )}
+
+      <CeritaShare c={c} />
 
       {others.length > 0 && (
         <section className="mt-16 border-t border-line pt-10" aria-labelledby="lainnya">

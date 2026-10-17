@@ -38,3 +38,9 @@ Penulis menulis langsung di situs: `/cerita/tulis` (tanpa akun). Penyunting tuli
 ### Menyetujui
 
 Persiapan sekali: buat label `cerita` dan `setujui-cerita` pada repositori. Setelah meninjau isu, pasang label `setujui-cerita`. Alur `.github/workflows/approve-cerita.yml` lalu menjalankan `scripts/approve-cerita.ts`: mengubah isu menjadi `src/content/cerita/<slug>.md`, mengunduh dan mengoptimalkan gambar serta foto profil ke `public/cerita/<slug>/`, melakukan commit, memicu deploy, dan menutup isu. Gambar dari host selain GitHub dibuang, dan HTML mentah tidak pernah dirender. Bila foto dan avatar tidak ada, dipilih avatar bawaan secara acak.
+
+## Membagikan tulisan
+
+Di bawah setiap tulisan ada bagian "Bagikan tulisan ini": kartu Instagram Story (1080 x 1920, memuat sampul, judul, topik, penulis dengan fotonya, dan waktu baca), WhatsApp, X, Threads, dan salin tautan. Instagram tidak mengizinkan situs menanam tautan yang bisa diklik di dalam gambar; tautan hanya bisa diklik lewat **stiker Tautan** yang ditambahkan pengguna sendiri di aplikasi Instagram. Karena itu tombol "Bagikan ke Story" otomatis menyalin tautan tulisan, dan kartunya menyisakan ruang kosong di bawah untuk stiker itu: tambahkan stiker Tautan, lalu tempel alamatnya.
+
+Setiap tulisan juga mendapat halaman statis dan gambar pratinjau (Open Graph) saat build (`scripts/build-og.ts`), sehingga tautan yang ditempel di WhatsApp, Threads, atau X tampil sebagai kartu dengan judul dan gambar. Atur alamat publik lewat `VITE_SITE_URL`.

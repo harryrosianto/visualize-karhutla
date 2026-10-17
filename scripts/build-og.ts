@@ -95,7 +95,7 @@ const write = (rel: string, html: string) => { const f = path.join(DIST, rel); f
 const sampleNote = meta.isSample ? ' (DATA CONTOH)' : ''
 const defaults = { desc: `Peta titik panas dan ringkasan Karhutla Wrapped per kabupaten/kota di wilayah terdampak tahun 2026${sampleNote}. Sumber data: NASA FIRMS dan SiPongi Kemenhut.`, image: `${SITE}/og/default.jpg` }
 write('index.html', page({ title: 'Visualize Karhutla', ...defaults, url: SITE + '/' }))
-for (const [route, title] of [['peta', 'Peta titik panas | Visualize Karhutla'], ['wrapped', 'Karhutla Wrapped 2026 | Visualize Karhutla'], ['tentang', 'Tentang data | Visualize Karhutla'], ['kontribusi', 'Kontribusi | Visualize Karhutla']])
+for (const [route, title] of [['peta', 'Peta titik panas | Visualize Karhutla'], ['wrapped', 'Karhutla Wrapped 2026 | Visualize Karhutla'], ['tentang', 'Tentang data | Visualize Karhutla'], ['kontribusi', 'Kontribusi | Visualize Karhutla'], ['galeri', 'Galeri warga | Visualize Karhutla'], ['templat', 'Templat Story | Visualize Karhutla'], ['cerita', 'Cerita karhutla | Visualize Karhutla'], ['cerita/tulis', 'Tulis cerita | Visualize Karhutla']])
   write(`${route}/index.html`, page({ title, ...defaults, url: `${SITE}/${route}` }))
 for (const k of kabs) {
   write(`wrapped/${k.slug}/index.html`, page({
@@ -104,6 +104,51 @@ for (const k of kabs) {
     image: `${SITE}/og/${k.slug}.jpg`, url: `${SITE}/wrapped/${k.slug}`,
   }))
 }
+
+// Cerita karhutla: gambar OG dan halaman statis per tulisan, supaya tautan yang dibagikan punya pratinjau
+function readCerita(): Record<string, string>[] {
+  const dir = 'src/content/cerita'
+  if (!fs.existsSync(dir)) return []
+  return fs.readdirSync(dir).filter(f => f.endsWith('.md')).map((f): Record<string, string> => {
+    const raw = fs.readFileSync(path.join(dir, f), 'utf8').replace(/^﻿/, '')
+    const m = raw.match(/^---\r?\n([\s\S]*?)\r?\n---/)
+    const meta: Record<string, string> = {}
+    for (const line of (m?.[1] ?? '').split(/\r?\n/)) { const k = line.match(/^([a-zA-Z_]+):\s*(.*)$/); if (k) meta[k[1]] = k[2].trim() }
+    return { slug: f.replace(/\.md$/, ''), ...meta }
+  }).filter(c => c.judul)
+}
+async function ceritaBg(gambar?: string) {
+  const file = gambar && /^cerita\/[\w./-]+$/.test(gambar) && !gambar.includes('..') ? path.join('public', gambar) : ''
+  if (!file || !fs.existsSync(file)) return bg
+  const buf = await sharp(file).resize(1200, 630, { fit: 'cover', position: 'attention' })
+    .composite([{ input: Buffer.from('<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630"><defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0C0A09" stop-opacity="0.55"/><stop offset="0.5" stop-color="#0C0A09" stop-opacity="0.8"/><stop offset="1" stop-color="#0C0A09" stop-opacity="0.96"/></linearGradient></defs><rect width="1200" height="630" fill="url(#g)"/></svg>') }])
+    .png().toBuffer()
+  return 'data:image/png;base64,' + buf.toString('base64')
+}
+function treeCerita(o: { title: string; author: string; topik: string; bgUrl: string }): N {
+  return h('div', { width: 1200, height: 630, position: 'relative', flexDirection: 'column', color: '#F5F5F4', fontFamily: 'Grotesk' },
+    { type: 'img', props: { src: o.bgUrl, width: 1200, height: 630, style: { position: 'absolute', left: 0, top: 0 } } },
+    h('div', { position: 'absolute', left: 0, top: 56, width: 1200, height: 518, flexDirection: 'column', padding: '0 72px', justifyContent: 'space-between' },
+      txt({ fontSize: 30, fontWeight: 500, color: '#F97316' }, o.topik ? `Cerita karhutla  ·  ${o.topik}` : 'Cerita karhutla'),
+      txt({ fontSize: o.title.length > 70 ? 56 : 68, fontWeight: 800, letterSpacing: -2, lineHeight: 1.08, width: 1056 }, o.title.length > 110 ? o.title.slice(0, 107).replace(/\s+\S*$/, '') + '...' : o.title),
+      h('div', { width: 1056, justifyContent: 'space-between', alignItems: 'flex-end' },
+        txt({ fontSize: 34, fontWeight: 500, color: '#E7E5E4' }, o.author),
+        h('div', { fontSize: 30, fontWeight: 800 }, 'Visualize Karhutla', h('div', { color: '#F97316' }, '.')),
+      ),
+    ),
+  )
+}
+const ceritaList = readCerita()
+for (const c of ceritaList) {
+  const out = await png(treeCerita({ title: c.judul, author: c.penulis || 'Anonim', topik: (c.topik || '').split(',')[0]?.trim() ?? '', bgUrl: await ceritaBg(c.gambar) }))
+  fs.writeFileSync(path.join(DIST, 'og', `cerita-${c.slug}.jpg`), out)
+  write(`cerita/${c.slug}/index.html`, page({
+    title: `${c.judul} | Cerita karhutla`,
+    desc: c.ringkasan || `Tulisan oleh ${c.penulis || 'Anonim'} di Cerita karhutla.`,
+    image: `${SITE}/og/cerita-${c.slug}.jpg`, url: `${SITE}/cerita/${c.slug}`,
+  }))
+}
+console.log(`[og] ${ceritaList.length} halaman Cerita karhutla`)
 console.log(`[og] selesai: ${kabs.length} halaman Wrapped, og:image ${SITE}/og/<slug>.jpg`)
 
 // Cloudflare Pages klasik (alamat <proyek>.pages.dev) butuh _redirects untuk routing sisi klien.
