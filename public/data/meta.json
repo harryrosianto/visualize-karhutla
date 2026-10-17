@@ -1,38 +1,279 @@
 {
  "isSample": false,
- "generatedAt": "2026-10-12T13:52:07.510Z",
- "dataDate": "2026-10-12",
+ "generatedAt": "2026-10-17T14:36:38.670Z",
+ "dataDate": "2026-10-17",
  "year": 2026,
  "sources": {
   "hotspot": "NASA FIRMS (VIIRS NOAA-20)",
   "burnedArea": "BNPB: gabungan data SiPongi Kemenhut hingga 31 Juli 2026 dan hasil pengukuran lapangan tim gabungan BNPB; dilaporkan CNBC Indonesia dan Katadata, periode 1 Januari sampai 14 September 2026",
   "boundaries": "geoBoundaries IDN ADM1/ADM2 (CC BY 3.0 IGO)"
  },
+ "islands": [
+  {
+   "id": "kalimantan",
+   "name": "Kalimantan"
+  },
+  {
+   "id": "sumatra",
+   "name": "Sumatra"
+  },
+  {
+   "id": "papua",
+   "name": "Papua"
+  }
+ ],
  "provinces": [
   {
    "id": "kalbar",
    "name": "Kalimantan Barat",
-   "short": "Kalbar"
+   "short": "Kalbar",
+   "island": "kalimantan",
+   "bounds": [
+    108.68,
+    -3.07,
+    114.22,
+    2.08
+   ]
   },
   {
    "id": "kalteng",
    "name": "Kalimantan Tengah",
-   "short": "Kalteng"
+   "short": "Kalteng",
+   "island": "kalimantan",
+   "bounds": [
+    110.73,
+    -3.54,
+    115.85,
+    0.78
+   ]
   },
   {
    "id": "kalsel",
    "name": "Kalimantan Selatan",
-   "short": "Kalsel"
+   "short": "Kalsel",
+   "island": "kalimantan",
+   "bounds": [
+    114.35,
+    -4.74,
+    116.56,
+    -1.31
+   ]
   },
   {
    "id": "kaltim",
    "name": "Kalimantan Timur",
-   "short": "Kaltim"
+   "short": "Kaltim",
+   "island": "kalimantan",
+   "bounds": [
+    113.84,
+    -2.41,
+    118.99,
+    2.63
+   ]
   },
   {
    "id": "kaltara",
    "name": "Kalimantan Utara",
-   "short": "Kaltara"
+   "short": "Kaltara",
+   "island": "kalimantan",
+   "bounds": [
+    114.59,
+    1.04,
+    117.99,
+    4.41
+   ]
+  },
+  {
+   "id": "aceh",
+   "name": "Aceh",
+   "short": "Aceh",
+   "island": "sumatra",
+   "bounds": [
+    95.01,
+    2,
+    98.29,
+    6.08
+   ]
+  },
+  {
+   "id": "sumut",
+   "name": "Sumatra Utara",
+   "short": "Sumut",
+   "island": "sumatra",
+   "bounds": [
+    97.06,
+    -0.64,
+    100.43,
+    4.3
+   ]
+  },
+  {
+   "id": "sumbar",
+   "name": "Sumatra Barat",
+   "short": "Sumbar",
+   "island": "sumatra",
+   "bounds": [
+    98.6,
+    -4.02,
+    101.89,
+    0.91
+   ]
+  },
+  {
+   "id": "riau",
+   "name": "Riau",
+   "short": "Riau",
+   "island": "sumatra",
+   "bounds": [
+    100.03,
+    -1.12,
+    103.81,
+    2.88
+   ]
+  },
+  {
+   "id": "kepri",
+   "name": "Kepulauan Riau",
+   "short": "Kepri",
+   "island": "sumatra",
+   "bounds": [
+    103.29,
+    -1.3,
+    109.16,
+    4.8
+   ]
+  },
+  {
+   "id": "jambi",
+   "name": "Jambi",
+   "short": "Jambi",
+   "island": "sumatra",
+   "bounds": [
+    101.13,
+    -2.77,
+    104.5,
+    -0.73
+   ]
+  },
+  {
+   "id": "sumsel",
+   "name": "Sumatra Selatan",
+   "short": "Sumsel",
+   "island": "sumatra",
+   "bounds": [
+    102.07,
+    -4.93,
+    106.19,
+    -1.63
+   ]
+  },
+  {
+   "id": "babel",
+   "name": "Kepulauan Bangka Belitung",
+   "short": "Babel",
+   "island": "sumatra",
+   "bounds": [
+    105.11,
+    -3.42,
+    108.85,
+    -1.5
+   ]
+  },
+  {
+   "id": "bengkulu",
+   "name": "Bengkulu",
+   "short": "Bengkulu",
+   "island": "sumatra",
+   "bounds": [
+    101.02,
+    -5.51,
+    103.76,
+    -2.28
+   ]
+  },
+  {
+   "id": "lampung",
+   "name": "Lampung",
+   "short": "Lampung",
+   "island": "sumatra",
+   "bounds": [
+    103.57,
+    -6.17,
+    106.11,
+    -3.72
+   ]
+  },
+  {
+   "id": "papua",
+   "name": "Papua",
+   "short": "Papua",
+   "island": "papua",
+   "bounds": [
+    134.3,
+    -3.95,
+    141,
+    0.94
+   ]
+  },
+  {
+   "id": "papbar",
+   "name": "Papua Barat",
+   "short": "Pabar",
+   "island": "papua",
+   "bounds": [
+    132,
+    -4.26,
+    135.26,
+    -0.71
+   ]
+  },
+  {
+   "id": "papsel",
+   "name": "Papua Selatan",
+   "short": "Pasel",
+   "island": "papua",
+   "bounds": [
+    137.55,
+    -9.12,
+    141.02,
+    -4.6
+   ]
+  },
+  {
+   "id": "papteng",
+   "name": "Papua Tengah",
+   "short": "Pateng",
+   "island": "papua",
+   "bounds": [
+    134.6,
+    -5.24,
+    138.3,
+    -2.48
+   ]
+  },
+  {
+   "id": "pappeg",
+   "name": "Papua Pegunungan",
+   "short": "Papeg",
+   "island": "papua",
+   "bounds": [
+    137.57,
+    -5.29,
+    141,
+    -3.19
+   ]
+  },
+  {
+   "id": "papbarda",
+   "name": "Papua Barat Daya",
+   "short": "Pabarda",
+   "island": "papua",
+   "bounds": [
+    129.31,
+    -2.28,
+    133.52,
+    0.58
+   ]
   }
  ],
  "burnedArea": {

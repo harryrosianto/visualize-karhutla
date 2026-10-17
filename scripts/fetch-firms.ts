@@ -1,6 +1,7 @@
-// Mengunduh titik panas NASA FIRMS untuk Kalimantan lewat API area, per jendela 5 hari, ke data/raw/.
+// Mengunduh titik panas NASA FIRMS (Kalimantan, Sumatra, Papua) lewat API area, per jendela 5 hari, ke data/raw/.
 // Butuh MAP_KEY gratis: https://firms.modaps.eosdis.nasa.gov/api/map_key/ (isi FIRMS_MAP_KEY di .env).
 // Pakai: npm run fetch-firms [tanggalMulai=2025-01-01] [tanggalAkhir=hari ini]
+// Lingkungan: FIRMS_AREAS=kalimantan,sumatra,papua (pilih wilayah), FIRMS_MERGE=1 (gabungkan dengan CSV yang sudah ada, tanpa duplikat).
 // Sumber default VIIRS SNPP: arsip standar (SP) untuk data lama + NRT untuk beberapa bulan terakhir, dedup per titik.
 import fs from 'node:fs'
 
@@ -11,7 +12,14 @@ if (!KEY) {
   process.exit(1)
 }
 const SOURCES = (process.env.FIRMS_SOURCES || 'VIIRS_SNPP_SP,VIIRS_SNPP_NRT').split(',')
-const AREA = '108.5,-4.5,119.5,4.6' // barat,selatan,timur,utara (Kalimantan)
+// kotak pembatas (barat,selatan,timur,utara); titik di luar batas kabupaten dibuang saat pemrosesan (process-firms)
+const AREA_BOXES: Record<string, string> = {
+  kalimantan: '108.5,-4.5,119.5,4.6',
+  sumatra: '94.5,-6.5,109.5,6.2',
+  papua: '130.0,-9.5,141.2,0.8',
+}
+const AREAS = (process.env.FIRMS_AREAS || 'kalimantan,sumatra,papua').split(',').map(x => x.trim()).filter(Boolean)
+for (const a of AREAS) if (!AREA_BOXES[a]) { console.error(`Wilayah tidak dikenal: ${a}. Pilihan: ${Object.keys(AREA_BOXES).join(', ')}`); process.exit(1) }
 const START = process.argv[2] || '2025-01-01'
 const END = process.argv[3] || new Date().toISOString().slice(0, 10)
 const WINDOW = 5
@@ -41,15 +49,24 @@ async function get(url: string, tries = 3): Promise<string> {
   return ''
 }
 
-let total = 0
+if (process.env.FIRMS_MERGE === '1' && fs.existsSync(OUT)) {
+  const old = fs.readFileSync(OUT, 'utf8').split(/\r?\n/).filter(Boolean)
+  header = old[0]
+  const h = header.split(',')
+  const iLat = h.indexOf('latitude'), iLon = h.indexOf('longitude'), iDate = h.indexOf('acq_date'), iTime = h.indexOf('acq_time')
+  for (const r of old.slice(1)) { const c = r.split(','); const k = `${c[iLat]}|${c[iLon]}|${c[iDate]}|${c[iTime]}`; if (!seen.has(k)) { seen.add(k); lines.push(r) } }
+  console.log(`Digabung dengan ${lines.length} titik yang sudah ada.`)
+}
+
+let total = lines.length
 for (let d = new Date(START + 'T00:00:00Z'); iso(d) <= END; d = new Date(d.getTime() + WINDOW * 864e5)) {
-  for (const src of SOURCES) {
-    const url = `https://firms.modaps.eosdis.nasa.gov/api/area/csv/${KEY}/${src}/${AREA}/${WINDOW}/${iso(d)}`
+  for (const src of SOURCES) for (const area of AREAS) {
+    const url = `https://firms.modaps.eosdis.nasa.gov/api/area/csv/${KEY}/${src}/${AREA_BOXES[area]}/${WINDOW}/${iso(d)}`
     const text = (await get(url)).trim()
     if (!text) continue
     if (!text.startsWith('latitude')) {
       // pesan galat dari API (kunci salah, kuota habis, dsb.)
-      console.error(`Respons tak terduga untuk ${src} ${iso(d)}: ${text.slice(0, 160)}`)
+      console.error(`Respons tak terduga untuk ${src} ${area} ${iso(d)}: ${text.slice(0, 160)}`)
       process.exit(1)
     }
     const rows = text.split(/\r?\n/)

@@ -12,7 +12,7 @@ export function KabupatenSheet({ kab, onClose }: { kab: Kab; onClose: () => void
   const reduce = useReducedMotion()
   const drag = useDragControls()
   const closeBtn = useRef<HTMLButtonElement>(null)
-  const { meta } = useData()
+  const { meta, kabs } = useData()
   const mobile = typeof window !== 'undefined' && window.innerWidth < 768
 
   useEffect(() => {
@@ -61,7 +61,7 @@ export function KabupatenSheet({ kab, onClose }: { kab: Kab; onClose: () => void
 
       <dl className="mt-5 grid grid-cols-2 gap-4 border-t border-line pt-5">
         <div><dt className="text-xs text-fg-3">Bulan puncak</dt><dd className="mt-1 text-lg font-bold text-fg">{MONTHS[kab.peakMonth]}</dd></div>
-        <div><dt className="text-xs text-fg-3">Peringkat di seluruh wilayah</dt><dd className="mt-1 text-lg font-bold text-fg num">#{kab.rankKalimantan} dari 56</dd></div>
+        <div><dt className="text-xs text-fg-3">Peringkat di seluruh wilayah</dt><dd className="mt-1 text-lg font-bold text-fg num">#{kab.rankKalimantan} dari {kabs.length}</dd></div>
       </dl>
 
       <Link to={`/wrapped/${kab.slug}`} className="btn btn-primary mt-6 w-full">Lihat <span translate="no">Karhutla Wrapped</span> <ArrowRight size={18} weight="bold" aria-hidden /></Link>

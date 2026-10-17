@@ -1,57 +1,253 @@
 slug,kabupaten_kota,provinsi,titik_panas_2026,titik_panas_2025_periode_sama,titik_panas_jan_2026,titik_panas_feb_2026,titik_panas_mar_2026,titik_panas_apr_2026,titik_panas_mei_2026,titik_panas_jun_2026,titik_panas_jul_2026,titik_panas_agu_2026,titik_panas_sep_2026,titik_panas_okt_2026,bulan_puncak,peringkat_kalimantan,luas_terbakar_kabupaten_ha,luas_terbakar_provinsi_ha,status_data
-"bengkayang","Bengkayang","Kalimantan Barat",1133,1054,26,39,247,42,8,22,118,587,39,5,"Agustus",36,,48536,asli
-"kapuas-hulu","Kapuas Hulu","Kalimantan Barat",2645,1341,19,6,54,2,1,27,199,1974,357,6,"Agustus",26,,48536,asli
-"kayong-utara","Kayong Utara","Kalimantan Barat",6522,204,14,12,49,3,2,15,580,3271,2530,46,"Agustus",11,,48536,asli
-"ketapang","Ketapang","Kalimantan Barat",38176,2749,82,112,468,21,24,110,983,16389,16169,3818,"Agustus",1,,48536,asli
-"kota-pontianak","Kota Pontianak","Kalimantan Barat",34,5,14,2,7,0,0,0,1,10,0,0,"Januari",55,,48536,asli
-"kota-singkawang","Kota Singkawang","Kalimantan Barat",150,14,2,6,6,34,0,0,5,65,32,0,"Agustus",49,,48536,asli
-"kubu-raya","Kubu Raya","Kalimantan Barat",6975,538,310,115,396,1,4,22,512,3950,1660,5,"Agustus",9,,48536,asli
-"landak","Landak","Kalimantan Barat",2179,1677,75,20,54,16,23,29,379,1530,49,4,"Agustus",27,,48536,asli
-"melawi","Melawi","Kalimantan Barat",3571,957,5,3,10,5,2,14,151,2428,881,72,"Agustus",20,,48536,asli
-"mempawah","Mempawah","Kalimantan Barat",1677,780,263,128,450,11,5,23,43,578,175,1,"Agustus",30,,48536,asli
-"sambas","Sambas","Kalimantan Barat",946,809,131,11,84,86,36,11,67,358,159,3,"Agustus",37,,48536,asli
-"sanggau","Sanggau","Kalimantan Barat",5287,3914,44,6,38,26,24,60,835,3969,242,43,"Agustus",14,,48536,asli
-"sekadau","Sekadau","Kalimantan Barat",1576,1674,13,1,8,1,1,16,175,1121,214,26,"Agustus",32,,48536,asli
-"sintang","Sintang","Kalimantan Barat",3176,2722,21,2,15,11,7,29,243,2037,678,133,"Agustus",23,,48536,asli
-"barito-selatan","Barito Selatan","Kalimantan Tengah",3841,62,9,0,1,13,2,1,28,1089,2093,605,"September",19,,15976.1,asli
-"barito-timur","Barito Timur","Kalimantan Tengah",716,146,2,1,3,2,0,4,16,144,402,142,"September",40,,15976.1,asli
-"barito-utara","Barito Utara","Kalimantan Tengah",471,278,28,1,5,17,4,15,37,158,188,18,"September",43,,15976.1,asli
-"gunung-mas","Gunung Mas","Kalimantan Tengah",2856,272,59,7,8,11,5,17,71,1449,967,262,"Agustus",24,,15976.1,asli
-"kapuas","Kapuas","Kalimantan Tengah",18499,282,72,3,8,12,16,19,160,6261,7324,4624,"September",4,,15976.1,asli
-"katingan","Katingan","Kalimantan Tengah",11284,644,96,9,7,18,6,12,98,2557,4917,3564,"September",7,,15976.1,asli
-"kota-palangka-raya","Kota Palangka Raya","Kalimantan Tengah",13012,12,3,1,0,0,2,5,49,4831,6014,2107,"September",6,,15976.1,asli
-"kotawaringin-barat","Kotawaringin Barat","Kalimantan Tengah",8618,49,3,2,3,2,5,3,28,561,5096,2915,"September",8,,15976.1,asli
-"kotawaringin-timur","Kotawaringin Timur","Kalimantan Tengah",19184,290,50,0,25,12,8,21,193,6866,8894,3115,"September",3,,15976.1,asli
-"lamandau","Lamandau","Kalimantan Tengah",3362,426,28,4,35,4,10,28,183,1125,1465,480,"September",21,,15976.1,asli
-"murung-raya","Murung Raya","Kalimantan Tengah",588,404,5,1,7,5,1,3,24,196,276,70,"September",41,,15976.1,asli
-"pulang-pisau","Pulang Pisau","Kalimantan Tengah",23060,52,2,0,3,6,3,7,363,2724,15050,4902,"September",2,,15976.1,asli
-"seruyan","Seruyan","Kalimantan Tengah",15774,292,31,2,13,7,2,12,118,2109,8038,5442,"September",5,,15976.1,asli
-"sukamara","Sukamara","Kalimantan Tengah",4586,53,19,18,16,0,1,22,193,1507,2367,443,"September",16,,15976.1,asli
-"balangan","Balangan","Kalimantan Selatan",400,49,0,1,1,4,1,0,22,135,206,30,"September",45,,19303.99,asli
-"banjar","Banjar","Kalimantan Selatan",3881,177,0,0,0,2,0,15,184,1272,1489,919,"September",18,,19303.99,asli
-"barito-kuala","Barito Kuala","Kalimantan Selatan",1309,12,0,0,0,1,0,0,9,310,729,260,"September",35,,19303.99,asli
-"hulu-sungai-selatan","Hulu Sungai Selatan","Kalimantan Selatan",3259,290,20,5,9,29,28,37,135,1411,1360,225,"Agustus",22,,19303.99,asli
-"hulu-sungai-tengah","Hulu Sungai Tengah","Kalimantan Selatan",447,32,0,0,0,1,3,0,17,199,212,15,"September",44,,19303.99,asli
-"hulu-sungai-utara","Hulu Sungai Utara","Kalimantan Selatan",1418,52,0,0,0,4,0,0,13,664,680,57,"September",34,,19303.99,asli
-"kota-banjar-baru","Kota Banjar Baru","Kalimantan Selatan",512,8,0,0,0,0,0,2,21,221,233,35,"September",42,,19303.99,asli
-"kota-banjarmasin","Kota Banjarmasin","Kalimantan Selatan",4,0,0,0,0,0,0,0,0,1,1,2,"Oktober",56,,19303.99,asli
-"kota-baru","Kota Baru","Kalimantan Selatan",2681,141,11,3,7,10,5,17,65,327,1331,905,"September",25,,19303.99,asli
-"tabalong","Tabalong","Kalimantan Selatan",929,498,28,8,24,35,22,34,139,244,296,99,"September",38,,19303.99,asli
-"tanah-bumbu","Tanah Bumbu","Kalimantan Selatan",1579,53,21,5,11,6,1,0,19,294,598,624,"Oktober",31,,19303.99,asli
-"tanah-laut","Tanah Laut","Kalimantan Selatan",1854,86,2,1,1,2,4,8,204,675,626,331,"Agustus",29,,19303.99,asli
-"tapin","Tapin","Kalimantan Selatan",3984,341,14,9,34,81,81,178,396,1497,1078,616,"Agustus",17,,19303.99,asli
-"berau","Berau","Kalimantan Timur",6890,711,139,20,35,62,132,136,314,3563,2337,152,"Agustus",10,,5761.57,asli
-"kota-balikpapan","Kota Balikpapan","Kalimantan Timur",178,43,12,2,5,20,18,20,18,39,34,10,"Agustus",48,,5761.57,asli
-"kota-bontang","Kota Bontang","Kalimantan Timur",147,39,2,2,7,14,10,15,11,56,28,2,"Agustus",50,,5761.57,asli
-"kota-samarinda","Kota Samarinda","Kalimantan Timur",143,8,2,0,1,0,3,1,7,32,88,9,"September",51,,5761.57,asli
-"kutai-barat","Kutai Barat","Kalimantan Timur",1969,274,13,4,6,27,10,15,69,542,888,395,"September",28,,5761.57,asli
-"kutai-kartanegara","Kutai Kartanegara","Kalimantan Timur",5256,578,66,7,36,106,51,120,196,1230,2487,957,"September",15,,5761.57,asli
-"kutai-timur","Kutai Timur","Kalimantan Timur",5962,1671,217,38,207,281,140,281,422,1684,2050,642,"September",13,,5761.57,asli
-"mahakam-hulu","Mahakam Hulu","Kalimantan Timur",292,96,0,0,0,0,0,0,12,198,69,13,"Agustus",46,,5761.57,asli
-"paser","Paser","Kalimantan Timur",6420,710,57,29,66,87,97,116,225,1087,3096,1560,"September",12,,5761.57,asli
-"penajam-paser-utara","Penajam Paser Utara","Kalimantan Timur",77,12,2,0,0,2,0,1,7,24,27,14,"September",53,,5761.57,asli
-"bulungan","Bulungan","Kalimantan Utara",1490,199,9,8,2,20,39,35,22,737,595,23,"Agustus",33,,,asli
-"kota-tarakan","Kota Tarakan","Kalimantan Utara",42,7,0,0,5,1,1,3,1,27,4,0,"Agustus",54,,,asli
-"malinau","Malinau","Kalimantan Utara",885,443,6,2,2,9,18,11,18,650,163,6,"Agustus",39,,,asli
-"nunukan","Nunukan","Kalimantan Utara",243,100,35,9,14,28,23,15,10,40,54,15,"September",47,,,asli
-"tana-tidung","Tana Tidung","Kalimantan Utara",130,55,17,2,0,6,8,12,0,26,47,12,"September",52,,,asli
+"bengkayang","Bengkayang","Kalimantan Barat",1133,1054,26,39,247,42,8,22,118,587,39,5,"Agustus",57,,48536,asli
+"kapuas-hulu","Kapuas Hulu","Kalimantan Barat",2649,1341,19,6,54,2,1,27,199,1974,357,10,"Agustus",36,,48536,asli
+"kayong-utara","Kayong Utara","Kalimantan Barat",6522,205,14,12,49,3,2,15,580,3271,2530,46,"Agustus",16,,48536,asli
+"ketapang","Ketapang","Kalimantan Barat",39922,2752,82,112,468,21,24,110,983,16389,16169,5564,"Agustus",2,,48536,asli
+"kota-pontianak","Kota Pontianak","Kalimantan Barat",34,5,14,2,7,0,0,0,1,10,0,0,"Januari",199,,48536,asli
+"kota-singkawang","Kota Singkawang","Kalimantan Barat",150,14,2,6,6,34,0,0,5,65,32,0,"Agustus",138,,48536,asli
+"kubu-raya","Kubu Raya","Kalimantan Barat",6975,541,310,115,396,1,4,22,512,3950,1660,5,"Agustus",14,,48536,asli
+"landak","Landak","Kalimantan Barat",2188,1677,75,20,54,16,23,29,379,1530,49,13,"Agustus",38,,48536,asli
+"melawi","Melawi","Kalimantan Barat",3581,958,5,3,10,5,2,14,151,2428,881,82,"Agustus",27,,48536,asli
+"mempawah","Mempawah","Kalimantan Barat",1677,780,263,128,450,11,5,23,43,578,175,1,"Agustus",42,,48536,asli
+"sambas","Sambas","Kalimantan Barat",946,809,131,11,84,86,36,11,67,358,159,3,"Agustus",67,,48536,asli
+"sanggau","Sanggau","Kalimantan Barat",5293,3916,44,6,38,26,24,60,835,3969,242,49,"Agustus",20,,48536,asli
+"sekadau","Sekadau","Kalimantan Barat",1579,1675,13,1,8,1,1,16,175,1121,214,29,"Agustus",46,,48536,asli
+"sintang","Sintang","Kalimantan Barat",3185,2723,21,2,15,11,7,29,243,2037,678,142,"Agustus",30,,48536,asli
+"barito-selatan","Barito Selatan","Kalimantan Tengah",4520,67,9,0,1,13,2,1,28,1089,2093,1284,"September",22,,15976.1,asli
+"barito-timur","Barito Timur","Kalimantan Tengah",846,152,2,1,3,2,0,4,16,144,402,272,"September",72,,15976.1,asli
+"barito-utara","Barito Utara","Kalimantan Tengah",499,354,28,1,5,17,4,15,37,158,188,46,"September",91,,15976.1,asli
+"gunung-mas","Gunung Mas","Kalimantan Tengah",3012,277,59,7,8,11,5,17,71,1449,967,418,"Agustus",34,,15976.1,asli
+"kapuas","Kapuas","Kalimantan Tengah",20518,298,72,3,8,12,16,19,160,6261,7324,6643,"September",5,,15976.1,asli
+"katingan","Katingan","Kalimantan Tengah",12964,662,96,9,7,18,6,12,98,2557,4917,5244,"Oktober",9,,15976.1,asli
+"kota-palangka-raya","Kota Palangka Raya","Kalimantan Tengah",13561,12,3,1,0,0,2,5,49,4831,6014,2656,"September",8,,15976.1,asli
+"kotawaringin-barat","Kotawaringin Barat","Kalimantan Tengah",9983,52,3,2,3,2,5,3,28,561,5096,4280,"September",11,,15976.1,asli
+"kotawaringin-timur","Kotawaringin Timur","Kalimantan Tengah",20305,312,50,0,25,12,8,21,193,6866,8894,4236,"September",6,,15976.1,asli
+"lamandau","Lamandau","Kalimantan Tengah",3557,427,28,4,35,4,10,28,183,1125,1465,675,"September",28,,15976.1,asli
+"murung-raya","Murung Raya","Kalimantan Tengah",712,432,5,1,7,5,1,3,24,196,276,194,"September",78,,15976.1,asli
+"pulang-pisau","Pulang Pisau","Kalimantan Tengah",25479,60,2,0,3,6,3,7,363,2724,15050,7321,"September",3,,15976.1,asli
+"seruyan","Seruyan","Kalimantan Tengah",19108,298,31,2,13,7,2,12,118,2109,8038,8776,"Oktober",7,,15976.1,asli
+"sukamara","Sukamara","Kalimantan Tengah",4800,53,19,18,16,0,1,22,193,1507,2367,657,"September",21,,15976.1,asli
+"balangan","Balangan","Kalimantan Selatan",419,53,0,1,1,4,1,0,22,135,206,49,"September",97,,19303.99,asli
+"banjar","Banjar","Kalimantan Selatan",4117,182,0,0,0,2,0,15,184,1272,1489,1155,"September",26,,19303.99,asli
+"barito-kuala","Barito Kuala","Kalimantan Selatan",1467,15,0,0,0,1,0,0,9,310,729,418,"September",49,,19303.99,asli
+"hulu-sungai-selatan","Hulu Sungai Selatan","Kalimantan Selatan",3456,317,20,5,9,29,28,37,135,1411,1360,422,"Agustus",29,,19303.99,asli
+"hulu-sungai-tengah","Hulu Sungai Tengah","Kalimantan Selatan",460,34,0,0,0,1,3,0,17,199,212,28,"September",96,,19303.99,asli
+"hulu-sungai-utara","Hulu Sungai Utara","Kalimantan Selatan",1481,58,0,0,0,4,0,0,13,664,680,120,"September",48,,19303.99,asli
+"kota-banjar-baru","Kota Banjar Baru","Kalimantan Selatan",534,10,0,0,0,0,0,2,21,221,233,57,"September",89,,19303.99,asli
+"kota-banjarmasin","Kota Banjarmasin","Kalimantan Selatan",4,0,0,0,0,0,0,0,0,1,1,2,"Oktober",226,,19303.99,asli
+"kota-baru","Kota Baru","Kalimantan Selatan",3094,148,11,3,7,10,5,17,65,327,1331,1318,"September",32,,19303.99,asli
+"tabalong","Tabalong","Kalimantan Selatan",1010,512,28,8,24,35,22,34,139,244,296,180,"September",63,,19303.99,asli
+"tanah-bumbu","Tanah Bumbu","Kalimantan Selatan",1725,56,21,5,11,6,1,0,19,294,598,770,"Oktober",41,,19303.99,asli
+"tanah-laut","Tanah Laut","Kalimantan Selatan",1959,91,2,1,1,2,4,8,204,675,626,436,"Agustus",40,,19303.99,asli
+"tapin","Tapin","Kalimantan Selatan",4297,358,14,9,34,81,81,178,396,1497,1078,929,"Agustus",24,,19303.99,asli
+"berau","Berau","Kalimantan Timur",6982,827,139,20,35,62,132,136,314,3563,2337,244,"Agustus",13,,5761.57,asli
+"kota-balikpapan","Kota Balikpapan","Kalimantan Timur",184,47,12,2,5,20,18,20,18,39,34,16,"Agustus",130,,5761.57,asli
+"kota-bontang","Kota Bontang","Kalimantan Timur",154,42,2,2,7,14,10,15,11,56,28,9,"Agustus",137,,5761.57,asli
+"kota-samarinda","Kota Samarinda","Kalimantan Timur",148,8,2,0,1,0,3,1,7,32,88,14,"September",139,,5761.57,asli
+"kutai-barat","Kutai Barat","Kalimantan Timur",2220,340,13,4,6,27,10,15,69,542,888,646,"September",37,,5761.57,asli
+"kutai-kartanegara","Kutai Kartanegara","Kalimantan Timur",5599,620,66,7,36,106,51,120,196,1230,2487,1300,"September",19,,5761.57,asli
+"kutai-timur","Kutai Timur","Kalimantan Timur",6332,1821,217,38,207,281,140,281,422,1684,2050,1012,"September",17,,5761.57,asli
+"mahakam-hulu","Mahakam Hulu","Kalimantan Timur",299,101,0,0,0,0,0,0,12,198,69,20,"Agustus",110,,5761.57,asli
+"paser","Paser","Kalimantan Timur",6851,733,57,29,66,87,97,116,225,1087,3096,1991,"September",15,,5761.57,asli
+"penajam-paser-utara","Penajam Paser Utara","Kalimantan Timur",82,12,2,0,0,2,0,1,7,24,27,19,"September",169,,5761.57,asli
+"bulungan","Bulungan","Kalimantan Utara",1528,225,9,8,2,20,39,35,22,737,595,61,"Agustus",47,,,asli
+"kota-tarakan","Kota Tarakan","Kalimantan Utara",47,7,0,0,5,1,1,3,1,27,4,5,"Agustus",186,,,asli
+"malinau","Malinau","Kalimantan Utara",890,446,6,2,2,9,18,11,18,650,163,11,"Agustus",69,,,asli
+"nunukan","Nunukan","Kalimantan Utara",261,108,35,9,14,28,23,15,10,40,54,33,"September",115,,,asli
+"tana-tidung","Tana Tidung","Kalimantan Utara",134,61,17,2,0,6,8,12,0,26,47,16,"September",142,,,asli
+"aceh-barat","Aceh Barat","Aceh",372,230,197,12,16,1,23,25,45,33,20,0,"Januari",99,,,asli
+"aceh-barat-daya","Aceh Barat Daya","Aceh",62,62,22,3,6,5,11,0,3,11,1,0,"Januari",180,,,asli
+"aceh-besar","Aceh Besar","Aceh",156,240,7,4,13,1,2,2,52,70,3,2,"Agustus",136,,,asli
+"aceh-jaya","Aceh Jaya","Aceh",193,108,60,8,21,15,10,2,47,25,4,1,"Januari",127,,,asli
+"aceh-selatan","Aceh Selatan","Aceh",618,403,202,17,48,10,82,49,139,51,18,2,"Januari",83,,,asli
+"aceh-singkil","Aceh Singkil","Aceh",130,175,32,9,12,3,30,6,30,6,2,0,"Januari",146,,,asli
+"aceh-tamiang","Aceh Tamiang","Aceh",70,3,0,2,40,19,2,0,0,4,2,1,"Maret",175,,,asli
+"aceh-tengah","Aceh Tengah","Aceh",106,252,25,6,17,3,12,3,2,35,3,0,"Agustus",154,,,asli
+"aceh-tenggara","Aceh Tenggara","Aceh",69,68,16,17,12,4,1,2,3,13,1,0,"Februari",176,,,asli
+"aceh-timur","Aceh Timur","Aceh",184,34,3,13,62,48,22,1,19,11,3,2,"Maret",131,,,asli
+"aceh-utara","Aceh Utara","Aceh",122,39,5,6,42,14,13,6,13,22,1,0,"Maret",149,,,asli
+"bener-meriah","Bener Meriah","Aceh",47,110,6,2,23,3,1,4,1,7,0,0,"Maret",187,,,asli
+"bireuen","Bireuen","Aceh",75,137,3,1,4,4,5,5,27,23,3,0,"Juli",172,,,asli
+"gayo-lues","Gayo Lues","Aceh",130,130,46,5,20,4,11,0,7,36,1,0,"Januari",147,,,asli
+"kota-banda-aceh","Kota Banda Aceh","Aceh",0,0,0,0,0,0,0,0,0,0,0,0,"Januari",239,,,asli
+"kota-langsa","Kota Langsa","Aceh",5,0,2,2,0,1,0,0,0,0,0,0,"Januari",223,,,asli
+"kota-lhokseumawe","Kota Lhokseumawe","Aceh",95,35,10,7,16,16,7,1,14,14,4,6,"Maret",162,,,asli
+"kota-sabang","Kota Sabang","Aceh",1,0,0,0,0,0,0,0,1,0,0,0,"Juli",235,,,asli
+"kota-subulussalam","Kota Subulussalam","Aceh",161,118,51,3,14,4,24,13,38,10,4,0,"Januari",135,,,asli
+"nagan-raya","Nagan Raya","Aceh",304,77,34,9,44,3,120,20,64,7,1,2,"Mei",108,,,asli
+"pidie","Pidie","Aceh",59,67,1,0,2,0,2,2,18,27,7,0,"Agustus",181,,,asli
+"pidie-jaya","Pidie Jaya","Aceh",22,22,0,1,0,0,3,2,6,10,0,0,"Agustus",207,,,asli
+"simeulue","Simeulue","Aceh",6,6,1,0,1,0,2,0,2,0,0,0,"Mei",222,,,asli
+"asahan","Asahan","Sumatra Utara",40,40,2,5,14,0,0,1,3,7,7,1,"Maret",195,,,asli
+"batu-bara","Batu Bara","Sumatra Utara",4,4,1,0,1,0,0,0,0,1,1,0,"Januari",227,,,asli
+"dairi","Dairi","Sumatra Utara",97,126,20,5,14,3,10,6,9,27,3,0,"Agustus",161,,,asli
+"deli-serdang","Deli Serdang","Sumatra Utara",34,33,0,2,5,4,4,2,5,6,6,0,"Agustus",200,,,asli
+"humbang-hasundutan","Humbang Hasundutan","Sumatra Utara",107,275,11,0,6,0,7,4,64,12,3,0,"Juli",153,,,asli
+"karo","Karo","Sumatra Utara",138,149,26,20,32,2,2,8,5,36,6,1,"Agustus",141,,,asli
+"kota-binjai","Kota Binjai","Sumatra Utara",0,0,0,0,0,0,0,0,0,0,0,0,"Januari",240,,,asli
+"kota-gunungsitoli","Kota Gunungsitoli","Sumatra Utara",1,0,1,0,0,0,0,0,0,0,0,0,"Januari",236,,,asli
+"kota-medan","Kota Medan","Sumatra Utara",9,8,2,0,0,2,1,1,1,1,1,0,"Januari",219,,,asli
+"kota-padangsidimpuan","Kota Padangsidimpuan","Sumatra Utara",0,0,0,0,0,0,0,0,0,0,0,0,"Januari",241,,,asli
+"kota-pematang-siantar","Kota Pematang Siantar","Sumatra Utara",1,0,0,0,0,0,0,0,0,0,1,0,"September",237,,,asli
+"kota-sibolga","Kota Sibolga","Sumatra Utara",0,0,0,0,0,0,0,0,0,0,0,0,"Januari",242,,,asli
+"kota-tanjung-balai","Kota Tanjung Balai","Sumatra Utara",0,0,0,0,0,0,0,0,0,0,0,0,"Januari",243,,,asli
+"kota-tebing-tinggi","Kota Tebing Tinggi","Sumatra Utara",0,0,0,0,0,0,0,0,0,0,0,0,"Januari",244,,,asli
+"labuhan-batu","Labuhan Batu","Sumatra Utara",241,186,7,10,126,7,8,3,14,44,21,1,"Maret",119,,,asli
+"labuhan-batu-selatan","Labuhan Batu Selatan","Sumatra Utara",32,80,5,0,7,3,0,0,4,11,1,1,"Agustus",202,,,asli
+"labuhan-batu-utara","Labuhan Batu Utara","Sumatra Utara",58,54,1,2,16,2,0,0,5,26,6,0,"Agustus",183,,,asli
+"langkat","Langkat","Sumatra Utara",23,34,5,1,6,4,0,0,1,5,1,0,"Maret",206,,,asli
+"mandailing-natal","Mandailing Natal","Sumatra Utara",94,148,35,3,7,5,12,14,10,7,1,0,"Januari",163,,,asli
+"nias","Nias","Sumatra Utara",9,10,1,1,3,0,1,2,0,0,1,0,"Maret",220,,,asli
+"nias-barat","Nias Barat","Sumatra Utara",4,6,0,0,0,0,1,0,3,0,0,0,"Juli",228,,,asli
+"nias-selatan","Nias Selatan","Sumatra Utara",28,51,5,2,1,1,7,10,1,0,1,0,"Juni",203,,,asli
+"nias-utara","Nias Utara","Sumatra Utara",53,46,21,1,5,0,16,3,7,0,0,0,"Januari",184,,,asli
+"padang-lawas","Padang Lawas","Sumatra Utara",36,779,5,0,0,0,13,2,3,9,4,0,"Mei",198,,,asli
+"padang-lawas-utara","Padang Lawas Utara","Sumatra Utara",110,497,10,0,4,1,10,9,10,45,15,6,"Agustus",152,,,asli
+"pakpak-bharat","Pakpak Bharat","Sumatra Utara",41,36,12,0,0,0,3,0,18,8,0,0,"Juli",192,,,asli
+"samosir","Samosir","Sumatra Utara",11,215,1,0,2,0,1,1,2,4,0,0,"Agustus",217,,,asli
+"serdang-bedagai","Serdang Bedagai","Sumatra Utara",3,4,0,1,1,0,0,0,0,0,1,0,"Februari",232,,,asli
+"simalungun","Simalungun","Sumatra Utara",42,114,9,4,7,1,7,2,4,8,0,0,"Januari",191,,,asli
+"tapanuli-selatan","Tapanuli Selatan","Sumatra Utara",99,182,17,3,8,9,9,9,12,16,16,0,"Januari",160,,,asli
+"tapanuli-tengah","Tapanuli Tengah","Sumatra Utara",116,266,33,2,4,5,10,2,16,23,21,0,"Januari",151,,,asli
+"tapanuli-utara","Tapanuli Utara","Sumatra Utara",87,299,14,2,9,0,6,5,14,32,5,0,"Agustus",166,,,asli
+"toba-samosir","Toba Samosir","Sumatra Utara",59,189,5,1,6,1,6,1,11,22,5,1,"Agustus",182,,,asli
+"agam","Agam","Sumatra Barat",33,32,14,0,1,0,0,8,0,3,1,6,"Januari",201,,,asli
+"dharmasraya","Dharmasraya","Sumatra Barat",131,67,9,3,4,1,7,12,10,34,45,6,"September",145,,,asli
+"kepulauan-mentawai","Kepulauan Mentawai","Sumatra Barat",3,4,0,0,1,0,0,0,0,0,2,0,"September",233,,,asli
+"kota-bukittinggi","Kota Bukittinggi","Sumatra Barat",0,0,0,0,0,0,0,0,0,0,0,0,"Januari",245,,,asli
+"kota-padang","Kota Padang","Sumatra Barat",0,3,0,0,0,0,0,0,0,0,0,0,"Januari",246,,,asli
+"kota-padang-panjang","Kota Padang Panjang","Sumatra Barat",0,0,0,0,0,0,0,0,0,0,0,0,"Januari",247,,,asli
+"kota-pariaman","Kota Pariaman","Sumatra Barat",0,0,0,0,0,0,0,0,0,0,0,0,"Januari",248,,,asli
+"kota-payakumbuh","Kota Payakumbuh","Sumatra Barat",0,3,0,0,0,0,0,0,0,0,0,0,"Januari",249,,,asli
+"kota-sawah-lunto","Kota Sawah Lunto","Sumatra Barat",1,9,0,0,0,0,0,0,0,0,1,0,"September",238,,,asli
+"kota-solok","Kota Solok","Sumatra Barat",4,3,1,0,0,0,0,1,2,0,0,0,"Juli",229,,,asli
+"lima-puluh-kota","Lima Puluh Kota","Sumatra Barat",43,212,4,2,5,0,3,3,2,17,7,0,"Agustus",189,,,asli
+"padang-pariaman","Padang Pariaman","Sumatra Barat",13,15,4,1,0,0,2,3,0,1,2,0,"Januari",215,,,asli
+"pasaman","Pasaman","Sumatra Barat",87,163,6,0,9,3,5,13,17,24,10,0,"Agustus",167,,,asli
+"pasaman-barat","Pasaman Barat","Sumatra Barat",212,303,35,6,19,12,43,27,19,21,27,3,"Mei",123,,,asli
+"pesisir-selatan","Pesisir Selatan","Sumatra Barat",617,741,103,38,80,9,40,66,145,57,74,5,"Juli",84,,,asli
+"sijunjung","Sijunjung","Sumatra Barat",104,151,7,2,4,4,11,14,20,21,21,0,"Agustus",155,,,asli
+"solok","Solok","Sumatra Barat",26,110,2,0,5,0,4,0,5,0,10,0,"September",204,,,asli
+"solok-selatan","Solok Selatan","Sumatra Barat",39,46,2,3,1,1,0,4,4,8,15,1,"September",196,,,asli
+"tanah-datar","Tanah Datar","Sumatra Barat",4,24,0,0,4,0,0,0,0,0,0,0,"Maret",230,,,asli
+"bengkalis","Bengkalis","Riau",1670,179,26,439,713,348,11,29,5,55,42,2,"Maret",44,,,asli
+"indragiri-hilir","Indragiri Hilir","Riau",961,93,55,60,152,8,3,8,9,404,226,36,"Agustus",66,,,asli
+"indragiri-hulu","Indragiri Hulu","Riau",828,77,7,2,29,10,16,21,24,231,482,6,"September",73,,,asli
+"kampar","Kampar","Riau",163,186,1,6,32,5,12,6,3,63,34,1,"Agustus",133,,,asli
+"kepulauan-meranti","Kepulauan Meranti","Riau",102,66,6,15,8,0,1,0,2,16,53,1,"September",156,,,asli
+"kota-dumai","Kota Dumai","Riau",468,204,18,50,241,35,2,8,21,38,50,5,"Maret",95,,,asli
+"kota-pekanbaru","Kota Pekanbaru","Riau",11,19,0,0,0,1,1,1,3,3,1,1,"Juli",218,,,asli
+"kuantan-singingi","Kuantan Singingi","Riau",142,66,1,6,8,4,3,18,7,52,27,16,"Agustus",140,,,asli
+"pelalawan","Pelalawan","Riau",1654,235,30,292,539,39,20,21,26,602,71,14,"Agustus",45,,,asli
+"rokan-hilir","Rokan Hilir","Riau",312,1491,9,20,105,20,21,30,16,82,8,1,"Maret",105,,,asli
+"rokan-hulu","Rokan Hulu","Riau",127,659,13,4,16,2,11,25,9,31,16,0,"Agustus",148,,,asli
+"siak","Siak","Riau",486,194,7,27,38,18,11,25,65,158,125,12,"Agustus",92,,,asli
+"bintan","Bintan","Kepulauan Riau",275,37,38,32,130,10,2,1,1,40,21,0,"Maret",113,,,asli
+"karimun","Karimun","Kepulauan Riau",325,38,6,33,94,10,1,1,8,135,36,1,"Agustus",104,,,asli
+"kepulauan-anambas","Kepulauan Anambas","Kepulauan Riau",5,8,0,0,0,0,0,2,0,0,2,1,"Juni",224,,,asli
+"kota-batam","Kota Batam","Kepulauan Riau",134,34,5,17,74,7,1,2,3,15,7,3,"Maret",143,,,asli
+"kota-tanjung-pinang","Kota Tanjung Pinang","Kepulauan Riau",18,1,0,3,4,0,0,0,0,4,2,5,"Oktober",213,,,asli
+"lingga","Lingga","Kepulauan Riau",204,14,2,18,62,1,1,0,8,38,74,0,"September",124,,,asli
+"natuna","Natuna","Kepulauan Riau",383,44,38,12,73,35,5,1,8,88,123,0,"September",98,,,asli
+"batang-hari","Batang Hari","Jambi",627,94,4,5,7,7,1,9,21,210,324,39,"September",82,,,asli
+"bungo","Bungo","Jambi",216,109,2,0,5,6,7,11,22,42,93,28,"September",122,,,asli
+"kerinci","Kerinci","Jambi",49,35,5,0,0,2,1,2,6,4,21,8,"September",185,,,asli
+"kota-jambi","Kota Jambi","Jambi",4,1,0,0,1,1,1,0,0,0,1,0,"Maret",231,,,asli
+"kota-sungai-penuh","Kota Sungai Penuh","Jambi",0,1,0,0,0,0,0,0,0,0,0,0,"Januari",250,,,asli
+"merangin","Merangin","Jambi",334,235,9,10,3,4,12,34,51,75,100,36,"September",102,,,asli
+"muaro-jambi","Muaro Jambi","Jambi",1314,365,16,13,50,27,37,37,57,202,335,540,"Oktober",51,,,asli
+"sarolangun","Sarolangun","Jambi",1083,232,11,3,18,16,9,45,79,431,352,119,"Agustus",60,,,asli
+"tanjung-jabung-barat","Tanjung Jabung Barat","Jambi",764,280,35,28,68,40,47,28,39,185,260,34,"September",75,,,asli
+"tanjung-jabung-timur","Tanjung Jabung Timur","Jambi",2140,36,7,8,17,14,10,5,3,74,820,1182,"Oktober",39,,,asli
+"tebo","Tebo","Jambi",875,109,5,5,9,2,8,5,15,223,576,27,"September",71,,,asli
+"banyu-asin","Banyu Asin","Sumatra Selatan",3046,85,1,3,16,10,7,14,50,490,1400,1055,"September",33,,,asli
+"empat-lawang","Empat Lawang","Sumatra Selatan",225,123,0,0,5,3,2,8,11,71,80,45,"September",121,,,asli
+"kota-lubuklinggau","Kota Lubuklinggau","Sumatra Selatan",21,12,0,0,1,0,3,4,0,1,9,3,"September",209,,,asli
+"kota-pagar-alam","Kota Pagar Alam","Sumatra Selatan",12,2,0,0,1,0,0,1,0,1,7,2,"September",216,,,asli
+"kota-palembang","Kota Palembang","Sumatra Selatan",65,5,0,0,0,2,2,0,3,18,36,4,"September",178,,,asli
+"kota-prabumulih","Kota Prabumulih","Sumatra Selatan",41,12,0,0,0,2,3,10,4,2,16,4,"September",193,,,asli
+"lahat","Lahat","Sumatra Selatan",936,243,4,7,17,29,75,104,132,250,203,115,"Agustus",68,,,asli
+"muara-enim","Muara Enim","Sumatra Selatan",4360,414,7,4,21,40,64,126,203,1002,2071,822,"September",23,,,asli
+"musi-banyuasin","Musi Banyuasin","Sumatra Selatan",7932,400,13,7,38,21,33,86,203,1107,3595,2829,"September",12,,,asli
+"musi-rawas","Musi Rawas","Sumatra Selatan",1062,350,6,1,10,17,28,22,41,155,669,113,"September",61,,,asli
+"musi-rawas-utara","Musi Rawas Utara","Sumatra Selatan",1140,276,13,6,17,13,29,28,75,235,561,163,"September",56,,,asli
+"ogan-ilir","Ogan Ilir","Sumatra Selatan",1233,94,2,0,6,9,6,18,81,320,510,281,"September",52,,,asli
+"ogan-komering-ilir","Ogan Komering Ilir","Sumatra Selatan",22265,145,0,7,20,5,11,40,105,3034,7637,11406,"Oktober",4,,,asli
+"ogan-komering-ulu","Ogan Komering Ulu","Sumatra Selatan",552,175,0,1,1,6,10,18,40,109,275,92,"September",88,,,asli
+"ogan-komering-ulu-selatan","Ogan Komering Ulu Selatan","Sumatra Selatan",285,108,1,0,1,1,8,2,20,68,108,76,"September",112,,,asli
+"ogan-komering-ulu-timur","Ogan Komering Ulu Timur","Sumatra Selatan",1232,56,0,0,5,7,5,12,50,427,534,192,"September",53,,,asli
+"penukal-abab-lematang-ilir","Penukal Abab Lematang Ilir","Sumatra Selatan",1108,131,1,0,17,12,10,9,40,274,585,160,"September",59,,,asli
+"bangka","Bangka","Kepulauan Bangka Belitung",972,328,22,14,22,7,16,38,69,306,309,169,"September",65,,,asli
+"bangka-barat","Bangka Barat","Kepulauan Bangka Belitung",807,408,21,20,30,13,10,21,122,303,215,52,"Agustus",74,,,asli
+"bangka-selatan","Bangka Selatan","Kepulauan Bangka Belitung",3002,574,26,27,28,14,31,62,192,578,1180,864,"September",35,,,asli
+"bangka-tengah","Bangka Tengah","Kepulauan Bangka Belitung",1161,236,13,8,9,4,11,30,84,247,553,202,"September",55,,,asli
+"belitung","Belitung","Kepulauan Bangka Belitung",588,117,8,7,11,6,1,18,52,182,164,139,"Agustus",86,,,asli
+"belitung-timur","Belitung Timur","Kepulauan Bangka Belitung",754,141,2,7,7,3,5,6,57,181,296,190,"September",76,,,asli
+"kota-pangkal-pinang","Kota Pangkal Pinang","Kepulauan Bangka Belitung",19,5,0,0,0,0,0,1,0,3,12,3,"September",212,,,asli
+"bengkulu-selatan","Bengkulu Selatan","Bengkulu",78,69,6,2,4,1,6,10,14,20,14,1,"Agustus",171,,,asli
+"bengkulu-tengah","Bengkulu Tengah","Bengkulu",92,42,9,3,6,4,6,7,23,17,12,5,"Juli",164,,,asli
+"bengkulu-utara","Bengkulu Utara","Bengkulu",187,258,29,1,16,5,18,28,37,21,21,11,"Juli",128,,,asli
+"kaur","Kaur","Bengkulu",242,69,10,1,10,2,9,29,42,69,48,22,"Agustus",118,,,asli
+"kepahiang","Kepahiang","Bengkulu",9,0,2,0,1,0,1,0,1,0,4,0,"September",221,,,asli
+"kota-bengkulu","Kota Bengkulu","Bengkulu",2,2,0,0,0,0,0,1,0,0,0,1,"Juni",234,,,asli
+"lebong","Lebong","Bengkulu",71,23,3,0,2,1,8,2,11,11,25,8,"September",174,,,asli
+"mukomuko","Mukomuko","Bengkulu",74,290,18,4,12,0,6,6,19,6,2,1,"Juli",173,,,asli
+"rejang-lebong","Rejang Lebong","Bengkulu",92,61,0,2,1,1,5,2,11,20,36,14,"September",165,,,asli
+"seluma","Seluma","Bengkulu",85,67,4,3,6,7,6,12,13,11,10,13,"Juli",168,,,asli
+"kota-bandar-lampung","Kota Bandar Lampung","Lampung",0,3,0,0,0,0,0,0,0,0,0,0,"Januari",251,,,asli
+"kota-metro","Kota Metro","Lampung",0,1,0,0,0,0,0,0,0,0,0,0,"Januari",252,,,asli
+"lampung-barat","Lampung Barat","Lampung",41,4,0,0,6,2,0,5,4,13,10,1,"Agustus",194,,,asli
+"lampung-selatan","Lampung Selatan","Lampung",343,20,0,0,0,1,2,7,7,63,207,56,"September",101,,,asli
+"lampung-tengah","Lampung Tengah","Lampung",586,63,0,1,1,2,5,21,50,115,222,169,"September",87,,,asli
+"lampung-timur","Lampung Timur","Lampung",503,60,34,0,2,2,2,1,25,130,99,208,"Oktober",90,,,asli
+"lampung-utara","Lampung Utara","Lampung",259,55,0,0,1,0,0,5,41,101,57,54,"Agustus",116,,,asli
+"mesuji","Mesuji","Lampung",977,27,0,0,0,0,0,0,19,175,428,355,"September",64,,,asli
+"pesawaran","Pesawaran","Lampung",46,3,0,0,0,0,0,2,2,8,22,12,"September",188,,,asli
+"pesisir-barat","Pesisir Barat","Lampung",102,14,0,0,2,1,0,5,12,49,21,12,"Agustus",157,,,asli
+"pringsewu","Pringsewu","Lampung",14,4,0,0,0,0,1,0,0,8,4,1,"Agustus",214,,,asli
+"tanggamus","Tanggamus","Lampung",43,7,0,1,0,0,0,0,0,16,20,6,"September",190,,,asli
+"tulang-bawang-barat","Tulang Bawang Barat","Lampung",306,31,0,0,0,1,5,5,12,67,112,104,"September",107,,,asli
+"tulangbawang","Tulangbawang","Lampung",1162,37,0,0,0,0,3,8,66,268,386,431,"Oktober",54,,,asli
+"way-kanan","Way Kanan","Lampung",882,172,4,1,1,3,5,15,72,311,296,174,"Agustus",70,,,asli
+"biak-numfor","Biak Numfor","Papua",300,28,2,4,2,19,1,6,21,205,29,11,"Agustus",109,,,asli
+"jayapura","Jayapura","Papua",100,50,5,1,2,5,8,12,19,13,26,9,"September",159,,,asli
+"keerom","Keerom","Papua",185,27,5,0,0,1,5,12,10,65,57,30,"Agustus",129,,,asli
+"kepulauan-yapen","Kepulauan Yapen","Papua",330,257,23,11,7,35,22,44,48,67,46,27,"Agustus",103,,,asli
+"kota-jayapura","Kota Jayapura","Papua",63,19,3,4,1,3,4,1,19,6,21,1,"September",179,,,asli
+"mamberamo-raya","Mamberamo Raya","Papua",20,2,0,0,0,2,0,0,2,1,14,1,"September",210,,,asli
+"sarmi","Sarmi","Papua",25,4,0,0,0,6,0,0,5,1,10,3,"September",205,,,asli
+"supiori","Supiori","Papua",5,0,0,0,0,0,0,0,0,3,2,0,"Agustus",225,,,asli
+"waropen","Waropen","Papua",22,1,0,0,1,0,0,0,1,15,4,1,"Agustus",208,,,asli
+"fakfak","Fakfak","Papua Barat",6035,26,9,1,9,1,0,27,60,714,2754,2460,"September",18,,,asli
+"kaimana","Kaimana","Papua Barat",3163,0,0,0,1,0,0,0,6,243,1194,1719,"Oktober",31,,,asli
+"manokwari","Manokwari","Papua Barat",183,38,5,1,0,6,6,8,32,55,50,20,"Agustus",132,,,asli
+"manokwari-selatan","Manokwari Selatan","Papua Barat",351,7,0,0,0,1,0,5,38,249,48,10,"Agustus",100,,,asli
+"pegunungan-arfak","Pegunungan Arfak","Papua Barat",239,4,0,3,1,1,0,3,8,207,9,7,"Agustus",120,,,asli
+"teluk-bintuni","Teluk Bintuni","Papua Barat",1677,59,17,6,1,5,13,8,31,138,634,824,"Oktober",43,,,asli
+"teluk-wondama","Teluk Wondama","Papua Barat",250,2,1,1,0,1,3,5,8,143,64,24,"Agustus",117,,,asli
+"asmat","Asmat","Papua Selatan",691,0,6,2,1,0,1,24,60,241,277,79,"September",79,,,asli
+"boven-digoel","Boven Digoel","Papua Selatan",4156,0,6,2,0,0,0,13,45,184,1162,2744,"Oktober",25,,,asli
+"mappi","Mappi","Papua Selatan",10043,71,74,35,25,7,4,190,991,2258,3667,2792,"September",10,,,asli
+"merauke","Merauke","Papua Selatan",46145,547,0,15,9,16,44,828,3853,9194,16669,15517,"September",1,,,asli
+"deiyai","Deiyai","Papua Tengah",102,0,3,0,0,0,0,1,0,20,6,72,"Oktober",158,,,asli
+"dogiyai","Dogiyai","Papua Tengah",741,12,49,4,11,16,2,0,43,349,110,157,"Agustus",77,,,asli
+"intan-jaya","Intan Jaya","Papua Tengah",292,2,3,0,7,42,0,2,45,112,35,46,"Agustus",111,,,asli
+"mimika","Mimika","Papua Tengah",20,1,1,2,1,1,0,2,1,10,1,1,"Agustus",211,,,asli
+"nabire","Nabire","Papua Tengah",1406,22,6,1,3,10,6,10,68,657,466,179,"Agustus",50,,,asli
+"paniai","Paniai","Papua Tengah",629,4,51,3,3,41,0,6,51,215,117,142,"Agustus",81,,,asli
+"puncak","Puncak","Papua Tengah",660,3,1,1,0,5,1,7,46,140,254,205,"September",80,,,asli
+"puncak-jaya","Puncak Jaya","Papua Tengah",203,51,0,0,0,7,3,20,58,40,61,14,"September",125,,,asli
+"jayawijaya","Jayawijaya","Papua Pegunungan",1121,77,3,0,4,28,13,26,127,473,327,120,"Agustus",58,,,asli
+"lanny-jaya","Lanny Jaya","Papua Pegunungan",610,87,2,3,0,20,8,18,69,194,224,72,"September",85,,,asli
+"mamberamo-tengah","Mamberamo Tengah","Papua Pegunungan",133,40,0,0,3,5,13,24,25,39,18,6,"Agustus",144,,,asli
+"nduga","Nduga","Papua Pegunungan",118,0,0,0,0,0,0,1,1,95,21,0,"Agustus",150,,,asli
+"pegunungan-bintang","Pegunungan Bintang","Papua Pegunungan",196,103,1,0,0,8,5,34,43,67,23,15,"Agustus",126,,,asli
+"tolikara","Tolikara","Papua Pegunungan",162,69,1,0,0,8,24,46,27,33,11,12,"Juni",134,,,asli
+"yahukimo","Yahukimo","Papua Pegunungan",476,19,1,0,0,8,2,12,49,240,122,42,"Agustus",93,,,asli
+"yalimo","Yalimo","Papua Pegunungan",39,6,1,0,0,0,0,2,7,11,16,2,"September",197,,,asli
+"kota-sorong","Kota Sorong","Papua Barat Daya",68,1,0,2,0,0,0,1,10,10,13,32,"Oktober",177,,,asli
+"maybrat","Maybrat","Papua Barat Daya",82,8,7,1,0,0,0,3,11,11,9,40,"Oktober",170,,,asli
+"raja-ampat","Raja Ampat","Papua Barat Daya",474,0,0,1,0,0,0,3,3,43,180,244,"Oktober",94,,,asli
+"sorong","Sorong","Papua Barat Daya",272,0,0,0,1,0,1,1,0,57,111,101,"September",114,,,asli
+"sorong-selatan","Sorong Selatan","Papua Barat Daya",1051,1,0,1,3,0,0,0,18,154,454,421,"September",62,,,asli
+"tambrauw","Tambrauw","Papua Barat Daya",312,42,2,3,11,10,6,14,39,99,54,74,"Agustus",106,,,asli

@@ -1,6 +1,6 @@
 # Visualize Karhutla
 
-Web app mobile-first untuk kesadaran publik tentang kebakaran hutan dan lahan (karhutla) di Kalimantan 2026: peta titik panas interaktif dan "Karhutla Wrapped" per kabupaten yang mudah dibagikan. Tanpa fitur AI/LLM.
+Web app mobile-first untuk kesadaran publik tentang kebakaran hutan dan lahan (karhutla) di Kalimantan, Sumatra, dan Papua 2026: peta titik panas interaktif dan "Karhutla Wrapped" per kabupaten yang mudah dibagikan. Tanpa fitur AI/LLM.
 
 Stack: Vite, React, TypeScript, Tailwind v4, MapLibre GL JS + deck.gl, `motion`, visx, `html-to-image`, React Router.
 
@@ -26,7 +26,7 @@ Skrip lain:
 
 | Perintah | Fungsi |
 |---|---|
-| `npm run boundaries` | Unduh batas geoBoundaries IDN ADM1/ADM2, saring 56 kabupaten/kota Kalimantan ke `public/data/boundaries-*.json` |
+| `npm run boundaries` | Unduh batas geoBoundaries IDN ADM1/ADM2, saring 252 kabupaten/kota (21 provinsi: Kalimantan, Sumatra, Papua) ke `public/data/boundaries-*.json` |
 | `npm run sample` | Bangkitkan DATA CONTOH deterministik (seed tetap) |
 | `npm run firms` | Proses CSV NASA FIRMS di `data/raw/` menjadi data asli |
 | `npm run downloads` | Buat CSV dan metadata unduhan di `public/unduh/` (otomatis saat `npm run build`) |
@@ -36,7 +36,7 @@ Skrip lain:
 
 ## Mengganti data contoh dengan data asli
 
-1. **Titik panas (NASA FIRMS).** Unduh CSV VIIRS dan/atau MODIS untuk area Kalimantan, 1 Januari 2025 sampai hari ini, dari <https://firms.modaps.eosdis.nasa.gov/download/>. Taruh semua `.csv` di `data/raw/`. Kolom wajib: `latitude`, `longitude`, `acq_date`. Kolom `frp` dan `confidence` dipakai bila ada.
+1. **Titik panas (NASA FIRMS).** Unduh CSV VIIRS dan/atau MODIS untuk area Kalimantan, Sumatra, dan Papua, 1 Januari 2025 sampai hari ini, dari <https://firms.modaps.eosdis.nasa.gov/download/>. Taruh semua `.csv` di `data/raw/`. Kolom wajib: `latitude`, `longitude`, `acq_date`. Kolom `frp` dan `confidence` dipakai bila ada.
 2. **Luas terbakar (SiPongi).** Isi `data/sipongi.json`: `source`, `period`, `retrievedAt`, dan `entries` berupa `{ "kabupatenSlug": "...", "burnedHa": 0 }`. Slug ada di `public/data/kabupaten.json`. Kabupaten tanpa entri tampil "Belum ada data" (bukan angka karangan).
 3. Jalankan `npm run firms`. Skrip ini:
    - menyaring titik ke lima provinsi dengan point-in-polygon terhadap batas ADM2,

@@ -4,12 +4,12 @@
 // Titik MODIS dengan confidence < 30 dan VIIRS confidence 'l' (low) dibuang.
 import fs from 'node:fs'
 import path from 'node:path'
-import { PROVINCES, YEAR, bbox, dayLabels, inPolygon, loadBoundaries } from './shared'
+import { ISLANDS, PROVINCES, YEAR, bbox, dayLabels, inPolygon, loadBoundaries } from './shared'
 
 const RAW = 'data/raw'
 const files = fs.existsSync(RAW) ? fs.readdirSync(RAW).filter(f => f.toLowerCase().endsWith('.csv')) : []
 if (!files.length) {
-  console.error('Tidak ada CSV di data/raw/. Unduh dari https://firms.modaps.eosdis.nasa.gov/download/ (area Kalimantan, tahun 2025-2026).')
+  console.error('Tidak ada CSV di data/raw/. Unduh dari https://firms.modaps.eosdis.nasa.gov/download/ (Kalimantan, Sumatra, Papua; tahun 2025-2026), atau jalankan npm run fetch-firms.')
   process.exit(1)
 }
 
@@ -58,7 +58,7 @@ for (const file of files) {
     dailyKey.set(slug, dm)
   }
 }
-if (!maxDate) { console.error(`Tidak ada titik tahun ${YEAR} di dalam lima provinsi.`); process.exit(1) }
+if (!maxDate) { console.error(`Tidak ada titik tahun ${YEAR} di dalam provinsi yang dicakup.`); process.exit(1) }
 console.log(`baris dibaca ${read}, dipertahankan ${kept}, tanggal data terakhir ${maxDate}`)
 
 const SAT: Record<string, string> = { N: 'VIIRS Suomi NPP', N20: 'VIIRS NOAA-20', N21: 'VIIRS NOAA-21', T: 'MODIS Terra', A: 'MODIS Aqua', Terra: 'MODIS Terra', Aqua: 'MODIS Aqua' }
@@ -103,7 +103,13 @@ fs.writeFileSync('public/data/meta.json', JSON.stringify({
     burnedArea: sip.entries?.length || sip.provinces?.length ? `${sip.source}, periode ${sip.period}` : 'belum tersedia',
     boundaries: 'geoBoundaries IDN ADM1/ADM2 (CC BY 3.0 IGO)',
   },
-  provinces: PROVINCES.map(p => ({ id: p.id, name: p.name, short: p.short })),
+  islands: ISLANDS,
+  provinces: PROVINCES.map(p => {
+    // batas tampilan provinsi: [barat, selatan, timur, utara]
+    const bs = bnd[p.id].map(f => bbox(f.geometry))
+    const bounds = [Math.min(...bs.map(b => b[0])), Math.min(...bs.map(b => b[1])), Math.max(...bs.map(b => b[2])), Math.max(...bs.map(b => b[3]))].map(n => Math.round(n * 100) / 100)
+    return { id: p.id, name: p.name, short: p.short, island: p.island, bounds }
+  }),
   // luas lahan terbakar tingkat provinsi dari pemberitaan (lihat data/sipongi.json); kosong bila belum diisi
   burnedArea: sip.provinces?.length ? {
     source: sip.source, period: sip.period, retrievedAt: sip.retrievedAt, note: sip.note ?? '',

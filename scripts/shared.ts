@@ -1,13 +1,37 @@
 import fs from 'node:fs'
 import type { Feature, FeatureCollection, MultiPolygon, Polygon, Position } from 'geojson'
 
-export const PROVINCES = [
-  { id: 'kalbar', name: 'Kalimantan Barat', short: 'Kalbar' },
-  { id: 'kalteng', name: 'Kalimantan Tengah', short: 'Kalteng' },
-  { id: 'kalsel', name: 'Kalimantan Selatan', short: 'Kalsel' },
-  { id: 'kaltim', name: 'Kalimantan Timur', short: 'Kaltim' },
-  { id: 'kaltara', name: 'Kalimantan Utara', short: 'Kaltara' },
-] as const
+export type Island = 'kalimantan' | 'sumatra' | 'papua'
+export const ISLANDS: { id: Island; name: string }[] = [
+  { id: 'kalimantan', name: 'Kalimantan' },
+  { id: 'sumatra', name: 'Sumatra' },
+  { id: 'papua', name: 'Papua' },
+]
+
+/** adm1: nama ADM1 geoBoundaries (data 2017). Provinsi Papua hasil pemekaran 2022 tidak punya ADM1 sendiri; kabupatennya dipetakan menurut nama (fetch-boundaries). */
+export const PROVINCES: { id: string; name: string; short: string; island: Island; adm1?: string }[] = [
+  { id: 'kalbar', name: 'Kalimantan Barat', short: 'Kalbar', island: 'kalimantan', adm1: 'West Kalimantan' },
+  { id: 'kalteng', name: 'Kalimantan Tengah', short: 'Kalteng', island: 'kalimantan', adm1: 'Central Kalimantan' },
+  { id: 'kalsel', name: 'Kalimantan Selatan', short: 'Kalsel', island: 'kalimantan', adm1: 'South Kalimantan' },
+  { id: 'kaltim', name: 'Kalimantan Timur', short: 'Kaltim', island: 'kalimantan', adm1: 'East Kalimantan' },
+  { id: 'kaltara', name: 'Kalimantan Utara', short: 'Kaltara', island: 'kalimantan', adm1: 'North Kalimantan' },
+  { id: 'aceh', name: 'Aceh', short: 'Aceh', island: 'sumatra', adm1: 'Aceh' },
+  { id: 'sumut', name: 'Sumatra Utara', short: 'Sumut', island: 'sumatra', adm1: 'North Sumatra' },
+  { id: 'sumbar', name: 'Sumatra Barat', short: 'Sumbar', island: 'sumatra', adm1: 'West Sumatra' },
+  { id: 'riau', name: 'Riau', short: 'Riau', island: 'sumatra', adm1: 'Riau' },
+  { id: 'kepri', name: 'Kepulauan Riau', short: 'Kepri', island: 'sumatra', adm1: 'Riau Islands' },
+  { id: 'jambi', name: 'Jambi', short: 'Jambi', island: 'sumatra', adm1: 'Jambi' },
+  { id: 'sumsel', name: 'Sumatra Selatan', short: 'Sumsel', island: 'sumatra', adm1: 'South Sumatra' },
+  { id: 'babel', name: 'Kepulauan Bangka Belitung', short: 'Babel', island: 'sumatra', adm1: 'Bangka-Belitung Islands' },
+  { id: 'bengkulu', name: 'Bengkulu', short: 'Bengkulu', island: 'sumatra', adm1: 'Bengkulu' },
+  { id: 'lampung', name: 'Lampung', short: 'Lampung', island: 'sumatra', adm1: 'Lampung' },
+  { id: 'papua', name: 'Papua', short: 'Papua', island: 'papua', adm1: 'Papua' },
+  { id: 'papbar', name: 'Papua Barat', short: 'Pabar', island: 'papua', adm1: 'West Papua' },
+  { id: 'papsel', name: 'Papua Selatan', short: 'Pasel', island: 'papua' },
+  { id: 'papteng', name: 'Papua Tengah', short: 'Pateng', island: 'papua' },
+  { id: 'pappeg', name: 'Papua Pegunungan', short: 'Papeg', island: 'papua' },
+  { id: 'papbarda', name: 'Papua Barat Daya', short: 'Pabarda', island: 'papua' },
+]
 
 export const YEAR = 2026
 

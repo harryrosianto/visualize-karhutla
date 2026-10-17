@@ -61,7 +61,7 @@ Berkas `wrangler.jsonc` hanya dipakai alur Workers; build Pages klasik mengabaik
 Data bersifat statis pada saat build. Untuk memperbarui:
 
 ```bash
-npm run fetch-firms     # butuh FIRMS_MAP_KEY di .env
+npm run fetch-firms     # butuh FIRMS_MAP_KEY di .env; FIRMS_AREAS=kalimantan,sumatra,papua; FIRMS_MERGE=1 untuk menambah ke CSV yang ada
 npm run firms
 git add public/data && git commit -m "pembaruan data" && git push
 ```

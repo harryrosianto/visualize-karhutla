@@ -1,19 +1,33 @@
 import { Pause, Play } from '@phosphor-icons/react'
-import { MONTHS_SHORT, fmt, fmtDate, type ProvinceId } from '../../lib/data'
-import type { MapMode } from './mapTypes'
-
-export type Filter = 'all' | ProvinceId
+import { MONTHS_SHORT, fmt, fmtDate } from '../../lib/data'
+import type { Meta } from '../../lib/data'
+import type { Filter, MapMode } from './mapTypes'
 
 const chip = (on: boolean) =>
   `inline-flex min-h-[44px] shrink-0 items-center rounded-full border px-4 text-sm font-semibold transition-colors ${on ? 'border-ember bg-ember text-ink' : 'border-line bg-ink-2/90 text-fg-2 hover:text-fg'}`
 
-export function ProvinceChips({ provinces, value, onChange }: { provinces: { id: ProvinceId; short: string }[]; value: Filter; onChange: (f: Filter) => void }) {
-  const all = [{ id: 'all' as const, short: 'Semua' }, ...provinces]
+/** Dua baris: pulau, lalu provinsi pada pulau yang dipilih. */
+export function ProvinceChips({ meta, value, onChange }: { meta: Meta | null; value: Filter; onChange: (f: Filter) => void }) {
+  if (!meta) return <div className="min-h-[44px] flex-1" />
+  const prov = meta.provinces.find(p => p.id === value)
+  const island = prov?.island ?? (meta.islands.some(i => i.id === value) ? value : null)
+  const here = island ? meta.provinces.filter(p => p.island === island) : []
+  const row = 'flex min-w-0 flex-1 gap-2 overflow-x-auto [scrollbar-width:none]'
   return (
-    <div role="group" aria-label="Filter provinsi" className="flex min-w-0 flex-1 gap-2 overflow-x-auto [scrollbar-width:none]">
-      {all.map(p => (
-        <button key={p.id} type="button" aria-pressed={value === p.id} onClick={() => onChange(p.id)} className={chip(value === p.id)}>{p.short}</button>
-      ))}
+    <div className="flex min-w-0 flex-1 flex-col gap-2">
+      <div role="group" aria-label="Filter pulau" className={row}>
+        {[{ id: 'all', name: 'Semua' }, ...meta.islands].map(i => (
+          <button key={i.id} type="button" aria-pressed={island === null ? i.id === 'all' : i.id === island} onClick={() => onChange(i.id)} className={chip(island === null ? i.id === 'all' : i.id === island)}>{i.name}</button>
+        ))}
+      </div>
+      {here.length > 0 && (
+        <div role="group" aria-label="Filter provinsi" className={row}>
+          <button type="button" aria-pressed={value === island} onClick={() => onChange(island!)} className={chip(value === island)}>Semua provinsi</button>
+          {here.map(p => (
+            <button key={p.id} type="button" aria-pressed={value === p.id} onClick={() => onChange(p.id)} className={chip(value === p.id)}>{p.short}</button>
+          ))}
+        </div>
+      )}
     </div>
   )
 }

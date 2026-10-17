@@ -1,25 +1,18 @@
 // Mengunduh batas wilayah geoBoundaries (IDN ADM1/ADM2, CC BY 3.0 IGO / ODbL) dan
-// menyaring kabupaten/kota di lima provinsi Kalimantan. ADM2 tidak membawa atribut
+// menyaring kabupaten/kota di Kalimantan, Sumatra, dan Papua. ADM2 tidak membawa atribut
 // provinsi, jadi provinsi ditentukan dari ADM1 yang memuat titik pusat kabupaten.
 import fs from 'node:fs'
 import path from 'node:path'
 import booleanPointInPolygon from '@turf/boolean-point-in-polygon'
 import { point } from '@turf/helpers'
 import type { Feature, FeatureCollection, MultiPolygon, Polygon, Position } from 'geojson'
+import { PROVINCES } from './shared'
 
 const SRC = 'data/boundaries/src'
 const URLS = {
   adm1: 'https://github.com/wmgeolab/geoBoundaries/raw/9469f09/releaseData/gbOpen/IDN/ADM1/geoBoundaries-IDN-ADM1_simplified.geojson',
   adm2: 'https://github.com/wmgeolab/geoBoundaries/raw/9469f09/releaseData/gbOpen/IDN/ADM2/geoBoundaries-IDN-ADM2_simplified.geojson',
 }
-export const PROVINCES = [
-  { id: 'kalbar', name: 'Kalimantan Barat', short: 'Kalbar', adm1: 'West Kalimantan' },
-  { id: 'kalteng', name: 'Kalimantan Tengah', short: 'Kalteng', adm1: 'Central Kalimantan' },
-  { id: 'kalsel', name: 'Kalimantan Selatan', short: 'Kalsel', adm1: 'South Kalimantan' },
-  { id: 'kaltim', name: 'Kalimantan Timur', short: 'Kaltim', adm1: 'East Kalimantan' },
-  { id: 'kaltara', name: 'Kalimantan Utara', short: 'Kaltara', adm1: 'North Kalimantan' },
-]
-
 async function load(key: 'adm1' | 'adm2'): Promise<FeatureCollection> {
   const file = path.join(SRC, `${key}.geojson`)
   if (!fs.existsSync(file)) {
@@ -32,7 +25,23 @@ async function load(key: 'adm1' | 'adm2'): Promise<FeatureCollection> {
 }
 
 // ADM1 geoBoundaries (OSM 2017) belum memuat pemekaran/perubahan batas: koreksi berdasarkan pembagian administratif resmi.
-const OWNER_OVERRIDE: Record<string, string> = { Seruyan: 'kalteng', 'Kutai Barat': 'kaltim', 'Mahakam Hulu': 'kaltim', Malinau: 'kaltara' }
+const OWNER_OVERRIDE: Record<string, string> = {
+  Seruyan: 'kalteng', 'Kutai Barat': 'kaltim', 'Mahakam Hulu': 'kaltim', Malinau: 'kaltara',
+  Dairi: 'sumut', Karo: 'sumut', 'Musi Banyuasin': 'sumsel', 'Bengkulu Selatan': 'bengkulu', 'Lampung Barat': 'lampung',
+  'Kota Sungai Penuh': 'jambi', 'Batang Hari': 'jambi', 'Tanjung Jabung Timur': 'jambi', 'Muara Enim': 'sumsel', 'Kota Pagar Alam': 'sumsel',
+}
+// bukan kabupaten/kota (danau) pada data geoBoundaries
+const EXCLUDE = new Set(['Danau', 'Danau Toba'])
+// pemekaran Papua 2022: ADM1 geoBoundaries hanya Papua dan Papua Barat, jadi kabupaten dipetakan menurut nama
+const PAPUA_MAP: Record<string, string[]> = {
+  papsel: ['Merauke', 'Boven Digoel', 'Mappi', 'Asmat'],
+  papteng: ['Nabire', 'Paniai', 'Mimika', 'Puncak Jaya', 'Puncak', 'Dogiyai', 'Intan Jaya', 'Deiyai'],
+  pappeg: ['Jayawijaya', 'Lanny Jaya', 'Mamberamo Tengah', 'Nduga', 'Pegunungan Bintang', 'Tolikara', 'Yalimo', 'Yahukimo'],
+  papbarda: ['Sorong', 'Kota Sorong', 'Sorong Selatan', 'Raja Ampat', 'Tambrauw', 'Maybrat'],
+  papbar: ['Fakfak', 'Kaimana', 'Manokwari', 'Manokwari Selatan', 'Pegunungan Arfak', 'Teluk Bintuni', 'Teluk Wondama'],
+  papua: ['Jayapura', 'Kota Jayapura', 'Keerom', 'Sarmi', 'Waropen', 'Biak Numfor', 'Supiori', 'Kepulauan Yapen', 'Mamberamo Raya'],
+}
+const PAPUA_OF = new Map(Object.entries(PAPUA_MAP).flatMap(([id, names]) => names.map(n => [n, id] as const)))
 const round = (n: number) => Math.round(n * 1e4) / 1e4
 function roundCoords(c: any): any {
   return typeof c[0] === 'number' ? [round(c[0]), round(c[1])] : c.map(roundCoords)
@@ -59,8 +68,9 @@ function centroid(geom: Polygon | MultiPolygon): [number, number] {
 
 async function main() {
   const adm1 = await load('adm1'), adm2 = await load('adm2')
-  const prov = PROVINCES.map(p => ({ ...p, feat: adm1.features.find(f => f.properties?.shapeName === p.adm1) as Feature<Polygon | MultiPolygon> }))
+  const prov = PROVINCES.filter(p => p.adm1).map(p => ({ ...p, feat: adm1.features.find(f => f.properties?.shapeName === p.adm1) as Feature<Polygon | MultiPolygon> }))
   for (const p of prov) if (!p.feat) throw new Error(`ADM1 ${p.adm1} tidak ditemukan`)
+  const byId = (id: string) => PROVINCES.find(p => p.id === id)!
   const out: Record<string, Feature[]> = {}
   const seen = new Set<string>()
   for (const f of adm2.features as Feature<Polygon | MultiPolygon>[]) {
@@ -69,9 +79,11 @@ async function main() {
     // titik pusat bisa jatuh di luar poligon cekung; uji juga satu titik dari cincin terluar
     const probe = point((f.geometry.type === 'Polygon' ? f.geometry.coordinates[0] : f.geometry.coordinates[0][0])[0])
     const nm = String(f.properties?.shapeName)
-    const owner = OWNER_OVERRIDE[nm] ? prov.find(p => p.id === OWNER_OVERRIDE[nm]) : prov.find(p => booleanPointInPolygon(pt, p.feat) || booleanPointInPolygon(probe, p.feat))
+    if (EXCLUDE.has(nm)) continue
+    let owner: (typeof PROVINCES)[number] | undefined = OWNER_OVERRIDE[nm] ? byId(OWNER_OVERRIDE[nm]) : prov.find(p => booleanPointInPolygon(pt, p.feat) || booleanPointInPolygon(probe, p.feat))
+    if (owner && owner.island === 'papua' && PAPUA_OF.has(nm)) owner = byId(PAPUA_OF.get(nm)!)
     if (!owner) continue
-    const name = String(f.properties?.shapeName)
+    const name = nm
     let slug = slugify(name)
     if (seen.has(slug)) slug += '-' + owner.id
     seen.add(slug)

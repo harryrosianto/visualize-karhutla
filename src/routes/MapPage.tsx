@@ -3,10 +3,10 @@ import { Suspense, lazy, useCallback, useEffect, useMemo, useRef, useState } fro
 import { useSearchParams } from 'react-router-dom'
 import { Info, LinkSimple, MagnifyingGlass } from '@phosphor-icons/react'
 import { KabupatenPicker } from '../components/KabupatenPicker'
-import { Legend, ProvinceChips, TimeDock, type Filter } from '../components/map/MapControls'
+import { Legend, ProvinceChips, TimeDock } from '../components/map/MapControls'
 import { KabupatenSheet } from '../components/map/KabupatenSheet'
-import { BOUNDS, type MapMode } from '../components/map/mapTypes'
-import { PROVS, useMapData } from '../components/map/useMapData'
+import { resolveFilter, type Filter, type MapMode } from '../components/map/mapTypes'
+import { useMapData } from '../components/map/useMapData'
 import { SourceNote } from '../components/SourceNote'
 import { useData } from '../lib/DataContext'
 import type { Kab } from '../lib/data'
@@ -15,19 +15,18 @@ import { siteUrl } from '../lib/share'
 // MapLibre + deck.gl (sekitar 1,9 MB) dimuat terpisah supaya kontrol dan teks halaman tampil lebih dulu
 const MapView = lazy(() => import('../components/map/MapView'))
 
-const FILTERS = ['kalbar', 'kalteng', 'kalsel', 'kaltim', 'kaltara']
-
 export default function MapPage() {
   // keadaan tampilan disimpan di URL agar dapat dibagikan: ?provinsi=&tanggal=&mode=3d&kabupaten=
   const [params, setParams] = useSearchParams()
   const initial = useRef({
-    filter: (FILTERS.includes(params.get('provinsi') ?? '') ? params.get('provinsi') : 'all') as Filter,
+    filter: (/^[a-z]{2,12}$/.test(params.get('provinsi') ?? '') ? params.get('provinsi')! : 'all') as Filter,
     mode: (params.get('mode') === '3d' ? 'hex' : 'titik') as MapMode,
     date: params.get('tanggal'),
     kab: params.get('kabupaten'),
   })
   const { kabs, meta } = useData()
-  const { merged, loaded, total, error, retry } = useMapData()
+  const provIds = useMemo(() => (meta?.provinces ?? []).map(p => p.id), [meta])
+  const { merged, loaded, total, error, retry } = useMapData(provIds)
   const reduce = !!useReducedMotion()
   const [mode, setMode] = useState<MapMode>(initial.current.mode)
   const [filter, setFilter] = useState<Filter>(initial.current.filter)
@@ -95,6 +94,7 @@ export default function MapPage() {
     setPlaying(p => !p)
   }
 
+  const resolved = useMemo(() => resolveFilter(filter, meta), [filter, meta])
   const kab: Kab | undefined = useMemo(() => kabs.find(k => k.slug === sel), [kabs, sel])
   const onFilter = (f: Filter) => { setFilter(f); setFitKey(k => k + 1) }
   const close = useCallback(() => setSel(null), [])
@@ -102,33 +102,32 @@ export default function MapPage() {
 
   const { today, cumulative } = useMemo(() => {
     if (!merged) return { today: 0, cumulative: 0 }
-    const ids = filter === 'all' ? PROVS : [filter]
+    const ids = resolved.ids ?? provIds
     let t = 0, c = 0
     for (const p of ids) { t += merged.daily[p]?.[day] ?? 0; c += merged.cum[p]?.[day] ?? 0 }
     return { today: t, cumulative: c }
-  }, [merged, filter, day])
+  }, [merged, resolved, provIds, day])
 
-  const bounds = BOUNDS[filter]
   return (
     <section className="relative h-[calc(100dvh-var(--banner-h,0px))] min-h-[560px] overflow-hidden bg-ink">
       <h1 className="sr-only">Peta titik panas 2026</h1>
       {mapGo && <Suspense fallback={<div className="absolute inset-0 bg-ink" />}>
       <MapView
-        merged={merged} mode={mode} day={day} filter={filter} selectedSlug={sel} onSelect={select}
-        fitBounds={bounds} fitKey={fitKey} flyTo={flyTo} reduceMotion={reduce}
+        merged={merged} mode={mode} day={day} provIds={resolved.ids} fRange={resolved.range} selectedSlug={sel} onSelect={select}
+        fitBounds={resolved.bounds} fitKey={fitKey} flyTo={flyTo} reduceMotion={reduce}
       />
       </Suspense>}
 
       <div className="pointer-events-none absolute inset-x-0 top-16 z-10 flex flex-col gap-2 px-4 md:px-8">
         <div className={`pointer-events-auto max-w-sm ${searchOpen ? '' : 'max-md:hidden'}`}>
-          <KabupatenPicker hideLabel label="Cari kabupaten atau kota" onSelect={k => { setSearchOpen(false); setSel(k.slug); if (filter !== 'all' && filter !== k.provinceId) setFilter('all'); setFlyTo({ lon: k.centroid[0], lat: k.centroid[1], key: Date.now() }) }} />
+          <KabupatenPicker hideLabel label="Cari kabupaten atau kota" onSelect={k => { setSearchOpen(false); setSel(k.slug); if (resolved.ids && !resolved.ids.includes(k.provinceId)) setFilter('all'); setFlyTo({ lon: k.centroid[0], lat: k.centroid[1], key: Date.now() }) }} />
         </div>
-        <div className="pointer-events-auto flex items-center gap-2">
+        <div className="pointer-events-auto flex items-start gap-2">
           <button type="button" onClick={() => setSearchOpen(o => !o)} aria-expanded={searchOpen} aria-label="Cari kabupaten atau kota"
             className="grid size-11 shrink-0 place-items-center rounded-full border border-line bg-ink-2/90 text-fg-2 hover:text-fg md:hidden">
             <MagnifyingGlass size={20} weight="bold" aria-hidden />
           </button>
-          <ProvinceChips provinces={meta?.provinces ?? []} value={filter} onChange={onFilter} />
+          <ProvinceChips meta={meta} value={filter} onChange={onFilter} />
         </div>
         <div role="status" aria-live="polite" className="pointer-events-none text-xs text-fg-2">
           {error ? '' : loaded < total ? `Memuat data provinsi (${loaded} dari ${total})...` : ''}

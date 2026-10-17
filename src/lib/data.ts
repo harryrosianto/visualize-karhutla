@@ -1,6 +1,7 @@
 import type { FeatureCollection, MultiPolygon, Polygon } from 'geojson'
 
-export type ProvinceId = 'kalbar' | 'kalteng' | 'kalsel' | 'kaltim' | 'kaltara'
+export type ProvinceId = string
+export type IslandId = 'kalimantan' | 'sumatra' | 'papua'
 
 export interface Meta {
   isSample: boolean
@@ -8,7 +9,9 @@ export interface Meta {
   dataDate: string
   year: number
   sources: { hotspot: string; burnedArea: string; boundaries: string }
-  provinces: { id: ProvinceId; name: string; short: string }[]
+  islands: { id: IslandId; name: string }[]
+  /** bounds: [barat, selatan, timur, utara] */
+  provinces: { id: ProvinceId; name: string; short: string; island: IslandId; bounds: [number, number, number, number] }[]
   /** luas lahan terbakar tingkat provinsi (ha), dari pemberitaan yang mengutip BNPB/SiPongi */
   burnedArea?: {
     source: string; period: string; retrievedAt: string; note: string
@@ -29,7 +32,7 @@ export interface Kab {
   peakMonth: number
   burnedHa: number | null
   rankKalimantan: number
-  /** true untuk entri gabungan seluruh Kalimantan (slug `kalimantan`) */
+  /** true untuk entri gabungan seluruh wilayah terpantau (slug `kalimantan`, dipertahankan agar tautan lama tetap berlaku) */
   isRegion?: boolean
 }
 
@@ -74,7 +77,7 @@ export function sourceLine(meta: Meta, kind: 'hotspot' | 'burnedArea' = 'hotspot
 
 export const REGION_SLUG = 'kalimantan'
 
-/** Entri gabungan seluruh Kalimantan: jumlah dari 56 kabupaten/kota. Pembanding dan luas terbakar hanya dihitung bila lengkap. */
+/** Entri gabungan seluruh wilayah terpantau: jumlah dari semua kabupaten/kota. Pembanding dan luas terbakar hanya dihitung bila lengkap. */
 export function buildRegion(kabs: Kab[]): Kab | null {
   if (!kabs.length) return null
   const monthly = Array(10).fill(0)
@@ -96,7 +99,7 @@ export function provinceTotals(kabs: Kab[], meta: Meta): ProvinceTotal[] {
 
 export interface BurnedInfo { ha: number; scope: 'kabupaten' | 'provinsi' | 'wilayah'; scopeNote: string }
 
-/** Luas lahan terbakar yang tersedia untuk sebuah wilayah: per kabupaten/kota bila ada, jika tidak tingkat provinsi, atau jumlah provinsi untuk seluruh Kalimantan. */
+/** Luas lahan terbakar yang tersedia untuk sebuah wilayah: per kabupaten/kota bila ada, jika tidak tingkat provinsi, atau jumlah provinsi untuk seluruh wilayah. */
 export function burnedInfo(kab: Kab, meta: Meta): BurnedInfo | null {
   if (kab.burnedHa !== null) return { ha: kab.burnedHa, scope: 'kabupaten', scopeNote: '' }
   const b = meta.burnedArea
@@ -105,7 +108,7 @@ export function burnedInfo(kab: Kab, meta: Meta): BurnedInfo | null {
     const vals = Object.values(b.provinces) as number[]
     if (!vals.length) return null
     const missing = meta.provinces.length - vals.length
-    return { ha: vals.reduce((a, v) => a + v, 0), scope: 'wilayah', scopeNote: missing ? `jumlah ${vals.length} provinsi; ${missing} provinsi belum tersedia` : 'jumlah lima provinsi' }
+    return { ha: vals.reduce((a, v) => a + v, 0), scope: 'wilayah', scopeNote: missing ? `jumlah ${vals.length} provinsi; ${missing} provinsi belum tersedia` : `jumlah ${vals.length} provinsi` }
   }
   const ha = b.provinces[kab.provinceId]
   return ha === undefined ? null : { ha, scope: 'provinsi', scopeNote: `data tingkat provinsi; data per kabupaten/kota belum tersedia` }

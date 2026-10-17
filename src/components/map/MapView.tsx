@@ -6,7 +6,7 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { pickKabupaten } from '../../lib/geo'
 import type { ProvinceId } from '../../lib/data'
 import type { Bounds, MapMode } from './mapTypes'
-import { PROVS, type Merged } from './useMapData'
+import type { Merged } from './useMapData'
 
 // worker disalin dari node_modules oleh scripts/copy-maplibre-worker.mjs (lihat catatan di skrip itu)
 maplibregl.setWorkerUrl(`${import.meta.env.BASE_URL}vendor/maplibre-gl-worker.mjs`)
@@ -21,7 +21,9 @@ interface Props {
   merged: Merged | null
   mode: MapMode
   day: number
-  filter: 'all' | ProvinceId
+  /** provinsi terpilih (null: semua) dan rentang indeksnya untuk filter GPU */
+  provIds: ProvinceId[] | null
+  fRange: [number, number]
   selectedSlug: string | null
   onSelect: (slug: string) => void
   fitBounds: Bounds
@@ -30,7 +32,7 @@ interface Props {
   reduceMotion: boolean
 }
 
-export default function MapView({ merged, mode, day, filter, selectedSlug, onSelect, fitBounds, fitKey, flyTo, reduceMotion }: Props) {
+export default function MapView({ merged, mode, day, provIds, fRange, selectedSlug, onSelect, fitBounds, fitKey, flyTo, reduceMotion }: Props) {
   const el = useRef<HTMLDivElement>(null)
   const map = useRef<MLMap | null>(null)
   const overlay = useRef<MapLibreOverlay | null>(null)
@@ -46,8 +48,8 @@ export default function MapView({ merged, mode, day, filter, selectedSlug, onSel
 
   const features = useMemo(() => {
     if (!merged) return []
-    return filter === 'all' ? merged.boundaries.features : merged.boundaries.features.filter(f => f.properties.provinceId === filter)
-  }, [merged, filter])
+    return provIds ? merged.boundaries.features.filter(f => provIds.includes(f.properties.provinceId)) : merged.boundaries.features
+  }, [merged, provIds])
   const featuresRef = useRef(features)
   featuresRef.current = features
 
@@ -55,7 +57,7 @@ export default function MapView({ merged, mode, day, filter, selectedSlug, onSel
     if (!el.current) return
     const small = window.innerWidth < 768
     const m = new maplibregl.Map({
-      container: el.current, style: STYLE, center: [113.9, 0.1], zoom: small ? 4.1 : 5.1, minZoom: 3.5, maxZoom: 11,
+      container: el.current, style: STYLE, center: [118, -1.5], zoom: small ? 3 : 4, minZoom: 2.8, maxZoom: 11,
       attributionControl: { compact: true }, dragRotate: true, pitchWithRotate: true,
     })
     m.on('error', e => console.error('[peta]', e.error?.message ?? e))
@@ -138,7 +140,7 @@ export default function MapView({ merged, mode, day, filter, selectedSlug, onSel
   useEffect(() => {
     const m = map.current
     if (!m) return
-    const pad = window.innerWidth < 768 ? { top: 150, bottom: 190, left: 20, right: 20 } : { top: 110, bottom: 150, left: 40, right: 420 }
+    const pad = window.innerWidth < 768 ? { top: 200, bottom: 190, left: 20, right: 20 } : { top: 110, bottom: 150, left: 40, right: 420 }
     m.fitBounds([[fitBounds[0], fitBounds[1]], [fitBounds[2], fitBounds[3]]], { padding: pad, duration: reduceMotion ? 0 : 900 })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fitKey])
@@ -151,12 +153,6 @@ export default function MapView({ merged, mode, day, filter, selectedSlug, onSel
   useEffect(() => {
     map.current?.easeTo({ pitch: mode === 'hex' ? 55 : 0, bearing: mode === 'hex' ? -18 : 0, duration: reduceMotion ? 0 : 900 })
   }, [mode, reduceMotion])
-
-  const fRange = useMemo<[number, number]>(() => {
-    if (filter === 'all') return [0, PROVS.length - 1]
-    const i = PROVS.indexOf(filter)
-    return [i, i]
-  }, [filter])
 
   const hexData = useMemo(() => {
     if (!merged || mode !== 'hex') return []

@@ -4,15 +4,15 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import fireUrl from '../assets/media/fire.webp'
 import { Link } from 'react-router-dom'
 import { useData } from '../lib/DataContext'
-import { loadBoundaries, type ProvinceId } from '../lib/data'
+import { loadBoundaries } from '../lib/data'
 import { SourceNote } from './SourceNote'
 
-const PROV: ProvinceId[] = ['kalbar', 'kalteng', 'kalsel', 'kaltim', 'kaltara']
-const LON0 = 108.7, LON1 = 119.4, LAT0 = -4.3, LAT1 = 4.5
+// kerangka Kalimantan, Sumatra, dan Papua (barat, selatan, timur, utara)
+const LON0 = 94.8, LON1 = 141.2, LAT0 = -9.4, LAT1 = 6.1
 
 /** Cuplikan peta ringan (kanvas 2D, tanpa MapLibre) supaya landing tetap cepat. */
 export function MapTeaser() {
-  const { kabs } = useData()
+  const { kabs, meta } = useData()
   const wrap = useRef<HTMLDivElement>(null)
   const cv = useRef<HTMLCanvasElement>(null)
   const near = useInView(wrap, { once: true, margin: '300px 0px' })
@@ -24,21 +24,21 @@ export function MapTeaser() {
     ro.observe(c)
     return () => ro.disconnect()
   }, [])
-  // ikon api pada 28 kabupaten dengan titik panas terbanyak, memakai proyeksi yang sama dengan kanvas
+  // ikon api pada 40 kabupaten dengan titik panas terbanyak, memakai proyeksi yang sama dengan kanvas
   const icons = useMemo(() => {
     if (!box.w || !kabs.length) return []
     const s = Math.min(box.w / (LON1 - LON0), box.h / (LAT1 - LAT0))
     const ox = (box.w - (LON1 - LON0) * s) / 2, oy = (box.h - (LAT1 - LAT0) * s) / 2
-    const top = [...kabs].sort((a, b) => b.total2026 - a.total2026).slice(0, 28)
+    const top = [...kabs].sort((a, b) => b.total2026 - a.total2026).slice(0, 40)
     const max = top[0]?.total2026 || 1
-    return top.map(k => ({ slug: k.slug, name: k.name, x: ox + (k.centroid[0] - LON0) * s, y: oy + (LAT1 - k.centroid[1]) * s, size: 22 + 50 * Math.sqrt(k.total2026 / max) }))
+    return top.map(k => ({ slug: k.slug, name: k.name, x: ox + (k.centroid[0] - LON0) * s, y: oy + (LAT1 - k.centroid[1]) * s, size: 16 + 34 * Math.sqrt(k.total2026 / max) }))
   }, [box, kabs])
 
   useEffect(() => {
-    if (!near || !kabs.length || !cv.current) return
+    if (!near || !kabs.length || !meta || !cv.current) return
     const canvas = cv.current
     let alive = true
-    Promise.all(PROV.map(loadBoundaries)).then(cols => {
+    Promise.all(meta.provinces.map(p => loadBoundaries(p.id))).then(cols => {
       if (!alive) return
       const draw = () => {
         const dpr = Math.min(window.devicePixelRatio || 1, 2)
@@ -50,7 +50,7 @@ export function MapTeaser() {
         const ox = (w - (LON1 - LON0) * s) / 2, oy = (h - (LAT1 - LAT0) * s) / 2
         const P = (lon: number, lat: number): [number, number] => [ox + (lon - LON0) * s, oy + (LAT1 - lat) * s]
         ctx.clearRect(0, 0, w, h)
-        ctx.lineWidth = 0.8; ctx.strokeStyle = '#6b564a'; ctx.fillStyle = '#241b16'
+        ctx.lineWidth = 0.6; ctx.strokeStyle = '#6b564a'; ctx.fillStyle = '#241b16'
         for (const col of cols) for (const f of col.features) {
           const polys = f.geometry.type === 'Polygon' ? [f.geometry.coordinates] : f.geometry.coordinates
           ctx.beginPath()
@@ -63,7 +63,7 @@ export function MapTeaser() {
       ;(canvas as any)._ro = ro
     }).catch(() => {})
     return () => { alive = false; (canvas as any)._ro?.disconnect() }
-  }, [near, kabs])
+  }, [near, kabs, meta])
 
   return (
     <section className="border-y border-line bg-ink-2">
@@ -74,7 +74,7 @@ export function MapTeaser() {
           <Link to="/peta" className="btn btn-primary mt-8">Lihat peta <ArrowRight weight="bold" size={18} aria-hidden /></Link>
           <SourceNote className="mt-6" />
         </div>
-        <Link to="/peta" aria-label="Lihat peta titik panas" className="relative block aspect-[5/4] md:col-span-8 md:aspect-[16/11]">
+        <Link to="/peta" aria-label="Lihat peta titik panas" className="relative block aspect-[3/1.4] md:col-span-8 md:aspect-[3/1.25]">
           <canvas ref={cv} role="img" aria-label="Peta dengan ikon api di kabupaten berpanas terbanyak" className="size-full" />
           <div aria-hidden className="pointer-events-none absolute inset-0">
             {icons.map(i => (

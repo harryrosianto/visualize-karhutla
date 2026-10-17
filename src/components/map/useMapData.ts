@@ -2,9 +2,6 @@ import { useEffect, useMemo, useState } from 'react'
 import type { Feature, MultiPolygon, Polygon } from 'geojson'
 import { loadBoundaries, loadDaily, loadHotspots, type Daily, type Hotspots, type KabCollection, type ProvinceId } from '../../lib/data'
 
-export const PROVS: ProvinceId[] = ['kalbar', 'kalteng', 'kalsel', 'kaltim', 'kaltara']
-// urutan muat bertahap: provinsi terbesar dulu agar peta cepat terisi
-const LOAD_ORDER: ProvinceId[] = ['kalteng', 'kalbar', 'kalsel', 'kaltim', 'kaltara']
 
 interface Part { hot: Hotspots; daily: Daily; bnd: KabCollection }
 
@@ -26,41 +23,46 @@ export interface Merged {
 const ORANGE = [249, 115, 22]
 const RED = [239, 68, 68]
 
-export function useMapData() {
+/** provs: id provinsi sesuai urutan meta.provinces (urutan ini menjadi indeks filter). Memuat sekelompok provinsi sekaligus. */
+export function useMapData(provs: ProvinceId[]) {
   const [parts, setParts] = useState<Partial<Record<ProvinceId, Part>>>({})
   const [error, setError] = useState<string | null>(null)
   const [attempt, setAttempt] = useState(0)
 
+  const key = provs.join(',')
   useEffect(() => {
+    if (!provs.length) return
     let alive = true
     ;(async () => {
       try {
-        // dua tahap: provinsi terbesar dulu, sisanya sekaligus (menghindari rebuild layer berulang)
+        // bertahap per kelompok (Kalimantan lebih dulu, lalu pulau lain) agar peta cepat terisi tanpa rebuild layer berulang
         const load = async (p: ProvinceId) => ({ p, part: { hot: await loadHotspots(p), daily: await loadDaily(p), bnd: await loadBoundaries(p) } })
-        const first = await load(LOAD_ORDER[0])
-        if (!alive) return
-        setParts({ [first.p]: first.part })
-        const rest = await Promise.all(LOAD_ORDER.slice(1).map(load))
-        if (!alive) return
-        setParts(prev => ({ ...prev, ...Object.fromEntries(rest.map(r => [r.p, r.part])) }))
+        const groups: ProvinceId[][] = []
+        for (let i = 0; i < provs.length; i += 6) groups.push(provs.slice(i, i + 6))
+        for (const g of groups) {
+          const got = await Promise.all(g.map(load))
+          if (!alive) return
+          setParts(prev => ({ ...prev, ...Object.fromEntries(got.map(r => [r.p, r.part])) }))
+        }
       } catch (e: any) {
         if (alive) setError(String(e?.message ?? e))
       }
     })()
     return () => { alive = false }
-  }, [attempt])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [attempt, key])
 
   const loaded = Object.keys(parts).length
 
   const merged = useMemo<Merged | null>(() => {
-    const present = PROVS.filter(p => parts[p])
+    const present = provs.filter(p => parts[p])
     if (!present.length) return null
     const n = present.reduce((a, p) => a + parts[p]!.hot.lon.length, 0)
     const position = new Float32Array(n * 2), filter = new Float32Array(n * 2), color = new Uint8Array(n * 4), frp = new Float32Array(n)
     let o = 0
     for (const p of present) {
       const { hot } = parts[p]!
-      const pi = PROVS.indexOf(p)
+      const pi = provs.indexOf(p)
       for (let i = 0; i < hot.lon.length; i++, o++) {
         position[o * 2] = hot.lon[i]; position[o * 2 + 1] = hot.lat[i]
         filter[o * 2] = hot.day[i]; filter[o * 2 + 1] = pi
@@ -90,7 +92,8 @@ export function useMapData() {
     }
     const boundaries = { type: 'FeatureCollection' as const, features: present.flatMap(p => parts[p]!.bnd.features) }
     return { n, position, filter, color, frp, days, cum, daily, kabCum, boundaries }
-  }, [parts])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [parts, key])
 
-  return { merged, loaded, total: PROVS.length, error, retry: () => { setError(null); setAttempt(a => a + 1) } }
+  return { merged, loaded, total: provs.length, error, retry: () => { setError(null); setAttempt(a => a + 1) } }
 }
