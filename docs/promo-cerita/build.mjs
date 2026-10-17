@@ -45,7 +45,7 @@ S.push(`<section class="slide"><div class="wm">Visualize Karhutla<i>.</i></div>
 <p class="cap" style="left:120px;width:400px;top:1425px">Your story joins the <b>Cerita karhutla</b> feed.</p>
 <p class="cap" style="left:560px;width:400px;top:1475px">Read like an article, with <b>your name and photo</b>.</p>
 <div class="pill" style="top:1590px">Write yours</div>
-<p class="note" style="top:1715px">Example story shown for illustration.</p>
+<p class="note" style="top:1715px">Example: a story already published on the site.</p>
 </section>`)
 fs.writeFileSync('docs/promo-cerita/slides.html', `<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Cerita karhutla: promo story</title><style>${css}</style></head><body>${S.join('')}</body></html>`)
 console.log('slides.html ditulis')
