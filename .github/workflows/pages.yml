@@ -24,6 +24,10 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
+      - name: Periksa konfigurasi formulir kirim karya
+        run: |
+          echo "Variabel TURNSTILE_SITEKEY terisi: ${{ vars.TURNSTILE_SITEKEY != '' }}"
+          echo "Secret TURNSTILE_SITEKEY terisi: ${{ secrets.TURNSTILE_SITEKEY != '' }}"
       - run: npm run build
         env:
           # Kunci situs Turnstile (publik) untuk formulir kirim karya; kosong = formulir langsung disembunyikan.
