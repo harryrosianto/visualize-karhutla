@@ -1,7 +1,7 @@
 import { Link, NavLink } from 'react-router-dom'
 
 const link = ({ isActive }: { isActive: boolean }) =>
-  `inline-flex min-h-[44px] items-center px-3 text-sm font-medium transition-colors ${isActive ? 'text-fg' : 'text-fg-2 hover:text-fg'}`
+  `inline-flex min-h-[44px] items-center px-2.5 text-sm sm:px-3 font-medium transition-colors ${isActive ? 'text-fg' : 'text-fg-2 hover:text-fg'}`
 
 export function SiteNav() {
   return (
@@ -10,9 +10,10 @@ export function SiteNav() {
         <Link to="/" translate="no" className="flex min-h-[44px] items-center font-brand whitespace-nowrap text-xl font-normal tracking-wide text-fg sm:text-2xl">
           Visualize Karhutla<span className="text-ember">.</span>
         </Link>
-        <div className="-ml-3 flex items-center sm:ml-0">
+        <div className="-ml-2.5 flex items-center sm:ml-0">
           <NavLink to="/peta" className={link}>Peta</NavLink>
           <NavLink to="/wrapped" className={link}>Wrapped</NavLink>
+          <NavLink to="/templat#galeri-warga" className={link}>Galeri</NavLink>
           <NavLink to="/kontribusi" className={link}>Kontribusi</NavLink>
           <NavLink to="/tentang" className={link}>Tentang</NavLink>
         </div>
