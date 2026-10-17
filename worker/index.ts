@@ -150,7 +150,8 @@ async function handleSubmit(request: Request, env: Env): Promise<Response> {
   }
 }
 
-const CERITA_KATEGORI: Record<string, string> = { ilmiah: 'Artikel ilmiah', warga: 'Cerita warga terdampak', opini: 'Opini publik' }
+const CERITA_MAX_TOPIK = 5
+const CERITA_MAX_FOTO_BYTES = 1024 * 1024
 const CERITA_MAX_IMAGES = 8
 const CERITA_MAX_IMAGE_BYTES = 3 * 1024 * 1024
 const CERITA_MAX_CHARS = 40000
@@ -187,10 +188,15 @@ async function handleCerita(request: Request, env: Env): Promise<Response> {
     const judul = clean(String(form.get('judul') ?? ''), 120)
     const penulis = clean(String(form.get('penulis') ?? ''), 60)
     const wilayah = clean(String(form.get('wilayah') ?? ''), 80)
-    const kategori = String(form.get('kategori') ?? '')
+    let tautanPenulis = String(form.get('tautan_penulis') ?? '').trim()
+    if (tautanPenulis && !/^https:\/\/[^\s<>"'`]{3,200}$/i.test(tautanPenulis)) throw new HttpError(400, 'tautan', 'Tautan portofolio harus diawali https:// dan tidak berisi spasi.')
+    const topikRaw = String(form.get('topik') ?? '').split(',').map(t => t.replace(/[^\p{L}\p{N}\s&-]/gu, '').replace(/\s+/g, ' ').trim().slice(0, 30).trim()).filter(Boolean)
+    const topik = [...new Map(topikRaw.map(t => [t.toLowerCase(), t.charAt(0).toUpperCase() + t.slice(1)])).values()].slice(0, CERITA_MAX_TOPIK)
+    if (topik.length < 1) throw new HttpError(400, 'topik', 'Pilih atau buat minimal satu topik.')
+    const avatarN = Number(form.get('avatar'))
+    const avatar = Number.isInteger(avatarN) && avatarN >= 1 && avatarN <= 9 ? avatarN : 0
     let sumber = String(form.get('sumber') ?? '').trim()
     if (sumber && !/^https:\/\/[^\s<>"'`]{3,300}$/i.test(sumber)) throw new HttpError(400, 'sumber', 'Tautan sumber harus diawali https:// dan tidak berisi spasi.')
-    if (!CERITA_KATEGORI[kategori]) throw new HttpError(400, 'kategori', 'Pilih kategori tulisan.')
     if (judul.length < 5 || !penulis) throw new HttpError(400, 'field', 'Judul (minimal 5 huruf) dan nama penulis wajib diisi.')
     if (form.get('hak') !== 'on' || form.get('izin') !== 'on') throw new HttpError(400, 'consent', 'Kedua pernyataan wajib dicentang.')
     const raw = String(form.get('isi') ?? '')
@@ -208,10 +214,27 @@ async function handleCerita(request: Request, env: Env): Promise<Response> {
       prepared.push({ bytes, ext: kind.ext })
     }
 
+    const fotoFile = form.get('foto')
+    let foto: { bytes: Uint8Array; ext: string } | null = null
+    if (typeof fotoFile !== 'string' && fotoFile && (fotoFile as File).size > 0) {
+      const ff = fotoFile as File
+      if (ff.size > CERITA_MAX_FOTO_BYTES) throw new HttpError(413, 'size', 'Foto profil maksimal 1 MB.')
+      const bytes = new Uint8Array(await ff.arrayBuffer())
+      const kind = sniff(bytes)
+      if (!kind || kind.ext === 'gif') throw new HttpError(415, 'type', 'Foto profil harus PNG, JPG, atau WebP.')
+      foto = { bytes, ext: kind.ext }
+    }
+
     const stamp = new Date().toISOString().slice(0, 10).replace(/-/g, '')
     const rand = crypto.randomUUID().slice(0, 8)
     const branch = env.UPLOADS_BRANCH || 'main'
     const urls: string[] = []
+    let fotoUrl = ''
+    if (foto) {
+      const path = `cerita/${stamp}-${rand}-foto.${foto.ext}`
+      await gh(env, 'PUT', `/repos/${env.UPLOADS_REPO}/contents/${path}`, { message: `Foto penulis ${stamp}-${rand}`, content: toBase64(foto.bytes), branch })
+      fotoUrl = `https://raw.githubusercontent.com/${env.UPLOADS_REPO}/${branch}/${path}`
+    }
     for (const [i, p] of prepared.entries()) {
       const path = `cerita/${stamp}-${rand}-${i + 1}.${p.ext}`
       await gh(env, 'PUT', `/repos/${env.UPLOADS_REPO}/contents/${path}`, { message: `Gambar cerita ${stamp}-${rand}-${i + 1}`, content: toBase64(p.bytes), branch })
@@ -220,13 +243,16 @@ async function handleCerita(request: Request, env: Env): Promise<Response> {
     let isi = cleanMarkdown(raw, prepared.length)
     isi = isi.replace(/\(img:(\d+)\)/g, (_m, n: string) => `(${urls[Number(n) - 1]})`)
     if (/^https?:\/\//i.test(sumber) === false) sumber = ''
+    if (/[\u200b-\u200f]/.test(tautanPenulis)) tautanPenulis = ''
 
     const body = [
-      '### Kategori', '', CERITA_KATEGORI[kategori], '',
+      '### Topik', '', topik.join(', '), '',
       '### Judul', '', judul, '',
       '### Nama penulis', '', penulis, '',
+      '### Tautan penulis (portofolio atau media sosial)', '', tautanPenulis || '_No response_', '',
+      '### Foto profil', '', fotoUrl ? `![foto-penulis](${fotoUrl})` : (avatar ? `Avatar bawaan: ${avatar}` : '_No response_'), '',
       '### Wilayah terkait', '', wilayah || '_No response_', '',
-      '### Tautan sumber (khusus artikel ilmiah)', '', sumber || '_No response_', '',
+      '### Tautan sumber atau rujukan', '', sumber || '_No response_', '',
       '### Isi tulisan', '', isi, '',
       '### Pernyataan', '',
       '- [X] Tulisan ini karya saya sendiri (atau saya berhak penuh mengirimkannya), dan saya mengizinkan situs memuatnya dengan mencantumkan nama saya.',

@@ -7,9 +7,11 @@ import StarterKit from '@tiptap/starter-kit'
 import TurndownService from 'turndown'
 import { useCallback, useEffect, useRef, useState, type FormEvent } from 'react'
 import { Link } from 'react-router-dom'
-import { KATEGORI, type Kategori } from '../lib/cerita'
+import { AvatarPicker } from '../components/AvatarPicker'
+import { randomAvatar } from '../components/PenulisAvatar'
+import { TopikPicker } from '../components/TopikPicker'
 import { renderMarkdown } from '../lib/markdown'
-import { CERITA_URL, THREADS_URL, TURNSTILE_SITEKEY, issueUrl } from '../lib/site'
+import { CERITA_URL, TURNSTILE_SITEKEY } from '../lib/site'
 
 declare global {
   interface Window { turnstile?: { render: (el: HTMLElement, opts: Record<string, unknown>) => string; reset: (id?: string) => void; remove: (id: string) => void } }
@@ -21,8 +23,8 @@ const MAX_IMAGE_BYTES = 3 * 1024 * 1024
 
 const td = new TurndownService({ headingStyle: 'atx', bulletListMarker: '-', codeBlockStyle: 'fenced', hr: '---', emDelimiter: '_' })
 
-interface Draft { judul: string; html: string; kategori: Kategori | ''; penulis: string; wilayah: string; sumber: string }
-const emptyDraft: Draft = { judul: '', html: '', kategori: '', penulis: '', wilayah: '', sumber: '' }
+interface Draft { judul: string; html: string; topik: string[]; penulis: string; tautan: string; avatar: number; foto: string; wilayah: string; sumber: string }
+const emptyDraft: Draft = { judul: '', html: '', topik: [], penulis: '', tautan: '', avatar: 0, foto: '', wilayah: '', sumber: '' }
 
 function loadDraft(): Draft {
   try { return { ...emptyDraft, ...(JSON.parse(localStorage.getItem(DRAFT_KEY) ?? '{}') as Partial<Draft>) } } catch { return emptyDraft }
@@ -77,8 +79,11 @@ function loadTurnstile() {
 export default function CeritaTulis() {
   const initial = useRef<Draft>(loadDraft())
   const [judul, setJudul] = useState(initial.current.judul)
-  const [kategori, setKategori] = useState<Kategori | ''>(initial.current.kategori)
+  const [topik, setTopik] = useState<string[]>(initial.current.topik)
   const [penulis, setPenulis] = useState(initial.current.penulis)
+  const [tautan, setTautan] = useState(initial.current.tautan)
+  const [avatar, setAvatar] = useState(initial.current.avatar || randomAvatar())
+  const [foto, setFoto] = useState(initial.current.foto)
   const [wilayah, setWilayah] = useState(initial.current.wilayah)
   const [sumber, setSumber] = useState(initial.current.sumber)
   const [saved, setSaved] = useState<'baru' | 'menyimpan' | 'tersimpan' | 'penuh'>('baru')
@@ -145,12 +150,12 @@ export default function CeritaTulis() {
     window.clearTimeout(timer.current)
     timer.current = window.setTimeout(() => {
       try {
-        localStorage.setItem(DRAFT_KEY, JSON.stringify({ judul, html: editor.getHTML(), kategori, penulis, wilayah, sumber } satisfies Draft))
+        localStorage.setItem(DRAFT_KEY, JSON.stringify({ judul, html: editor.getHTML(), topik, penulis, tautan, avatar, foto, wilayah, sumber } satisfies Draft))
         setSaved('tersimpan')
       } catch { setSaved('penuh') }
     }, 800)
-  }, [editor, judul, kategori, penulis, wilayah, sumber])
-  useEffect(() => { if (phase !== 'done') save() }, [judul, kategori, penulis, wilayah, sumber, save, phase])
+  }, [editor, judul, topik, penulis, tautan, avatar, foto, wilayah, sumber])
+  useEffect(() => { if (phase !== 'done') save() }, [judul, topik, penulis, tautan, avatar, foto, wilayah, sumber, save, phase])
   useEffect(() => {
     if (!editor) return
     const h = () => { if (phase !== 'done') save() }
@@ -166,7 +171,7 @@ export default function CeritaTulis() {
     loadTurnstile().then(() => {
       if (!alive || !captchaBox.current || !window.turnstile || widget.current) return
       widget.current = window.turnstile.render(captchaBox.current, { sitekey: TURNSTILE_SITEKEY, theme: 'dark', callback: (t: string) => setToken(t), 'expired-callback': () => setToken(''), 'error-callback': () => setToken('') })
-    }).catch(() => setError('Captcha tidak dapat dimuat. Muat ulang halaman atau pakai jalur GitHub atau DM.'))
+    }).catch(() => setError('Captcha tidak dapat dimuat. Muat ulang halaman lalu coba lagi.'))
     return () => { alive = false; if (widget.current && window.turnstile) { window.turnstile.remove(widget.current); widget.current = '' } }
   }, [phase])
 
@@ -192,13 +197,14 @@ export default function CeritaTulis() {
     const { markdown, files } = serialize(editor.getHTML())
     if (judul.trim().length < 5) { setError('Judul minimal 5 huruf.'); return }
     if (markdown.split(/\s+/).length < 30) { setError('Tulisan terlalu singkat (minimal 30 kata).'); return }
-    if (!kategori) { setError('Pilih kategori tulisan.'); return }
+    if (topik.length === 0) { setError('Pilih atau buat minimal satu topik.'); return }
     if (!penulis.trim()) { setError('Isi nama penulis.'); return }
     if (!token) { setError('Selesaikan verifikasi captcha terlebih dahulu.'); return }
     setPhase('sending')
     try {
       const fd = new FormData(e.currentTarget)
-      fd.set('judul', judul.trim()); fd.set('kategori', kategori); fd.set('penulis', penulis.trim()); fd.set('wilayah', wilayah.trim()); fd.set('sumber', kategori === 'ilmiah' ? sumber.trim() : '')
+      fd.set('judul', judul.trim()); fd.set('topik', topik.join(',')); fd.set('penulis', penulis.trim()); fd.set('tautan_penulis', tautan.trim()); fd.set('wilayah', wilayah.trim()); fd.set('sumber', sumber.trim())
+      if (foto) fd.append('foto', dataUrlToFile(foto, 'foto-penulis.jpg')); else fd.set('avatar', String(avatar))
       fd.set('isi', markdown); fd.set('cf-turnstile-response', token)
       for (const f of files) fd.append('gambar', f, f.name)
       const res = await fetch(CERITA_URL, { method: 'POST', body: fd })
@@ -283,36 +289,28 @@ export default function CeritaTulis() {
 
       <form id="kirim" onSubmit={submit} className="mt-16 grid scroll-mt-24 gap-5 rounded-panel border border-line bg-ink-2 p-6">
         <h2 className="text-2xl font-bold text-fg">Sebelum terbit</h2>
-        <fieldset>
-          <legend className="text-sm font-semibold text-fg">Kategori</legend>
-          <div className="mt-2 flex flex-wrap gap-2">
-            {(Object.keys(KATEGORI) as Kategori[]).map(k => (
-              <label key={k} className={`inline-flex min-h-10 cursor-pointer items-center rounded-full px-4 text-sm font-semibold ${kategori === k ? 'bg-ember text-ink' : 'border border-line text-fg-2 hover:text-fg'}`}>
-                <input type="radio" name="kategori-pilihan" className="sr-only" checked={kategori === k} onChange={() => setKategori(k)} />{KATEGORI[k].label}
-              </label>
-            ))}
-          </div>
-        </fieldset>
+        <TopikPicker value={topik} onChange={setTopik} />
         <label className="block text-sm font-semibold text-fg">Nama penulis
           <input value={penulis} onChange={e => setPenulis(e.target.value)} maxLength={60} className={input} placeholder="Nama atau nama pena (tampil di tulisan)" />
         </label>
+        <label className="block text-sm font-semibold text-fg">Tautan portofolio atau media sosial <span className="font-normal text-fg-3">(opsional)</span>
+          <input value={tautan} onChange={e => setTautan(e.target.value)} type="url" maxLength={200} className={input} placeholder="https://" />
+        </label>
+        <AvatarPicker avatar={avatar} foto={foto} onAvatar={setAvatar} onFoto={setFoto} onError={setImgError} />
         <label className="block text-sm font-semibold text-fg">Wilayah terkait <span className="font-normal text-fg-3">(opsional)</span>
           <input value={wilayah} onChange={e => setWilayah(e.target.value)} maxLength={80} className={input} placeholder="Misalnya kabupaten atau provinsi" />
         </label>
-        {kategori === 'ilmiah' && (
-          <label className="block text-sm font-semibold text-fg">Tautan publikasi asli <span className="font-normal text-fg-3">(opsional)</span>
-            <input value={sumber} onChange={e => setSumber(e.target.value)} type="url" maxLength={300} className={input} placeholder="https:// atau tautan DOI" />
-            <span className="mt-1 block text-xs font-normal text-fg-3">Untuk artikel ilmiah, tulis ringkasan dengan kata-kata sendiri dan sertakan tautan; jangan menyalin seluruh isi yang berhak cipta.</span>
-          </label>
-        )}
+        <label className="block text-sm font-semibold text-fg">Tautan sumber atau rujukan <span className="font-normal text-fg-3">(opsional)</span>
+          <input value={sumber} onChange={e => setSumber(e.target.value)} type="url" maxLength={300} className={input} placeholder="https:// atau tautan DOI" />
+          <span className="mt-1 block text-xs font-normal text-fg-3">Untuk tulisan berbasis publikasi, tulis dengan kata-kata sendiri dan sertakan tautannya; jangan menyalin seluruh isi yang berhak cipta.</span>
+        </label>
         <input name="website" tabIndex={-1} autoComplete="off" aria-hidden className="absolute left-[-9999px] h-0 w-0 opacity-0" />
         <label className="flex items-start gap-3 text-sm text-fg-2"><input type="checkbox" name="hak" required className="mt-1 size-4 accent-[#ff6a1f]" /><span>Tulisan ini karya saya sendiri (atau saya berhak penuh mengirimkannya), dan saya mengizinkan situs memuatnya dengan mencantumkan nama saya.</span></label>
         <label className="flex items-start gap-3 text-sm text-fg-2"><input type="checkbox" name="izin" required className="mt-1 size-4 accent-[#ff6a1f]" /><span>Saya tidak mencantumkan data pribadi pihak lain tanpa izin.</span></label>
-        {TURNSTILE_SITEKEY ? <div ref={captchaBox} /> : <p className="text-sm text-fg-2">Pengiriman langsung belum aktif. Gunakan salah satu jalur di bawah.</p>}
+        {TURNSTILE_SITEKEY ? <div ref={captchaBox} /> : <p className="text-sm text-fg-2">Pengiriman belum aktif untuk sementara. Silakan coba lagi nanti.</p>}
         {error && <p role="alert" className="text-sm text-ember">{error}</p>}
         <p className="text-xs text-fg-3">Tulisan ditinjau pemelihara sebelum terbit. Judul, isi, dan nama penulis akan tampil publik.</p>
         <button type="submit" disabled={phase === 'sending' || !TURNSTILE_SITEKEY} className="btn btn-primary w-full disabled:opacity-60 sm:w-fit">{phase === 'sending' ? 'Mengirim...' : 'Kirim untuk ditinjau'}</button>
-        <p className="text-sm text-fg-3">Lebih suka cara lain? <a href={issueUrl('cerita.yml')} target="_blank" rel="noopener noreferrer" className="text-fg underline decoration-ember underline-offset-4">Kirim lewat GitHub</a> atau <a href={THREADS_URL} target="_blank" rel="noopener noreferrer" className="text-fg underline decoration-ember underline-offset-4">DM Threads</a>.</p>
       </form>
     </div>
   )

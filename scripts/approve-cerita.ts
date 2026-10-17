@@ -21,17 +21,21 @@ const one = (s: string, max: number) => s.replace(/[\u0000-\u001f\u007f<>]/g, ' 
 const noResp = (s: string) => !s || /^_no response_$/i.test(s.trim())
 
 const s = sections(body)
-const KATEGORI: Record<string, string> = { 'artikel ilmiah': 'ilmiah', 'cerita warga terdampak': 'warga', 'cerita warga': 'warga', 'opini publik': 'opini', opini: 'opini' }
-const kategori = KATEGORI[(s['kategori'] ?? '').trim().toLowerCase()]
+const topik = [...new Map(((s['topik'] ?? '').split(',') as string[])
+  .map(t => t.replace(/[^\p{L}\p{N}\s&-]/gu, '').replace(/\s+/g, ' ').trim().slice(0, 30).trim()).filter(Boolean)
+  .map(t => [t.toLowerCase(), t.charAt(0).toUpperCase() + t.slice(1)] as const)).values()].slice(0, 5)
 const judul = one(s['judul'] ?? '', 120)
 const penulis = one(s['nama penulis'] ?? '', 60)
 const wilayahRaw = s['wilayah terkait'] ?? ''
 const wilayah = noResp(wilayahRaw) ? '' : one(wilayahRaw, 80)
-const sumberRaw = (s['tautan sumber (khusus artikel ilmiah)'] ?? '').trim()
+const sumberRaw = (s['tautan sumber atau rujukan'] ?? s['tautan sumber (khusus artikel ilmiah)'] ?? '').trim()
 const sumber = /^https:\/\/[^\s<>"'`]{3,300}$/i.test(sumberRaw) ? sumberRaw : ''
 let isi = (s['isi tulisan'] ?? '').trim()
 const consent = s['pernyataan'] ?? ''
-if (!kategori) { console.error('Kategori tidak dikenali'); process.exit(1) }
+const tautanRaw = (s['tautan penulis (portofolio atau media sosial)'] ?? '').trim()
+const tautan = /^https:\/\/[^\s<>"'`]{3,200}$/i.test(tautanRaw) ? tautanRaw : ''
+const fotoSection = s['foto profil'] ?? ''
+if (topik.length < 1) { console.error('Topik wajib diisi'); process.exit(1) }
 if (judul.length < 5 || !penulis) { console.error('Judul atau nama penulis tidak valid'); process.exit(1) }
 if (!/\[x\]/i.test(consent) || /\[ \]/.test(consent)) { console.error('Pernyataan belum dicentang seluruhnya'); process.exit(1) }
 if (isi.split(/\s+/).length < 30) { console.error('Isi tulisan terlalu singkat'); process.exit(1) }
@@ -77,6 +81,31 @@ for (const m of matches) {
 }
 for (const [from, to] of replacements) isi = isi.split(from).join(to)
 
+// foto profil penulis: unggahan (dioptimalkan 256x256), avatar bawaan pilihan penulis, atau avatar acak
+let foto = ''
+const fotoUrl = /!\[[^\]]*\]\((\S+?)\)/.exec(fotoSection)?.[1]
+if (fotoUrl) {
+  try {
+    const u = new URL(fotoUrl)
+    if (!allowed(u)) throw new Error('host tidak diizinkan')
+    const res = await fetch(fotoUrl, { redirect: 'follow' })
+    if (!res.ok) throw new Error(String(res.status))
+    const buf = Buffer.from(await res.arrayBuffer())
+    if (buf.length > 4 * 1024 * 1024) throw new Error('terlalu besar')
+    const meta = await sharp(buf).metadata()
+    if (!meta.format || !['png', 'jpeg', 'webp'].includes(meta.format)) throw new Error('format')
+    fs.mkdirSync(imgDir, { recursive: true })
+    await sharp(buf).rotate().resize(256, 256, { fit: 'cover' }).webp({ quality: 85 }).toFile(path.join(imgDir, 'penulis.webp'))
+    foto = `cerita/${slug}/penulis.webp`
+  } catch (e) {
+    console.warn(`Foto profil dilewati: ${(e as Error).message}`)
+  }
+}
+if (!foto) {
+  const n = Number(/Avatar bawaan:\s*(\d+)/i.exec(fotoSection)?.[1])
+  foto = String(Number.isInteger(n) && n >= 1 && n <= 9 ? n : 1 + Math.floor(Math.random() * 9))
+}
+
 // ringkasan: paragraf pertama berupa teks biasa
 const firstPara = isi.split(/\n{2,}/).map(p => p.replace(/!\[[^\]]*\]\([^)]*\)/g, '').replace(/\[([^\]]*)\]\([^)]*\)/g, '$1').replace(/[*_`]/g, '').replace(/^[#>\-\s]+/, '').replace(/\s+/g, ' ').trim()).find(p => p.length > 20) ?? ''
 const ringkasan = firstPara.length > 180 ? firstPara.slice(0, 177).replace(/\s+\S*$/, '') + '...' : firstPara
@@ -84,8 +113,10 @@ const tanggal = new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Jakarta
 const fm = [
   '---',
   `judul: ${judul}`,
-  `kategori: ${kategori}`,
+  `topik: ${topik.join(', ')}`,
   `penulis: ${penulis}`,
+  tautan && `tautan: ${tautan}`,
+  `foto: ${foto}`,
   `tanggal: ${tanggal}`,
   wilayah && `wilayah: ${wilayah}`,
   ringkasan && `ringkasan: ${ringkasan.replace(/\n/g, ' ')}`,
