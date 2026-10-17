@@ -11,6 +11,10 @@
 
 Karya tetap **tidak tayang** sebelum pemelihara memasang label `setujui-templat`.
 
+## Endpoint kedua: `POST /api/cerita`
+
+Dipakai penyunting di `/cerita/tulis`. Menerima judul, kategori, penulis, wilayah, tautan sumber, isi Markdown, hingga 8 gambar (maksimal 3 MB per gambar, jenis dicek dari tanda tangan berkas), dan token Turnstile. Gambar masuk ke folder `cerita/` pada repositori unggahan; isi Markdown dibersihkan (HTML mentah dinetralkan, hanya gambar hasil unggahan yang dipertahankan, `@` dinetralkan), lalu dibuat isu `[Cerita] ...` berlabel `cerita`. Penerbitan memakai label `setujui-cerita` (lihat `docs/CERITA.md`). Secret dan variabel yang dipakai sama dengan `/api/submit`.
+
 ## Pemasangan (sekali saja)
 
 1. **Token GitHub (fine-grained)**: GitHub, Settings, Developer settings, Fine-grained tokens. Repositori: `visualize-karhutla` dan `visualize-karhutla-v01`. Izin: *Issues: Read and write* dan *Contents: Read and write*. Atur masa berlaku, lalu salin tokennya.

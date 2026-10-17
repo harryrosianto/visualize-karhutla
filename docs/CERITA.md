@@ -27,4 +27,14 @@ Catatan:
 
 ## Alur kiriman
 
-Pembaca mengirim tulisan lewat formulir isu **Kirim cerita karhutla** (`.github/ISSUE_TEMPLATE/cerita.yml`, label `cerita`) atau DM Threads. Pemelihara meninjau, lalu menambahkan berkas `.md` ke `src/content/cerita/` dan melakukan commit; deploy berjalan otomatis. (Penayangan otomatis dari isu, seperti galeri karya, belum tersedia.)
+Ada tiga jalur, semuanya berujung pada isu GitHub berlabel `cerita` yang ditinjau pemelihara:
+
+1. **Menulis langsung di situs** (`/cerita/tulis`, tanpa akun): penyunting bergaya Medium (judul, blok teks, tombol + untuk gambar, judul bagian, kutipan, daftar, pemisah; menu format saat teks diblok; draf tersimpan otomatis). Saat dikirim, Worker (`POST /api/cerita`) menyimpan gambar ke repositori unggahan dan membuat isu `[Cerita] ...` dengan isi Markdown.
+2. **Formulir isu GitHub** "Kirim cerita karhutla" (`.github/ISSUE_TEMPLATE/cerita.yml`).
+3. **DM Threads**: ditambahkan manual oleh pemelihara.
+
+### Menyetujui
+
+Persiapan sekali: buat label `cerita` dan `setujui-cerita` pada repositori. Setelah meninjau isu, pasang label `setujui-cerita`. Alur `.github/workflows/approve-cerita.yml` lalu menjalankan `scripts/approve-cerita.ts`: mengubah isu menjadi `src/content/cerita/<slug>.md`, mengunduh dan mengoptimalkan gambar ke `public/cerita/<slug>/`, melakukan commit, memicu deploy, dan menutup isu. Gambar dari host selain GitHub dibuang, dan HTML mentah tidak pernah dirender.
+
+Jalur DM tidak otomatis: tambahkan berkas `.md` sesuai format di atas lalu commit.

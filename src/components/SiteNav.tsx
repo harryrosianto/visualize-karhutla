@@ -2,19 +2,18 @@ import { CaretDown, List, X } from '@phosphor-icons/react'
 import { useEffect, useRef, useState } from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
 
-const link = ({ isActive }: { isActive: boolean }) =>
-  `inline-flex min-h-[44px] items-center px-3 text-sm font-medium transition-colors ${isActive ? 'text-fg' : 'text-fg-2 hover:text-fg'}`
-const mobileLink = ({ isActive }: { isActive: boolean }) =>
-  `flex min-h-12 items-center rounded-panel px-3 text-lg font-semibold ${isActive ? 'bg-ink-3 text-fg' : 'text-fg-2'}`
+const cls = (active: boolean) =>
+  `inline-flex min-h-[44px] items-center px-3 text-sm font-medium transition-colors ${active ? 'text-fg' : 'text-fg-2 hover:text-fg'}`
+const mcls = (active: boolean) =>
+  `flex min-h-12 items-center rounded-panel px-3 text-lg font-semibold ${active ? 'bg-ink-3 text-fg' : 'text-fg-2'}`
 
-/** Urutan menu: Galeri warga, Wrapped, Templat Story, Peta, Cerita karhutla, lalu Tentang (berisi Tentang proyek dan Kontribusi). */
-const MAIN = [
+/** Urutan menu: Galeri warga, Wrapped (termasuk Templat Story), Peta, Cerita karhutla, lalu Tentang (berisi Tentang proyek dan Kontribusi). */
+const MAIN: { to: string; label: string; also?: string }[] = [
   { to: '/galeri', label: 'Galeri warga' },
-  { to: '/wrapped', label: 'Wrapped' },
-  { to: '/templat', label: 'Templat Story' },
+  { to: '/wrapped', label: 'Wrapped', also: '/templat' },
   { to: '/peta', label: 'Peta' },
   { to: '/cerita', label: 'Cerita karhutla' },
-] as const
+]
 const ABOUT = [
   { to: '/tentang', label: 'Tentang proyek' },
   { to: '/kontribusi', label: 'Kontribusi' },
@@ -45,7 +44,7 @@ export function SiteNav() {
 
         {/* desktop */}
         <div className="hidden items-center lg:flex">
-          {MAIN.map(m => <NavLink key={m.to} to={m.to} className={link}>{m.label}</NavLink>)}
+          {MAIN.map(m => <NavLink key={m.to} to={m.to} className={({ isActive }) => cls(isActive || (!!m.also && pathname.startsWith(m.also)))}>{m.label}</NavLink>)}
           <div ref={aboutRef} className="relative">
             <button type="button" aria-expanded={about} aria-haspopup="menu" onClick={() => setAbout(v => !v)}
               className={`inline-flex min-h-[44px] items-center gap-1 px-3 text-sm font-medium transition-colors ${aboutActive || about ? 'text-fg' : 'text-fg-2 hover:text-fg'}`}>
@@ -69,9 +68,9 @@ export function SiteNav() {
       {menu && (
         <div id="menu-ponsel" className="absolute inset-x-0 top-16 max-h-[calc(100dvh-4rem)] overflow-y-auto border-y border-line bg-ink/95 px-4 py-4 backdrop-blur lg:hidden">
           <div className="mx-auto grid max-w-[1400px] gap-1">
-            {MAIN.map(m => <NavLink key={m.to} to={m.to} className={mobileLink}>{m.label}</NavLink>)}
+            {MAIN.map(m => <NavLink key={m.to} to={m.to} className={({ isActive }) => mcls(isActive || (!!m.also && pathname.startsWith(m.also)))}>{m.label}</NavLink>)}
             <p className="mt-3 px-3 text-xs font-semibold uppercase tracking-wide text-fg-3">Tentang</p>
-            {ABOUT.map(a => <NavLink key={a.to} to={a.to} className={mobileLink}>{a.label}</NavLink>)}
+            {ABOUT.map(a => <NavLink key={a.to} to={a.to} className={({ isActive }) => mcls(isActive)}>{a.label}</NavLink>)}
           </div>
         </div>
       )}

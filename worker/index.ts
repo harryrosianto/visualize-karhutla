@@ -150,10 +150,102 @@ async function handleSubmit(request: Request, env: Env): Promise<Response> {
   }
 }
 
+const CERITA_KATEGORI: Record<string, string> = { ilmiah: 'Artikel ilmiah', warga: 'Cerita warga terdampak', opini: 'Opini publik' }
+const CERITA_MAX_IMAGES = 8
+const CERITA_MAX_IMAGE_BYTES = 3 * 1024 * 1024
+const CERITA_MAX_CHARS = 40000
+
+/** Bersihkan isi Markdown dari penulis: HTML mentah dinetralkan, hanya gambar hasil unggahan (img:N) yang dipertahankan, dan @ dinetralkan agar tidak memicu notifikasi. */
+function cleanMarkdown(src: string, imageCount: number) {
+  let md = src.replace(/\r\n?/g, '\n').replace(/[\u0000-\u0008\u000b\u000c\u000e-\u001f\u007f]/g, '')
+  md = md.replace(/<(?=[a-zA-Z!/?])/g, '&lt;')
+  md = md.replace(/!\[([^\]]*)\]\(([^)\s]*)(?:\s+"[^"]*")?\)/g, (_m, alt: string, url: string) => {
+    const k = /^img:(\d+)$/.exec(url)
+    if (k && Number(k[1]) >= 1 && Number(k[1]) <= imageCount) return `![${alt.replace(/[\[\]]/g, '')}](${url})`
+    return alt
+  })
+  return md.replace(/@/g, '@​')
+}
+
+async function handleCerita(request: Request, env: Env): Promise<Response> {
+  const origin = request.headers.get('Origin')
+  const allowed = allowedOrigins(env, new URL(request.url).origin)
+  const cors = corsHeaders(origin, allowed)
+  try {
+    if (request.method === 'OPTIONS') return new Response(null, { status: 204, headers: cors })
+    if (request.method !== 'POST') throw new HttpError(405, 'method', 'Metode tidak didukung.')
+    if (origin && !allowed.has(origin)) throw new HttpError(403, 'origin', 'Asal permintaan tidak diizinkan.')
+    if (!env.GITHUB_TOKEN || !env.TURNSTILE_SECRET) throw new HttpError(503, 'config', 'Layanan unggah belum dikonfigurasi.')
+    const len = Number(request.headers.get('Content-Length') ?? 0)
+    if (len > CERITA_MAX_IMAGES * CERITA_MAX_IMAGE_BYTES + 400 * 1024) throw new HttpError(413, 'size', 'Ukuran kiriman terlalu besar.')
+
+    let form: FormData
+    try { form = await request.formData() } catch { throw new HttpError(400, 'form', 'Formulir tidak dapat dibaca.') }
+    if (String(form.get('website') ?? '').trim()) return json({ ok: true }, 200, cors)
+    await verifyCaptcha(env, String(form.get('cf-turnstile-response') ?? ''), request.headers.get('CF-Connecting-IP'))
+
+    const judul = clean(String(form.get('judul') ?? ''), 120)
+    const penulis = clean(String(form.get('penulis') ?? ''), 60)
+    const wilayah = clean(String(form.get('wilayah') ?? ''), 80)
+    const kategori = String(form.get('kategori') ?? '')
+    let sumber = String(form.get('sumber') ?? '').trim()
+    if (sumber && !/^https:\/\/[^\s<>"'`]{3,300}$/i.test(sumber)) throw new HttpError(400, 'sumber', 'Tautan sumber harus diawali https:// dan tidak berisi spasi.')
+    if (!CERITA_KATEGORI[kategori]) throw new HttpError(400, 'kategori', 'Pilih kategori tulisan.')
+    if (judul.length < 5 || !penulis) throw new HttpError(400, 'field', 'Judul (minimal 5 huruf) dan nama penulis wajib diisi.')
+    if (form.get('hak') !== 'on' || form.get('izin') !== 'on') throw new HttpError(400, 'consent', 'Kedua pernyataan wajib dicentang.')
+    const raw = String(form.get('isi') ?? '')
+    if (raw.length > CERITA_MAX_CHARS) throw new HttpError(413, 'size', 'Tulisan terlalu panjang (maksimal 40.000 karakter).')
+    if (raw.trim().split(/\s+/).length < 30) throw new HttpError(400, 'isi', 'Tulisan terlalu singkat (minimal 30 kata).')
+
+    const files = form.getAll('gambar').filter((f): f is File => typeof f !== 'string' && (f as File).size > 0)
+    if (files.length > CERITA_MAX_IMAGES) throw new HttpError(400, 'files', `Maksimal ${CERITA_MAX_IMAGES} gambar per tulisan.`)
+    const prepared: { bytes: Uint8Array; ext: string }[] = []
+    for (const f of files) {
+      if (f.size > CERITA_MAX_IMAGE_BYTES) throw new HttpError(413, 'size', 'Setiap gambar maksimal 3 MB.')
+      const bytes = new Uint8Array(await f.arrayBuffer())
+      const kind = sniff(bytes)
+      if (!kind) throw new HttpError(415, 'type', 'Format gambar tidak didukung. Gunakan PNG, JPG, WebP, atau GIF.')
+      prepared.push({ bytes, ext: kind.ext })
+    }
+
+    const stamp = new Date().toISOString().slice(0, 10).replace(/-/g, '')
+    const rand = crypto.randomUUID().slice(0, 8)
+    const branch = env.UPLOADS_BRANCH || 'main'
+    const urls: string[] = []
+    for (const [i, p] of prepared.entries()) {
+      const path = `cerita/${stamp}-${rand}-${i + 1}.${p.ext}`
+      await gh(env, 'PUT', `/repos/${env.UPLOADS_REPO}/contents/${path}`, { message: `Gambar cerita ${stamp}-${rand}-${i + 1}`, content: toBase64(p.bytes), branch })
+      urls.push(`https://raw.githubusercontent.com/${env.UPLOADS_REPO}/${branch}/${path}`)
+    }
+    let isi = cleanMarkdown(raw, prepared.length)
+    isi = isi.replace(/\(img:(\d+)\)/g, (_m, n: string) => `(${urls[Number(n) - 1]})`)
+    if (/^https?:\/\//i.test(sumber) === false) sumber = ''
+
+    const body = [
+      '### Kategori', '', CERITA_KATEGORI[kategori], '',
+      '### Judul', '', judul, '',
+      '### Nama penulis', '', penulis, '',
+      '### Wilayah terkait', '', wilayah || '_No response_', '',
+      '### Tautan sumber (khusus artikel ilmiah)', '', sumber || '_No response_', '',
+      '### Isi tulisan', '', isi, '',
+      '### Pernyataan', '',
+      '- [X] Tulisan ini karya saya sendiri (atau saya berhak penuh mengirimkannya), dan saya mengizinkan situs memuatnya dengan mencantumkan nama saya.',
+      '- [X] Saya tidak mencantumkan data pribadi pihak lain tanpa izin.', '',
+      '### Asal kiriman', '', '_Ditulis dan dikirim lewat penyunting di situs (tanpa akun GitHub). Gambar tersimpan pada repositori unggahan terpisah._',
+    ].join('\n')
+    await gh(env, 'POST', `/repos/${env.ISSUES_REPO}/issues`, { title: `[Cerita] ${judul}`, body, labels: ['cerita'] })
+    return json({ ok: true }, 200, cors)
+  } catch (e) {
+    if (e instanceof HttpError) return json({ ok: false, error: e.code, message: e.message }, e.status, cors)
+    return json({ ok: false, error: 'internal', message: 'Terjadi kesalahan pada server. Silakan coba lagi.' }, 500, cors)
+  }
+}
+
 export default {
   async fetch(request: Request, env: Env): Promise<Response> {
     const { pathname } = new URL(request.url)
     if (pathname === '/api/submit') return handleSubmit(request, env)
+    if (pathname === '/api/cerita') return handleCerita(request, env)
     return env.ASSETS.fetch(request)
   },
 }

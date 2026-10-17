@@ -1,3 +1,5 @@
+import { resolveUrl } from './markdown'
+
 /** Cerita karhutla: artikel ilmiah, cerita warga terdampak, dan opini publik. Setiap cerita adalah satu berkas Markdown di src/content/cerita/. */
 
 export type Kategori = 'ilmiah' | 'warga' | 'opini'
@@ -48,7 +50,7 @@ export const cerita: Cerita[] = Object.entries(files)
     const kata = body.trim().split(/\s+/).length
     return {
       slug, judul: meta.judul, kategori, penulis: meta.penulis || 'Anonim', tanggal: meta.tanggal || '', ringkasan: meta.ringkasan || '',
-      sumber: meta.sumber || undefined, rujukan: meta.rujukan || undefined, gambar: meta.gambar || undefined, wilayah: meta.wilayah || undefined,
+      sumber: meta.sumber || undefined, rujukan: meta.rujukan || undefined, gambar: meta.gambar ? resolveUrl(meta.gambar) || undefined : undefined, wilayah: meta.wilayah || undefined,
       body, menit: Math.max(1, Math.round(kata / 200)),
     } as Cerita
   })

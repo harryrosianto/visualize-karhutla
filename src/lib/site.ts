@@ -19,3 +19,6 @@ export const INSTAGRAM_URL = 'https://www.instagram.com/worldofhahadaily/' as co
 export const SUBMIT_URL: string = import.meta.env.VITE_SUBMIT_URL || 'https://visualize-karhutla.harry-prasetyo.workers.dev/api/submit'
 /** Kunci situs Cloudflare Turnstile (publik). Bila kosong, formulir unggah langsung disembunyikan. */
 export const TURNSTILE_SITEKEY: string = import.meta.env.VITE_TURNSTILE_SITEKEY || ''
+
+/** Alamat API kiriman cerita (Worker Cloudflare), diturunkan dari SUBMIT_URL. */
+export const CERITA_URL: string = SUBMIT_URL.replace(/\/api\/submit$/, '/api/cerita')

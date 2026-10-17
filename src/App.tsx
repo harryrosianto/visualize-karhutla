@@ -28,6 +28,7 @@ const WrappedPage = lazyRoute(() => import('./routes/WrappedPage'))
 const Templates = lazyRoute(() => import('./routes/Templates'))
 const Galeri = lazyRoute(() => import('./routes/Galeri'))
 const Cerita = lazyRoute(() => import('./routes/Cerita'))
+const CeritaTulis = lazyRoute(() => import('./routes/CeritaTulis'))
 const CeritaDetail = lazyRoute(() => import('./routes/CeritaDetail'))
 const About = lazyRoute(() => import('./routes/About'))
 const Contribute = lazyRoute(() => import('./routes/Contribute'))
@@ -102,6 +103,7 @@ export default function App() {
             </Route>
             <Route element={<Shell footer={false} />}>
               <Route path="peta" element={<MapPage />} />
+              <Route path="cerita/tulis" element={<CeritaTulis />} />
             </Route>
             <Route path="wrapped/:slug" element={<WrappedPage />} />
           </Routes>

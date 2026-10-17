@@ -1,7 +1,14 @@
 import { Marked } from 'marked'
 
 const esc = (s: string) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')
-const safeUrl = (u: string) => (/^(https?:|mailto:|\/|#|\.\/|\.\.\/)/i.test(u.trim()) ? u.trim() : '')
+/** Tautan yang diizinkan: http(s), mailto, anchor, dan berkas milik situs di bawah cerita/ (diberi awalan base path). */
+export function resolveUrl(u: string): string {
+  const t = u.trim()
+  if (/^(https?:|mailto:|#)/i.test(t)) return t
+  if (/^cerita\/[\w./-]+$/.test(t) && !t.includes('..')) return import.meta.env.BASE_URL + t
+  return ''
+}
+const safeUrl = resolveUrl
 
 /** Penerjemah Markdown untuk cerita. HTML mentah di dalam isi tidak dirender (di-escape), dan tautan serta gambar dibatasi pada http(s). */
 const md = new Marked({ gfm: true })

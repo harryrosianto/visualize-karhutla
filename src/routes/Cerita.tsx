@@ -39,15 +39,25 @@ export default function Cerita() {
       ) : (
         <ul>
           {list.map(c => (
-            <li key={c.slug} className="border-b border-line py-9">
-              <article className="grid gap-5 sm:grid-cols-[1fr_auto] sm:items-start">
-                <div className="min-w-0">
-                  <p className="text-sm text-fg-3"><span className="font-semibold text-ember">{KATEGORI[c.kategori].label}</span>{c.wilayah ? ` · ${c.wilayah}` : ''}</p>
-                  <h2 className="mt-2 text-2xl font-bold leading-tight tracking-tight text-fg md:text-3xl"><Link to={`/cerita/${c.slug}`} className="hover:text-ember">{c.judul}</Link></h2>
-                  {c.ringkasan && <p className="mt-3 font-serif text-lg leading-relaxed text-fg-2">{c.ringkasan}</p>}
-                  <p className="mt-4 text-sm text-fg-3">{c.penulis}{c.tanggal ? ` · ${fmtDate(c.tanggal)}` : ''} · {c.menit} menit baca</p>
+            <li key={c.slug} className="border-b border-line py-8">
+              <article>
+                <p className="flex items-center gap-2 text-sm text-fg-2">
+                  <span aria-hidden className="grid size-6 place-items-center rounded-full bg-ink-3 text-xs font-bold text-fg">{c.penulis.trim().charAt(0).toUpperCase()}</span>
+                  <span className="font-semibold text-fg">{c.penulis}</span>
+                  {c.tanggal && <span className="text-fg-3">· {fmtDate(c.tanggal)}</span>}
+                </p>
+                <div className="mt-3 grid grid-cols-[1fr_auto] items-start gap-4 sm:gap-8">
+                  <div className="min-w-0">
+                    <h2 className="text-xl font-bold leading-tight tracking-tight text-fg md:text-2xl"><Link to={`/cerita/${c.slug}`} className="hover:text-ember">{c.judul}</Link></h2>
+                    {c.ringkasan && <p className="mt-2 line-clamp-3 font-serif text-base leading-relaxed text-fg-2 md:text-lg">{c.ringkasan}</p>}
+                  </div>
+                  {c.gambar && <Link to={`/cerita/${c.slug}`} tabIndex={-1} aria-hidden className="block w-24 sm:w-40"><img src={c.gambar} alt="" loading="lazy" className="aspect-[4/3] w-full rounded-lg border border-line object-cover" /></Link>}
                 </div>
-                {c.gambar && <Link to={`/cerita/${c.slug}`} tabIndex={-1} aria-hidden className="block w-full sm:w-40"><img src={c.gambar} alt="" loading="lazy" className="aspect-[4/3] w-full rounded-panel border border-line object-cover" /></Link>}
+                <p className="mt-4 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-fg-3">
+                  <span className="rounded-full bg-ink-3 px-3 py-1 text-xs font-semibold text-fg-2">{KATEGORI[c.kategori].label}</span>
+                  {c.wilayah && <span>{c.wilayah}</span>}
+                  <span>{c.menit} menit baca</span>
+                </p>
               </article>
             </li>
           ))}
@@ -56,10 +66,11 @@ export default function Cerita() {
 
       <aside className="mt-14 rounded-panel border border-line bg-ink-2 p-6">
         <h2 className="flex items-center gap-2 text-xl font-bold text-fg"><PencilSimpleLine size={22} weight="bold" aria-hidden />Tulis ceritamu</h2>
-        <p className="mt-3 text-fg-2">Anda warga terdampak, peneliti, atau ingin menyampaikan pendapat? Kirimkan tulisan Anda. Setiap kiriman ditinjau pemelihara sebelum dimuat, dan nama penulis dicantumkan.</p>
+        <p className="mt-3 text-fg-2">Anda warga terdampak, peneliti, atau ingin menyampaikan pendapat? Tulis langsung di situs seperti di Medium, tanpa akun. Setiap kiriman ditinjau pemelihara sebelum dimuat, dan nama penulis dicantumkan.</p>
         <div className="mt-5 flex flex-wrap gap-3">
-          <a href={issueUrl('cerita.yml')} target="_blank" rel="noopener noreferrer" className="btn btn-primary">Kirim lewat GitHub</a>
-          <a href={THREADS_URL} target="_blank" rel="noopener noreferrer" className="btn btn-ghost">Kirim lewat DM Threads</a>
+          <Link to="/cerita/tulis" className="btn btn-primary">Tulis di sini</Link>
+          <a href={issueUrl('cerita.yml')} target="_blank" rel="noopener noreferrer" className="btn btn-ghost">Kirim lewat GitHub</a>
+          <a href={THREADS_URL} target="_blank" rel="noopener noreferrer" className="btn btn-ghost">DM Threads</a>
         </div>
       </aside>
     </div>
