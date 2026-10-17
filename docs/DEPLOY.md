@@ -85,3 +85,7 @@ Berkas `.github/workflows/pages.yml` membangun dan menerbitkan situs setiap kali
 3. Push; situs terbit pada alamat tersebut.
 
 Catatan: pada GitHub Pages, halaman statis tiap rute (`/wrapped/<slug>/`) dilayani langsung sehingga pratinjau media sosial berfungsi; alamat lain yang tidak dikenal memakai `404.html` (salinan `index.html`) sehingga status HTTP-nya 404 meski halaman tetap tampil. Kuota lunak GitHub Pages: situs 1 GB dan bandwidth sekitar 100 GB per bulan.
+
+## Kirim karya tanpa akun GitHub (Worker)
+
+Formulir di halaman `/templat` memanggil Worker `worker/index.ts` (proyek Cloudflare `visualize-karhutla`) yang menyimpan gambar ke repositori `visualize-karhutla-v01` dan membuat isu di repositori utama. Langkah pemasangan (token GitHub, Turnstile, secret) ada di `worker/README.md`.

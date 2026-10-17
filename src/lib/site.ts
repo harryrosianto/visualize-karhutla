@@ -14,3 +14,8 @@ export const THREADS_URL = 'https://www.threads.com/@harrierosss' as const
 
 /** Akun Instagram pengembang. */
 export const INSTAGRAM_URL = 'https://www.instagram.com/worldofhahadaily/' as const
+
+/** Alamat API kiriman karya (Worker Cloudflare). Dapat diganti lewat VITE_SUBMIT_URL. */
+export const SUBMIT_URL: string = import.meta.env.VITE_SUBMIT_URL || 'https://visualize-karhutla.harry-prasetyo.workers.dev/api/submit'
+/** Kunci situs Cloudflare Turnstile (publik). Bila kosong, formulir unggah langsung disembunyikan. */
+export const TURNSTILE_SITEKEY: string = import.meta.env.VITE_TURNSTILE_SITEKEY || ''

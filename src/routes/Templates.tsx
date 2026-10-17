@@ -8,6 +8,7 @@ import { downloadBlob, renderPng, shareOrDownload } from '../lib/exportImage'
 import { siteUrl } from '../lib/share'
 import { CommunityGallery } from '../components/CommunityGallery'
 import { GalleryCollage } from '../components/GalleryCollage'
+import { SubmitArtwork } from '../components/SubmitArtwork'
 import { GalleryStory } from '../components/GalleryStory'
 import { ADD_YOURS_URL, THREADS_URL, issueUrl } from '../lib/site'
 
@@ -116,6 +117,7 @@ export default function Templates() {
       <section id="galeri-warga" aria-labelledby="galeri-warga-judul" className="mt-20 scroll-mt-24 border-t border-line pt-14">
         <h2 id="galeri-warga-judul" className="text-3xl font-extrabold tracking-tight text-fg md:text-4xl">Galeri warga<span className="text-ember">.</span></h2>
         <p className="mt-4 max-w-[60ch] text-fg-2">Karya ilustrator, fotografer, dan desainer grafis yang disumbangkan untuk kampanye ini. Semua kiriman ditinjau pemelihara sebelum dimuat. Silakan unduh dan bagikan dengan mencantumkan nama kreator.</p>
+        <SubmitArtwork className="mt-6" />
         <div className="mt-6 flex flex-wrap gap-3">
           <a href={issueUrl('templat.yml')} target="_blank" rel="noopener noreferrer" className="btn btn-primary">Kirim lewat GitHub</a>
           <a href={THREADS_URL} target="_blank" rel="noopener noreferrer" className="btn btn-ghost">Kirim lewat DM Threads</a>

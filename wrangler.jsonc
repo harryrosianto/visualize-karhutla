@@ -1,10 +1,24 @@
 {
-  // Situs statis di Cloudflare (Workers Static Assets). Nama harus sama dengan nama proyek di dasbor Cloudflare.
+  // Situs statis di Cloudflare (Workers Static Assets) + Worker untuk kiriman karya warga di /api/submit.
+  // Nama harus sama dengan nama proyek di dasbor Cloudflare.
   "name": "visualize-karhutla",
+  "main": "worker/index.ts",
   "compatibility_date": "2026-10-01",
   "assets": {
     "directory": "./dist",
+    "binding": "ASSETS",
     // alamat yang tidak cocok dengan berkas dilayani index.html (routing sisi klien)
-    "not_found_handling": "single-page-application"
+    "not_found_handling": "single-page-application",
+    // hanya /api/* yang dijalankan oleh Worker; sisanya langsung dari aset
+    "run_worker_first": ["/api/*"]
+  },
+  "vars": {
+    "ISSUES_REPO": "harryrosianto/visualize-karhutla",
+    "UPLOADS_REPO": "harryrosianto/visualize-karhutla-v01",
+    "UPLOADS_BRANCH": "main",
+    // asal yang boleh memanggil API dari browser (situs GitHub Pages dan pengembangan lokal)
+    "ALLOWED_ORIGINS": "https://harryrosianto.github.io,http://localhost:5173,http://localhost:4173"
   }
+  // Secret (jangan ditulis di sini; atur lewat `npx wrangler secret put` atau dasbor):
+  //   GITHUB_TOKEN, TURNSTILE_SECRET
 }
