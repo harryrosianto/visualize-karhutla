@@ -27,7 +27,7 @@ jobs:
       - run: npm run build
         env:
           # Kunci situs Turnstile (publik) untuk formulir kirim karya; kosong = formulir langsung disembunyikan.
-          VITE_TURNSTILE_SITEKEY: ${{ vars.TURNSTILE_SITEKEY }}
+          VITE_TURNSTILE_SITEKEY: ${{ vars.TURNSTILE_SITEKEY || secrets.TURNSTILE_SITEKEY }}
           # Terisi otomatis: https://<akun>.github.io/<repositori> dan base /<repositori>/.
           # Untuk domain khusus, buat variabel repositori SITE_URL (alamat publik) dan SITE_BASE (kosongkan).
           VITE_SITE_URL: ${{ vars.SITE_URL || format('https://{0}.github.io/{1}', github.repository_owner, github.event.repository.name) }}
