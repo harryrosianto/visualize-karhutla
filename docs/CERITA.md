@@ -1,6 +1,6 @@
 # Cerita karhutla
 
-Halaman `/cerita` memuat tulisan warga, peneliti, dan masyarakat tentang karhutla: artikel ilmiah, cerita warga terdampak, opini, dan lainnya. Tulisan dikelompokkan dengan **topik** (seperti Medium): penulis memilih dari topik bawaan (`src/content/topik.ts`, misalnya Kesehatan dan asap, Lahan gambut, Satwa liar, Kebijakan dan hukum) atau membuat topik sendiri, hingga 5 topik per tulisan.
+Halaman `/cerita` memuat tulisan warga, peneliti, dan masyarakat tentang karhutla: artikel ilmiah, cerita warga terdampak, opini, dan lainnya. Tulisan dikelompokkan dengan **topik**: penulis memilih dari topik bawaan (`src/content/topik.ts`, misalnya Kesehatan dan asap, Lahan gambut, Satwa liar, Kebijakan dan hukum) atau membuat topik sendiri, hingga 5 topik per tulisan.
 
 Setiap tulisan adalah satu berkas Markdown di `src/content/cerita/<slug>.md`. Slug berkas menjadi alamat `/cerita/<slug>`.
 
@@ -32,7 +32,7 @@ Catatan:
 
 ## Alur kiriman
 
-Penulis menulis langsung di situs: `/cerita/tulis` (tanpa akun). Penyunting bergaya Medium: judul, blok teks, tombol + untuk gambar, judul bagian, kutipan, daftar, pemisah; menu format saat teks diblok; draf tersimpan otomatis. Di bagian "Sebelum terbit" penulis memilih topik, mengisi nama, tautan portofolio atau media sosial (opsional), dan memilih avatar atau mengunggah foto profil (opsional). Saat dikirim, Worker (`POST /api/cerita`) menyimpan gambar ke repositori unggahan dan membuat isu `[Cerita] ...` berlabel `cerita` di repositori utama.
+Penulis menulis langsung di situs: `/cerita/tulis` (tanpa akun). Penyunting tulisan: judul, blok teks, tombol + untuk gambar, judul bagian, kutipan, daftar, pemisah; menu format saat teks diblok; draf tersimpan otomatis. Di bagian "Sebelum terbit" penulis memilih topik, mengisi nama, tautan portofolio atau media sosial (opsional), dan memilih avatar atau mengunggah foto profil (opsional). Saat dikirim, Worker (`POST /api/cerita`) menyimpan gambar ke repositori unggahan dan membuat isu `[Cerita] ...` berlabel `cerita` di repositori utama.
 
 ### Menyetujui
 

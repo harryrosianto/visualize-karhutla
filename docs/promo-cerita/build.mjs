@@ -23,7 +23,7 @@ const S = []
 S.push(`<section class="slide"><div class="wm">Visualize Karhutla<i>.</i></div>
 <div class="k">New feature</div>
 <h1>Write your<br>karhutla story<i>.</i></h1>
-<p class="sub" style="top:600px">A Medium-style editor, right on the site. No account needed.</p>
+<p class="sub" style="top:600px">A simple editor, right on the site. No account needed.</p>
 <div class="phone" style="left:325px;top:740px;width:430px"><img src="img/p-editor.png" alt=""></div>
 <p class="cap" style="left:84px;right:84px;top:1735px"><b>Photos, headings, quotes.</b> Drafts save automatically.</p>
 </section>`)
@@ -33,7 +33,7 @@ S.push(`<section class="slide"><div class="wm">Visualize Karhutla<i>.</i></div>
 <h1>Pick topics.<br>Make it yours<i>.</i></h1>
 <div class="phone" style="left:84px;top:640px;width:430px"><img src="img/p-form-topik.png" alt=""></div>
 <div class="phone" style="left:566px;top:640px;width:430px"><img src="img/p-form-penulis.png" alt=""></div>
-<p class="cap" style="left:84px;width:430px;top:1580px"><b>Choose or create topics</b>, just like Medium.</p>
+<p class="cap" style="left:84px;width:430px;top:1580px"><b>Choose or create topics</b> to label your story.</p>
 <p class="cap" style="left:566px;width:430px;top:1580px"><b>Add your link and photo</b> (optional). Skip it and get a random animal avatar.</p>
 </section>`)
 // 3: terbit

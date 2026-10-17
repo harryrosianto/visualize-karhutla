@@ -1,7 +1,7 @@
 import { TOPIK_BAWAAN } from '../content/topik'
 import { resolveUrl } from './markdown'
 
-/** Cerita karhutla: tulisan warga, peneliti, dan masyarakat. Setiap cerita adalah satu berkas Markdown di src/content/cerita/, dikelompokkan dengan topik (seperti di Medium). */
+/** Cerita karhutla: tulisan warga, peneliti, dan masyarakat. Setiap cerita adalah satu berkas Markdown di src/content/cerita/, dikelompokkan dengan topik. */
 
 export interface Cerita {
   slug: string

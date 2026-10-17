@@ -1,4 +1,4 @@
-/** Topik bawaan Cerita karhutla. Penulis dapat memilih dari daftar ini atau membuat topik sendiri (seperti topik di Medium). */
+/** Topik bawaan Cerita karhutla. Penulis dapat memilih dari daftar ini atau membuat topik sendiri. */
 export const TOPIK_BAWAAN = [
   'Kesehatan dan asap',
   'Lahan gambut',

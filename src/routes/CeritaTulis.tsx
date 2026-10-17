@@ -143,7 +143,7 @@ export default function CeritaTulis() {
     selector: ({ editor: e }) => ({ bold: !!e?.isActive('bold'), italic: !!e?.isActive('italic'), link: !!e?.isActive('link'), h2: !!e?.isActive('heading', { level: 2 }), quote: !!e?.isActive('blockquote') }),
   })
 
-  // simpan draf otomatis (seperti Medium); gambar ikut tersimpan sebagai data URL selama kuota peramban cukup
+  // simpan draf otomatis; gambar ikut tersimpan sebagai data URL selama kuota peramban cukup
   const save = useCallback(() => {
     if (!editor) return
     setSaved('menyimpan')

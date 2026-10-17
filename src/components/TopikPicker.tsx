@@ -3,7 +3,7 @@ import { useId, useMemo, useState } from 'react'
 import { MAKS_TOPIK } from '../content/topik'
 import { normTopik, semuaTopik, slugTopik } from '../lib/cerita'
 
-/** Pemilih topik seperti di Medium: pilih dari topik yang sudah ada atau buat topik baru. */
+/** Pemilih topik: pilih dari topik yang sudah ada atau buat topik baru. */
 export function TopikPicker({ value, onChange }: { value: string[]; onChange: (v: string[]) => void }) {
   const [q, setQ] = useState('')
   const listId = useId()
