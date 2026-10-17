@@ -39,3 +39,13 @@ await sharp('assets-src/hero-forest-night.jpg').resize({ width: 1600 }).jpeg({ q
   }
   console.log('ok developer')
 }
+
+// ilustrasi pengembang (sisi belakang kartu balik di halaman Tentang): persegi, lebar 360 dan 720
+{
+  const art = sharp('assets-src/developer-art.jpg')
+  for (const w of [360, 720]) {
+    await art.clone().resize({ width: w }).avif({ quality: 55, effort: 4 }).toFile(`${OUT}/developer-art-${w}.avif`)
+    await art.clone().resize({ width: w }).webp({ quality: 82 }).toFile(`${OUT}/developer-art-${w}.webp`)
+  }
+  console.log('ok developer-art')
+}

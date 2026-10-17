@@ -8,6 +8,20 @@ import { INSTAGRAM_URL, THREADS_URL } from '../lib/site'
 import { useState } from 'react'
 import credits from '../assets/images/credits.json'
 
+/** Foto pengembang yang berbalik menjadi ilustrasi saat disorot kursor (perangkat dengan kursor) atau diketuk atau ditekan Enter. */
+function FlipPhoto() {
+  const [flipped, setFlipped] = useState(false)
+  return (
+    <button type="button" className="flip size-32 shrink-0 cursor-pointer rounded-full focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ember md:size-40" data-flipped={flipped}
+      aria-pressed={flipped} aria-label={flipped ? 'Tampilkan foto pengembang' : 'Tampilkan ilustrasi pengembang'} onClick={() => setFlipped(v => !v)}>
+      <span className="flip-inner">
+        <span className="flip-face"><Picture name="developer" decorative={false} sizes="160px" className="size-full object-cover" /></span>
+        <span className="flip-face flip-back"><Picture name="developer-art" decorative={false} sizes="160px" className="size-full object-cover" /></span>
+      </span>
+    </button>
+  )
+}
+
 const toc = [
   ['metodologi', 'Metodologi'],
   ['sumber', 'Sumber data'],
@@ -146,7 +160,7 @@ export default function About() {
 
           <Section id="pengembang" title="Pengembang">
             <div className="flex items-center gap-5">
-              <div className="size-32 shrink-0 overflow-hidden rounded-full md:size-40"><Picture name="developer" decorative={false} sizes="160px" className="size-full object-cover" /></div>
+              <FlipPhoto />
               <div>
                 <p className="text-2xl font-bold text-fg">harrie ros</p>
                 <p className="mt-1 text-fg-2">Pengembang situs <span translate="no">Visualize Karhutla</span>.</p>
