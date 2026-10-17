@@ -12,6 +12,7 @@ Gunakan formulir pada tab **Issues** repositori: kirim artikel, sumbang data, la
 - **Data**: harus disertai sumber yang dapat diperiksa, periode, dan satuan. Data luas lahan terbakar tingkat provinsi/kabupaten ditambahkan ke `data/sipongi.json`.
 - **Karya visual**: ilustrator, fotografer, dan desainer dapat mengunggah gambar (ukuran bebas) lewat formulir "Kirim templat", atau mengirim lewat DM Threads @harrierosss bagi yang tidak memakai GitHub (karya dari DM ditambahkan manual oleh pemelihara). Setelah ditinjau, pemelihara memasang label `setujui-templat`; alur `.github/workflows/approve-template.yml` lalu mengoptimalkan gambar, menambahkannya ke `src/assets/community/` dan `src/content/communityTemplates.json`, serta memicu deploy. Persiapan satu kali: buat label `setujui-templat` dan `templat` pada repositori.
 - **Karya visual lewat situs**: setelah Worker dan Turnstile dipasang (lihat `worker/README.md`), pengunjung dapat mengirim karya tanpa akun GitHub; isu `templat` dibuat otomatis atas nama pemelihara dan tetap melalui persetujuan label `setujui-templat`.
+- **Cerita karhutla**: tulisan (artikel ilmiah, cerita warga, opini) dikirim lewat formulir isu "Kirim cerita karhutla" atau DM Threads; pemelihara menambahkannya sebagai berkas Markdown (format di `docs/CERITA.md`).
 
 ## Mengirim perbaikan kode
 

@@ -33,7 +33,7 @@ const A = ({ href, children }: { href: string; children: ReactNode }) => (
 
 function Citation({ isSample, dataDate }: { isSample: boolean; dataDate: string }) {
   const [copied, setCopied] = useState(false)
-  const text = `Visualize Karhutla. (2026). Titik panas kebakaran hutan dan lahan di Kalimantan menurut kabupaten/kota, 1 Januari sampai ${fmtDate(dataDate)} 2026 [Set data]. Diolah dari NASA FIRMS (VIIRS NOAA-20) dan geoBoundaries. ${siteUrl()}/tentang#unduh. Diakses ${fmtDate(new Date().toISOString().slice(0, 10))}.`
+  const text = `Visualize Karhutla. (2026). Titik panas kebakaran hutan dan lahan di wilayah terpantau menurut kabupaten/kota, 1 Januari sampai ${fmtDate(dataDate)} 2026 [Set data]. Diolah dari NASA FIRMS (VIIRS NOAA-20) dan geoBoundaries. ${siteUrl()}/tentang#unduh. Diakses ${fmtDate(new Date().toISOString().slice(0, 10))}.`
   const copy = async () => {
     try { await navigator.clipboard.writeText(text); setCopied(true); window.setTimeout(() => setCopied(false), 2500) } catch { /* abaikan */ }
   }
@@ -91,7 +91,7 @@ export default function About() {
             <p>Titik panas disaring pada lima provinsi di Kalimantan, yaitu Kalimantan Barat, Kalimantan Tengah, Kalimantan Selatan, Kalimantan Timur, dan Kalimantan Utara. Suatu titik dihitung sebagai bagian dari kabupaten/kota apabila koordinatnya berada di dalam batas wilayah administratif tingkat ADM2 dari geoBoundaries. Titik dengan tingkat kepercayaan rendah dikeluarkan dari perhitungan (MODIS di bawah 30 dan VIIRS berlabel rendah).</p>
             <p>Data diagregasi menurut kabupaten/kota dan hari. Tanggal yang digunakan adalah tanggal akuisisi FIRMS dalam waktu UTC, sehingga dapat berbeda satu hari dari tanggal menurut WIB. Data pembanding tahun 2025 dihitung pada periode yang sama, yaitu 1 Januari hingga tanggal data terakhir.</p>
             <p>Luas lahan terbakar tidak diturunkan dari titik panas. Data per kabupaten/kota belum tersedia, sehingga situs ini memakai angka tingkat provinsi yang dilaporkan BNPB melalui pemberitaan: gabungan data SiPongi Kemenhut hingga 31 Juli 2026 dan hasil pengukuran lapangan tim gabungan BNPB hingga 14 September 2026. Angka Kalimantan Utara tidak dilaporkan. Periode angka ini lebih pendek daripada periode titik panas. Padanan "lapangan sepak bola" menggunakan luas 0,714 hektare per lapangan. Peringkat disusun berdasarkan jumlah titik panas, bukan berdasarkan luas lahan terbakar.</p>
-            <p>Ringkasan untuk seluruh Kalimantan merupakan penjumlahan dari 56 kabupaten/kota. Data pembanding tahun 2025 pada ringkasan tersebut hanya ditampilkan apabila tersedia untuk seluruh kabupaten/kota, sedangkan luas lahan terbakar merupakan jumlah provinsi yang datanya tersedia.</p>
+            <p>Ringkasan seluruh wilayah merupakan penjumlahan dari 56 kabupaten/kota. Data pembanding tahun 2025 pada ringkasan tersebut hanya ditampilkan apabila tersedia untuk seluruh kabupaten/kota, sedangkan luas lahan terbakar merupakan jumlah provinsi yang datanya tersedia.</p>
           </Section>
 
           <Section id="sumber" title="Sumber data">
@@ -159,7 +159,7 @@ export default function About() {
           </Section>
 
           <Section id="kredit" title="Kredit aset visual">
-            <p>Foto dan ilustrasi pada situs ini berfungsi sebagai ilustrasi suasana dan bukan dokumentasi lokasi tertentu di Kalimantan. Seluruh aset visual berasal dari sumber bebas royalti dan digunakan untuk keperluan nonkomersial.</p>
+            <p>Foto dan ilustrasi pada situs ini berfungsi sebagai ilustrasi suasana dan bukan dokumentasi lokasi tertentu di wilayah terpantau. Seluruh aset visual berasal dari sumber bebas royalti dan digunakan untuk keperluan nonkomersial.</p>
             <p>Foto yang dapat dikreditkan:</p>
             <ul className="grid gap-5">
               {credits.map(c => (

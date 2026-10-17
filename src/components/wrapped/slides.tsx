@@ -92,7 +92,7 @@ export function SlideTotal({ kab, meta }: SlideCtx) {
   const { item } = useVariants()
   return (
     <SlideShell image="embers-closeup" position="50% 65%" dim={0.7} footer={<Src meta={meta} />}>
-      <Kicker>Jumlah titik panas yang terdeteksi di {kab.name}</Kicker>
+      <Kicker>Jumlah titik panas yang terdeteksi di {kab.isRegion ? 'seluruh wilayah' : kab.name}</Kicker>
       <Big text={txt}><CountUp value={kab.total2026} duration={1.8} start /></Big>
       <Lead>sejak 1 Januari 2026</Lead>
       <motion.p variants={item} className="mt-[8cqw] max-w-[28ch] text-[5.2cqw] font-semibold leading-snug text-fg">{compareText(kab, meta)}</motion.p>
@@ -142,7 +142,7 @@ export function SlideMonth({ kab, meta }: SlideCtx) {
   )
 }
 
-/* 5. Peringkat (kabupaten/kota) atau peringkat provinsi (seluruh Kalimantan) */
+/* 5. Peringkat (kabupaten/kota) atau peringkat provinsi (seluruh wilayah) */
 export function SlideRank({ kab, kabs, meta }: SlideCtx) {
   const { item } = useVariants()
   if (kab.isRegion) {
@@ -151,7 +151,7 @@ export function SlideRank({ kab, kabs, meta }: SlideCtx) {
       <SlideShell image="firefighters-silhouette" position="32% 50%" dim={0.74} footer={<Src meta={meta} />}>
         <Kicker>Provinsi dengan titik panas terbanyak</Kicker>
         <Big text={prov[0].name} max={16}>{prov[0].name}</Big>
-        <Lead>{fmt(prov[0].total)} titik panas, atau {fmt((prov[0].total / kab.total2026) * 100)}% dari total Kalimantan.</Lead>
+        <Lead>{fmt(prov[0].total)} titik panas, atau {fmt((prov[0].total / kab.total2026) * 100)}% dari total seluruh wilayah.</Lead>
         <motion.ol variants={item} className="mt-[8cqw] grid gap-[2.2cqw]">
           {prov.map((p, i) => (
             <li key={p.id} className={`flex items-baseline justify-between gap-[3cqw] border-l-[0.8cqw] pl-[3.2cqw] text-[4.4cqw] leading-tight ${i === 0 ? 'border-ember font-bold text-fg' : 'border-fg-3/30 text-fg-2'}`}>
@@ -171,7 +171,7 @@ export function SlideRank({ kab, kabs, meta }: SlideCtx) {
   const provRank = inProv.findIndex(k => k.slug === kab.slug) + 1
   return (
     <SlideShell image="firefighters-silhouette" position="32% 50%" dim={0.74} footer={<Src meta={meta} />}>
-      <Kicker>Peringkat jumlah titik panas di Kalimantan</Kicker>
+      <Kicker>Peringkat jumlah titik panas di seluruh wilayah</Kicker>
       <Big text={`#${kab.rankKalimantan}`}>#<CountUp value={kab.rankKalimantan} duration={1.2} start /></Big>
       <Lead>dari {kabs.length} kabupaten/kota. Peringkat ke-{provRank} dari {inProv.length} di {kab.provinceName}.</Lead>
       <motion.ol variants={item} className="mt-[8cqw] grid gap-[2.2cqw]">
@@ -224,7 +224,7 @@ export function summaryStats(kab: Kab, kabs: Kab[], meta: Meta): SummaryStat[] {
     { label: 'Dibandingkan 2025', value: d === null ? 'Belum tersedia' : `${d >= 0 ? '+' : '-'}${fmt(Math.abs(d))}%`, sub: d === null ? undefined : `${fmt(kab.total2025!)} titik pada periode yang sama` },
     top
       ? { label: 'Provinsi tertinggi', value: top.short, sub: `${top.name}, ${fmt(top.total)} titik` }
-      : { label: 'Peringkat di Kalimantan', value: `#${kab.rankKalimantan}`, sub: `dari ${kabs.length} kabupaten/kota` },
+      : { label: 'Peringkat di seluruh wilayah', value: `#${kab.rankKalimantan}`, sub: `dari ${kabs.length} kabupaten/kota` },
     { label: 'Bulan puncak', value: MONTHS[kab.peakMonth], sub: `${fmt(kab.monthly[kab.peakMonth])} titik` },
     { label: 'Luas lahan terbakar', value: fields === null ? 'Belum tersedia' : fmt(fields), sub: fields === null || !burned ? undefined : `lapangan sepak bola, ${fmt(burned.ha)} ha${burned.scope === 'provinsi' ? ' (tingkat provinsi)' : burned.scope === 'wilayah' ? ' (provinsi yang tersedia)' : ''}` },
   ]

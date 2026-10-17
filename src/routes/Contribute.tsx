@@ -24,7 +24,7 @@ export default function Contribute() {
   const [note, setNote] = useState('')
   const share = async () => {
     const url = siteUrl() + '/'
-    const text = 'Visualize Karhutla: peta titik panas dan ringkasan tahunan karhutla per kabupaten/kota di Kalimantan.'
+    const text = 'Visualize Karhutla: peta titik panas dan ringkasan tahunan karhutla per kabupaten/kota di wilayah terdampak.'
     try {
       if (navigator.share) { await navigator.share({ title: 'Visualize Karhutla', text, url }); return }
       await navigator.clipboard.writeText(url)
@@ -96,7 +96,7 @@ export default function Contribute() {
 
       <section aria-labelledby="bacaan" className="mt-24 border-t border-line pt-14">
         <h2 id="bacaan" className="text-3xl font-extrabold tracking-tight text-fg md:text-4xl">Daftar bacaan<span className="text-ember">.</span></h2>
-        <p className="mt-4 max-w-[60ch] text-fg-2">Artikel terpilih tentang karhutla di Kalimantan, termasuk rujukan angka yang dipakai pada situs ini.</p>
+        <p className="mt-4 max-w-[60ch] text-fg-2">Artikel terpilih tentang karhutla di Indonesia, termasuk rujukan angka yang dipakai pada situs ini.</p>
         {articles.length === 0 ? (
           <p className="mt-8 text-fg-3">Belum ada artikel. Jadilah pengirim pertama.</p>
         ) : (

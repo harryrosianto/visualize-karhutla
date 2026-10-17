@@ -89,3 +89,23 @@
 
 /* Panggung ekspor PNG: matikan animasi CSS agar hasil statis */
 .export-static .kb { animation: none; }
+
+/* Bacaan Cerita karhutla: kolom sempit, huruf serif, jarak baris lega */
+.cerita-prose { font-family: var(--font-serif); font-size: 1.3rem; line-height: 1.75; color: var(--color-fg-2); overflow-wrap: break-word; }
+.cerita-prose > * + * { margin-top: 1.5em; }
+.cerita-prose h2 { font-family: var(--font-display); font-size: 1.75rem; line-height: 1.2; font-weight: 800; letter-spacing: -0.02em; color: var(--color-fg); margin-top: 2.2em; }
+.cerita-prose h3 { font-family: var(--font-display); font-size: 1.35rem; line-height: 1.25; font-weight: 700; color: var(--color-fg); margin-top: 1.8em; }
+.cerita-prose strong { color: var(--color-fg); }
+.cerita-prose a { color: var(--color-fg); text-decoration: underline; text-decoration-color: var(--color-ember); text-underline-offset: 4px; }
+.cerita-prose a:hover { color: var(--color-ember); }
+.cerita-prose ul, .cerita-prose ol { padding-left: 1.4em; }
+.cerita-prose ul { list-style: disc; }
+.cerita-prose ol { list-style: decimal; }
+.cerita-prose li + li { margin-top: 0.5em; }
+.cerita-prose blockquote { border-left: 3px solid var(--color-ember); padding-left: 1.2em; font-style: italic; color: var(--color-fg); }
+.cerita-prose img { width: 100%; border-radius: var(--radius-panel); border: 1px solid var(--color-line); }
+.cerita-prose hr { border: 0; border-top: 1px solid var(--color-line); margin-block: 2.5em; }
+.cerita-prose code { font-family: Consolas, monospace; font-size: 0.85em; background: var(--color-ink-3); border-radius: 6px; padding: 0.1em 0.4em; }
+.cerita-prose pre { overflow-x: auto; background: var(--color-ink-2); border: 1px solid var(--color-line); border-radius: var(--radius-panel); padding: 1em; }
+.cerita-prose pre code { background: none; padding: 0; }
+@media (max-width: 640px) { .cerita-prose { font-size: 1.15rem; } }

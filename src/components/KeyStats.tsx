@@ -26,7 +26,7 @@ export function KeyStats() {
   return (
     <section className="relative mx-auto grid max-w-[1400px] gap-12 px-4 py-24 md:grid-cols-12 md:gap-8 md:px-8 md:py-36">
       <div className="md:col-span-7">
-        <h2 className="text-xl font-semibold leading-snug text-fg-2 md:text-2xl">Jumlah titik panas yang terdeteksi satelit di Kalimantan sepanjang 2026</h2>
+        <h2 className="text-xl font-semibold leading-snug text-fg-2 md:text-2xl">Jumlah titik panas yang terdeteksi satelit sepanjang 2026</h2>
         <p className="mt-6 text-[clamp(4.25rem,17vw,12rem)] font-extrabold leading-[0.9] tracking-tighter text-fg">
           {s ? <CountUp value={s.total} duration={2.2} /> : <span className="inline-block h-[0.9em] w-3/4 animate-pulse rounded-panel bg-ink-3" />}
           <span className="text-ember">.</span>

@@ -1,0 +1,59 @@
+name: Kirim cerita karhutla
+description: Kirim artikel ilmiah, cerita warga terdampak, atau opini publik tentang karhutla
+title: "[Cerita] "
+labels: ["cerita"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Tulisan yang disetujui dimuat pada halaman **Cerita karhutla** dengan nama penulis. Kiriman bersifat publik dan **ditinjau pemelihara terlebih dahulu**. Jangan mencantumkan data pribadi (nomor telepon, alamat rumah, dan sejenisnya) atau identitas orang lain tanpa izin.
+  - type: dropdown
+    id: kategori
+    attributes:
+      label: Kategori
+      options:
+        - Artikel ilmiah
+        - Cerita warga terdampak
+        - Opini publik
+    validations:
+      required: true
+  - type: input
+    id: judul
+    attributes:
+      label: Judul
+    validations:
+      required: true
+  - type: input
+    id: penulis
+    attributes:
+      label: Nama penulis
+      description: Nama atau nama pena yang ditampilkan.
+    validations:
+      required: true
+  - type: input
+    id: wilayah
+    attributes:
+      label: Wilayah terkait
+      description: Opsional. Misalnya kabupaten atau provinsi.
+  - type: input
+    id: sumber
+    attributes:
+      label: Tautan sumber (khusus artikel ilmiah)
+      description: Tautan atau DOI publikasi asli. Untuk artikel ilmiah, kirimkan ringkasan dan tautan; jangan menyalin seluruh isi bila ada hak cipta penerbit.
+      placeholder: https://
+  - type: textarea
+    id: isi
+    attributes:
+      label: Isi tulisan
+      description: Boleh memakai Markdown (judul bagian dengan ##, daftar, kutipan). Untuk cerita warga, ceritakan apa yang Anda alami dan lihat.
+    validations:
+      required: true
+  - type: checkboxes
+    id: pernyataan
+    attributes:
+      label: Pernyataan
+      options:
+        - label: Tulisan ini karya saya sendiri (atau saya berhak penuh mengirimkannya), dan saya mengizinkan situs memuatnya dengan mencantumkan nama saya.
+          required: true
+        - label: Saya tidak mencantumkan data pribadi pihak lain tanpa izin.
+          required: true

@@ -209,7 +209,7 @@ export default function MapView({ merged, mode, day, filter, selectedSlug, onSel
 
   return (
     <div className="absolute inset-0 bg-ink">
-      <div ref={el} className="absolute inset-0" aria-label="Peta interaktif titik panas Kalimantan" role="application" />
+      <div ref={el} className="absolute inset-0" aria-label="Peta interaktif titik panas" role="application" />
       <div ref={tip} aria-hidden className="map-tip pointer-events-none absolute left-0 top-0 z-10 grid w-56 gap-0.5 rounded-xl border border-line bg-ink-2/95 px-3 py-2 text-xs text-fg-2 opacity-0 transition-opacity" />
     </div>
   )

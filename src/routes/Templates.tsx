@@ -1,19 +1,16 @@
 import { DownloadSimple, ShareNetwork } from '@phosphor-icons/react'
 import { useEffect, useRef, useState } from 'react'
+import { GallerySection } from '../components/GallerySection'
 import { ExportStage } from '../components/ExportContext'
 import { AddYoursTemplate, StoryTemplate } from '../components/wrapped/StoryTemplate'
 import { HASHTAG, TEMPLATES } from '../content/storyTemplates'
 import { useData } from '../lib/DataContext'
 import { downloadBlob, renderPng, shareOrDownload } from '../lib/exportImage'
 import { siteUrl } from '../lib/share'
-import { CommunityGallery } from '../components/CommunityGallery'
-import { GalleryCollage } from '../components/GalleryCollage'
-import { SubmitArtwork } from '../components/SubmitArtwork'
-import { GalleryStory } from '../components/GalleryStory'
 import { ADD_YOURS_URL, THREADS_URL, issueUrl } from '../lib/site'
 
 const ADD_YOURS = { id: 'add-yours', headline: 'Add yours' }
-const PROMPT = 'Add yours: how are you speaking up for Kalimantan’s forests? #visualizekarhutla'
+const PROMPT = 'Add yours: how are you speaking up for our forests? #visualizekarhutla'
 
 type Job = { id: string; mode: 'bagikan' | 'unduh' }
 
@@ -114,19 +111,7 @@ export default function Templates() {
         </div>
       </section>
 
-      <section id="galeri-warga" aria-labelledby="galeri-warga-judul" className="mt-20 scroll-mt-24 border-t border-line pt-14">
-        <h2 id="galeri-warga-judul" className="text-3xl font-extrabold tracking-tight text-fg md:text-4xl">Galeri warga<span className="text-ember">.</span></h2>
-        <p className="mt-4 max-w-[60ch] text-fg-2">Karya ilustrator, fotografer, dan desainer grafis yang disumbangkan untuk kampanye ini. Semua kiriman ditinjau pemelihara sebelum dimuat. Silakan unduh dan bagikan dengan mencantumkan nama kreator.</p>
-        <SubmitArtwork className="mt-6" />
-        <div className="mt-6 flex flex-wrap gap-3">
-          <a href={issueUrl('templat.yml')} target="_blank" rel="noopener noreferrer" className="btn btn-primary">Kirim lewat GitHub</a>
-          <a href={THREADS_URL} target="_blank" rel="noopener noreferrer" className="btn btn-ghost">Kirim lewat DM Threads</a>
-        </div>
-        <p className="mt-3 max-w-[60ch] text-sm text-fg-3">Ukuran dan rasio bebas: Story 9:16, lanskap desktop, atau lainnya. Kirim lewat GitHub (akun gratis) atau, bila tidak punya akun, lewat DM Threads @harrierosss. Semua kiriman disetujui terlebih dahulu sebelum tampil di sini.</p>
-        <GalleryStory className="mt-6" />
-        <GalleryCollage className="mt-4" />
-        <CommunityGallery />
-      </section>
+      <GallerySection />
 
       <p className="mt-12 max-w-[64ch] text-sm leading-relaxed text-fg-3">
         Gambar berukuran 1080 x 1920 piksel (rasio 9:16). Foto bersumber dari aset bebas royalti; lihat rincian pada halaman Tentang. Angka pada templat terakhir berasal dari NASA FIRMS (VIIRS NOAA-20) dan mengikuti data terbaru situs ini.

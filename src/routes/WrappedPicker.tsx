@@ -7,10 +7,10 @@ export default function WrappedPicker() {
   return (
     <section className="mx-auto min-h-[80dvh] max-w-[1400px] px-4 pb-32 pt-40 md:px-8">
       <h1 translate="no" className="max-w-[14ch] text-5xl font-extrabold leading-[0.98] tracking-tighter text-fg md:text-7xl">Karhutla Wrapped<span className="text-ember">.</span></h1>
-      <p className="mt-6 max-w-[48ch] text-lg leading-relaxed text-fg-2">Pilih kabupaten/kota di Kalimantan untuk melihat ringkasan titik panas tahun 2026 dalam delapan layar.</p>
+      <p className="mt-6 max-w-[48ch] text-lg leading-relaxed text-fg-2">Pilih kabupaten/kota untuk melihat ringkasan titik panas tahun 2026 dalam delapan layar.</p>
       <ul className="mt-8 grid max-w-3xl gap-3 sm:grid-cols-2 sm:gap-4">
         {[
-          { to: '/wrapped/kalimantan', title: 'Seluruh Kalimantan', desc: 'Lihat ringkasan gabungan lima provinsi.' },
+          { to: '/wrapped/kalimantan', title: 'Seluruh wilayah', desc: 'Lihat ringkasan gabungan seluruh provinsi.' },
           { to: '/templat', title: 'Templat Instagram Story', desc: 'Unduh templat kampanye kesadaran karhutla.' },
         ].map(c => (
           <li key={c.to}>

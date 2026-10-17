@@ -1,5 +1,5 @@
 import { Component, Suspense, lazy, type ComponentType, type ReactNode } from 'react'
-import { BrowserRouter, Navigate, Outlet, Route, Routes, useLocation } from 'react-router-dom'
+import { BrowserRouter, Outlet, Route, Routes, useLocation } from 'react-router-dom'
 import { useEffect } from 'react'
 import { DataBanner } from './components/DataBanner'
 import { Footer } from './components/Footer'
@@ -26,6 +26,9 @@ const MapPage = lazyRoute(() => import('./routes/MapPage'))
 const WrappedPicker = lazyRoute(() => import('./routes/WrappedPicker'))
 const WrappedPage = lazyRoute(() => import('./routes/WrappedPage'))
 const Templates = lazyRoute(() => import('./routes/Templates'))
+const Galeri = lazyRoute(() => import('./routes/Galeri'))
+const Cerita = lazyRoute(() => import('./routes/Cerita'))
+const CeritaDetail = lazyRoute(() => import('./routes/CeritaDetail'))
 const About = lazyRoute(() => import('./routes/About'))
 const Contribute = lazyRoute(() => import('./routes/Contribute'))
 const NotFound = lazyRoute(() => import('./routes/NotFound'))
@@ -90,7 +93,9 @@ export default function App() {
               <Route index element={<Landing />} />
               <Route path="wrapped" element={<WrappedPicker />} />
               <Route path="templat" element={<Templates />} />
-              <Route path="galeri" element={<Navigate to="/templat#galeri-warga" replace />} />
+              <Route path="galeri" element={<Galeri />} />
+              <Route path="cerita" element={<Cerita />} />
+              <Route path="cerita/:slug" element={<CeritaDetail />} />
               <Route path="tentang" element={<About />} />
               <Route path="kontribusi" element={<Contribute />} />
               <Route path="*" element={<NotFound />} />

@@ -74,8 +74,8 @@ export function MapTeaser() {
           <Link to="/peta" className="btn btn-primary mt-8">Lihat peta <ArrowRight weight="bold" size={18} aria-hidden /></Link>
           <SourceNote className="mt-6" />
         </div>
-        <Link to="/peta" aria-label="Lihat peta titik panas Kalimantan" className="relative block aspect-[5/4] md:col-span-8 md:aspect-[16/11]">
-          <canvas ref={cv} role="img" aria-label="Peta Kalimantan dengan ikon api di kabupaten berpanas terbanyak" className="size-full" />
+        <Link to="/peta" aria-label="Lihat peta titik panas" className="relative block aspect-[5/4] md:col-span-8 md:aspect-[16/11]">
+          <canvas ref={cv} role="img" aria-label="Peta dengan ikon api di kabupaten berpanas terbanyak" className="size-full" />
           <div aria-hidden className="pointer-events-none absolute inset-0">
             {icons.map(i => (
               <img key={i.slug} src={fireUrl} alt="" width={i.size} height={i.size} draggable={false} loading="lazy"

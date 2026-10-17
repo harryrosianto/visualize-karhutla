@@ -17,7 +17,7 @@ if (!fs.existsSync(path.join(DIST, 'index.html'))) { console.error('[og] dist/in
 const meta = JSON.parse(fs.readFileSync('public/data/meta.json', 'utf8'))
 const kabsOnly: any[] = JSON.parse(fs.readFileSync('public/data/kabupaten.json', 'utf8'))
 // entri gabungan seluruh Kalimantan, sama seperti buildRegion di src/lib/data.ts
-const kabs: any[] = [...kabsOnly, { slug: 'kalimantan', name: 'Kalimantan', provinceName: 'Lima provinsi', total2026: kabsOnly.reduce((a, k) => a + k.total2026, 0) }]
+const kabs: any[] = [...kabsOnly, { slug: 'kalimantan', name: 'Seluruh wilayah', provinceName: 'Seluruh provinsi terpantau', total2026: kabsOnly.reduce((a, k) => a + k.total2026, 0) }]
 const fmt = (n: number) => new Intl.NumberFormat('id-ID').format(Math.round(n))
 const MONTHS = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember']
 const dateLabel = (iso: string) => { const [y, m, d] = iso.split('-').map(Number); return `${d} ${MONTHS[m - 1]} ${y}` }
@@ -70,7 +70,7 @@ const foot = `Data per ${dateLabel(meta.dataDate)}. Sumber: NASA FIRMS, SiPongi 
 fs.mkdirSync(path.join(DIST, 'og'), { recursive: true })
 
 console.log(`[og] membuat ${kabs.length + 1} gambar...`)
-fs.writeFileSync(path.join(DIST, 'og', 'default.jpg'), await png(tree({ kicker: 'Karhutla Kalimantan 2026', title: 'Setahun di balik asap', foot })))
+fs.writeFileSync(path.join(DIST, 'og', 'default.jpg'), await png(tree({ kicker: 'Karhutla 2026', title: 'Setahun di balik asap', foot })))
 for (const k of kabs) {
   const out = await png(tree({ kicker: `Karhutla Wrapped 2026, ${k.provinceName}`, title: k.name, big: fmt(k.total2026), sub: 'titik panas sejak 1 Januari 2026', foot }))
   fs.writeFileSync(path.join(DIST, 'og', `${k.slug}.jpg`), out)
@@ -93,7 +93,7 @@ function page(o: { title: string; desc: string; image: string; url: string }) {
 }
 const write = (rel: string, html: string) => { const f = path.join(DIST, rel); fs.mkdirSync(path.dirname(f), { recursive: true }); fs.writeFileSync(f, html) }
 const sampleNote = meta.isSample ? ' (DATA CONTOH)' : ''
-const defaults = { desc: `Peta titik panas dan ringkasan Karhutla Wrapped per kabupaten/kota di Kalimantan tahun 2026${sampleNote}. Sumber data: NASA FIRMS dan SiPongi Kemenhut.`, image: `${SITE}/og/default.jpg` }
+const defaults = { desc: `Peta titik panas dan ringkasan Karhutla Wrapped per kabupaten/kota di wilayah terdampak tahun 2026${sampleNote}. Sumber data: NASA FIRMS dan SiPongi Kemenhut.`, image: `${SITE}/og/default.jpg` }
 write('index.html', page({ title: 'Visualize Karhutla', ...defaults, url: SITE + '/' }))
 for (const [route, title] of [['peta', 'Peta titik panas | Visualize Karhutla'], ['wrapped', 'Karhutla Wrapped 2026 | Visualize Karhutla'], ['tentang', 'Tentang data | Visualize Karhutla'], ['kontribusi', 'Kontribusi | Visualize Karhutla']])
   write(`${route}/index.html`, page({ title, ...defaults, url: `${SITE}/${route}` }))

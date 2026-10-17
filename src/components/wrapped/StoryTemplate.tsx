@@ -6,7 +6,7 @@ import { HASHTAG, type StoryTemplateDef } from '../../content/storyTemplates'
 /** Satu templat story 9:16. Ukuran memakai cqw sehingga markup sama untuk pratinjau kecil dan ekspor 1080x1920. */
 export function StoryTemplate({ t, total }: { t: StoryTemplateDef; total: number | null }) {
   const headline = t.stat ? (total ? `${fmt(total)} ${t.headline}` : 'Every ember is a warning.') : t.headline
-  const sub = t.stat && !total ? 'Kalimantan, 2026.' : t.sub
+  const sub = t.stat && !total ? '2026.' : t.sub
   const long = headline.length > 26
   const text = (
     <div lang="en" translate="no">

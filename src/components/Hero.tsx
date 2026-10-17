@@ -61,11 +61,13 @@ export function Hero() {
           Visualize<br />Karhutla<span className="text-ember">.</span>
         </motion.h1>
         <motion.p {...rise(0.4)} className="mt-7 max-w-[46ch] text-base leading-relaxed text-fg-2 md:text-lg">
-          Peta titik panas dan ringkasan tahunan per kabupaten/kota di Kalimantan, berdasarkan data satelit NASA FIRMS.
+          Peta titik panas dan ringkasan tahunan per kabupaten/kota di wilayah terdampak, berdasarkan data satelit NASA FIRMS.
         </motion.p>
         <motion.div {...rise(0.55)} className="mt-8 flex flex-wrap gap-3">
           <a href="#cek" className="btn btn-primary">Telusuri wilayah <ArrowRight weight="bold" size={18} aria-hidden /></a>
           <Link to="/peta" className="btn btn-ghost">Lihat peta</Link>
+          <Link to="/galeri" className="btn btn-ghost">Galeri warga</Link>
+          <Link to="/cerita" className="btn btn-ghost">Cerita karhutla</Link>
         </motion.div>
       </motion.div>
     </section>

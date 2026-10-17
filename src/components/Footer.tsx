@@ -29,13 +29,15 @@ export function Footer() {
           <p translate="no" className="font-brand text-6xl font-normal leading-none tracking-[0.05em] text-fg md:text-7xl">
             Visualize Karhutla<span className="text-ember">.</span>
           </p>
-          <p translate="no" className="mt-3 font-serif text-2xl leading-[1.15] text-ember pb-1">Karhutla Kalimantan 2026.</p>
+          <p translate="no" className="mt-3 font-serif text-2xl leading-[1.15] text-ember pb-1">Karhutla 2026.</p>
           <p className="mt-6 max-w-[40ch] text-base leading-relaxed text-fg-2">
-            Peta dan ringkasan data titik panas karhutla di lima provinsi Kalimantan yang dapat diakses dan dibagikan oleh masyarakat.
+            Peta dan ringkasan data titik panas karhutla di wilayah terdampak yang dapat diakses dan dibagikan oleh masyarakat.
           </p>
         </div>
         <div className="grid grid-cols-2 gap-10 sm:grid-cols-3">
           <Col title="Jelajah">
+            <li><Link className={a} to="/galeri">Galeri warga</Link></li>
+            <li><Link className={a} to="/cerita">Cerita karhutla</Link></li>
             <li><Link className={a} to="/peta">Peta titik panas</Link></li>
             <li><Link className={a} to="/kontribusi">Kontribusi</Link></li>
             <li><Link className={a} to="/wrapped"><span translate="no">Karhutla Wrapped</span></Link></li>

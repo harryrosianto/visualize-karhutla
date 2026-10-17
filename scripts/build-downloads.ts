@@ -32,7 +32,7 @@ for (const p of meta.provinces) {
 fs.writeFileSync(`${OUT}/${prefix}titik-panas-harian-2026.csv`, daily.join('\n') + '\n')
 
 fs.writeFileSync(`${OUT}/${prefix}metadata.json`, JSON.stringify({
-  judul: 'Titik panas kebakaran hutan dan lahan di Kalimantan menurut kabupaten/kota, 2026',
+  judul: 'Titik panas kebakaran hutan dan lahan di wilayah terpantau menurut kabupaten/kota, 2026',
   status_data: status,
   tanggal_data: meta.dataDate,
   dibuat: new Date().toISOString(),

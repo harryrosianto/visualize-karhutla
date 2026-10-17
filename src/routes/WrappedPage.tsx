@@ -48,7 +48,7 @@ export default function WrappedPage() {
       { id: 'total', title: 'Total titik panas', node: <SlideTotal {...c} /> },
       { id: 'luas', title: 'Luas terbakar', node: <SlideBurned {...c} /> },
       { id: 'bulan', title: 'Bulan paling berasap', node: <SlideMonth {...c} /> },
-      { id: 'rank', title: 'Peringkat di Kalimantan', node: <SlideRank {...c} /> },
+      { id: 'rank', title: 'Peringkat di seluruh wilayah', node: <SlideRank {...c} /> },
       { id: 'kampanye', title: 'Karhutla belum berakhir. The fires are not over.', node: <SlideCampaign /> },
       { id: 'ringkas', title: 'Rangkuman', node: <SummaryCard {...c} /> },
       { id: 'kontribusi', title: 'Mengangkat isu karhutla', node: <SlideContribute /> },
@@ -80,7 +80,7 @@ export default function WrappedPage() {
 
   if (error) return <Message title="Data belum dapat dimuat" body="Periksa sambungan internet, kemudian muat ulang halaman." />
   if (!kabs.length || !meta) return <div className="grid min-h-dvh place-items-center bg-ink text-fg-3" role="status">Memuat ringkasan...</div>
-  if (!kab || !slides) return <Message title="Wilayah tidak ditemukan" body="Tautan ini tidak sesuai dengan kabupaten/kota maupun wilayah Kalimantan." />
+  if (!kab || !slides) return <Message title="Wilayah tidak ditemukan" body="Tautan ini tidak sesuai dengan kabupaten/kota maupun ringkasan seluruh wilayah." />
 
   const c = { kab, kabs, meta }
   return (

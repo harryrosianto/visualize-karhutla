@@ -111,7 +111,7 @@ export default function MapPage() {
   const bounds = BOUNDS[filter]
   return (
     <section className="relative h-[calc(100dvh-var(--banner-h,0px))] min-h-[560px] overflow-hidden bg-ink">
-      <h1 className="sr-only">Peta titik panas Kalimantan 2026</h1>
+      <h1 className="sr-only">Peta titik panas 2026</h1>
       {mapGo && <Suspense fallback={<div className="absolute inset-0 bg-ink" />}>
       <MapView
         merged={merged} mode={mode} day={day} filter={filter} selectedSlug={sel} onSelect={select}
@@ -119,7 +119,7 @@ export default function MapPage() {
       />
       </Suspense>}
 
-      <div className="pointer-events-none absolute inset-x-0 top-28 sm:top-16 z-10 flex flex-col gap-2 px-4 md:px-8">
+      <div className="pointer-events-none absolute inset-x-0 top-16 z-10 flex flex-col gap-2 px-4 md:px-8">
         <div className={`pointer-events-auto max-w-sm ${searchOpen ? '' : 'max-md:hidden'}`}>
           <KabupatenPicker hideLabel label="Cari kabupaten atau kota" onSelect={k => { setSearchOpen(false); setSel(k.slug); if (filter !== 'all' && filter !== k.provinceId) setFilter('all'); setFlyTo({ lon: k.centroid[0], lat: k.centroid[1], key: Date.now() }) }} />
         </div>

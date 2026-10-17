@@ -81,7 +81,7 @@ export function buildRegion(kabs: Kab[]): Kab | null {
   kabs.forEach(k => k.monthly.forEach((n, i) => (monthly[i] += n)))
   const complete = <T extends 'total2025' | 'burnedHa'>(key: T) => (kabs.every(k => k[key] !== null) ? kabs.reduce((a, k) => a + (k[key] as number), 0) : null)
   return {
-    slug: REGION_SLUG, name: 'Kalimantan', provinceId: 'kalbar', provinceName: 'Lima provinsi', centroid: [114, 0.1],
+    slug: REGION_SLUG, name: 'Seluruh wilayah', provinceId: 'kalbar', provinceName: 'Seluruh provinsi terpantau', centroid: [114, 0.1],
     total2026: kabs.reduce((a, k) => a + k.total2026, 0), total2025: complete('total2025'),
     monthly, peakMonth: monthly.indexOf(Math.max(...monthly)), burnedHa: complete('burnedHa'), rankKalimantan: 0, isRegion: true,
   }
