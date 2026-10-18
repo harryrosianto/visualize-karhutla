@@ -7,6 +7,7 @@ import { CommunityGallery } from '../components/CommunityGallery'
 import { GalleryCollage } from '../components/GalleryCollage'
 import { GalleryStory } from '../components/GalleryStory'
 import { Picture } from '../components/Picture'
+import { VideoSection } from '../components/VideoSection'
 import { communityTemplates } from '../lib/community'
 
 function CheckRegion() {
@@ -57,6 +58,7 @@ export default function Landing() {
       {/* menumpuk satu piksel di atas hero agar tidak ada garis sambungan */}
       <div className="relative z-10 -mt-px bg-ink"><KeyStats /></div>
       <MapTeaser />
+      <VideoSection />
       <Gallery />
       <CheckRegion />
     </>
