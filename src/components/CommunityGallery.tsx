@@ -20,7 +20,8 @@ function ArtworkCard({ t }: { t: CommunityTemplate }) {
     if (e.key === 'ArrowLeft') { e.preventDefault(); go(i - 1) }
   }
   const cur = t.slides[i] ?? t.slides[0]
-  const arrow = 'absolute top-1/2 grid size-11 -translate-y-1/2 place-items-center rounded-full border border-line bg-ink/80 text-fg backdrop-blur transition-opacity hover:bg-ink disabled:pointer-events-none disabled:opacity-0'
+  // hanya panah (tanpa latar); area ketuk tetap 44 px, terbaca di atas gambar terang maupun gelap lewat bayangan
+  const arrow = 'absolute top-1/2 grid size-11 -translate-y-1/2 place-items-center text-white transition-[opacity,transform] hover:scale-110 active:scale-95 disabled:pointer-events-none disabled:opacity-0 [&>svg]:drop-shadow-[0_1px_3px_rgb(0_0_0/0.9)]'
   return (
     <>
       <div className="relative" {...(n > 1 ? { role: 'group', 'aria-roledescription': 'carousel', 'aria-label': `Seri ${t.title}, ${n} gambar`, tabIndex: 0, onKeyDown: onKey } : {})}>
@@ -35,8 +36,8 @@ function ArtworkCard({ t }: { t: CommunityTemplate }) {
         </ul>
         {n > 1 && (
           <>
-            <button type="button" onClick={() => go(i - 1)} disabled={i === 0} aria-label="Gambar sebelumnya" className={`${arrow} left-2`}><CaretLeft size={20} weight="bold" aria-hidden /></button>
-            <button type="button" onClick={() => go(i + 1)} disabled={i === n - 1} aria-label="Gambar berikutnya" className={`${arrow} right-2`}><CaretRight size={20} weight="bold" aria-hidden /></button>
+            <button type="button" onClick={() => go(i - 1)} disabled={i === 0} aria-label="Gambar sebelumnya" className={`${arrow} left-0`}><CaretLeft size={22} weight="bold" aria-hidden /></button>
+            <button type="button" onClick={() => go(i + 1)} disabled={i === n - 1} aria-label="Gambar berikutnya" className={`${arrow} right-0`}><CaretRight size={22} weight="bold" aria-hidden /></button>
             <p aria-hidden className="pointer-events-none absolute bottom-2 right-2 rounded-full bg-ink/80 px-2.5 py-0.5 text-xs font-semibold text-fg num">{i + 1}/{n}</p>
             <p className="sr-only" aria-live="polite">Gambar {i + 1} dari {n}</p>
           </>
