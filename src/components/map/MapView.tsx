@@ -136,14 +136,17 @@ export default function MapView({ merged, mode, day, provIds, fRange, selectedSl
     map.current.setFilter('kab-sel', ['==', ['get', 'slug'], selectedSlug ?? ''])
   }, [ready, selectedSlug])
 
-  // sesuaikan pandangan saat filter provinsi berubah
+  // sesuaikan pandangan saat filter provinsi berubah; pada pemuatan pertama langsung pas (tanpa animasi)
+  const fitted = useRef(false)
   useEffect(() => {
     const m = map.current
     if (!m) return
     const pad = window.innerWidth < 768 ? { top: 200, bottom: 190, left: 20, right: 20 } : { top: 110, bottom: 150, left: 40, right: 420 }
-    m.fitBounds([[fitBounds[0], fitBounds[1]], [fitBounds[2], fitBounds[3]]], { padding: pad, duration: reduceMotion ? 0 : 900 })
+    const first = !fitted.current && ready
+    if (ready) fitted.current = true
+    m.fitBounds([[fitBounds[0], fitBounds[1]], [fitBounds[2], fitBounds[3]]], { padding: pad, duration: reduceMotion || first ? 0 : 900 })
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [fitKey])
+  }, [fitKey, ready])
 
   useEffect(() => {
     if (!flyTo || !map.current) return
