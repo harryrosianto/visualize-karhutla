@@ -54,7 +54,7 @@ Mode "Kepadatan 3D" mengelompokkan titik ke dalam sel segi enam. Semakin tinggi 
 
 ## Membuka satu kabupaten
 
-![Panel Merauke menunjukkan total titik panas, perbandingan dengan 2025, bulan puncak, dan peringkat.](cerita/cara-membaca-peta-titik-panas/5.webp)
+![Peta Papua Selatan dengan panel Merauke yang menunjukkan total titik panas, perbandingan dengan 2025, bulan puncak, dan peringkat.](cerita/cara-membaca-peta-titik-panas/5.webp)
 
 Klik atau ketuk satu kabupaten/kota untuk melihat ringkasannya: total titik panas sejak 1 Januari, perbandingan dengan periode yang sama tahun 2025, grafik per bulan, bulan puncak, dan peringkat di antara seluruh kabupaten/kota yang terpantau. Dari sini Anda juga dapat membuka Karhutla Wrapped untuk kabupaten tersebut.
 
