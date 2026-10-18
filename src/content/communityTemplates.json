@@ -238,5 +238,29 @@
     "width": 1080,
     "height": 1350,
     "issue": 28
+  },
+  {
+    "id": "t30-1",
+    "ext": "jpg",
+    "title": "stop korbankan warga & seisi hutan untuk komoditas global",
+    "creator": "ceritanupi",
+    "creatorUrl": "https://www.instagram.com/ceritanupi/",
+    "width": 1080,
+    "height": 1350,
+    "issue": 30,
+    "more": [
+      {
+        "id": "t30-2",
+        "ext": "jpg",
+        "width": 1080,
+        "height": 1350
+      },
+      {
+        "id": "t30-3",
+        "ext": "jpg",
+        "width": 1080,
+        "height": 1350
+      }
+    ]
   }
 ]
