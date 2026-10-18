@@ -16,7 +16,7 @@ export function GallerySection({ asPage = false }: { asPage?: boolean }) {
         <a href={issueUrl('templat.yml')} target="_blank" rel="noopener noreferrer" className="btn btn-primary">Kirim lewat GitHub</a>
         <a href={THREADS_URL} target="_blank" rel="noopener noreferrer" className="btn btn-ghost">Kirim lewat DM Threads</a>
       </div>
-      <p className="mt-3 max-w-[60ch] text-sm text-fg-3">Ukuran dan rasio bebas: Story 9:16, lanskap desktop, atau lainnya. Kirim lewat formulir, lewat GitHub (akun gratis), atau lewat DM Threads @harrierosss. Semua kiriman disetujui terlebih dahulu sebelum tampil di sini.</p>
+      <p className="mt-3 max-w-[60ch] text-sm text-fg-3">Ukuran dan rasio bebas: Story 9:16, lanskap desktop, atau lainnya. Punya karya berkelanjutan? Kirim hingga 10 gambar sekaligus sebagai satu seri (satu judul, satu deskripsi) yang bisa digeser di galeri. Kirim lewat formulir, lewat GitHub (akun gratis), atau lewat DM Threads @harrierosss. Semua kiriman disetujui terlebih dahulu sebelum tampil di sini.</p>
       <GalleryStory className="mt-6" />
       <GalleryCollage className="mt-4" />
       <CommunityGallery />

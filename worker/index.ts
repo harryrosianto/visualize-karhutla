@@ -17,9 +17,11 @@ interface Env {
   TURNSTILE_VERIFY_URL?: string
 }
 
-const MAX_FILES = 6
+// satu kiriman = satu karya, atau satu seri berurutan (hingga MAX_FILES gambar) dengan satu judul dan satu deskripsi
+const MAX_FILES = 10
 const MAX_FILE_BYTES = 5 * 1024 * 1024
-const MAX_BODY_BYTES = MAX_FILES * MAX_FILE_BYTES + 256 * 1024
+const MAX_TOTAL_BYTES = 30 * 1024 * 1024 // batas total agar memori Worker aman (browser mengecilkan gambar besar lebih dulu)
+const MAX_BODY_BYTES = MAX_TOTAL_BYTES + 256 * 1024
 
 class HttpError extends Error {
   constructor(public status: number, public code: string, message: string) { super(message) }
@@ -103,6 +105,7 @@ async function handleSubmit(request: Request, env: Env): Promise<Response> {
 
     const judul = clean(String(form.get('judul') ?? ''), 80)
     const kreator = clean(String(form.get('kreator') ?? ''), 60)
+    const deskripsi = clean(String(form.get('deskripsi') ?? ''), 400)
     let tautan = String(form.get('tautan') ?? '').trim()
     if (tautan && !/^https:\/\/[^\s<>"'`]{3,200}$/i.test(tautan)) throw new HttpError(400, 'tautan', 'Tautan harus diawali https:// dan tidak berisi spasi.')
     if (!judul || !kreator) throw new HttpError(400, 'field', 'Judul dan nama kreator wajib diisi.')
@@ -113,6 +116,7 @@ async function handleSubmit(request: Request, env: Env): Promise<Response> {
     if (files.length < 1) throw new HttpError(400, 'files', 'Unggah minimal satu gambar.')
     if (files.length > MAX_FILES) throw new HttpError(400, 'files', `Maksimal ${MAX_FILES} gambar per kiriman.`)
 
+    if (files.reduce((a, f) => a + f.size, 0) > MAX_TOTAL_BYTES) throw new HttpError(413, 'size', 'Total ukuran gambar maksimal 30 MB.')
     const prepared: { bytes: Uint8Array; ext: string }[] = []
     for (const f of files) {
       if (f.size > MAX_FILE_BYTES) throw new HttpError(413, 'size', 'Setiap gambar maksimal 5 MB.')
@@ -135,8 +139,10 @@ async function handleSubmit(request: Request, env: Env): Promise<Response> {
     const body = [
       '### Judul templat', '', judul, '',
       '### Nama kreator', '', kreator, '',
+      '### Deskripsi', '', deskripsi || '_No response_', '',
       '### Tautan portofolio atau akun media sosial', '', tautan || '_No response_', '',
       '### Gambar', '', ...urls.map((u, i) => `![gambar-${i + 1}](${u})`), '',
+      ...(urls.length > 1 ? ['_Seri berurutan: satu karya dengan banyak gambar. Urutan gambar di atas = urutan geser di galeri._', ''] : []),
       '### Pernyataan', '',
       '- [X] Karya ini buatan saya sendiri (atau saya berhak penuh menyumbangkannya), dan tidak memuat merek, karya, atau wajah orang lain tanpa izin.',
       '- [X] Saya mengizinkan pengunjung memakai, mengunduh, dan membagikan karya ini secara gratis untuk kampanye kesadaran karhutla dengan mencantumkan nama saya sebagai kredit.', '',

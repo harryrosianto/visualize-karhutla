@@ -89,3 +89,5 @@ Catatan: pada GitHub Pages, halaman statis tiap rute (`/wrapped/<slug>/`) dilaya
 ## Kirim karya tanpa akun GitHub (Worker)
 
 Formulir di halaman `/templat` memanggil Worker `worker/index.ts` (proyek Cloudflare `visualize-karhutla`) yang menyimpan gambar ke repositori `visualize-karhutla-v01` dan membuat isu di repositori utama. Langkah pemasangan (token GitHub, Turnstile, secret) ada di `worker/README.md`.
+
+Satu kiriman dapat berisi hingga 10 gambar (maksimal 5 MB per gambar, 30 MB total) dan dianggap satu karya atau satu seri berurutan dengan satu judul dan satu deskripsi. Pada `src/content/communityTemplates.json`, gambar pertama menjadi sampul entri (dipakai kolase dan video), sedangkan gambar lainnya berada pada larik `more` dan tampil sebagai slide yang bisa digeser pada kartu galeri.

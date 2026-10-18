@@ -6,8 +6,9 @@ declare global {
   interface Window { turnstile?: { render: (el: HTMLElement, opts: Record<string, unknown>) => string; reset: (id?: string) => void; remove: (id: string) => void } }
 }
 
-const MAX_FILES = 6
+const MAX_FILES = 10 // satu kiriman = satu karya atau satu seri berurutan
 const MAX_BYTES = 5 * 1024 * 1024
+const MAX_TOTAL = 30 * 1024 * 1024
 const OK_TYPES = ['image/png', 'image/jpeg', 'image/webp', 'image/gif']
 
 function loadTurnstile() {
@@ -24,7 +25,7 @@ function loadTurnstile() {
 
 /** Perkecil gambar besar di browser (sisi terpanjang 2400 px) agar unggahan ringan; gambar kecil dikirim apa adanya. */
 async function prepare(file: File): Promise<File> {
-  if (file.size <= 3 * 1024 * 1024 || file.type === 'image/gif') return file
+  if (file.size <= 1.5 * 1024 * 1024 || file.type === 'image/gif') return file
   const bmp = await createImageBitmap(file)
   const scale = Math.min(1, 2400 / Math.max(bmp.width, bmp.height))
   const c = document.createElement('canvas')
@@ -86,11 +87,14 @@ export function SubmitArtwork({ className = '' }: { className?: string }) {
     try {
       const fd = new FormData(e.currentTarget)
       fd.delete('gambar')
+      let total = 0
       for (const f of files) {
         const p = await prepare(f)
         if (p.size > MAX_BYTES) throw new Error('Gambar terlalu besar (maksimal 5 MB setelah dikecilkan). Gunakan jalur GitHub atau DM untuk berkas besar.')
+        total += p.size
         fd.append('gambar', p, p.name)
       }
+      if (total > MAX_TOTAL) throw new Error('Total ukuran gambar terlalu besar (maksimal 30 MB). Kurangi jumlah gambar atau pakai jalur GitHub atau DM.')
       fd.set('cf-turnstile-response', token)
       const res = await fetch(SUBMIT_URL, { method: 'POST', body: fd })
       const out = (await res.json().catch(() => ({}))) as { ok?: boolean; message?: string }
@@ -120,6 +124,9 @@ export function SubmitArtwork({ className = '' }: { className?: string }) {
           <label className="block text-sm font-semibold text-fg">Judul karya
             <input name="judul" required maxLength={80} className={input} />
           </label>
+          <label className="block text-sm font-semibold text-fg">Deskripsi <span className="font-normal text-fg-3">(opsional)</span>
+            <textarea name="deskripsi" rows={3} maxLength={400} className={input} placeholder="Satu deskripsi singkat untuk karya atau seri ini" />
+          </label>
           <label className="block text-sm font-semibold text-fg">Nama kreator
             <input name="kreator" required maxLength={60} className={input} placeholder="Nama atau nama pena (tampil sebagai kredit)" />
           </label>
@@ -128,7 +135,8 @@ export function SubmitArtwork({ className = '' }: { className?: string }) {
           </label>
           <label className="block text-sm font-semibold text-fg">Gambar
             <input name="gambar" type="file" accept={OK_TYPES.join(',')} multiple onChange={e => pick(e.target.files)} className={`${input} file:mr-3 file:rounded-full file:border-0 file:bg-ember file:px-4 file:py-1.5 file:font-semibold file:text-ink`} />
-            <span className="mt-1 block text-xs font-normal text-fg-3">PNG, JPG, WebP, atau GIF. Hingga {MAX_FILES} gambar; gambar besar dikecilkan otomatis. Ukuran dan rasio bebas.</span>
+            <span className="mt-1 block text-xs font-normal text-fg-3">PNG, JPG, WebP, atau GIF. Hingga {MAX_FILES} gambar. Lebih dari satu gambar ditampilkan sebagai satu seri yang bisa digeser, dengan satu judul dan satu deskripsi; gambar pertama menjadi sampul. Gambar besar dikecilkan otomatis. Ukuran dan rasio bebas.</span>
+            {files.length > 1 && <span className="mt-2 block text-xs font-normal text-fg">Urutan seri: {files.map((f, k) => `${k + 1}. ${f.name}`).join('; ')}</span>}
           </label>
           {/* kolom jebakan bot: tidak terlihat oleh manusia */}
           <input name="website" tabIndex={-1} autoComplete="off" aria-hidden className="absolute left-[-9999px] h-0 w-0 opacity-0" />

@@ -20,6 +20,11 @@ body:
       description: Nama atau nama samaran yang ditampilkan sebagai kredit.
     validations:
       required: true
+  - type: textarea
+    id: deskripsi
+    attributes:
+      label: Deskripsi
+      description: Opsional. Satu deskripsi singkat untuk karya atau seri ini (maksimal 400 karakter).
   - type: input
     id: tautan
     attributes:
@@ -30,7 +35,7 @@ body:
     id: gambar
     attributes:
       label: Gambar
-      description: Seret berkas gambar ke kotak ini (PNG, JPG, WebP, atau GIF; maksimal 12 MB per berkas, hingga 6 berkas). Format SVG tidak diterima.
+      description: Seret berkas gambar ke kotak ini (PNG, JPG, WebP, atau GIF; maksimal 12 MB per berkas, hingga 10 berkas). Jika lebih dari satu, kumpulan gambar ditampilkan sebagai satu seri yang bisa digeser, berurutan seperti yang Anda unggah; gambar pertama menjadi sampul. Format SVG tidak diterima.
     validations:
       required: true
   - type: checkboxes
