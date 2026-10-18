@@ -1,5 +1,6 @@
 import { Play } from '@phosphor-icons/react'
-import { useState } from 'react'
+import { useInView, useReducedMotion } from 'motion/react'
+import { useEffect, useRef, useState } from 'react'
 
 const VIDEO = {
   id: 'aks6P_onYqo',
@@ -8,9 +9,18 @@ const VIDEO = {
   channelUrl: 'https://www.youtube.com/@thereformistid',
 }
 
-/** Video YouTube tentang karhutla. Pemutar baru dimuat setelah diklik (tanpa pelacakan YouTube saat halaman dibuka) dan memakai domain youtube-nocookie. */
+/** Video YouTube tentang karhutla. Pemutar baru dimuat saat video mulai terlihat (diputar otomatis tanpa suara, sesuai aturan browser) atau saat tombol putar ditekan (dengan suara). Memakai domain youtube-nocookie. Tidak diputar otomatis bila pengguna memilih gerak dikurangi atau hemat data. */
 export function VideoSection() {
   const [play, setPlay] = useState(false)
+  const [muted, setMuted] = useState(false)
+  const box = useRef<HTMLDivElement>(null)
+  const reduce = useReducedMotion()
+  const visible = useInView(box, { once: true, amount: 0.6 })
+  useEffect(() => {
+    const saveData = (navigator as any).connection?.saveData === true
+    if (visible && !reduce && !saveData && !play) { setMuted(true); setPlay(true) }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [visible, reduce])
   return (
     <section id="video" aria-labelledby="video-judul" className="mx-auto max-w-[1400px] px-4 py-24 md:px-8 md:py-36">
       <div className="grid gap-8 md:grid-cols-12 md:items-end">
@@ -22,10 +32,10 @@ export function VideoSection() {
             {' '}<a href={`https://www.youtube.com/watch?v=${VIDEO.id}`} target="_blank" rel="noopener noreferrer" className="underline decoration-ember underline-offset-4 hover:text-fg">Buka di YouTube</a>
           </p>
         </div>
-        <div className="relative aspect-video overflow-hidden rounded-panel border border-line bg-ink-2 md:col-span-8">
+        <div ref={box} className="relative aspect-video overflow-hidden rounded-panel border border-line bg-ink-2 md:col-span-8">
           {play ? (
             <iframe
-              src={`https://www.youtube-nocookie.com/embed/${VIDEO.id}?autoplay=1&rel=0`}
+              src={`https://www.youtube-nocookie.com/embed/${VIDEO.id}?autoplay=1&rel=0&playsinline=1${muted ? '&mute=1' : ''}`}
               title={VIDEO.title}
               allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; web-share"
               referrerPolicy="strict-origin-when-cross-origin"
@@ -33,7 +43,7 @@ export function VideoSection() {
               className="absolute inset-0 size-full"
             />
           ) : (
-            <button type="button" onClick={() => setPlay(true)} aria-label={`Putar video: ${VIDEO.title}`}
+            <button type="button" onClick={() => { setMuted(false); setPlay(true) }} aria-label={`Putar video: ${VIDEO.title}`}
               className="group absolute inset-0 grid place-items-center bg-gradient-to-br from-ink-2 via-ink-3 to-ink text-left">
               <span aria-hidden className="absolute inset-0 opacity-60 [background:radial-gradient(60%_60%_at_30%_100%,rgb(249_115_22/0.35),transparent)]" />
               <span className="relative grid size-20 place-items-center rounded-full bg-ember text-ink transition-transform group-hover:scale-105 group-active:scale-95 md:size-24">
