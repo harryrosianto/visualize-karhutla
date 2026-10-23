@@ -1,7 +1,7 @@
-// Mengunduh titik panas NASA FIRMS (Kalimantan, Sumatra, Papua) lewat API area, per jendela 5 hari, ke data/raw/.
+// Mengunduh titik panas NASA FIRMS (seluruh Indonesia: Kalimantan, Sumatra, Papua, Jawa, Bali dan Nusa Tenggara, Sulawesi, Maluku) lewat API area, per jendela 5 hari, ke data/raw/.
 // Butuh MAP_KEY gratis: https://firms.modaps.eosdis.nasa.gov/api/map_key/ (isi FIRMS_MAP_KEY di .env).
 // Pakai: npm run fetch-firms [tanggalMulai=2025-01-01] [tanggalAkhir=hari ini]
-// Lingkungan: FIRMS_AREAS=kalimantan,sumatra,papua (pilih wilayah), FIRMS_MERGE=1 (gabungkan dengan CSV yang sudah ada, tanpa duplikat).
+// Lingkungan: FIRMS_AREAS=kalimantan,sumatra,papua,jawa,balinusa,sulawesi,maluku (pilih wilayah), FIRMS_MERGE=1 (gabungkan dengan CSV yang sudah ada, tanpa duplikat).
 // Sumber default VIIRS SNPP: arsip standar (SP) untuk data lama + NRT untuk beberapa bulan terakhir, dedup per titik.
 import fs from 'node:fs'
 
@@ -17,8 +17,12 @@ const AREA_BOXES: Record<string, string> = {
   kalimantan: '108.5,-4.5,119.5,4.6',
   sumatra: '94.5,-6.5,109.5,6.2',
   papua: '130.0,-9.5,141.2,0.8',
+  jawa: '105.0,-8.95,114.8,-5.5',
+  balinusa: '114.3,-11.2,125.3,-8.0',
+  sulawesi: '118.7,-6.0,127.0,5.8',
+  maluku: '124.3,-8.5,135.0,3.0',
 }
-const AREAS = (process.env.FIRMS_AREAS || 'kalimantan,sumatra,papua').split(',').map(x => x.trim()).filter(Boolean)
+const AREAS = (process.env.FIRMS_AREAS || Object.keys(AREA_BOXES).join(',')).split(',').map(x => x.trim()).filter(Boolean)
 for (const a of AREAS) if (!AREA_BOXES[a]) { console.error(`Wilayah tidak dikenal: ${a}. Pilihan: ${Object.keys(AREA_BOXES).join(', ')}`); process.exit(1) }
 const START = process.argv[2] || '2025-01-01'
 const END = process.argv[3] || new Date().toISOString().slice(0, 10)

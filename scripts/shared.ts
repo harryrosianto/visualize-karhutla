@@ -1,11 +1,15 @@
 import fs from 'node:fs'
 import type { Feature, FeatureCollection, MultiPolygon, Polygon, Position } from 'geojson'
 
-export type Island = 'kalimantan' | 'sumatra' | 'papua'
+export type Island = 'kalimantan' | 'sumatra' | 'papua' | 'jawa' | 'balinusa' | 'sulawesi' | 'maluku'
 export const ISLANDS: { id: Island; name: string }[] = [
   { id: 'kalimantan', name: 'Kalimantan' },
   { id: 'sumatra', name: 'Sumatra' },
   { id: 'papua', name: 'Papua' },
+  { id: 'jawa', name: 'Jawa' },
+  { id: 'balinusa', name: 'Bali dan Nusa Tenggara' },
+  { id: 'sulawesi', name: 'Sulawesi' },
+  { id: 'maluku', name: 'Maluku' },
 ]
 
 /** adm1: nama ADM1 geoBoundaries (data 2017). Provinsi Papua hasil pemekaran 2022 tidak punya ADM1 sendiri; kabupatennya dipetakan menurut nama (fetch-boundaries). */
@@ -31,6 +35,23 @@ export const PROVINCES: { id: string; name: string; short: string; island: Islan
   { id: 'papteng', name: 'Papua Tengah', short: 'Pateng', island: 'papua' },
   { id: 'pappeg', name: 'Papua Pegunungan', short: 'Papeg', island: 'papua' },
   { id: 'papbarda', name: 'Papua Barat Daya', short: 'Pabarda', island: 'papua' },
+  { id: 'banten', name: 'Banten', short: 'Banten', island: 'jawa', adm1: 'Banten' },
+  { id: 'dki', name: 'DKI Jakarta', short: 'Jakarta', island: 'jawa', adm1: 'Jakarta Special Capital Region' },
+  { id: 'jabar', name: 'Jawa Barat', short: 'Jabar', island: 'jawa', adm1: 'West Java' },
+  { id: 'jateng', name: 'Jawa Tengah', short: 'Jateng', island: 'jawa', adm1: 'Central Java' },
+  { id: 'diy', name: 'DI Yogyakarta', short: 'DIY', island: 'jawa', adm1: 'Special Region of Yogyakarta' },
+  { id: 'jatim', name: 'Jawa Timur', short: 'Jatim', island: 'jawa', adm1: 'East Java' },
+  { id: 'bali', name: 'Bali', short: 'Bali', island: 'balinusa', adm1: 'Bali' },
+  { id: 'ntb', name: 'Nusa Tenggara Barat', short: 'NTB', island: 'balinusa', adm1: 'West Nusa Tenggara' },
+  { id: 'ntt', name: 'Nusa Tenggara Timur', short: 'NTT', island: 'balinusa', adm1: 'East Nusa Tenggara' },
+  { id: 'sulut', name: 'Sulawesi Utara', short: 'Sulut', island: 'sulawesi', adm1: 'North Sulawesi' },
+  { id: 'gorontalo', name: 'Gorontalo', short: 'Gorontalo', island: 'sulawesi', adm1: 'Gorontalo' },
+  { id: 'sulteng', name: 'Sulawesi Tengah', short: 'Sulteng', island: 'sulawesi', adm1: 'Central Sulawesi' },
+  { id: 'sulbar', name: 'Sulawesi Barat', short: 'Sulbar', island: 'sulawesi', adm1: 'West Sulawesi' },
+  { id: 'sulsel', name: 'Sulawesi Selatan', short: 'Sulsel', island: 'sulawesi', adm1: 'South Sulawesi' },
+  { id: 'sultra', name: 'Sulawesi Tenggara', short: 'Sultra', island: 'sulawesi', adm1: 'Southeast Sulawesi' },
+  { id: 'maluku', name: 'Maluku', short: 'Maluku', island: 'maluku', adm1: 'Maluku' },
+  { id: 'malut', name: 'Maluku Utara', short: 'Malut', island: 'maluku', adm1: 'North Maluku' },
 ]
 
 export const YEAR = 2026

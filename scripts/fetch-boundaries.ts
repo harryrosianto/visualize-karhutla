@@ -29,9 +29,13 @@ const OWNER_OVERRIDE: Record<string, string> = {
   Seruyan: 'kalteng', 'Kutai Barat': 'kaltim', 'Mahakam Hulu': 'kaltim', Malinau: 'kaltara',
   Dairi: 'sumut', Karo: 'sumut', 'Musi Banyuasin': 'sumsel', 'Bengkulu Selatan': 'bengkulu', 'Lampung Barat': 'lampung',
   'Kota Sungai Penuh': 'jambi', 'Batang Hari': 'jambi', 'Tanjung Jabung Timur': 'jambi', 'Muara Enim': 'sumsel', 'Kota Pagar Alam': 'sumsel',
+  // Jawa, Sulawesi, Nusa Tenggara, Maluku: batas ADM1 yang kasar menempatkan sebagian kabupaten pada provinsi tetangga atau tidak sama sekali
+  'Kota Jakarta Barat': 'dki', 'Kepulauan Seribu': 'dki', Bojonegoro: 'jatim', Magetan: 'jatim', Ngawi: 'jatim',
+  'Bone Bolango': 'gorontalo', 'Mamuju Utara': 'sulbar', 'Morowali Utara': 'sulteng', 'Parigi Moutong': 'sulteng', Kolaka: 'sultra',
+  Sikka: 'ntt', 'Halmahera Tengah': 'malut',
 }
 // bukan kabupaten/kota (danau) pada data geoBoundaries
-const EXCLUDE = new Set(['Danau', 'Danau Toba'])
+const EXCLUDE = new Set(['Danau', 'Danau Toba', 'Waduk Cirata', 'Hutan', 'Wadung Kedungombo'])
 // pemekaran Papua 2022: ADM1 geoBoundaries hanya Papua dan Papua Barat, jadi kabupaten dipetakan menurut nama
 const PAPUA_MAP: Record<string, string[]> = {
   papsel: ['Merauke', 'Boven Digoel', 'Mappi', 'Asmat'],
@@ -73,6 +77,8 @@ async function main() {
   const byId = (id: string) => PROVINCES.find(p => p.id === id)!
   const out: Record<string, Feature[]> = {}
   const seen = new Set<string>()
+  const items: { f: Feature<Polygon | MultiPolygon>; c: [number, number]; nm: string; owner: (typeof PROVINCES)[number] }[] = []
+  const unassigned: string[] = []
   for (const f of adm2.features as Feature<Polygon | MultiPolygon>[]) {
     const c = centroid(f.geometry)
     const pt = point(c)
@@ -82,8 +88,13 @@ async function main() {
     if (EXCLUDE.has(nm)) continue
     let owner: (typeof PROVINCES)[number] | undefined = OWNER_OVERRIDE[nm] ? byId(OWNER_OVERRIDE[nm]) : prov.find(p => booleanPointInPolygon(pt, p.feat) || booleanPointInPolygon(probe, p.feat))
     if (owner && owner.island === 'papua' && PAPUA_OF.has(nm)) owner = byId(PAPUA_OF.get(nm)!)
-    if (!owner) continue
-    const name = nm
+    if (!owner) { unassigned.push(nm); continue }
+    items.push({ f, c, nm, owner })
+  }
+  // slug wilayah lama (Kalimantan, Sumatra, Papua) dibagikan lebih dulu agar tautan yang sudah beredar tidak berubah; wilayah baru menyusul
+  const LEGACY = new Set(['kalimantan', 'sumatra', 'papua'])
+  items.sort((a, b) => Number(!LEGACY.has(a.owner.island)) - Number(!LEGACY.has(b.owner.island)))
+  for (const { f, c, nm: name, owner } of items) {
     let slug = slugify(name)
     if (seen.has(slug)) slug += '-' + owner.id
     seen.add(slug)
@@ -93,6 +104,7 @@ async function main() {
       geometry: { ...f.geometry, coordinates: roundCoords(f.geometry.coordinates) } as any,
     })
   }
+  if (unassigned.length) console.log('TIDAK TERPETAKAN:', unassigned.join(', '))
   fs.mkdirSync('public/data', { recursive: true })
   let total = 0
   for (const p of PROVINCES) {

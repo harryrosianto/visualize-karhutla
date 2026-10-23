@@ -1,7 +1,7 @@
 import type { FeatureCollection, MultiPolygon, Polygon } from 'geojson'
 
 export type ProvinceId = string
-export type IslandId = 'kalimantan' | 'sumatra' | 'papua'
+export type IslandId = 'kalimantan' | 'sumatra' | 'papua' | 'jawa' | 'balinusa' | 'sulawesi' | 'maluku'
 
 export interface Meta {
   isSample: boolean

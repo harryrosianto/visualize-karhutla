@@ -7,8 +7,8 @@ import { useData } from '../lib/DataContext'
 import { loadBoundaries } from '../lib/data'
 import { SourceNote } from './SourceNote'
 
-// kerangka Kalimantan, Sumatra, dan Papua (barat, selatan, timur, utara)
-const LON0 = 94.8, LON1 = 141.2, LAT0 = -9.4, LAT1 = 6.1
+// kerangka seluruh Indonesia yang terpantau (barat, selatan, timur, utara)
+const LON0 = 94.8, LON1 = 141.2, LAT0 = -11.3, LAT1 = 6.1
 
 /** Cuplikan peta ringan (kanvas 2D, tanpa MapLibre) supaya landing tetap cepat. */
 export function MapTeaser() {
@@ -24,12 +24,12 @@ export function MapTeaser() {
     ro.observe(c)
     return () => ro.disconnect()
   }, [])
-  // ikon api pada 40 kabupaten dengan titik panas terbanyak, memakai proyeksi yang sama dengan kanvas
+  // ikon api pada 50 kabupaten dengan titik panas terbanyak, memakai proyeksi yang sama dengan kanvas
   const icons = useMemo(() => {
     if (!box.w || !kabs.length) return []
     const s = Math.min(box.w / (LON1 - LON0), box.h / (LAT1 - LAT0))
     const ox = (box.w - (LON1 - LON0) * s) / 2, oy = (box.h - (LAT1 - LAT0) * s) / 2
-    const top = [...kabs].sort((a, b) => b.total2026 - a.total2026).slice(0, 40)
+    const top = [...kabs].sort((a, b) => b.total2026 - a.total2026).slice(0, 50)
     const max = top[0]?.total2026 || 1
     return top.map(k => ({ slug: k.slug, name: k.name, x: ox + (k.centroid[0] - LON0) * s, y: oy + (LAT1 - k.centroid[1]) * s, size: 16 + 34 * Math.sqrt(k.total2026 / max) }))
   }, [box, kabs])
@@ -74,7 +74,7 @@ export function MapTeaser() {
           <Link to="/peta" className="btn btn-primary mt-8">Lihat peta <ArrowRight weight="bold" size={18} aria-hidden /></Link>
           <SourceNote className="mt-6" />
         </div>
-        <Link to="/peta" aria-label="Lihat peta titik panas" className="relative block aspect-[3/1.4] md:col-span-8 md:aspect-[3/1.25]">
+        <Link to="/peta" aria-label="Lihat peta titik panas" className="relative block aspect-[3/1.3] md:col-span-8 md:aspect-[8/3]">
           <canvas ref={cv} role="img" aria-label="Peta dengan ikon api di kabupaten berpanas terbanyak" className="size-full" />
           <div aria-hidden className="pointer-events-none absolute inset-0">
             {icons.map(i => (

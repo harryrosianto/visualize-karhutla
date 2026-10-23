@@ -1,7 +1,7 @@
 {
  "isSample": false,
- "generatedAt": "2026-10-17T14:36:38.670Z",
- "dataDate": "2026-10-17",
+ "generatedAt": "2026-10-23T10:23:40.891Z",
+ "dataDate": "2026-10-23",
  "year": 2026,
  "sources": {
   "hotspot": "NASA FIRMS (VIIRS NOAA-20)",
@@ -20,6 +20,22 @@
   {
    "id": "papua",
    "name": "Papua"
+  },
+  {
+   "id": "jawa",
+   "name": "Jawa"
+  },
+  {
+   "id": "balinusa",
+   "name": "Bali dan Nusa Tenggara"
+  },
+  {
+   "id": "sulawesi",
+   "name": "Sulawesi"
+  },
+  {
+   "id": "maluku",
+   "name": "Maluku"
   }
  ],
  "provinces": [
@@ -273,6 +289,210 @@
     -2.28,
     133.52,
     0.58
+   ]
+  },
+  {
+   "id": "banten",
+   "name": "Banten",
+   "short": "Banten",
+   "island": "jawa",
+   "bounds": [
+    105.1,
+    -7.02,
+    106.78,
+    -5.81
+   ]
+  },
+  {
+   "id": "dki",
+   "name": "DKI Jakarta",
+   "short": "Jakarta",
+   "island": "jawa",
+   "bounds": [
+    106.39,
+    -6.37,
+    106.97,
+    -5.2
+   ]
+  },
+  {
+   "id": "jabar",
+   "name": "Jawa Barat",
+   "short": "Jabar",
+   "island": "jawa",
+   "bounds": [
+    106.37,
+    -7.82,
+    108.85,
+    -5.92
+   ]
+  },
+  {
+   "id": "jateng",
+   "name": "Jawa Tengah",
+   "short": "Jateng",
+   "island": "jawa",
+   "bounds": [
+    108.56,
+    -8.21,
+    111.69,
+    -5.73
+   ]
+  },
+  {
+   "id": "diy",
+   "name": "DI Yogyakarta",
+   "short": "DIY",
+   "island": "jawa",
+   "bounds": [
+    110,
+    -8.2,
+    110.83,
+    -7.54
+   ]
+  },
+  {
+   "id": "jatim",
+   "name": "Jawa Timur",
+   "short": "Jatim",
+   "island": "jawa",
+   "bounds": [
+    110.9,
+    -8.78,
+    116.27,
+    -5.05
+   ]
+  },
+  {
+   "id": "bali",
+   "name": "Bali",
+   "short": "Bali",
+   "island": "balinusa",
+   "bounds": [
+    114.43,
+    -8.85,
+    115.71,
+    -8.06
+   ]
+  },
+  {
+   "id": "ntb",
+   "name": "Nusa Tenggara Barat",
+   "short": "NTB",
+   "island": "balinusa",
+   "bounds": [
+    115.82,
+    -9.11,
+    119.34,
+    -8.08
+   ]
+  },
+  {
+   "id": "ntt",
+   "name": "Nusa Tenggara Timur",
+   "short": "NTT",
+   "island": "balinusa",
+   "bounds": [
+    118.93,
+    -11.01,
+    125.19,
+    -8.06
+   ]
+  },
+  {
+   "id": "sulut",
+   "name": "Sulawesi Utara",
+   "short": "Sulut",
+   "island": "sulawesi",
+   "bounds": [
+    123.11,
+    0.29,
+    127.16,
+    5.57
+   ]
+  },
+  {
+   "id": "gorontalo",
+   "name": "Gorontalo",
+   "short": "Gorontalo",
+   "island": "sulawesi",
+   "bounds": [
+    121.16,
+    0.31,
+    123.55,
+    1.04
+   ]
+  },
+  {
+   "id": "sulteng",
+   "name": "Sulawesi Tengah",
+   "short": "Sulteng",
+   "island": "sulawesi",
+   "bounds": [
+    119.45,
+    -3.64,
+    124.18,
+    1.38
+   ]
+  },
+  {
+   "id": "sulbar",
+   "name": "Sulawesi Barat",
+   "short": "Sulbar",
+   "island": "sulawesi",
+   "bounds": [
+    117.07,
+    -3.57,
+    119.88,
+    -0.85
+   ]
+  },
+  {
+   "id": "sulsel",
+   "name": "Sulawesi Selatan",
+   "short": "Sulsel",
+   "island": "sulawesi",
+   "bounds": [
+    117.04,
+    -7.59,
+    121.84,
+    -1.9
+   ]
+  },
+  {
+   "id": "sultra",
+   "name": "Sulawesi Tenggara",
+   "short": "Sultra",
+   "island": "sulawesi",
+   "bounds": [
+    120.86,
+    -6.21,
+    124.61,
+    -2.78
+   ]
+  },
+  {
+   "id": "maluku",
+   "name": "Maluku",
+   "short": "Maluku",
+   "island": "maluku",
+   "bounds": [
+    125.72,
+    -8.35,
+    134.91,
+    -1.38
+   ]
+  },
+  {
+   "id": "malut",
+   "name": "Maluku Utara",
+   "short": "Malut",
+   "island": "maluku",
+   "bounds": [
+    124.28,
+    -2.48,
+    129.66,
+    2.65
    ]
   }
  ],

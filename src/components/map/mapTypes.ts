@@ -2,7 +2,7 @@ import type { Meta, ProvinceId } from '../../lib/data'
 
 export type MapMode = 'titik' | 'hex'
 export type Bounds = [number, number, number, number]
-/** 'all', id pulau (kalimantan, sumatra, papua), atau id provinsi */
+/** 'all', id wilayah (kalimantan, sumatra, papua, jawa, balinusa, sulawesi, maluku), atau id provinsi */
 export type Filter = string
 
 export interface Resolved {
