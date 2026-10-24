@@ -49,7 +49,7 @@ export function Footer() {
           </Col>
           <Col title="Data">
             <li><a className={a} href="https://firms.modaps.eosdis.nasa.gov/" rel="noreferrer" target="_blank">NASA FIRMS</a></li>
-            <li><a className={a} href="https://sipongi.menlhk.go.id/" rel="noreferrer" target="_blank">SiPongi Kemenhut</a></li>
+            <li><a className={a} href="https://sipongi.gakkum.kehutanan.go.id/" rel="noreferrer" target="_blank">SiPongi Kemenhut</a></li>
             <li><a className={a} href="https://www.geoboundaries.org/" rel="noreferrer" target="_blank">geoBoundaries</a></li>
           </Col>
         </div>
