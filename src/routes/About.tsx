@@ -96,7 +96,7 @@ export default function About() {
           <Section id="sumber" title="Sumber data">
             <ul className="grid gap-3">
               <li><A href="https://firms.modaps.eosdis.nasa.gov/">NASA FIRMS</A>: titik panas VIIRS NOAA-20, 1 Januari 2025 hingga tanggal data terakhir.</li>
-              <li><A href="https://sipongi.menlhk.go.id/">SiPongi Kemenhut</A> dan BNPB: sumber primer luas lahan terbakar. Situs ini belum mengakses SiPongi secara langsung; angka dikutip dari pemberitaan Tirto dan Mongabay Indonesia yang tercantum pada bagian referensi di bawah.</li>
+              <li><A href="https://sipongi.gakkum.kehutanan.go.id/">SiPongi Kemenhut</A> dan BNPB: sumber primer luas lahan terbakar. Situs ini belum mengakses SiPongi secara langsung; angka dikutip dari pemberitaan Tirto dan Mongabay Indonesia yang tercantum pada bagian referensi di bawah.</li>
               <li><A href="https://www.geoboundaries.org/">geoBoundaries</A>: batas provinsi dan kabupaten/kota Indonesia (ADM1 dan ADM2).</li>
               <li><A href="https://satupeta.go.id/">Kebijakan Satu Peta</A> (Badan Informasi Geospasial): lapisan opsional Kesatuan Hidrologis Gambut, izin hutan tanaman industri, dan izin hutan alam pada peta. Layanan peta publik per Agustus 2024, hanya berupa batas wilayah tanpa nama pemegang izin, dan dimuat dari server mereka hanya setelah lapisan dinyalakan.</li>
               <li><A href="https://open-meteo.com/en/docs/air-quality-api">Open-Meteo</A> (data model CAMS, Copernicus): perkiraan kualitas udara saat ini pada panel kabupaten/kota. Skala US AQI, berupa perkiraan model, bukan pengukuran stasiun.</li>
