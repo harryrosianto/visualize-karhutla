@@ -198,18 +198,18 @@ export default function MapView({ merged, mode, day, provIds, fRange, selectedSl
           getFillColor: { value: merged.color, size: 4, normalized: true },
         } } as any
         const blend = { blend: true, blendColorSrcFactor: 'src-alpha', blendColorDstFactor: 'one', blendAlphaSrcFactor: 'one', blendAlphaDstFactor: 'one' } as any
-        // titik lama memudar (rentang lunak 21 hari); titik 5 hari terakhir menyala dengan halo
+        // titik berukuran piksel tetap di semua tingkat zoom (tidak menggelembung menjadi bidang saat zoom jauh); titik lama memudar (rentang lunak 21 hari), titik 5 hari terakhir lebih terang dengan halo tipis
         layers.push(new ScatterplotLayer({
-          id: 'trail', data, radiusUnits: 'meters', getRadius: 1600, radiusMinPixels: 1.1, radiusMaxPixels: 6, opacity: 0.5, parameters: blend,
+          id: 'trail', data, radiusUnits: 'pixels', getRadius: 1.2, opacity: 0.16, parameters: blend,
           extensions: [ext],
           filterRange: [[0, day], fRange] as any, filterSoftRange: [[day - 21, day], fRange] as any, filterTransformSize: true,
         } as any))
         layers.push(new ScatterplotLayer({
-          id: 'glow', data, radiusUnits: 'meters', getRadius: 8000, radiusMinPixels: 5, radiusMaxPixels: 26, opacity: 0.16, parameters: blend,
+          id: 'glow', data, radiusUnits: 'pixels', getRadius: 3, opacity: 0.06, parameters: blend,
           extensions: [ext], filterRange: [[day - 4, day], fRange] as any,
         } as any))
         layers.push(new ScatterplotLayer({
-          id: 'core', data, radiusUnits: 'meters', getRadius: 2600, radiusMinPixels: 2, radiusMaxPixels: 9, opacity: 1,
+          id: 'core', data, radiusUnits: 'pixels', getRadius: 2.2, opacity: 1,
           extensions: [ext], filterRange: [[day - 4, day], fRange] as any,
         } as any))
       } else {
