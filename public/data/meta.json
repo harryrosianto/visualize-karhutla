@@ -1,11 +1,11 @@
 {
  "isSample": false,
- "generatedAt": "2026-10-23T10:23:40.891Z",
+ "generatedAt": "2026-10-24T18:43:12.209Z",
  "dataDate": "2026-10-23",
  "year": 2026,
  "sources": {
   "hotspot": "NASA FIRMS (VIIRS NOAA-20)",
-  "burnedArea": "BNPB: gabungan data SiPongi Kemenhut hingga 31 Juli 2026 dan hasil pengukuran lapangan tim gabungan BNPB; dilaporkan CNBC Indonesia dan Katadata, periode 1 Januari sampai 14 September 2026",
+  "burnedArea": "BNPB: gabungan data SiPongi Kemenhut hingga 31 Juli 2026 dan hasil pengukuran lapangan tim gabungan BNPB; dikutip dari pemberitaan Tirto dan Mongabay Indonesia, periode 1 Januari sampai 14 September 2026",
   "boundaries": "geoBoundaries IDN ADM1/ADM2 (CC BY 3.0 IGO)"
  },
  "islands": [
@@ -497,9 +497,9 @@
   }
  ],
  "burnedArea": {
-  "source": "BNPB: gabungan data SiPongi Kemenhut hingga 31 Juli 2026 dan hasil pengukuran lapangan tim gabungan BNPB; dilaporkan CNBC Indonesia dan Katadata",
+  "source": "BNPB: gabungan data SiPongi Kemenhut hingga 31 Juli 2026 dan hasil pengukuran lapangan tim gabungan BNPB; dikutip dari pemberitaan Tirto dan Mongabay Indonesia",
   "period": "1 Januari sampai 14 September 2026",
-  "retrievedAt": "2026-10-12",
+  "retrievedAt": "2026-10-25",
   "note": "Angka provinsi Kalimantan Barat adalah 38.310 ha (SiPongi hingga 31 Juli) ditambah 10.224 ha (pengukuran lapangan BNPB 1 Agustus sampai 14 September). Kalimantan Utara tidak disebut dalam laporan tersebut, sehingga tidak tersedia. Angka lain dari sumber berbeda (Walhi, BPBD, Nusantara Atlas) berbeda metode dan periode, dan tidak dicampur.",
   "provinces": {
    "kalbar": 48536,
@@ -509,16 +509,24 @@
   },
   "references": [
    {
-    "publisher": "CNBC Indonesia",
-    "title": "Luas Lahan Terbakar di Kalbar Tembus 48.536 Ha, Masih Ada 19 Hotspot",
-    "date": "2026-09-15",
-    "url": "https://www.cnbcindonesia.com/news/20260915170901-4-768159/luas-lahan-terbakar-di-kalbar-tembus-48536-ha-masih-ada-19-hotspot"
+    "publisher": "Tirto",
+    "title": "Area Karhutla di Kalimantan Barat Capai Lebih dari 48 Hektare",
+    "url": "https://tirto.id/area-karhutla-di-kalimantan-barat-capai-lebih-dari-48-hektare-hCUy"
    },
    {
-    "publisher": "Katadata",
-    "title": "Karhutla Kalimantan Hanguskan Hampir 100 Ribu Hektare, Kalahkan Luas Jakarta",
-    "date": "2026-09-22",
-    "url": "https://katadata.co.id/ekonomi-hijau/investasi-hijau/6ab2461180b79/karhutla-kalimantan-hanguskan-hampir-100-ribu-hektare-kalahkan-luas-jakarta"
+    "publisher": "Tirto",
+    "title": "Karhutla Kalteng Terluas di RI, Lahan Terbakar Tembus 16 Ribu Ha",
+    "url": "https://tirto.id/karhutla-kalteng-terluas-di-ri-lahan-terbakar-tembus-16-ribu-ha-hEdw"
+   },
+   {
+    "publisher": "Tirto",
+    "title": "Karhutla: Lebih Murah Mencegah atau Membayar Kerugian?",
+    "url": "https://tirto.id/berapa-biaya-yang-harus-dibayar-akibat-karhutla-hDfh"
+   },
+   {
+    "publisher": "Tirto",
+    "title": "Berapa Luas Hutan Kalimantan yang Terdampak Karhutla Tahun 2026?",
+    "url": "https://tirto.id/berapa-luas-hutan-kalimantan-yang-terdampak-karhutla-tahun-2026-hDK6"
    },
    {
     "publisher": "Mongabay Indonesia",

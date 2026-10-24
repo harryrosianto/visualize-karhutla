@@ -103,7 +103,7 @@ export default function Contribute() {
           <ul className="mt-8 grid max-w-3xl gap-8">
             {articles.map(a => (
               <li key={a.url}>
-                <p className="text-sm text-fg-3">{a.publisher}, {fmtDate(a.date)}</p>
+                <p className="text-sm text-fg-3">{a.publisher}{a.date ? `, ${fmtDate(a.date)}` : ""}</p>
                 <a href={a.url} target="_blank" rel="noopener noreferrer" className="mt-1 block text-lg font-semibold text-fg underline decoration-ember underline-offset-4 hover:text-ember">{a.title}</a>
                 {a.note && <p className="mt-1 text-fg-2">{a.note}</p>}
               </li>

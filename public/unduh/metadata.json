@@ -2,10 +2,10 @@
   "judul": "Titik panas kebakaran hutan dan lahan di wilayah terpantau menurut kabupaten/kota, 2026",
   "status_data": "asli",
   "tanggal_data": "2026-10-23",
-  "dibuat": "2026-10-23T10:25:34.297Z",
+  "dibuat": "2026-10-24T18:43:14.542Z",
   "sumber": {
     "hotspot": "NASA FIRMS (VIIRS NOAA-20)",
-    "burnedArea": "BNPB: gabungan data SiPongi Kemenhut hingga 31 Juli 2026 dan hasil pengukuran lapangan tim gabungan BNPB; dilaporkan CNBC Indonesia dan Katadata, periode 1 Januari sampai 14 September 2026",
+    "burnedArea": "BNPB: gabungan data SiPongi Kemenhut hingga 31 Juli 2026 dan hasil pengukuran lapangan tim gabungan BNPB; dikutip dari pemberitaan Tirto dan Mongabay Indonesia, periode 1 Januari sampai 14 September 2026",
     "boundaries": "geoBoundaries IDN ADM1/ADM2 (CC BY 3.0 IGO)"
   },
   "berkas": [
@@ -17,7 +17,7 @@
     "Tanggal menggunakan tanggal akuisisi FIRMS dalam waktu UTC.",
     "titik_panas_2025_periode_sama: 1 Januari sampai tanggal yang sama pada tahun 2025; kosong bila tidak tersedia.",
     "luas_terbakar_kabupaten_ha kosong karena data per kabupaten/kota belum tersedia.",
-    "luas_terbakar_provinsi_ha (nilai provinsi diulang pada setiap kabupaten/kota): BNPB: gabungan data SiPongi Kemenhut hingga 31 Juli 2026 dan hasil pengukuran lapangan tim gabungan BNPB; dilaporkan CNBC Indonesia dan Katadata; periode 1 Januari sampai 14 September 2026. Kosong bila provinsi tidak dilaporkan (Kalimantan Utara).",
+    "luas_terbakar_provinsi_ha (nilai provinsi diulang pada setiap kabupaten/kota): BNPB: gabungan data SiPongi Kemenhut hingga 31 Juli 2026 dan hasil pengukuran lapangan tim gabungan BNPB; dikutip dari pemberitaan Tirto dan Mongabay Indonesia; periode 1 Januari sampai 14 September 2026. Kosong bila provinsi tidak dilaporkan (Kalimantan Utara).",
     "Batas wilayah: geoBoundaries (ADM2), CC BY 3.0 IGO.",
     "Data turunan; rujuk NASA FIRMS dan SiPongi untuk sumber asli."
   ]

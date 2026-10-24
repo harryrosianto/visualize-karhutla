@@ -1,17 +1,27 @@
 [
   {
-    "publisher": "CNBC Indonesia",
-    "title": "Luas Lahan Terbakar di Kalbar Tembus 48.536 Ha, Masih Ada 19 Hotspot",
-    "date": "2026-09-15",
-    "url": "https://www.cnbcindonesia.com/news/20260915170901-4-768159/luas-lahan-terbakar-di-kalbar-tembus-48536-ha-masih-ada-19-hotspot",
-    "note": "Angka BNPB hingga 14 September 2026, gabungan data SiPongi dan pengukuran lapangan. Dipakai sebagai rujukan luas lahan terbakar."
+    "publisher": "Tirto",
+    "title": "Area Karhutla di Kalimantan Barat Capai Lebih dari 48 Hektare",
+    "url": "https://tirto.id/area-karhutla-di-kalimantan-barat-capai-lebih-dari-48-hektare-hCUy",
+    "note": "Angka BNPB untuk Kalimantan Barat hingga 14 September 2026 (gabungan data SiPongi dan pengukuran lapangan). Dipakai sebagai rujukan luas lahan terbakar."
   },
   {
-    "publisher": "Katadata",
-    "title": "Karhutla Kalimantan Hanguskan Hampir 100 Ribu Hektare, Kalahkan Luas Jakarta",
-    "date": "2026-09-22",
-    "url": "https://katadata.co.id/ekonomi-hijau/investasi-hijau/6ab2461180b79/karhutla-kalimantan-hanguskan-hampir-100-ribu-hektare-kalahkan-luas-jakarta",
-    "note": "Rincian luas lahan terbakar empat provinsi di Kalimantan menurut BNPB. Dipakai sebagai rujukan luas lahan terbakar."
+    "publisher": "Tirto",
+    "title": "Karhutla Kalteng Terluas di RI, Lahan Terbakar Tembus 16 Ribu Ha",
+    "url": "https://tirto.id/karhutla-kalteng-terluas-di-ri-lahan-terbakar-tembus-16-ribu-ha-hEdw",
+    "note": "Angka BNPB untuk Kalimantan Tengah. Dipakai sebagai rujukan luas lahan terbakar."
+  },
+  {
+    "publisher": "Tirto",
+    "title": "Karhutla: Lebih Murah Mencegah atau Membayar Kerugian?",
+    "url": "https://tirto.id/berapa-biaya-yang-harus-dibayar-akibat-karhutla-hDfh",
+    "note": "Angka BNPB untuk Kalimantan Selatan dan Kalimantan Timur hingga 14 September 2026. Dipakai sebagai rujukan luas lahan terbakar."
+  },
+  {
+    "publisher": "Tirto",
+    "title": "Berapa Luas Hutan Kalimantan yang Terdampak Karhutla Tahun 2026?",
+    "url": "https://tirto.id/berapa-luas-hutan-kalimantan-yang-terdampak-karhutla-tahun-2026-hDK6",
+    "note": "Gambaran luas karhutla di Kalimantan sepanjang 2026."
   },
   {
     "publisher": "Mongabay Indonesia",
@@ -19,5 +29,32 @@
     "date": "2026-08-06",
     "url": "https://mongabay.co.id/2026/08/06/ketika-kebakaran-hutan-dan-lahan-menggila-di-kalimantan/",
     "note": "Data Walhi tentang titik panas dan luas kebakaran Januari hingga Juli 2026, termasuk sebaran titik panas pada area berizin."
+  },
+  {
+    "publisher": "Mongabay Indonesia",
+    "title": "Lonjakan Tajam Kebakaran Ancam Target Tekan Emisi Hutan dan Lahan",
+    "date": "2026-09-20",
+    "url": "https://mongabay.co.id/2026/09/20/lonjakan-tajam-kebakaran-ancam-target-tekan-emisi-hutan-dan-lahan/",
+    "note": "Memuat perkiraan Yayasan Madani Berkelanjutan: sekitar 1,36 juta hektare area indikatif terbakar pada Januari hingga Agustus 2026. Ini hasil pemodelan, bukan pengukuran lapangan."
+  },
+  {
+    "publisher": "Tempo",
+    "title": "Benarkah Luas Kebakaran Hutan Tinggal Ratusan Hektare?",
+    "url": "https://www.tempo.co/politik/benarkah-data-kebakaran-hutan-dari-bnpb-yang-dilaporkan-ke-prabowo-2300387",
+    "note": "Ulasan Tempo tentang angka luas kebakaran yang dilaporkan BNPB kepada Presiden. Perlu dibaca untuk membedakan lahan yang masih ditangani dari total luas terbakar."
+  },
+  {
+    "publisher": "Greenpeace Indonesia",
+    "title": "Saat Udara Bersih Dikorbankan demi Komoditas Global",
+    "date": "2026-10-05",
+    "url": "https://www.greenpeace.org/indonesia/laporan/67961/saat-udara-bersih-dikorbankan-demi-komoditas-global/",
+    "note": "Laporan Greenpeace Indonesia dan Pantau Gambut tentang titik sumber asap, termasuk yang berada di dalam konsesi. Keberadaan titik di konsesi belum membuktikan siapa penyebab kebakaran."
+  },
+  {
+    "publisher": "Forest Watch Indonesia",
+    "title": "Krisis Karhutla Bukan Bahan Bakar Transisi Energi E20",
+    "date": "2026-09-24",
+    "url": "https://fwi.or.id/krisis-karhutla-bukan-bahak-bakar-transisi-eneri-e20/",
+    "note": "Siaran pers FWI dan koalisi tentang karhutla dan rencana ekspansi lahan untuk bioetanol."
   }
 ]

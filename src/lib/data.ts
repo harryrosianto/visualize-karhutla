@@ -16,7 +16,7 @@ export interface Meta {
   burnedArea?: {
     source: string; period: string; retrievedAt: string; note: string
     provinces: Partial<Record<ProvinceId, number>>
-    references: { publisher: string; title: string; date: string; url: string }[]
+    references: { publisher: string; title: string; date?: string; url: string }[]
   } | null
 }
 

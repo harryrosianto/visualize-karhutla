@@ -95,8 +95,8 @@ export default function About() {
 
           <Section id="sumber" title="Sumber data">
             <ul className="grid gap-3">
-              <li><A href="https://firms.modaps.eosdis.nasa.gov/">NASA FIRMS</A>: titik panas VIIRS, tahun 2025 dan 2026.</li>
-              <li><A href="https://sipongi.menlhk.go.id/">SiPongi Kemenhut</A> dan BNPB: sumber primer luas lahan terbakar. Situs ini belum mengakses SiPongi secara langsung; angka dikutip dari pemberitaan yang tercantum pada bagian referensi di bawah.</li>
+              <li><A href="https://firms.modaps.eosdis.nasa.gov/">NASA FIRMS</A>: titik panas VIIRS NOAA-20, 1 Januari 2025 hingga tanggal data terakhir.</li>
+              <li><A href="https://sipongi.menlhk.go.id/">SiPongi Kemenhut</A> dan BNPB: sumber primer luas lahan terbakar. Situs ini belum mengakses SiPongi secara langsung; angka dikutip dari pemberitaan Tirto dan Mongabay Indonesia yang tercantum pada bagian referensi di bawah.</li>
               <li><A href="https://www.geoboundaries.org/">geoBoundaries</A>: batas provinsi dan kabupaten/kota Indonesia (ADM1 dan ADM2).</li>
               <li><A href="https://satupeta.go.id/">Kebijakan Satu Peta</A> (Badan Informasi Geospasial): lapisan opsional Kesatuan Hidrologis Gambut, izin hutan tanaman industri, dan izin hutan alam pada peta. Layanan peta publik per Agustus 2024, hanya berupa batas wilayah tanpa nama pemegang izin, dan dimuat dari server mereka hanya setelah lapisan dinyalakan.</li>
               <li><A href="https://open-meteo.com/en/docs/air-quality-api">Open-Meteo</A> (data model CAMS, Copernicus): perkiraan kualitas udara saat ini pada panel kabupaten/kota. Skala US AQI, berupa perkiraan model, bukan pengukuran stasiun.</li>
@@ -107,11 +107,12 @@ export default function About() {
                 <p>Referensi angka luas lahan terbakar (diakses {fmtDate(meta.burnedArea.retrievedAt)}):</p>
                 <ul className="grid gap-3">
                   {meta.burnedArea.references.map(r => (
-                    <li key={r.url}>{r.publisher} ({fmtDate(r.date)}). <A href={r.url}>{r.title}</A>.</li>
+                    <li key={r.url}>{r.publisher}{r.date ? ` (${fmtDate(r.date)})` : ''}. <A href={r.url}>{r.title}</A>.</li>
                   ))}
                 </ul>
               </>
             )}
+            <p>Untuk konteks dan pemeriksaan angka, situs ini mengacu pada pemberitaan dan laporan <A href="https://www.tempo.co/">Tempo</A>, <A href="https://tirto.id/">Tirto</A>, <A href="https://mongabay.co.id/">Mongabay Indonesia</A>, <A href="https://fwi.or.id/">Forest Watch Indonesia</A>, dan <A href="https://www.greenpeace.org/indonesia/">Greenpeace Indonesia</A>. Setiap kutipan angka disebut pada tempatnya; data pada peta hanya berasal dari sumber data di atas.</p>
           </Section>
 
           <Section id="keterbatasan" title="Keterbatasan data">
