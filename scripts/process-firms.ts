@@ -4,6 +4,8 @@
 // Titik MODIS dengan confidence < 30 dan VIIRS confidence 'l' (low) dibuang.
 import fs from 'node:fs'
 import path from 'node:path'
+import zlib from 'node:zlib'
+import { encodeHotspots } from '../src/lib/hotspotBin'
 import { ISLANDS, PROVINCES, YEAR, bbox, dayLabels, inPolygon, loadBoundaries } from './shared'
 
 const RAW = 'data/raw'
@@ -75,7 +77,10 @@ const count2025 = new Map<string, number>([...prev].map(([slug, l]) => [slug, l.
 
 for (const p of PROVINCES) {
   const b = pts.get(p.id) ?? { lon: [], lat: [], day: [], frp: [] }
-  fs.writeFileSync(`public/data/hotspots-${p.id}.json`, JSON.stringify({ lon: b.lon, lat: b.lat, day: b.day.map(d => dayIdx.get(d)!), frp: b.frp }))
+  // biner terkompres: lebih ringan diunduh dan jauh lebih cepat dibaca peta daripada JSON (format di src/lib/hotspotBin.ts)
+  const bin = encodeHotspots({ lon: b.lon, lat: b.lat, day: b.day.map(d => dayIdx.get(d)!), frp: b.frp }, days.length)
+  fs.writeFileSync(`public/data/hotspots-${p.id}.bin.gz`, zlib.gzipSync(bin, { level: 9 }))
+  fs.rmSync(`public/data/hotspots-${p.id}.json`, { force: true })
   const kab: Record<string, number[]> = {}
   for (const f of bnd[p.id]) {
     const slug = f.properties.slug

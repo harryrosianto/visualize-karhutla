@@ -1,6 +1,8 @@
 // Generator DATA CONTOH. Semua angka di sini FIKTIF dan ditandai isSample:true.
 // Hanya batas kabupaten yang asli (geoBoundaries). Jangan dipakai sebagai klaim fakta.
 import fs from 'node:fs'
+import zlib from 'node:zlib'
+import { encodeHotspots } from '../src/lib/hotspotBin'
 import { PROVINCES, YEAR, bbox, dayLabels, inPolygon, loadBoundaries } from './shared'
 
 const DATA_DATE = '2026-10-12'
@@ -86,7 +88,7 @@ for (const p of PROVINCES) {
     }
     kabDaily[f.properties.slug] = daily
   }
-  fs.writeFileSync(`public/data/hotspots-${p.id}.json`, JSON.stringify({ lon, lat, day, frp }))
+  fs.writeFileSync(`public/data/hotspots-${p.id}.bin.gz`, zlib.gzipSync(encodeHotspots({ lon, lat, day, frp }, days.length), { level: 9 }))
   fs.writeFileSync(`public/data/daily-${p.id}.json`, JSON.stringify({ days, kab: kabDaily }))
   for (const f of bnd[p.id]) {
     const daily = kabDaily[f.properties.slug]

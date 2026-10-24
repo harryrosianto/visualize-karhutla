@@ -66,7 +66,7 @@ Taruh `public/media/hero.mp4` (H.264, tanpa suara, disarankan 8 detik loop, leba
 data/               sipongi.json, raw/ (CSV FIRMS), boundaries/src (cache unduhan)
 docs/               DECISIONS, DEPLOY
 scripts/            pipeline data, optimasi gambar, build-og
-public/data/        meta, kabupaten, daily-*, hotspots-*, boundaries-* (dimuat per provinsi)
+public/data/        meta, kabupaten, daily-*, hotspots-*.bin.gz (biner terkompres, format di src/lib/hotspotBin.ts), boundaries-* (dimuat per provinsi)
 src/components/     Hero, KeyStats, MapTeaser, Footer, map/*, wrapped/*
 src/routes/         Landing, MapPage, WrappedPicker, WrappedPage, About
 ```

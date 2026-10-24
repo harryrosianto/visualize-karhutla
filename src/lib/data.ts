@@ -1,4 +1,5 @@
 import type { FeatureCollection, MultiPolygon, Polygon } from 'geojson'
+import { decodeHotspots, type HotspotData } from './hotspotBin'
 
 export type ProvinceId = string
 export type IslandId = 'kalimantan' | 'sumatra' | 'papua' | 'jawa' | 'balinusa' | 'sulawesi' | 'maluku'
@@ -37,7 +38,7 @@ export interface Kab {
 }
 
 export interface Daily { days: string[]; kab: Record<string, number[]> }
-export interface Hotspots { lon: number[]; lat: number[]; day: number[]; frp: number[] }
+export type Hotspots = HotspotData
 export type KabCollection = FeatureCollection<Polygon | MultiPolygon, { slug: string; name: string; provinceId: ProvinceId; centroid: [number, number] }>
 
 const base = import.meta.env.BASE_URL
@@ -58,7 +59,28 @@ function get<T>(file: string): Promise<T> {
 export const loadMeta = () => get<Meta>('meta.json')
 export const loadKab = () => get<Kab[]>('kabupaten.json')
 export const loadDaily = (p: ProvinceId) => get<Daily>(`daily-${p}.json`)
-export const loadHotspots = (p: ProvinceId) => get<Hotspots>(`hotspots-${p}.json`)
+
+/** Titik panas per provinsi: biner terkompres (lihat hotspotBin.ts). Server tidak selalu mengompres .bin, jadi berkas dikompres gzip lebih dulu dan dibuka di browser;
+ *  bila server sudah membukanya sendiri (Content-Encoding), isinya langsung terbaca. */
+export const loadHotspots = (p: ProvinceId): Promise<Hotspots> => {
+  const key = `hotspots-${p}.bin.gz`
+  let q = cache.get(key) as Promise<Hotspots> | undefined
+  if (!q) {
+    q = fetch(`${base}data/${key}`).then(async r => {
+      if (!r.ok) throw new Error(`Gagal memuat ${key} (${r.status})`)
+      let buf = await r.arrayBuffer()
+      const head = new Uint8Array(buf, 0, 2)
+      if (head[0] === 0x1f && head[1] === 0x8b) {
+        if (typeof DecompressionStream === 'undefined') throw new Error('Browser ini belum mendukung pembukaan data terkompres')
+        buf = await new Response(new Blob([buf]).stream().pipeThrough(new DecompressionStream('gzip'))).arrayBuffer()
+      }
+      return decodeHotspots(buf)
+    })
+    q.catch(() => cache.delete(key))
+    cache.set(key, q)
+  }
+  return q
+}
 export const loadBoundaries = (p: ProvinceId) => get<KabCollection>(`boundaries-${p}.json`)
 
 export const MONTHS = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober']
