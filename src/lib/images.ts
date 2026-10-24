@@ -1,7 +1,7 @@
 // Menyusun srcset dari hasil `npm run images` di src/assets/images/.
 const urls = import.meta.glob('../assets/images/*.{avif,webp}', { eager: true, query: '?url', import: 'default' }) as Record<string, string>
 
-export type ImageName = 'hero-forest-night' | 'embers-closeup' | 'grass-fire-smoke' | 'firefighters-manggala' | 'firefighters-silhouette' | 'developer' | 'developer-art' | 'wildfire-1' | 'wildfire-2' | 'wildfire-3'
+export type ImageName = 'hero-forest-night' | 'embers-closeup' | 'grass-fire-smoke' | 'firefighters-manggala' | 'firefighters-silhouette' | 'developer' | 'wildfire-1' | 'wildfire-2' | 'wildfire-3'
 
 export function imageSet(name: ImageName) {
   const build = (ext: 'avif' | 'webp') => {
@@ -25,7 +25,6 @@ export const ALT: Record<ImageName, string> = {
   'wildfire-1': 'Orangutan bergelantung pada ranting pohon gundul di lanskap hutan yang berkabut asap.',
   'wildfire-2': 'Dua petugas bermasker menggendong seekor orangutan di tengah semak kering dan kabut asap.',
   'wildfire-3': 'Pemandangan dari udara: asap tebal mengepul di atas hutan yang terbakar.',
-  'developer-art': 'Ilustrasi harrie ros berkacamata memeluk boneka orangutan dengan latar jingga.',
-  'developer': 'Foto harrie ros, pengembang situs, memegang boneka orangutan di sebuah toko perabot.',
+  'developer': 'Ilustrasi karakter harrie ros, pengembang situs, berkacamata berlensa ungu dan berjaket hitam, mengangkat tiga jari.',
   'grass-fire-smoke': 'Api menjalar di rerumputan kering di bawah pohon-pohon gundul, asap putih tebal menyelimuti lahan.',
 }

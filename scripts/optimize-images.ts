@@ -30,22 +30,12 @@ fs.mkdirSync('public/media', { recursive: true })
 await sharp('assets-src/hero-forest-night.jpg').resize({ width: 1600 }).jpeg({ quality: 70, mozjpeg: true }).toFile('public/media/hero-poster.jpg')
 
 
-// foto pengembang: dipotong persegi 1:1 (wajah dan boneka), lebar 360 dan 720
+// ilustrasi profil pengembang (halaman Tentang): dipotong persegi 1:1 (wajah dan tangan), lebar 360 dan 720
 {
-  const crop = sharp('assets-src/developer.webp').extract({ left: 0, top: 330, width: 720, height: 720 })
+  const crop = sharp('assets-src/developer-profile.webp').extract({ left: 380, top: 130, width: 1400, height: 1400 })
   for (const w of [360, 720]) {
     await crop.clone().resize({ width: w }).avif({ quality: 55, effort: 4 }).toFile(`${OUT}/developer-${w}.avif`)
-    await crop.clone().resize({ width: w }).webp({ quality: 80 }).toFile(`${OUT}/developer-${w}.webp`)
+    await crop.clone().resize({ width: w }).webp({ quality: 82 }).toFile(`${OUT}/developer-${w}.webp`)
   }
   console.log('ok developer')
-}
-
-// ilustrasi pengembang (sisi belakang kartu balik di halaman Tentang): persegi, lebar 360 dan 720
-{
-  const art = sharp('assets-src/developer-art.jpg')
-  for (const w of [360, 720]) {
-    await art.clone().resize({ width: w }).avif({ quality: 55, effort: 4 }).toFile(`${OUT}/developer-art-${w}.avif`)
-    await art.clone().resize({ width: w }).webp({ quality: 82 }).toFile(`${OUT}/developer-art-${w}.webp`)
-  }
-  console.log('ok developer-art')
 }
