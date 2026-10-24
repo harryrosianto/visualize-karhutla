@@ -35,3 +35,23 @@ function unionBounds(bs: Bounds[]): Bounds | null {
   if (!bs.length) return null
   return [Math.min(...bs.map(b => b[0])), Math.min(...bs.map(b => b[1])), Math.max(...bs.map(b => b[2])), Math.max(...bs.map(b => b[3]))]
 }
+
+const SATUPETA = 'https://kspservices.big.go.id/satupeta/rest/services/PUBLIK'
+
+/** Lapisan tambahan dari layanan peta publik Kebijakan Satu Peta (BIG): gambar dari server mereka, dimuat hanya setelah dinyalakan. Tanpa nama pemegang izin. */
+export interface OverlayDef { id: string; label: string; desc: string; swatch: string; url: string; opacity: number; hueRotate?: number }
+export const OVERLAYS: OverlayDef[] = [
+  {
+    id: 'gambut', label: 'Gambut', desc: 'Kesatuan Hidrologis Gambut (KHG), area yang memuat ekosistem gambut (garis arsir)', swatch: '#33ff33', opacity: 0.9, hueRotate: 120,
+    url: `${SATUPETA}/SUMBER_DAYA_ALAM_DAN_LINGKUNGAN/MapServer/export?bbox={bbox-epsg-3857}&bboxSR=3857&imageSR=3857&size=256,256&format=png32&transparent=true&layers=show:37&f=image`,
+  },
+  {
+    id: 'hti', label: 'Konsesi HTI', desc: 'Izin hutan tanaman industri (IUPHHK-HTI), batas saja', swatch: '#c26bff', opacity: 0.9, hueRotate: 180,
+    url: `${SATUPETA}/PERIZINAN_DAN_PERTANAHAN/MapServer/export?bbox={bbox-epsg-3857}&bboxSR=3857&imageSR=3857&size=256,256&format=png32&transparent=true&layers=show:2&f=image`,
+  },
+  {
+    id: 'ha', label: 'Konsesi hutan alam', desc: 'Izin hutan alam (IUPHHK-HA), batas saja', swatch: '#0070ff', opacity: 0.9,
+    url: `${SATUPETA}/PERIZINAN_DAN_PERTANAHAN/MapServer/export?bbox={bbox-epsg-3857}&bboxSR=3857&imageSR=3857&size=256,256&format=png32&transparent=true&layers=show:1&f=image`,
+  },
+]
+export const OVERLAY_IDS = OVERLAYS.map(o => o.id)

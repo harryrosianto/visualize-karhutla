@@ -6,6 +6,7 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { pickKabupaten } from '../../lib/geo'
 import type { ProvinceId } from '../../lib/data'
 import type { Bounds, MapMode } from './mapTypes'
+import { OVERLAYS } from './mapTypes'
 import type { Merged } from './useMapData'
 
 // worker disalin dari node_modules oleh scripts/copy-maplibre-worker.mjs (lihat catatan di skrip itu)
@@ -27,12 +28,14 @@ interface Props {
   selectedSlug: string | null
   onSelect: (slug: string) => void
   fitBounds: Bounds
+  /** id lapisan tambahan yang menyala (lihat OVERLAYS) */
+  overlays: string[]
   fitKey: number
   flyTo: { lon: number; lat: number; key: number } | null
   reduceMotion: boolean
 }
 
-export default function MapView({ merged, mode, day, provIds, fRange, selectedSlug, onSelect, fitBounds, fitKey, flyTo, reduceMotion }: Props) {
+export default function MapView({ merged, mode, day, provIds, fRange, selectedSlug, onSelect, fitBounds, overlays, fitKey, flyTo, reduceMotion }: Props) {
   const el = useRef<HTMLDivElement>(null)
   const map = useRef<MLMap | null>(null)
   const overlay = useRef<MapLibreOverlay | null>(null)
@@ -135,6 +138,21 @@ export default function MapView({ merged, mode, day, provIds, fRange, selectedSl
     if (!ready || !map.current) return
     map.current.setFilter('kab-sel', ['==', ['get', 'slug'], selectedSlug ?? ''])
   }, [ready, selectedSlug])
+
+  // lapisan gambut dan konsesi: sumber baru ditambahkan (dan diminta ke server) hanya saat pertama kali dinyalakan, lalu cukup disembunyikan atau ditampilkan
+  useEffect(() => {
+    const m = map.current
+    if (!ready || !m) return
+    for (const o of OVERLAYS) {
+      const on = overlays.includes(o.id)
+      const lid = `ov-${o.id}`
+      if (on && !m.getSource(lid)) {
+        m.addSource(lid, { type: 'raster', tiles: [o.url], tileSize: 256, maxzoom: 11, attribution: 'Satu Peta (BIG)' })
+        m.addLayer({ id: lid, type: 'raster', source: lid, paint: { 'raster-opacity': o.opacity, ...(o.hueRotate ? { 'raster-hue-rotate': o.hueRotate } : {}) } }, 'kab-line')
+      }
+      if (m.getLayer(lid)) m.setLayoutProperty(lid, 'visibility', on ? 'visible' : 'none')
+    }
+  }, [ready, overlays])
 
   // sesuaikan pandangan saat filter provinsi berubah; pada pemuatan pertama langsung pas (tanpa animasi)
   const fitted = useRef(false)

@@ -1,7 +1,7 @@
 import { Pause, Play } from '@phosphor-icons/react'
 import { MONTHS_SHORT, fmt, fmtDate } from '../../lib/data'
 import type { Meta } from '../../lib/data'
-import type { Filter, MapMode } from './mapTypes'
+import { OVERLAYS, type Filter, type MapMode } from './mapTypes'
 
 const chip = (on: boolean) =>
   `inline-flex min-h-[44px] shrink-0 items-center rounded-full border px-4 text-sm font-semibold transition-colors ${on ? 'border-ember bg-ember text-ink' : 'border-line bg-ink-2/90 text-fg-2 hover:text-fg'}`
@@ -97,6 +97,31 @@ export function Legend({ mode }: { mode: MapMode }) {
         </>
       ) : (
         <span>Semakin tinggi dan terang kolom, semakin padat titik panas.</span>
+      )}
+    </div>
+  )
+}
+
+/** Tombol lapisan tambahan (gambut dan konsesi) beserta keterangan warna dan batasannya. */
+export function OverlayToggles({ value, onChange }: { value: string[]; onChange: (v: string[]) => void }) {
+  const toggle = (id: string) => onChange(value.includes(id) ? value.filter(x => x !== id) : [...value, id])
+  const active = OVERLAYS.filter(o => value.includes(o.id))
+  return (
+    <div className="w-full">
+      <div role="group" aria-label="Lapisan tambahan" className="flex flex-wrap items-center gap-2">
+        <span className="text-xs text-fg-3">Lapisan:</span>
+        {OVERLAYS.map(o => (
+          <button key={o.id} type="button" aria-pressed={value.includes(o.id)} onClick={() => toggle(o.id)}
+            className={`inline-flex min-h-11 items-center gap-2 rounded-full border px-3.5 text-xs font-semibold transition-colors ${value.includes(o.id) ? 'border-ember bg-ember/15 text-fg' : 'border-line text-fg-2 hover:text-fg'}`}>
+            <i aria-hidden className="size-2.5 rounded-sm" style={{ background: o.swatch }} />{o.label}
+          </button>
+        ))}
+      </div>
+      {active.length > 0 && (
+        <div className="mt-1 text-xs leading-relaxed text-fg-3">
+          {active.map(o => <p key={o.id}><i aria-hidden className="mr-1.5 inline-block size-2 rounded-sm align-middle" style={{ background: o.swatch }} />{o.desc}.</p>)}
+          <p className="mt-1">Sumber: layanan peta publik Kebijakan Satu Peta (BIG), data per Agustus 2024, sehingga bisa berbeda dari kondisi terkini. Lapisan dimuat dari server pemerintah dan bisa memerlukan waktu. Batas konsesi tidak menunjukkan siapa yang menyebabkan kebakaran.</p>
+        </div>
       )}
     </div>
   )
