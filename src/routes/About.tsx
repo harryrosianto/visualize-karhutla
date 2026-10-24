@@ -113,6 +113,7 @@ export default function About() {
               <li><A href="https://firms.modaps.eosdis.nasa.gov/">NASA FIRMS</A>: titik panas VIIRS, tahun 2025 dan 2026.</li>
               <li><A href="https://sipongi.menlhk.go.id/">SiPongi Kemenhut</A> dan BNPB: sumber primer luas lahan terbakar. Situs ini belum mengakses SiPongi secara langsung; angka dikutip dari pemberitaan yang tercantum pada bagian referensi di bawah.</li>
               <li><A href="https://www.geoboundaries.org/">geoBoundaries</A>: batas provinsi dan kabupaten/kota Indonesia (ADM1 dan ADM2).</li>
+              <li><A href="https://open-meteo.com/en/docs/air-quality-api">Open-Meteo</A> (data model CAMS, Copernicus): perkiraan kualitas udara saat ini pada panel kabupaten/kota. Skala US AQI, berupa perkiraan model, bukan pengukuran stasiun.</li>
             </ul>
             <p>Setiap angka pada situs ini disertai keterangan sumber dan tanggal data. Keterangan tersebut turut dicantumkan pada kartu yang dibagikan.</p>
             {meta?.burnedArea && (
@@ -191,6 +192,7 @@ export default function About() {
             <p>Situs ini menggunakan data dari Fire Information for Resource Management System (FIRMS) milik NASA, yang didukung oleh NASA Earth Science Data and Information System (ESDIS).</p>
             <p>Batas wilayah: Runfola, D. dkk. (2020), geoBoundaries: A global database of political administrative boundaries, PLoS ONE 15(4): e0231866. Data ADM2 Indonesia bersumber dari BPS dengan lisensi CC BY 3.0 IGO.</p>
             <p>Peta dasar: CARTO Dark Matter, dengan data peta &copy; kontributor OpenStreetMap.</p>
+            <p>Kualitas udara: Open-Meteo.com (CC BY 4.0), memuat data Copernicus Atmosphere Monitoring Service (CAMS). Koordinat titik pusat kabupaten/kota dikirim ke layanan ini saat panel dibuka; lokasi pengunjung tidak dikirim.</p>
           </Section>
         </div>
       </div>

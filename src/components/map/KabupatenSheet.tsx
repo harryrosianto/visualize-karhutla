@@ -2,10 +2,37 @@ import { ArrowRight, X } from '@phosphor-icons/react'
 import { motion, useDragControls, useReducedMotion } from 'motion/react'
 import { useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
+import { aqiLevel, useAirQuality } from '../../lib/airQuality'
 import { MONTHS, fmt, type Kab } from '../../lib/data'
 import { useData } from '../../lib/DataContext'
 import { SourceNote } from '../SourceNote'
 import { Sparkline } from '../Sparkline'
+
+/** Perkiraan kualitas udara saat ini di titik pusat kabupaten/kota (model, bukan pengukuran stasiun). */
+function AirQualityBlock({ lon, lat }: { lon: number; lat: number }) {
+  const { status, data } = useAirQuality(lon, lat)
+  const lvl = data ? aqiLevel(data.aqi) : null
+  return (
+    <section aria-label="Kualitas udara" className="mt-5 border-t border-line pt-5">
+      <h3 className="text-xs text-fg-3">Kualitas udara saat ini (perkiraan model)</h3>
+      {status === 'loading' && <p role="status" className="mt-2 text-sm text-fg-3">Memuat kualitas udara...</p>}
+      {status === 'error' && <p className="mt-2 text-sm text-fg-3">Data kualitas udara belum dapat dimuat saat ini.</p>}
+      {data && lvl && (
+        <>
+          <p className="mt-1 flex items-center gap-2 text-lg font-bold text-fg">
+            <i aria-hidden className="size-3 shrink-0 rounded-full" style={{ background: lvl.color }} />
+            <span>{lvl.label}</span>
+          </p>
+          <p className="mt-0.5 text-sm text-fg-2 num">US AQI {Math.round(data.aqi)} · PM2,5 {fmt(data.pm25)} · PM10 {fmt(data.pm10)} µg/m³ · pukul {data.time.slice(11, 16)} WIB</p>
+        </>
+      )}
+      <p className="mt-2 text-xs leading-relaxed text-fg-3">
+        Perkiraan model CAMS untuk titik pusat wilayah, bukan hasil pengukuran stasiun, sehingga bisa meleset, terutama saat asap tebal. US AQI diambil dari polutan terburuk (bukan hanya PM2,5), dan skalanya bukan ISPU.
+        {' '}<a href="https://open-meteo.com/en/docs/air-quality-api" target="_blank" rel="noopener noreferrer" className="underline decoration-ember underline-offset-4 hover:text-fg">Data: Open-Meteo</a>
+      </p>
+    </section>
+  )
+}
 
 /** Panel detail kabupaten: kartu di kanan pada desktop, bottom sheet yang bisa digeser pada mobile. */
 export function KabupatenSheet({ kab, onClose }: { kab: Kab; onClose: () => void }) {
@@ -63,6 +90,8 @@ export function KabupatenSheet({ kab, onClose }: { kab: Kab; onClose: () => void
         <div><dt className="text-xs text-fg-3">Bulan puncak</dt><dd className="mt-1 text-lg font-bold text-fg">{MONTHS[kab.peakMonth]}</dd></div>
         <div><dt className="text-xs text-fg-3">Peringkat di seluruh wilayah</dt><dd className="mt-1 text-lg font-bold text-fg num">#{kab.rankKalimantan} dari {kabs.length}</dd></div>
       </dl>
+
+      <AirQualityBlock lon={kab.centroid[0]} lat={kab.centroid[1]} />
 
       <Link to={`/wrapped/${kab.slug}`} className="btn btn-primary mt-6 w-full">Lihat <span translate="no">Karhutla Wrapped</span> <ArrowRight size={18} weight="bold" aria-hidden /></Link>
       <SourceNote className="mt-4" />
