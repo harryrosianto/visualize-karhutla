@@ -534,5 +534,65 @@
         "height": 2400
       }
     ]
+  },
+  {
+    "id": "t52-1",
+    "ext": "jpg",
+    "title": "When nature's screams turn to ash",
+    "creator": "Thamsia Ningrum",
+    "creatorUrl": "https://www.instagram.com/si_arum04/",
+    "width": 1600,
+    "height": 896,
+    "issue": 52
+  },
+  {
+    "id": "t53-1",
+    "ext": "jpg",
+    "title": "The Burning Home",
+    "creator": "Thamsia Ningrum",
+    "creatorUrl": "https://www.instagram.com/si_arum04/",
+    "width": 2039,
+    "height": 1447,
+    "issue": 53
+  },
+  {
+    "id": "t54-1",
+    "ext": "jpg",
+    "title": "marsupilami-nya papua",
+    "creator": "Amarilisa",
+    "creatorUrl": "https://www.threads.com/@monokromisav",
+    "width": 1500,
+    "height": 1875,
+    "issue": 54
+  },
+  {
+    "id": "t55-1",
+    "ext": "jpg",
+    "title": "Indonesia Membara",
+    "creator": "fia.artroom",
+    "creatorUrl": "https://www.threads.com/@fia.artroom/post/De6Ll-lkiQ4",
+    "width": 1600,
+    "height": 1132,
+    "issue": 55
+  },
+  {
+    "id": "t56-1",
+    "ext": "jpg",
+    "title": "Kembalikan hutan kami",
+    "creator": "Lili Kamilah",
+    "creatorUrl": "https://www.threads.com/@kamilahlili",
+    "width": 1080,
+    "height": 1350,
+    "issue": 56
+  },
+  {
+    "id": "t57-1",
+    "ext": "jpg",
+    "title": "hei, sehat-sehat ya!",
+    "creator": "Hady Sumarna",
+    "creatorUrl": "https://www.threads.com/@hadysumarna",
+    "width": 1080,
+    "height": 1350,
+    "issue": 57
   }
 ]
