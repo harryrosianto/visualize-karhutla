@@ -353,5 +353,48 @@
     "width": 1640,
     "height": 2360,
     "issue": 40
+  },
+  {
+    "id": "t44-1",
+    "ext": "jpg",
+    "title": "Vol. Bergambar 20: Angkara",
+    "creator": "TRX",
+    "creatorUrl": "https://www.instagram.com/plutonioneon?mdxt=MTRxN2RrZmtvMWJxeQ==",
+    "width": 1536,
+    "height": 2048,
+    "issue": 44,
+    "description": "Ini adalah satu seri dalam projectku namanya \"Vol. Bergambar\". Di seri yang ke 20 ini aku menamainya \"Angkara\". Ini adalah kumpulan emosi yang aku rasakan, pada gambar terakhir aku menutupnya dengan Peringatan kepada seluruh manusia yang aku tuangkan pada gambar tangan dengan ayat dari Alquran Surah Ar-Rum ayat 41.",
+    "more": [
+      {
+        "id": "t44-2",
+        "ext": "jpg",
+        "width": 1536,
+        "height": 2048
+      },
+      {
+        "id": "t44-3",
+        "ext": "jpg",
+        "width": 1536,
+        "height": 2048
+      },
+      {
+        "id": "t44-4",
+        "ext": "jpg",
+        "width": 1536,
+        "height": 2048
+      },
+      {
+        "id": "t44-5",
+        "ext": "jpg",
+        "width": 1536,
+        "height": 2048
+      },
+      {
+        "id": "t44-6",
+        "ext": "jpg",
+        "width": 1536,
+        "height": 2048
+      }
+    ]
   }
 ]
