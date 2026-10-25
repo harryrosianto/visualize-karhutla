@@ -22,7 +22,7 @@ function Row({ it, k, n, onMove, onRemove }: { it: Item; k: number; n: number; o
   const btn = 'grid size-11 shrink-0 place-items-center rounded-full text-fg-2 transition-colors hover:text-fg disabled:opacity-30'
   return (
     <Reorder.Item value={it} dragListener={false} dragControls={controls} whileDrag={{ scale: 1.02, boxShadow: '0 12px 30px rgb(0 0 0 / 0.5)', zIndex: 20 }}
-      className="relative flex items-center gap-2 rounded-panel border border-line bg-ink p-2 sm:gap-3">
+      className="relative flex min-w-0 items-center gap-2 rounded-panel border border-line bg-ink p-2 sm:gap-3">
       {n > 1 && (
         <button type="button" onPointerDown={e => controls.start(e)} aria-label={`Seret untuk memindah ${it.file.name}`}
           className="grid size-11 shrink-0 cursor-grab touch-none place-items-center rounded-full text-fg-3 hover:text-fg active:cursor-grabbing"><DotsSixVertical size={22} weight="bold" aria-hidden /></button>
@@ -178,7 +178,7 @@ export function SubmitArtwork({ className = '' }: { className?: string }) {
     <div className={className}>
       <details className="max-w-xl rounded-panel border border-line bg-ink-2 p-5" id="kirim-karya">
         <summary className="flex cursor-pointer list-none items-center gap-2 font-bold text-fg"><UploadSimple size={20} weight="bold" aria-hidden />Kirim karya langsung dari sini (tanpa akun GitHub)</summary>
-        <form onSubmit={submit} className="mt-5 grid gap-4">
+        <form onSubmit={submit} className="mt-5 grid grid-cols-[minmax(0,1fr)] gap-4">
           <label className="block text-sm font-semibold text-fg">Judul karya
             <input name="judul" required maxLength={80} className={input} />
           </label>
@@ -191,7 +191,7 @@ export function SubmitArtwork({ className = '' }: { className?: string }) {
           <label className="block text-sm font-semibold text-fg">Tautan portofolio atau media sosial <span className="font-normal text-fg-3">(opsional)</span>
             <input name="tautan" type="url" maxLength={200} className={input} placeholder="https://" />
           </label>
-          <div>
+          <div className="min-w-0">
             <p id="gambar-judul" className="text-sm font-semibold text-fg">Gambar</p>
             <div onDragOver={e => { e.preventDefault(); setOver(true) }} onDragLeave={() => setOver(false)} onDrop={e => { e.preventDefault(); setOver(false); pick(e.dataTransfer.files) }}
               className={`mt-1 rounded-panel border-2 border-dashed px-4 py-5 text-center transition-colors ${over ? 'border-ember bg-ember/10' : 'border-line bg-ink-2'}`}>
@@ -208,7 +208,7 @@ export function SubmitArtwork({ className = '' }: { className?: string }) {
                   {items.length > 1 ? <p className="text-xs text-fg-2">Seret pegangan <DotsSixVertical size={14} weight="bold" aria-hidden className="inline align-text-bottom" /> atau pakai tombol panah untuk mengatur urutan seri.</p> : <span />}
                   {items.length > 1 && <button type="button" onClick={sortByName} className="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-line px-3 text-xs font-semibold text-fg-2 hover:text-fg"><SortAscending size={16} weight="bold" aria-hidden />Urutkan menurut nama</button>}
                 </div>
-                <Reorder.Group axis="y" values={items} onReorder={setItems} className="mt-2 grid gap-2">
+                <Reorder.Group axis="y" values={items} onReorder={setItems} className="mt-2 grid grid-cols-[minmax(0,1fr)] gap-2">
                   {items.map((it, k) => <Row key={it.id} it={it} k={k} n={items.length} onMove={move} onRemove={() => remove(it.id)} />)}
                 </Reorder.Group>
               </div>
