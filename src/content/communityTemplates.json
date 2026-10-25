@@ -303,5 +303,35 @@
     "width": 1080,
     "height": 1440,
     "issue": 36
+  },
+  {
+    "id": "t37-1",
+    "ext": "jpg",
+    "title": "We never stop to fight",
+    "creator": "dinihadyan",
+    "creatorUrl": "https://www.threads.com/@dinihadyan",
+    "width": 2048,
+    "height": 2048,
+    "issue": 37,
+    "more": [
+      {
+        "id": "t37-2",
+        "ext": "jpg",
+        "width": 2048,
+        "height": 2048
+      },
+      {
+        "id": "t37-3",
+        "ext": "jpg",
+        "width": 2048,
+        "height": 2048
+      },
+      {
+        "id": "t37-4",
+        "ext": "jpg",
+        "width": 2048,
+        "height": 2048
+      }
+    ]
   }
 ]
