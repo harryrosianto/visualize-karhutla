@@ -60,29 +60,54 @@ if (list.some(x => x.id === coverId)) {
 }
 
 // gambar pertama = sampul entri; sisanya menjadi slide berurutan pada entri yang sama (more)
-const slides: { id: string; ext: string; width: number; height: number }[] = []
+const slides: { id: string; ext: string; width: number; height: number; anim?: true }[] = []
+const MAX_GIF_BYTES = 5 * 1024 * 1024
+const MAX_FRAMES = 200
 for (const [i, url] of urls.entries()) {
   const res = await fetch(url, { redirect: 'follow' })
   if (!res.ok) { console.error(`Gagal mengunduh ${url}: ${res.status}`); process.exit(1) }
   const buf = Buffer.from(await res.arrayBuffer())
   if (buf.length > MAX_BYTES) { console.error(`Berkas ${i + 1} melebihi 12 MB`); process.exit(1) }
   let meta
-  try { meta = await sharp(buf).metadata() } catch { console.error(`Berkas ${i + 1} bukan gambar yang dikenali`); process.exit(1) }
+  try { meta = await sharp(buf, { pages: -1 }).metadata() } catch { console.error(`Berkas ${i + 1} bukan gambar yang dikenali`); process.exit(1) }
   if (!meta.format || !FORMATS.has(meta.format) || !meta.width || !meta.height) { console.error(`Format berkas ${i + 1} tidak didukung (${meta.format})`); process.exit(1) }
   const id = `t${issue}-${i + 1}`
-  const full = sharp(buf, { limitInputPixels: 120_000_000 }).rotate().resize({ width: 2400, height: 2400, fit: 'inside', withoutEnlargement: true })
+  const animated = (meta.pages ?? 1) > 1 && (meta.format === 'gif' || meta.format === 'webp')
+  // jumlah bingkai yang dibaca dibatasi (opsi pages tidak boleh melebihi jumlah bingkai berkas)
+  const frames = Math.min(meta.pages ?? 1, MAX_FRAMES)
+  // gambar diam: bingkai pertama (juga untuk GIF animasi), dipakai kolase, video, dan sebagai poster
+  const still = sharp(buf, { limitInputPixels: 120_000_000, page: 0 }).rotate().resize({ width: 2400, height: 2400, fit: 'inside', withoutEnlargement: true })
   // berkas unduhan: JPG (atau PNG bila ada transparansi) agar dapat langsung diunggah ke Instagram dari galeri
   const ext = meta.hasAlpha ? 'png' : 'jpg'
-  const flat = meta.hasAlpha ? full.clone().png({ compressionLevel: 9 }) : full.clone().flatten({ background: '#ffffff' }).jpeg({ quality: 88, mozjpeg: true })
+  const flat = meta.hasAlpha ? still.clone().png({ compressionLevel: 9 }) : still.clone().flatten({ background: '#ffffff' }).jpeg({ quality: 88, mozjpeg: true })
   const info = await flat.toFile(path.join(OUT_DIR, `${id}.${ext}`))
-  await sharp(buf).rotate().resize({ width: 640, withoutEnlargement: true }).webp({ quality: 74 }).toFile(path.join(OUT_DIR, `${id}-thumb.webp`))
-  slides.push({ id, ext, width: info.width, height: info.height })
+  await sharp(buf, { page: 0 }).rotate().resize({ width: 640, withoutEnlargement: true }).webp({ quality: 74 }).toFile(path.join(OUT_DIR, `${id}-thumb.webp`))
+  if (animated) {
+    // GIF asli untuk diunduh (bila terlalu besar atau bukan GIF, dikodekan ulang lebih kecil) dan WebP animasi ringan untuk pratinjau
+    let gif: Buffer = meta.format === 'gif' && buf.length <= MAX_GIF_BYTES ? buf : Buffer.alloc(0)
+    for (const w of [640, 480, 360]) {
+      if (gif.length) break
+      const g = await sharp(buf, { pages: frames, limitInputPixels: 120_000_000 }).resize({ width: Math.min(w, meta.width!), withoutEnlargement: true }).gif({ loop: 0 }).toBuffer()
+      if (g.length <= MAX_GIF_BYTES) gif = g
+    }
+    if (!gif.length) { console.error(`GIF ${i + 1} terlalu besar meski sudah dikecilkan (maksimal 5 MB)`); process.exit(1) }
+    fs.writeFileSync(path.join(OUT_DIR, `${id}.gif`), gif)
+    let webp: Buffer = Buffer.alloc(0)
+    for (const [w, q] of [[480, 65], [400, 55], [320, 45]] as const) {
+      webp = await sharp(buf, { pages: frames, limitInputPixels: 120_000_000 }).resize({ width: Math.min(w, meta.width!), withoutEnlargement: true }).webp({ quality: q, effort: 4, loop: 0 }).toBuffer()
+      if (webp.length <= 3 * 1024 * 1024) break
+    }
+    fs.writeFileSync(path.join(OUT_DIR, `${id}-anim.webp`), webp)
+    console.log(`  ${id}: GIF animasi, ${frames} bingkai (gif ${Math.round(gif.length / 1024)} KB, pratinjau ${Math.round(webp.length / 1024)} KB)`)
+  }
+  slides.push({ id, ext, width: info.width, height: info.height, ...(animated ? { anim: true as const } : {}) })
   added.push(id)
 }
 
 const [cover, ...more] = slides
 list.push({
   id: cover.id, ext: cover.ext, title, creator, creatorUrl, width: cover.width, height: cover.height, issue,
+  ...(cover.anim ? { anim: true } : {}),
   ...(description ? { description } : {}),
   ...(more.length ? { more } : {}),
 })

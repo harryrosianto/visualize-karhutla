@@ -1,7 +1,22 @@
-import { CaretLeft, CaretRight, DownloadSimple } from '@phosphor-icons/react'
+import { CaretLeft, CaretRight, DownloadSimple, Pause, Play } from '@phosphor-icons/react'
 import { useReducedMotion } from 'motion/react'
-import { useRef, useState, type KeyboardEvent } from 'react'
-import { communityTemplates, type CommunityTemplate } from '../lib/community'
+import { useEffect, useRef, useState, type KeyboardEvent } from 'react'
+import { communityTemplates, type CommunitySlide, type CommunityTemplate } from '../lib/community'
+
+/** Satu gambar pada kartu. GIF animasi tampil sebagai poster diam; animasinya baru dimuat dan diputar setelah tombol ditekan (tidak pernah otomatis). */
+function SlideImage({ s, alt, playing, onToggle }: { s: CommunitySlide; alt: string; playing: boolean; onToggle: () => void }) {
+  return (
+    <>
+      <img src={playing && s.anim ? s.anim.webp : s.thumb} alt={alt} width={s.width} height={s.height} loading="lazy" decoding="async" draggable={false} className="size-full bg-ink-2 object-contain" />
+      {s.anim && (
+        <button type="button" onClick={onToggle} aria-pressed={playing} aria-label={playing ? 'Jeda animasi GIF' : 'Putar animasi GIF'}
+          className="absolute bottom-2 left-2 inline-flex min-h-11 items-center gap-1.5 rounded-full bg-ink/80 px-3 text-xs font-bold text-fg backdrop-blur transition-transform hover:bg-ink active:scale-95">
+          {playing ? <Pause size={16} weight="fill" aria-hidden /> : <Play size={16} weight="fill" aria-hidden />}GIF
+        </button>
+      )}
+    </>
+  )
+}
 
 /** Satu karya. Bila berupa seri (lebih dari satu gambar), gambarnya dapat digeser: sapuan jari, panah, atau tombol panah keyboard. */
 function ArtworkCard({ t }: { t: CommunityTemplate }) {
@@ -9,6 +24,9 @@ function ArtworkCard({ t }: { t: CommunityTemplate }) {
   const reduce = !!useReducedMotion()
   const track = useRef<HTMLUListElement>(null)
   const [i, setI] = useState(0)
+  const [playId, setPlayId] = useState<string | null>(null)
+  // animasi berhenti saat pindah slide
+  useEffect(() => { setPlayId(null) }, [i])
   const go = (to: number) => {
     const el = track.current
     if (!el) return
@@ -29,8 +47,9 @@ function ArtworkCard({ t }: { t: CommunityTemplate }) {
           className={`flex overflow-hidden rounded-panel border border-line ${n > 1 ? 'snap-x snap-mandatory overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden' : ''}`}
           style={{ aspectRatio: `${t.width} / ${t.height}` }}>
           {t.slides.map((s, k) => (
-            <li key={s.id} className="size-full shrink-0 snap-center" {...(n > 1 ? { role: 'group', 'aria-roledescription': 'slide', 'aria-label': `${k + 1} dari ${n}` } : {})}>
-              <img src={s.thumb} alt={`${n > 1 ? `Gambar ${k + 1} dari ${n}: ` : 'Karya '}${t.title} oleh ${t.creator}`} width={s.width} height={s.height} loading="lazy" decoding="async" draggable={false} className="size-full bg-ink-2 object-contain" />
+            <li key={s.id} className="relative size-full shrink-0 snap-center" {...(n > 1 ? { role: 'group', 'aria-roledescription': 'slide', 'aria-label': `${k + 1} dari ${n}` } : {})}>
+              <SlideImage s={s} playing={playId === s.id} onToggle={() => setPlayId(p => (p === s.id ? null : s.id))}
+                alt={`${n > 1 ? `Gambar ${k + 1} dari ${n}: ` : 'Karya '}${t.title} oleh ${t.creator}${s.anim ? ' (GIF animasi)' : ''}`} />
             </li>
           ))}
         </ul>
@@ -49,7 +68,7 @@ function ArtworkCard({ t }: { t: CommunityTemplate }) {
         Oleh {t.creatorUrl ? <a href={t.creatorUrl} target="_blank" rel="noopener noreferrer nofollow" className="underline decoration-ember underline-offset-4 hover:text-fg">{t.creator}</a> : t.creator}
         {n > 1 && <span> · seri {n} gambar</span>}
       </p>
-      <a href={cur.full} download={`karhutla-galeri-${cur.id}.${cur.ext}`} className="btn btn-ghost mt-2 min-h-11 w-full gap-1.5 px-2 text-sm"><DownloadSimple size={18} weight="bold" aria-hidden />{n > 1 ? `Unduh gambar ${i + 1}` : 'Unduh'}</a>
+      <a href={cur.anim ? cur.anim.gif : cur.full} download={`karhutla-galeri-${cur.id}.${cur.anim ? 'gif' : cur.ext}`} className="btn btn-ghost mt-2 min-h-11 w-full gap-1.5 px-2 text-sm"><DownloadSimple size={18} weight="bold" aria-hidden />{n > 1 ? `Unduh gambar ${i + 1}` : 'Unduh'}{cur.anim ? ' (GIF)' : ''}</a>
     </>
   )
 }
