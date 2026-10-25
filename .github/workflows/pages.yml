@@ -10,9 +10,12 @@ permissions:
   pages: write
   id-token: write
 
+# Satu deploy dalam satu waktu. Deploy yang sedang berjalan dibiarkan selesai (tidak dibatalkan di tengah jalan);
+# bila ada beberapa run menunggu, hanya yang terbaru yang dijalankan sehingga situs selalu memuat commit terakhir.
+# Run perantara yang digantikan tampil "dibatalkan" dengan keterangan "higher priority waiting request": itu normal, bukan kegagalan.
 concurrency:
   group: pages
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   build:

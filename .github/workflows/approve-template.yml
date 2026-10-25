@@ -11,8 +11,12 @@ permissions:
   issues: write
   actions: write
 
+# Satu antrean per isu: pelabelan ganda pada isu yang sama tidak diproses dua kali.
+# Isu berbeda boleh berjalan bersamaan; benturan saat mendorong ke main ditangani oleh pengulangan di langkah dorong.
+# (Satu grup bersama untuk semua isu tidak dipakai: GitHub hanya menyimpan satu run menunggu per grup dan membatalkan sisanya,
+# sehingga persetujuan yang berurutan cepat bisa hilang.)
 concurrency:
-  group: approve-template
+  group: approve-template-${{ github.event.issue.number }}
   cancel-in-progress: false
 
 jobs:
@@ -34,25 +38,48 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
-      - name: Proses gambar kiriman
-        id: proses
+      - name: Proses gambar, commit, dan dorong ke main
+        id: dorong
         env:
           # Isi isu diteruskan lewat lingkungan, tidak pernah disisipkan ke perintah shell.
           ISSUE_BODY: ${{ github.event.issue.body }}
           ISSUE_NUMBER: ${{ github.event.issue.number }}
-        run: npx tsx scripts/approve-template.ts
-      - name: Commit dan dorong ke main
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add src/assets/community src/content/communityTemplates.json
-          git commit -m "Tambah templat komunitas dari isu #${{ github.event.issue.number }}"
-          git pull --rebase origin main
-          git push origin HEAD:main
+          # Jika dorong ditolak karena persetujuan lain baru saja masuk, ulangi seluruh proses di atas main terbaru
+          # (skrip aman diulang), bukan menggabung berkas data bersama yang bisa berbenturan.
+          for attempt in 1 2 3 4 5 6 7 8 9 10; do
+            git fetch --quiet origin main
+            git reset --hard origin/main
+            git clean -fdq src/assets/community
+            npx tsx scripts/approve-template.ts
+            git add src/assets/community src/content/communityTemplates.json
+            if git diff --cached --quiet; then
+              echo "Tidak ada perubahan: isu ini sudah diproses sebelumnya."
+              echo "status=tidakada" >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
+            git commit -m "Tambah templat komunitas dari isu #${{ github.event.issue.number }}"
+            if git push origin HEAD:main; then
+              echo "status=terdorong" >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
+            echo "Dorong ditolak (percobaan $attempt dari 10); mengulang dari main terbaru."
+            sleep $((RANDOM % 6 + attempt))
+          done
+          echo "Gagal mendorong ke main setelah 10 percobaan. Lepas lalu pasang kembali label untuk mengulang."
+          exit 1
       - name: Picu deploy, beri tahu pengirim, dan tutup isu
+        if: steps.dorong.outputs.status == 'terdorong'
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           gh workflow run pages.yml --ref main
           gh issue comment ${{ github.event.issue.number }} --body "Terima kasih. Templat Anda disetujui dan akan tampil pada halaman Templat Story setelah situs selesai diperbarui (beberapa menit)."
           gh issue close ${{ github.event.issue.number }} --reason completed
+      - name: Tutup isu yang sudah diproses sebelumnya
+        if: steps.dorong.outputs.status == 'tidakada'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh issue close ${{ github.event.issue.number }} --reason completed || true
