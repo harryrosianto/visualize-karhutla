@@ -1,4 +1,4 @@
-import { ArrowDown, ArrowUp, DotsSixVertical, SortAscending, UploadSimple, X } from '@phosphor-icons/react'
+import { ArrowDown, ArrowUp, DotsSixVertical, ImagesSquare, SortAscending, UploadSimple, X } from '@phosphor-icons/react'
 import { Reorder, useDragControls } from 'motion/react'
 import { useEffect, useRef, useState, type FormEvent } from 'react'
 import { SUBMIT_URL, TURNSTILE_SITEKEY } from '../lib/site'
@@ -23,15 +23,21 @@ function Row({ it, k, n, onMove, onRemove }: { it: Item; k: number; n: number; o
   return (
     <Reorder.Item value={it} dragListener={false} dragControls={controls} whileDrag={{ scale: 1.02, boxShadow: '0 12px 30px rgb(0 0 0 / 0.5)', zIndex: 20 }}
       className="relative flex items-center gap-2 rounded-panel border border-line bg-ink p-2 sm:gap-3">
-      <button type="button" onPointerDown={e => controls.start(e)} aria-label={`Seret untuk memindah ${it.file.name}`}
-        className="grid size-11 shrink-0 cursor-grab touch-none place-items-center rounded-full text-fg-3 hover:text-fg active:cursor-grabbing"><DotsSixVertical size={22} weight="bold" aria-hidden /></button>
+      {n > 1 && (
+        <button type="button" onPointerDown={e => controls.start(e)} aria-label={`Seret untuk memindah ${it.file.name}`}
+          className="grid size-11 shrink-0 cursor-grab touch-none place-items-center rounded-full text-fg-3 hover:text-fg active:cursor-grabbing"><DotsSixVertical size={22} weight="bold" aria-hidden /></button>
+      )}
       <img src={it.url} alt="" draggable={false} className="size-14 shrink-0 rounded-lg border border-line bg-ink-2 object-cover" />
       <div className="min-w-0 flex-1">
-        <p className="truncate text-sm font-semibold text-fg"><span className={`mr-1.5 inline-block rounded-full px-2 py-0.5 text-xs ${k === 0 ? 'bg-ember text-ink' : 'bg-ink-3 text-fg-2'}`}>{k === 0 ? 'Sampul' : k + 1}</span>{it.file.name}</p>
+        <p className="truncate text-sm font-semibold text-fg">{n > 1 && <span className={`mr-1.5 inline-block rounded-full px-2 py-0.5 text-xs ${k === 0 ? 'bg-ember text-ink' : 'bg-ink-3 text-fg-2'}`}>{k === 0 ? 'Sampul' : k + 1}</span>}{it.file.name}</p>
         <p className="text-xs text-fg-3">{fmtSize(it.file.size)}{it.file.type === 'image/gif' ? ' · GIF' : ''}</p>
       </div>
-      <button type="button" onClick={() => onMove(k, k - 1)} disabled={k === 0} aria-label={`Naikkan ${it.file.name} ke urutan ${k}`} className={btn}><ArrowUp size={18} weight="bold" aria-hidden /></button>
-      <button type="button" onClick={() => onMove(k, k + 1)} disabled={k === n - 1} aria-label={`Turunkan ${it.file.name} ke urutan ${k + 2}`} className={btn}><ArrowDown size={18} weight="bold" aria-hidden /></button>
+      {n > 1 && (
+        <>
+          <button type="button" onClick={() => onMove(k, k - 1)} disabled={k === 0} aria-label={`Naikkan ${it.file.name} ke urutan ${k}`} className={btn}><ArrowUp size={18} weight="bold" aria-hidden /></button>
+          <button type="button" onClick={() => onMove(k, k + 1)} disabled={k === n - 1} aria-label={`Turunkan ${it.file.name} ke urutan ${k + 2}`} className={btn}><ArrowDown size={18} weight="bold" aria-hidden /></button>
+        </>
+      )}
       <button type="button" onClick={onRemove} aria-label={`Hapus ${it.file.name}`} className={btn}><X size={18} weight="bold" aria-hidden /></button>
     </Reorder.Item>
   )
@@ -70,6 +76,7 @@ async function prepare(file: File): Promise<File> {
 export function SubmitArtwork({ className = '' }: { className?: string }) {
   const [phase, setPhase] = useState<'idle' | 'sending' | 'done'>('idle')
   const [error, setError] = useState('')
+  const [over, setOver] = useState(false)
   const [items, setItems] = useState<Item[]>([])
   const itemsRef = useRef<Item[]>([])
   itemsRef.current = items
@@ -185,14 +192,20 @@ export function SubmitArtwork({ className = '' }: { className?: string }) {
             <input name="tautan" type="url" maxLength={200} className={input} placeholder="https://" />
           </label>
           <div>
-            <label htmlFor="gambar-input" className="block text-sm font-semibold text-fg">Gambar</label>
-            <input id="gambar-input" type="file" accept={OK_TYPES.join(',')} multiple onChange={e => { pick(e.target.files); e.target.value = '' }}
-              className={`${input} file:mr-3 file:rounded-full file:border-0 file:bg-ember file:px-4 file:py-1.5 file:font-semibold file:text-ink`} />
-            <p className="mt-1 text-xs text-fg-3">PNG, JPG, WebP, atau GIF animasi (GIF maksimal 5 MB). Hingga {MAX_FILES} gambar. Lebih dari satu gambar ditampilkan sebagai satu seri yang bisa digeser, dengan satu judul dan satu deskripsi; gambar pertama menjadi sampul. Gambar besar dikecilkan otomatis. Ukuran dan rasio bebas.</p>
+            <p id="gambar-judul" className="text-sm font-semibold text-fg">Gambar</p>
+            <div onDragOver={e => { e.preventDefault(); setOver(true) }} onDragLeave={() => setOver(false)} onDrop={e => { e.preventDefault(); setOver(false); pick(e.dataTransfer.files) }}
+              className={`mt-1 rounded-panel border-2 border-dashed px-4 py-5 text-center transition-colors ${over ? 'border-ember bg-ember/10' : 'border-line bg-ink-2'}`}>
+              <input id="gambar-input" type="file" accept={OK_TYPES.join(',')} multiple aria-labelledby="gambar-judul" className="peer sr-only"
+                onChange={e => { pick(e.target.files); e.target.value = '' }} />
+              <label htmlFor="gambar-input" className="btn btn-primary cursor-pointer gap-2 peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-ember"><ImagesSquare size={18} weight="bold" aria-hidden />{items.length ? 'Tambah gambar' : 'Pilih gambar'}</label>
+              <p className="mt-2 text-sm text-fg-2">atau seret gambar ke sini</p>
+              <p className="mt-1 text-xs text-fg-3">PNG, JPG, WebP, atau GIF animasi (GIF maksimal 5 MB). Terpilih {items.length} dari {MAX_FILES} gambar.</p>
+            </div>
+            <p className="mt-2 text-xs text-fg-3">Lebih dari satu gambar tampil sebagai satu seri yang bisa digeser, dengan satu judul dan satu deskripsi; gambar pertama menjadi sampul. Gambar besar dikecilkan otomatis.</p>
             {items.length > 0 && (
               <div className="mt-3">
                 <div className="flex flex-wrap items-center justify-between gap-2">
-                  <p className="text-xs text-fg-2">{items.length} gambar. Seret pegangan <DotsSixVertical size={14} weight="bold" aria-hidden className="inline align-text-bottom" /> atau pakai tombol panah untuk mengatur urutan seri.</p>
+                  {items.length > 1 ? <p className="text-xs text-fg-2">Seret pegangan <DotsSixVertical size={14} weight="bold" aria-hidden className="inline align-text-bottom" /> atau pakai tombol panah untuk mengatur urutan seri.</p> : <span />}
                   {items.length > 1 && <button type="button" onClick={sortByName} className="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-line px-3 text-xs font-semibold text-fg-2 hover:text-fg"><SortAscending size={16} weight="bold" aria-hidden />Urutkan menurut nama</button>}
                 </div>
                 <Reorder.Group axis="y" values={items} onReorder={setItems} className="mt-2 grid gap-2">
