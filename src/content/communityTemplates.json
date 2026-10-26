@@ -594,5 +594,16 @@
     "width": 1080,
     "height": 1350,
     "issue": 57
+  },
+  {
+    "id": "t1-1",
+    "ext": "png",
+    "title": "anakku hilang tak kembali",
+    "creator": "gadisikal",
+    "creatorUrl": "https://www.instagram.com/reels/Dej0sQCz6_Y/",
+    "width": 320,
+    "height": 569,
+    "issue": 1,
+    "anim": true
   }
 ]
