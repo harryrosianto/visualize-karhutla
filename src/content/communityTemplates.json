@@ -625,5 +625,17 @@
     "width": 2048,
     "height": 2048,
     "issue": 59
+  },
+  {
+    "id": "t61-1",
+    "ext": "png",
+    "title": "This will be Okay.. Right?",
+    "creator": "Hitayotu",
+    "creatorUrl": "https://www.instagram.com/hitayotue/",
+    "width": 448,
+    "height": 560,
+    "issue": 61,
+    "anim": true,
+    "description": "That's what they think as their shelter burns.."
   }
 ]
