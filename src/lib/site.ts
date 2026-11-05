@@ -22,3 +22,6 @@ export const TURNSTILE_SITEKEY: string = import.meta.env.VITE_TURNSTILE_SITEKEY 
 
 /** Alamat API kiriman cerita (Worker Cloudflare), diturunkan dari SUBMIT_URL. */
 export const CERITA_URL: string = SUBMIT_URL.replace(/\/api\/submit$/, '/api/cerita')
+
+/** Alamat data konsentrasi asap (grid PM2,5), diturunkan dari SUBMIT_URL. */
+export const ASAP_URL: string = SUBMIT_URL.replace(/\/api\/submit$/, '/api/asap')

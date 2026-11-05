@@ -23,7 +23,7 @@ export default function MapPage() {
     mode: (params.get('mode') === '3d' ? 'hex' : 'titik') as MapMode,
     date: params.get('tanggal'),
     kab: params.get('kabupaten'),
-    overlays: (params.get('lapisan') ?? '').split(',').filter(x => OVERLAY_IDS.includes(x)),
+    overlays: (params.get('lapisan') ?? '').split(',').map(x => (x === 'aerosol' ? 'asap' : x)).filter(x => OVERLAY_IDS.includes(x)),
   })
   const { kabs, meta } = useData()
   const provIds = useMemo(() => (meta?.provinces ?? []).map(p => p.id), [meta])

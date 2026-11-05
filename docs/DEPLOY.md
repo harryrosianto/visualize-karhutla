@@ -93,3 +93,8 @@ Formulir di halaman `/templat` memanggil Worker `worker/index.ts` (proyek Cloudf
 Satu kiriman dapat berisi hingga 10 gambar (maksimal 5 MB per gambar, 30 MB total) dan dianggap satu karya atau satu seri berurutan dengan satu judul dan satu deskripsi. Pada `src/content/communityTemplates.json`, gambar pertama menjadi sampul entri (dipakai kolase dan video), sedangkan gambar lainnya berada pada larik `more` dan tampil sebagai slide yang bisa digeser pada kartu galeri.
 
 GIF animasi didukung: saat disetujui, `approve-template` menyimpan bingkai pertama sebagai poster diam (`-thumb.webp`) dan gambar diam resolusi penuh (dipakai kolase dan video), WebP animasi ringan untuk pratinjau (`-anim.webp`), dan GIF asli (`.gif`, dikodekan ulang bila lebih dari 5 MB) untuk diunduh. Entri atau slide yang beranimasi bertanda `anim: true` pada `communityTemplates.json`. Di galeri animasi tidak pernah berputar otomatis; pengunjung menekan tombol GIF. Di formulir kirim, urutan gambar seri diatur dengan seret dan lepas (atau tombol panah) sebelum dikirim.
+
+
+## Konsentrasi asap (`/api/asap`)
+
+Worker juga melayani `GET /api/asap`: grid PM2,5 (47 x 18 titik, jarak 1 derajat, seluruh Indonesia) dari Open-Meteo/CAMS dalam satu respons JSON. Hasilnya disimpan 3 jam di cache Cloudflare. Kuota gratis Open-Meteo dihitung per titik (846 titik per pengambilan), jadi peta tidak boleh memanggil Open-Meteo langsung untuk lapisan ini. Worker harus ter-deploy ulang setelah perubahan ini agar lapisan "Konsentrasi asap" berfungsi; selama belum, legenda menampilkan pesan gagal memuat.

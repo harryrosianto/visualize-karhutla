@@ -43,6 +43,8 @@ export interface OverlayDef {
   id: string; label: string; desc: string; swatch: string; opacity: number; hueRotate?: number
   /** keterangan sumber dan batasan yang tampil bersama lapisan ini */
   source: string
+  /** lapisan medan PM2,5 hasil model (digambar sendiri dari grid, lihat src/lib/smoke.ts) */
+  smoke?: true
   /** URL tile tetap (lapisan statis) */
   url?: string
   /** lapisan citra harian NASA GIBS: URL dibentuk dari tanggal pada slider */
@@ -50,6 +52,7 @@ export interface OverlayDef {
 }
 
 const BIG_SOURCE = 'Layanan peta publik Kebijakan Satu Peta (BIG), data per Agustus 2024, sehingga bisa berbeda dari kondisi terkini. Dimuat dari server pemerintah dan bisa memerlukan waktu. Batas konsesi tidak menunjukkan siapa yang menyebabkan kebakaran.'
+const SMOKE_SOURCE = 'Perkiraan model CAMS (Copernicus) lewat Open-Meteo pada grid 1°, dihaluskan menjadi gradasi, diperbarui sekitar 3 jam sekali. Ini hasil model, bukan pengukuran: saat asap tebal angkanya bisa meleset jauh dari kondisi di lokasi Anda, dan lapisan ini tidak mengikuti slider tanggal (selalu kondisi terkini).'
 const GIBS_SOURCE = 'Citra harian NASA GIBS (satelit VIIRS NOAA-20 dan MODIS Terra) untuk tanggal pada slider. Awan menutupi asap dan citra bisa kosong atau belum tersedia untuk hari terbaru. Ini gambar satelit, bukan pengukuran kualitas udara.'
 
 /** URL tile citra harian GIBS (EPSG:3857). Tanggal dibatasi sampai kemarin (UTC) karena citra hari ini belum tersedia. */
@@ -64,8 +67,8 @@ export const OVERLAYS: OverlayDef[] = [
     daily: { layer: 'VIIRS_NOAA20_CorrectedReflectance_TrueColor', matrix: 'GoogleMapsCompatible_Level9', ext: 'jpg' }, source: GIBS_SOURCE,
   },
   {
-    id: 'aerosol', label: 'Aerosol (asap)', desc: 'Kepekatan partikel di udara (aerosol optical depth); makin pekat, makin banyak asap atau debu', swatch: '#a855f7', opacity: 0.5,
-    daily: { layer: 'MODIS_Terra_Aerosol', matrix: 'GoogleMapsCompatible_Level6', ext: 'png' }, source: GIBS_SOURCE,
+    id: 'asap', label: 'Konsentrasi asap', desc: 'Perkiraan konsentrasi partikel halus PM2,5 saat ini (µg/m³), seperti peta cuaca; makin merah dan ungu, makin pekat', swatch: '#ef4444', opacity: 0.85,
+    smoke: true, source: SMOKE_SOURCE,
   },
   {
     id: 'gambut', label: 'Gambut', source: BIG_SOURCE, desc: 'Kesatuan Hidrologis Gambut (KHG), area yang memuat ekosistem gambut (garis arsir)', swatch: '#33ff33', opacity: 0.9, hueRotate: 120,

@@ -6,6 +6,7 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { pickKabupaten } from '../../lib/geo'
 import type { ProvinceId } from '../../lib/data'
 import type { Bounds, MapMode } from './mapTypes'
+import { loadSmoke, renderSmoke } from '../../lib/smoke'
 import { OVERLAYS, gibsUrl } from './mapTypes'
 import type { Merged } from './useMapData'
 
@@ -154,6 +155,7 @@ export default function MapView({ merged, mode, day, provIds, fRange, selectedSl
     for (const o of OVERLAYS) {
       const on = overlays.includes(o.id)
       const lid = `ov-${o.id}`
+      if (o.smoke) continue
       const url = o.daily ? gibsUrl(o.daily, dateSettled) : o.url!
       if (on && !m.getSource(lid)) {
         m.addSource(lid, { type: 'raster', tiles: [url], tileSize: 256, maxzoom: o.daily ? Number(/Level(\d+)/.exec(o.daily.matrix)?.[1] ?? 9) : 11, attribution: o.daily ? 'NASA GIBS' : 'Satu Peta (BIG)' })
@@ -165,6 +167,26 @@ export default function MapView({ merged, mode, day, provIds, fRange, selectedSl
       if (m.getLayer(lid)) m.setLayoutProperty(lid, 'visibility', on ? 'visible' : 'none')
     }
   }, [ready, overlays, dateSettled])
+
+  // konsentrasi asap: grid PM2,5 diambil sekali dari Worker, digambar menjadi gambar gradasi, lalu dipasang sebagai sumber gambar
+  const smokeOn = overlays.includes('asap')
+  useEffect(() => {
+    const m = map.current
+    if (!ready || !m) return
+    const lid = 'ov-asap'
+    if (smokeOn && !m.getSource(lid)) {
+      let alive = true
+      loadSmoke().then(g => {
+        if (!alive || !map.current || map.current.getSource(lid)) return
+        const { url, coordinates } = renderSmoke(g)
+        map.current.addSource(lid, { type: 'image', url, coordinates })
+        map.current.addLayer({ id: lid, type: 'raster', source: lid, paint: { 'raster-opacity': 0.85, 'raster-resampling': 'linear', 'raster-fade-duration': 300 } }, 'kab-line')
+        map.current.setLayoutProperty(lid, 'visibility', 'visible')
+      }).catch(() => {})
+      return () => { alive = false }
+    }
+    if (m.getLayer(lid)) m.setLayoutProperty(lid, 'visibility', smokeOn ? 'visible' : 'none')
+  }, [ready, smokeOn])
 
   // sesuaikan pandangan saat filter provinsi berubah; pada pemuatan pertama langsung pas (tanpa animasi)
   const fitted = useRef(false)

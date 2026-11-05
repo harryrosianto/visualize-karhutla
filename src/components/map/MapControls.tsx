@@ -1,6 +1,7 @@
 import { Pause, Play } from '@phosphor-icons/react'
 import { MONTHS_SHORT, fmt, fmtDate } from '../../lib/data'
 import type { Meta } from '../../lib/data'
+import { SMOKE_STOPS, smokeCss, smokeTimeWib, useSmoke } from '../../lib/smoke'
 import { OVERLAYS, type Filter, type MapMode } from './mapTypes'
 
 const chip = (on: boolean) =>
@@ -102,6 +103,25 @@ export function Legend({ mode }: { mode: MapMode }) {
   )
 }
 
+/** Skala warna konsentrasi asap, lengkap dengan waktu data. */
+function SmokeLegend() {
+  const { status, grid } = useSmoke(true)
+  return (
+    <div className="mt-2 max-w-md">
+      <div className="h-2.5 rounded-full" style={{ background: smokeCss() }} aria-hidden />
+      <div className="mt-1 flex justify-between text-[11px] text-fg-3 num" aria-hidden>
+        {SMOKE_STOPS.slice(1).map(s => <span key={s.v}>{s.label}</span>)}
+        <span>µg/m³</span>
+      </div>
+      <p role="status" className="mt-1">
+        {status === 'loading' && 'Memuat data konsentrasi asap...'}
+        {status === 'error' && 'Data konsentrasi asap belum dapat dimuat saat ini.'}
+        {status === 'ok' && grid?.time && `Data model: ${smokeTimeWib(grid.time)}.`}
+      </p>
+    </div>
+  )
+}
+
 /** Tombol lapisan tambahan (foto satelit, aerosol, gambut, konsesi) beserta keterangan warna dan batasannya. */
 export function OverlayToggles({ value, onChange }: { value: string[]; onChange: (v: string[]) => void }) {
   const toggle = (id: string) => onChange(value.includes(id) ? value.filter(x => x !== id) : [...value, id])
@@ -120,6 +140,7 @@ export function OverlayToggles({ value, onChange }: { value: string[]; onChange:
       {active.length > 0 && (
         <div className="mt-1 text-xs leading-relaxed text-fg-3">
           {active.map(o => <p key={o.id}><i aria-hidden className="mr-1.5 inline-block size-2 rounded-sm align-middle" style={{ background: o.swatch }} />{o.desc}.</p>)}
+          {active.some(o => o.smoke) && <SmokeLegend />}
           {[...new Set(active.map(o => o.source))].map(t => <p key={t} className="mt-1">{t}</p>)}
         </div>
       )}

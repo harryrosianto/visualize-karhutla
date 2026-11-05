@@ -15,6 +15,7 @@ interface Env {
   /** hanya untuk pengujian lokal */
   GITHUB_API?: string
   TURNSTILE_VERIFY_URL?: string
+  OPEN_METEO_API?: string
 }
 
 // satu kiriman = satu karya, atau satu seri berurutan (hingga MAX_FILES gambar) dengan satu judul dan satu deskripsi
@@ -36,7 +37,7 @@ function allowedOrigins(env: Env, self: string) {
 
 function corsHeaders(origin: string | null, allowed: Set<string>): Record<string, string> {
   if (!origin || !allowed.has(origin)) return {}
-  return { 'Access-Control-Allow-Origin': origin, 'Access-Control-Allow-Methods': 'POST, OPTIONS', 'Access-Control-Allow-Headers': 'Content-Type', 'Access-Control-Max-Age': '86400', Vary: 'Origin' }
+  return { 'Access-Control-Allow-Origin': origin, 'Access-Control-Allow-Methods': 'GET, POST, OPTIONS', 'Access-Control-Allow-Headers': 'Content-Type', 'Access-Control-Max-Age': '86400', Vary: 'Origin' }
 }
 
 /** Deteksi jenis gambar dari tanda tangan berkas (bukan dari nama atau tipe yang dikirim klien). */
@@ -273,9 +274,45 @@ async function handleCerita(request: Request, env: Env): Promise<Response> {
   }
 }
 
+// ---- Peta konsentrasi asap: grid PM2,5 hasil model CAMS (Open-Meteo) untuk seluruh Indonesia.
+// Open-Meteo menghitung kuota gratis per titik (846 titik per pengambilan), jadi hasilnya disimpan 3 jam di cache Cloudflare
+// dan dipakai bersama oleh semua pengunjung; pengunjung tidak pernah memanggil Open-Meteo untuk lapisan ini.
+const ASAP = { lat0: -11, lon0: 95, lat1: 6, lon1: 141, step: 1, ttl: 3 * 3600 }
+
+async function handleAsap(request: Request, env: Env, ctx: { waitUntil(p: Promise<unknown>): void }): Promise<Response> {
+  const origin = request.headers.get('Origin')
+  const allowed = allowedOrigins(env, new URL(request.url).origin)
+  const cors = corsHeaders(origin, allowed)
+  if (request.method === 'OPTIONS') return new Response(null, { status: 204, headers: cors })
+  if (request.method !== 'GET') return json({ ok: false, error: 'method' }, 405, cors)
+  const cache = (globalThis as any).caches?.default as Cache | undefined
+  const key = new Request('https://cache.local/asap-v1')
+  const hit = await cache?.match(key)
+  if (hit) return new Response(hit.body, { status: 200, headers: { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'public, max-age=900', 'X-Cache': 'HIT', ...cors } })
+  try {
+    const lats: number[] = [], lons: number[] = []
+    for (let la = ASAP.lat0; la <= ASAP.lat1; la += ASAP.step) for (let lo = ASAP.lon0; lo <= ASAP.lon1; lo += ASAP.step) { lats.push(la); lons.push(lo) }
+    const base = env.OPEN_METEO_API ?? 'https://air-quality-api.open-meteo.com'
+    const res = await fetch(`${base}/v1/air-quality?latitude=${lats.join(',')}&longitude=${lons.join(',')}&current=pm2_5&timezone=UTC`)
+    if (!res.ok) throw new Error(String(res.status))
+    const rows = (await res.json()) as { current?: { pm2_5?: number; time?: string } }[]
+    if (!Array.isArray(rows) || rows.length !== lats.length) throw new Error('format')
+    const nx = (ASAP.lon1 - ASAP.lon0) / ASAP.step + 1, ny = (ASAP.lat1 - ASAP.lat0) / ASAP.step + 1
+    const pm = rows.map(r => (typeof r.current?.pm2_5 === 'number' ? Math.round(r.current.pm2_5 * 10) / 10 : null))
+    if (pm.filter(v => v === null).length > pm.length * 0.2) throw new Error('data kosong')
+    const body = JSON.stringify({ time: rows.find(r => r.current?.time)?.current?.time ?? null, lat0: ASAP.lat0, lon0: ASAP.lon0, step: ASAP.step, nx, ny, pm25: pm })
+    const out = new Response(body, { status: 200, headers: { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': `public, max-age=${ASAP.ttl}` } })
+    if (cache) ctx.waitUntil(cache.put(key, out.clone()))
+    return new Response(body, { status: 200, headers: { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'public, max-age=900', 'X-Cache': 'MISS', ...cors } })
+  } catch {
+    return json({ ok: false, error: 'upstream', message: 'Data konsentrasi asap belum dapat diambil saat ini.' }, 502, cors)
+  }
+}
+
 export default {
-  async fetch(request: Request, env: Env): Promise<Response> {
+  async fetch(request: Request, env: Env, ctx: { waitUntil(p: Promise<unknown>): void }): Promise<Response> {
     const { pathname } = new URL(request.url)
+    if (pathname === '/api/asap') return handleAsap(request, env, ctx)
     if (pathname === '/api/submit') return handleSubmit(request, env)
     if (pathname === '/api/cerita') return handleCerita(request, env)
     return env.ASSETS.fetch(request)
