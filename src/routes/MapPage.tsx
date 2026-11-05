@@ -117,7 +117,7 @@ export default function MapPage() {
       {mapGo && <Suspense fallback={<div className="absolute inset-0 bg-ink" />}>
       <MapView
         merged={merged} mode={mode} day={day} provIds={resolved.ids} fRange={resolved.range} selectedSlug={sel} onSelect={select}
-        fitBounds={resolved.bounds} overlays={overlays} fitKey={fitKey} flyTo={flyTo} reduceMotion={reduce}
+        fitBounds={resolved.bounds} overlays={overlays} date={merged?.days[day] ?? ''} fitKey={fitKey} flyTo={flyTo} reduceMotion={reduce}
       />
       </Suspense>}
 

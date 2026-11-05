@@ -102,7 +102,7 @@ export function Legend({ mode }: { mode: MapMode }) {
   )
 }
 
-/** Tombol lapisan tambahan (gambut dan konsesi) beserta keterangan warna dan batasannya. */
+/** Tombol lapisan tambahan (foto satelit, aerosol, gambut, konsesi) beserta keterangan warna dan batasannya. */
 export function OverlayToggles({ value, onChange }: { value: string[]; onChange: (v: string[]) => void }) {
   const toggle = (id: string) => onChange(value.includes(id) ? value.filter(x => x !== id) : [...value, id])
   const active = OVERLAYS.filter(o => value.includes(o.id))
@@ -120,7 +120,7 @@ export function OverlayToggles({ value, onChange }: { value: string[]; onChange:
       {active.length > 0 && (
         <div className="mt-1 text-xs leading-relaxed text-fg-3">
           {active.map(o => <p key={o.id}><i aria-hidden className="mr-1.5 inline-block size-2 rounded-sm align-middle" style={{ background: o.swatch }} />{o.desc}.</p>)}
-          <p className="mt-1">Sumber: layanan peta publik Kebijakan Satu Peta (BIG), data per Agustus 2024, sehingga bisa berbeda dari kondisi terkini. Lapisan dimuat dari server pemerintah dan bisa memerlukan waktu. Batas konsesi tidak menunjukkan siapa yang menyebabkan kebakaran.</p>
+          {[...new Set(active.map(o => o.source))].map(t => <p key={t} className="mt-1">{t}</p>)}
         </div>
       )}
     </div>
